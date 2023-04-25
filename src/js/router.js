@@ -1,7 +1,7 @@
-const Hello = { template: '<div>test</div>' }
+const Hello = { template: '<div>Ahuan</div>' }
 
 const routes = [
-  { path: '/hello', component: HelloWorld }
+  { path: './', component: HomeView }
 ]
 
 const router = new VueRouter({

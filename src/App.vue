@@ -1,15 +1,22 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <!-- header -->
     <header-site />
     <!-- main -->
-    <v-main class="mt-2 " style="min-height:80vh">
+    <v-main class=" mt-12 pt-12 red" style="min-height:80vh">
+      <router-link to="/Istanbul">hiiii</router-link>
+      
       <router-view />
     </v-main>
     <!-- footer -->
     <footer-site />
   </v-app>
 </template>
+<script setup>
+import { RouterView } from "vue-router";
+
+
+</script>
 
 <script>
 
