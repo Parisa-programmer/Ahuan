@@ -32,6 +32,13 @@ import router from './router'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
+// vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+// meta tags
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
 
 
 Vue.config.productionTip = false
@@ -44,3 +51,6 @@ new Vue({
     AOS.init()
   },
 }).$mount('#app')
+
+
+

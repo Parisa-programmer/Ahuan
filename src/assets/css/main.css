@@ -11,6 +11,7 @@
   margin: 0 !important;
 }
 
+
 html {
   scroll-behavior: smooth;
 }
@@ -531,10 +532,6 @@ input::-webkit-inner-spin-button {
   justify-content: left !important;
 }
 
-.v-slide-group__wrapper .v-slide-group__content {
-  margin-top: 3px !important;
-  margin-bottom: 3px !important;
-}
 
 .v-tabs:not(.v-tabs--vertical) .v-tab {
   white-space: nowrap;

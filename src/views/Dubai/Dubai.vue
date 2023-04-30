@@ -29,8 +29,8 @@
         <main-tour-card :cards="cards" />
         <h2 class="px-12 mt-8">معرفی تورهای دبی</h2>
         <p class="text-justify answerText mt-4 px-12">
-          این مجموعه تور ویژه‌ای برای ایام نوروز در نظر گرفته است تا مسافران چند روزی را به دور از مشغولیت‌های کاری در شهر
-          دبی به خوشی سر ببرند. تور 5 شب دبی یکی از محبوب‌ترین تورهای نوروزی است که مسافران زیادی تمایل به انتخاب آن
+          این مجموعه تور ویژه‌ای در نظر گرفته است تا مسافران چند روزی را به دور از مشغولیت‌های کاری در شهر
+          دبی به خوشی سر ببرند. تور 5 شب دبی یکی از محبوب‌ترین تورها است که مسافران زیادی تمایل به انتخاب آن
           دارند. شما می‌توانید با توجه به علاقه و بودجه‌ای که برای تفریح و سرگرمی خود و خانواده‌تان برای ایام عید در نظر
           گرفته‌اید هتل‌های مختلفی را برگزینید.
         </p>
@@ -60,11 +60,31 @@
     </v-row>
   </div>
 </template>
-<style></style> 
+
+<style scoped>
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+</style> 
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 export default {
   name: 'EuropeTour',
+  metaInfo: {
+    meta: [
+      { name: 'description', content: "شرکت آهوان با بیش از 50 سال سابقه مجری مستقیم انواع تورهای دبی است. تورهای ارزان تا لوکس دبی به همراه لیست قیمت هتل‌ها از تهران و سایر شهرها" },
+    ]
+  },
   components: {
     MainTourCard
 
@@ -76,8 +96,8 @@ export default {
         title: 'دبی - 3 شب و 4 روز',
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
-        nights: 'شروع قیمت از 5.550.000 تومان',
-        route: '/تور-3-شب-دبی',
+        nights: 'شروع قیمت از 12.200.000 تومان',
+        route: '/dubai-3night',
         AllDayFlight: true
       },
       {
@@ -85,8 +105,8 @@ export default {
         title: 'دبی - 4 شب و 5 روز',
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
-        nights: 'شروع قیمت از 6.100.000 تومان',
-        route: '/Dubai/تور-4-شب-دبی/',
+        nights: 'شروع قیمت از 13.900.000 تومان',
+        route: '/dubai-4night',
         AllDayFlight: true
       },
       {
@@ -94,8 +114,8 @@ export default {
         title: 'دبی - 5 شب و 6 روز',
         airline: 'قشم-ایر-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
-        nights: 'شروع قیمت از 6.790.000 تومان',
-        route: '/Dubai/تور-5-شب-دبی/',
+        nights: 'شروع قیمت از 15.200.000 تومان',
+        route: '/dubai-5night',
         AllDayFlight: true
       },
     ]

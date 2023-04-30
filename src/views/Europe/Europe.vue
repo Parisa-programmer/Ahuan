@@ -85,16 +85,23 @@
     </v-row>
   </div>
 </template>
-<style></style> 
+ 
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
+import axios from 'axios'
 export default {
   name: 'EuropeTour',
+  metaInfo: {
+    meta: [
+      { name: 'description', content: "در این مقاله به بررسی یکی از جذاب‌ترین تورهای جهان، تور اروپا می‌پردازیم. با ما همراه باشید تا زیبایی‌های این تور را برایتان به تصویر بکشیم." },
+      { name: 'description', content: "شرکت آهوان مجری مستقیم تورهای ترکیبی و دور اروپا، تورهای فرانسه، اسپانیا، ترکیه، سوئیس و ایتالیا برای است." }  
+    ]
+  },
   components: {
     MainTourCard
-
   },
   data: () => ({
+    publicPath: process.env.BASE_URL,
     cards: [
       {
         image: require('@/assets/image/tour/europ-001.jpg'),
@@ -104,8 +111,9 @@ export default {
         date2: '11 خرداد و 25 خرداد',
         hotelStar: '4 و 5',
         nights: '6 شب پاریس + 2 شب دبی',
-        route: '/tour/Europe/تور-فرانسه-امارات/',
-        download: '@/assets/image/europe/فرانسه - امارات.pdf'
+        route: '/France-UAE-9days',
+
+        download: process.env.BASE_URL + 'فرانسه-امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-002.jpg'),
@@ -115,8 +123,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '4 شب پاریس + 4 شب بارسلون',
         nights2: '+ 2 شب دبی',
-        route: '/tour/Europe/تور-فرانسه-اسپانیا-امارات/',
-        download: '@/assets/image/europe/فرانسه - اسپانیا - امارات.pdf'
+        route: '/France-Spain-UAE-11days',
+        download: process.env.BASE_URL + 'فرانسه - اسپانیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-003.jpg'),
@@ -126,8 +134,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '4 شب زوریخ-لوسرن + 4 شب پاریس',
         nights2: '+ 2 شب دبی',
-        route: '/tour/Europe/تور-سوئیس-فرانسه-امارات',
-        download: '@/assets/image/europe/سوئیس - فرانسه - امارات.pdf'
+        route: '/Switzerland-France-UAE-11days',
+        download: process.env.BASE_URL + 'سوئیس - فرانسه - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-004.jpg'),
@@ -137,8 +145,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '4 شب پاریس + 2 شب بروکسل',
         nights2: '+ 3 شب آمستردام + 2 شب دبی',
-        route: '/tour/Europe/تور-فرانسه-بلژیک-هلند-امارات',
-        download: '@/assets/image/europe/فرانسه - بلژیک - هلند - امارات.pdf'
+        route: '/France-Belgium-Netherlands-UAE-12days',
+        download: process.env.BASE_URL +  'فرانسه - بلژیک - هلند - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-005.jpg'),
@@ -148,8 +156,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '4 شب پاریس + 4 شب رم',
         nights2: '+ 3 شب بارسلون + 2 شب دبی',
-        route: '/tour/Europe/تور-فرانسه-ایتالیا-اسپانیا-امارات',
-        download: '@/assets/image/europe/فرانسه - ایتالیا - اسپانیا - امارات.pdf'
+        route: '/France-Italy-Spain-UAE-14days',
+        download:  process.env.BASE_URL + 'فرانسه - ایتالیا - اسپانیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-007.jpg'),
@@ -159,8 +167,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '3 شب زوریخ-لوسرن + 2 شب لوگانو',
         nights2: '+ 2 شب میلان-ونیز + 2 شب دبی',
-        route: '/tour/Europe/تور-سوئیس-ایتالیا-امارات',
-        download: '@/assets/image/europe/سوئیس - ایتالیا - امارات.pdf'
+        route: '/Switzerland-Italy-UAE-10days',
+        download: process.env.BASE_URL +  'سوئیس - ایتالیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-006.jpg'),
@@ -170,8 +178,8 @@ export default {
         hotelStar: ' 5 ',
         nights: '2 شب مادرید + 2 شب والنسیا',
         nights2: '+ 4 شب بارسلون + 2 شب استانبول',
-        route: '/tour/Europe/تور-اسپانیا-ترکیه',
-        download: '@/assets/image/europe/اسپانیا - ترکیه.pdf'
+        route: '/Spain-Turkiye-11days',
+        download:  process.env.BASE_URL + 'اسپانیا - ترکیه.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-008.jpg'),
@@ -181,8 +189,8 @@ export default {
         hotelStar: '4  و 5 ',
         nights: '5 شب بارسلون + 2 شب رم + 1 شب فلورانس',
         nights2: '+ 2 شب ونیز + 2 شب استانبول',
-        route: '/tour/Europe/تور-اسپانیا-ایتالیا-ترکیه',
-        download: '@/assets/image/europe/اسپانیا - ایتالیا - ترکیه.pdf'
+        route: '/Spain-Italy-Turkey-13days',
+        download:  process.env.BASE_URL + 'اسپانیا - ایتالیا - ترکیه.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-009.jpg'),
@@ -193,8 +201,8 @@ export default {
         nights: 'زوریخ + 1شب اینترلاکن+1شب مونتخو+',
         nights2: '1شب زرمات + 1شب سن موریس + 1شب لوگانو +',
         nights3: '1شب لوسرن + 1شب زوریخ + 2شب استانبول',
-        route: '/tour/Europe/گرند-تور-سوئیس',
-        download: '@/assets/image/europe/گرندتور سوئیس.pdf'
+        route: '/Swiss-grandtour-10days',
+        download:  process.env.BASE_URL + 'گرندتور سوئیس.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-002.jpg'),
@@ -203,13 +211,13 @@ export default {
         date: 'تاریخ رفت: 12 خرداد',
         hotelStar: '4  و 5 ',
         nights: '5 شب زوریخ-لوسرن + 2شب استانبول',
-        route: '/tour/Europe/تور-سوئیس-ترکیه',
-        download: '@/assets/image/europe/سوئیس - ترکیه.pdf'
+        route: '/Switzerland-Turkiye-8days',
+        download:  process.env.BASE_URL + 'سوئیس - ترکیه.pdf'
       },
     ]
   }),
   methods: {
-
+  
   },
   created() {
     document.title = 'تورهای 1402 اروپا'

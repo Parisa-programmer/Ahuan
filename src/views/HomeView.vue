@@ -20,10 +20,10 @@
     <!-- visline -->
     <v-row justify="center">
       <div class="indexDiv">
-        <a href="/visa">
+        <router-link to="/visa">
           <img class="widthAll rounded-xl d-none d-md-block" src="../assets/image/ویزلاین.jpg" alt="">
           <img class="widthAll rounded-xl d-block d-md-none" src="../assets/image/ویزلاین موبایل.jpg" alt="">
-        </a>
+        </router-link>
       </div>
     </v-row>
     <!-- tours -->
@@ -165,7 +165,7 @@
                     </v-row>
                   </div>
                 </v-row>
-</router-link>
+              </router-link>
 
             </div>
           </v-col>
@@ -255,9 +255,9 @@
                 <!-- سرسبز شمالی ایران و در مرز استان های خوش آب و هوای گیلان و مازندران واقع است.هتل چهار ستاره آهوان با بیش از 18 هکتار مساحت از وسیع ترین مناطق اقامتی ایران است که دارای 212 واحد اقامتی شامل 18 واحد ویلایی 2 خوابه،32 واحد واحد ویلایی یک خوابه و 162 واحد آپارتمانی 2 تخته تا 6 تخته است.همواره از زمان محول شدن مسئولیت این مجموعه به شرکت آهوان سعی بر این شده است که خدمات هتل به روز و در حد استانداردهای بین المللی ارائه شود. -->
               </p>
             </div>
-            <a href="/office-protector-customer-interests">
+            <router-link to="/office-protector-customer-interests">
               <v-btn color="#bf0000" class="px-sm-9 mt-2 mt-sm-4 float-left font-small-xs" dark>مشاهده بیشتر</v-btn>
-            </a>
+            </router-link>
           </v-col>
           <v-col cols="12" md="6">
             <v-row justify="center">
@@ -284,9 +284,9 @@
                       {{ item.text }}
                     </p>
                     <v-row justify="end">
-                      <a :href="item.link" class="text-decoration-none">
-                        <v-btn dark color="#bf0000" to="/jkjkj" class="py-0 mb-6 rounded-xl caption">مشاهده بیشتر</v-btn>
-                      </a>
+                      <router-link :to="item.link" class="text-decoration-none">
+                        <v-btn dark color="#bf0000" class="py-0 mb-6 rounded-xl caption">مشاهده بیشتر</v-btn>
+                      </router-link>
                     </v-row>
                   </div>
                 </v-card>
@@ -352,7 +352,7 @@
     </v-row>
   </div>
 </template>
-<style>
+<style scoped>
 .maintourImages {
   opacity: 0;
   transition: all 400ms;
@@ -381,12 +381,28 @@ import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
 const $ = require('jquery');
 
+
 export default {
   name: 'HomeView',
+  metaInfo: {
+    title: 'خدمات گردشگری آهوان',
+    meta: [
+      { name: 'description', content: '' },
+    ]
+  },
   components: {
     InputMain,
     QuestionAnswer,
     Slick
+  },
+  watch: {
+    showAlert() {
+      if (this.showAlert) {
+        setTimeout(() => {
+          this.showAlert = false
+        }, 5000);
+      }
+    },
   },
   data: () => ({
     selectedSection: {
@@ -424,38 +440,38 @@ export default {
       {
         image: require('../assets/image/magazine-turkiye.jpg'),
         title: 'جاذبه های استانبول',
-        text: 'تور نوروزی استانبول، به دلیل خدمات تفریحی‌ای که برای افراد به همراه داره، می‌تونه به شما در روند تجربه یک سفر متفاوت کمک کنه. تور استانبول از تمام شهرهای ایران، در میان تورهای پرطرفداری قرار می‌گیره که هزینه نسبتا مناسبی برای افراد...',
-        link: '/tour/Istanbul'
+        text: 'تور استانبول، به دلیل خدمات تفریحی‌ای که برای افراد به همراه داره، می‌تونه به شما در روند تجربه یک سفر متفاوت کمک کنه. تور استانبول از تمام شهرهای ایران، در میان تورهای پرطرفداری قرار می‌گیره که هزینه نسبتا مناسبی برای افراد...',
+        link: '/Istanbul'
       },
       {
         image: require('../assets/image/magazine-urope.jpg'),
         title: 'اروپا و جذابیت‌های آن',
-        text: 'سفر با تور نوروزی اروپا بدون شک یکی از زیباترین و بهترین تجربیات زندگی هر فرد می‌باشد. این قاره یکی از مقاصد زیبا برای سفر است که در سالهای اخیر به یکی از محبوب‌ترین مقاصد توریستی جهان تبدیل‌شده‌است. در بین تمامی مردم جهان...',
-        link: '/tour/Europe/'
+        text: 'سفر با تور اروپا بدون شک یکی از زیباترین و بهترین تجربیات زندگی هر فرد می‌باشد. این قاره یکی از مقاصد زیبا برای سفر است که در سالهای اخیر به یکی از محبوب‌ترین مقاصد توریستی جهان تبدیل‌شده‌است. در بین تمامی مردم جهان...',
+        link: '/Europe'
       },
       {
         image: require('../assets/image/magazine-dubai.jpg'),
         title: 'جاذبه های دبی',
         text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-        link: '/tour/Dubai/'
+        link: '/Dubai'
       },
       {
         image: require('../assets/image/magazine-thailand.jpg'),
-        title: 'تور تایلند 1402',
-        text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند 1402 از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-        link: '/tour/Thailand/'
+        title: 'تور تایلند',
+        text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
+        link: '/Thailand'
       },
       {
         image: require('../assets/image/magazine-dubai.jpg'),
         title: 'جاذبه های دبی',
         text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-        link: '/tour/Dubai/'
+        link: '/Dubai'
       },
       {
         image: require('../assets/image/magazine-thailand.jpg'),
-        title: 'تور تایلند 1402',
-        text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند 1402 از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-        link: '/tour/Thailand/'
+        title: 'تور تایلند',
+        text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
+        link: '/Thailand'
       },
       // {
       //   image: '/tour/Srilanka/',
@@ -474,9 +490,10 @@ export default {
     getWidth() {
       this.windowWidth = window.innerWidth
     },
+
+
   },
   created() {
-    document.title = 'خدمات گردشگری آهوان'
     this.getWidth();
     this.slickOptions = {
       slidesToShow: this.windowWidth > 1400 ? 3 : (this.windowWidth <= 1400 && this.windowWidth > 960) ? 3 : (this.windowWidth <= 960 && this.windowWidth > 599) ? 2 : 1,

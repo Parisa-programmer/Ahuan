@@ -1,11 +1,9 @@
 <template>
   <v-app id="app">
     <!-- header -->
-    <header-site />
+    <header-site style="z-index:10" />
     <!-- main -->
-    <v-main class=" mt-12 pt-12 red" style="min-height:80vh">
-      <router-link to="/Istanbul">hiiii</router-link>
-      
+    <v-main class=" mt-2" style="min-height:80vh">      
       <router-view />
     </v-main>
     <!-- footer -->

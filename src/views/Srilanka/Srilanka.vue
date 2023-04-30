@@ -12,7 +12,8 @@
     </v-row>
   </div>
 </template>
-<style></style> 
+
+
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 export default {
@@ -29,7 +30,7 @@ export default {
         date: '27 و 29 اسفند- 5 و 7 فروردین',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'مراسم سال نو + 15 دقیقه spa رایگان',
-        route: '/Srilanka/تور-سریلانکا-15روز',
+        route: '/SrilankaTour',
         download: '@/assets/image/tour/Srilanka-tour.jpg'
       },
     ]

@@ -86,12 +86,12 @@
               <h4 class="mt-2 mt-sm-3">روزهای پرواز: همه روزه</h4>
             </v-row>
             <v-row justify='center'>
-              <a :href="item.route" class="text-decoration-none mt-5">
+              <router-link :to="item.route" class="text-decoration-none mt-5">
                 <v-btn color="red" class="pr-5" :outlined="!item.AllDayFlight" dark>مشاهده جزئیات</v-btn>
-              </a>
+              </router-link>
             </v-row>
             <v-row v-if="item.download" justify='center'>
-              <a :href="download" class="text-decoration-none">
+              <a :href="item.download" download class="text-decoration-none">
                 <v-btn class="px-8 mt-2" color="red" dark>دانلود پکیج</v-btn>
               </a>
             </v-row>

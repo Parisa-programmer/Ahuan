@@ -14,7 +14,8 @@
     </v-row>
   </div>
 </template>
-<style></style> 
+
+
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 export default {
@@ -27,12 +28,23 @@ export default {
     cards: [
       {
         image: require('@/assets/image/tour/rus-1.jpg'),
-        title: 'مسکو (4 شب)',
+        title: 'مسکو (5 روز)',
         airline: 'ماهان',
         hotelStar: '4  و 5 ',
-        nights: 'شروع قیمت از 19.900.000 تومان',
-        route: '/Moscow/RUS-1401-Z-017',
-        download: '@/assets/image/پکیج مسکو.jpg'
+        nights: 'شروع قیمت از 22.700.000 تومان',
+        route: '/Moscow-5days',
+        download: '@/assets/image/پکیج مسکو.jpg',
+        date:'روز‌های پرواز: همه‌روزه'
+      },
+      {
+        image: require('@/assets/image/tour/rus-1.jpg'),
+        title: 'مسکو+سنت پترزبورگ (9 روز)',
+        airline: 'ماهان',
+        hotelStar: '4',
+        nights: 'شروع قیمت از 48.900.000 تومان',
+        route: '/Moscow-St.Petersburg-9days',
+        download: '@/assets/image/پکیج مسکو.jpg',
+        date:'تاریخ حرکت: 11 خرداد (تور گروهی)'
       },
     ]
   }),

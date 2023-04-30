@@ -5,8 +5,7 @@
         <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background9.jpg" alt="تور دبی">
         <div class="tourImageBackground"></div>
       </div>
-      <!-- <div class="mb-12 indexDiv main-div" style="z-index: 3">
-        <router-link :to="{name:'test-page',params:{slug:'125'}}">hiiii</router-link>
+      <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <div>
           <h1 class="white--text countryNmae px-12 d-inline-block">دبی _ 3 شب و 4 روز</h1>
         </div>
@@ -15,23 +14,23 @@
         </div>
         <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
           <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
-            <v-slide-item v-slot="{ activeTab }">
+            <v-slide-item >
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
             </v-slide-item>
-            <v-slide-item v-slot="{ activeTab }">
+            <v-slide-item >
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
             </v-slide-item>
-            <v-slide-item v-slot="{ activeTab }">
+            <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
             </v-slide-item>
-            <v-slide-item v-slot="{ active }">
+            <v-slide-item >
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
             </v-slide-item>
-            <v-slide-item v-slot="{ active }">
+            <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
             </v-slide-item>
@@ -45,7 +44,7 @@
                   <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;" :headers="pricesHeaderDubai"
                     hide-default-footer :items="pricesItemsDubai" :items-per-page="50"
                     class="tabelTourId rounded-lg even-odd-tabel ">
-                    <template v-slot:item.name="{ item }">
+                    <template v-slot:[`item.name`]="{ item }">
                       <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
 
 
@@ -129,7 +128,7 @@
           </div>
           <div class="widthAll" v-else-if="tab == 4">
             <v-row justify="center">
-              <div class="d-inline-block galeryImageParent" v-for="(item, i) in dubaiImages" :keys="i">
+              <div class="d-inline-block galeryImageParent" v-for="(item, i) in dubaiImages" :key="i">
                 <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i; imageDialog = true"
                   :src="item.src" :alt="item.title"></v-img>
               </div>
@@ -139,7 +138,7 @@
               <div class="relative">
 
                 <v-carousel v-model="imageNumber">
-                  <v-carousel-item v-for="(item, i) in dubaiImages" :keys="i">
+                  <v-carousel-item v-for="(item, i) in dubaiImages" :key="i">
                     <img :src="item.src" :alt="item.title">
                   </v-carousel-item>
                 </v-carousel>
@@ -149,7 +148,7 @@
             </v-dialog>
           </div>
         </v-row>
-        <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
+        <!-- <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
           <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us"
             style="font-family: Byekan !important;">
             جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
@@ -164,391 +163,390 @@
             style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
             <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a>
           </b>
-        </v-row>
-      </div> -->
+        </v-row> -->
+      </div>
     </v-row>
   </div>
 </template>
-<style>
-.hoverCard:hover {
-  box-shadow: 0 0 15px rgb(153, 153, 153);
-}
 
-.hoverCard .tourImage {
-  transition: all 500ms;
-}
-
-.hoverCard:hover .tourImage {
-  width: 105%;
-  height: 105%;
-}
-
-* {
-  letter-spacing: -0.7px !important;
-}
-
-.tourImageBackground {
-  position: absolute;
-  width: 100%;
-  height: 98.5%;
-  top: 0;
-  left: 0;
-  opacity: 1;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.55) 0,
-      rgba(0, 0, 0, 0.55) 1%,
-      transparent 56%,
-      transparent 74%);
-}
-
-.tourPageTitle h3,
-.tourPageTitle span {
-  color: #fff;
-  position: relative;
-  z-index: 1;
-}
-
-.tourPageTitle h3:hover {
-  color: rgb(44, 44, 44);
-  background: #fff;
-}
-
-.tourPageTitle h3:hover .lighter {
-  /* content: ""; */
-  /* position: absolute; */
-  /* height: 15px;
-      width: 67%; */
-  background: #ffeb3b !important;
-  /* top: 47%;
-      right: 16%;
-      z-index: -1; */
-}
-
-.tourPageTitle span {
-  color: rgb(44, 44, 44);
-}
-
-.v-slide-group__wrapper .v-slide-group__content {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-.tabTitles {
-  color: #fff;
-}
-
-.activeTab {
-  color: rgb(44, 44, 44) !important;
-  background: #fff;
-  z-index: 1;
-}
-
-.activeTab::before {
-  content: "";
-  position: absolute;
-  height: 15px;
-  width: 67%;
-  background: #eccfb275;
-  top: 47%;
-  right: 16%;
-  z-index: -1;
-}
-
-.countryNmae {
-  margin-right: -52px;
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
-  font-size: 62px;
-  font-weight: bold;
-}
-
-.tour-date {
-  margin-right: -52px;
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
-}
-
-.main-div {
-  margin-top: -300px;
-}
-
-.logo-tour-title {
-  height: 35px;
-}
-
-.see-more {
-  font-weight: normal;
-  font-size: small;
-  text-decoration: underline;
-}
-
-.even-odd-tabel tbody tr:nth-child(even) {
-  background-color: #e3c8af4b !important;
-}
-
-.even-odd-tabel th {
-  background-color: #e3c8afe0 !important;
-}
-
-.theme--light.v-data-table .v-data-footer,
-.v-application--is-ltr .v-data-footer__pagination {
-  direction: ltr !important;
-}
-
-.v-application--is-ltr .v-data-footer__select {
-  margin-left: 14px;
-  margin-right: auto;
-}
-
-.even-odd-tabel {
-  width: 100% !important;
-}
-
-.v-data-table,
-.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
-  border: 1px solid #9d9d9d;
-  font-weight: bold;
-}
-
-.galeryImageParent {
-  width: 24%;
-}
-
-.galeryImage {
-  position: relative;
-}
-
-.galeryImage::after {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  /* background-color: #0000006e; */
-  z-index: 2222;
-  top: 0;
-  opacity: 1;
-}
-
-.galeryImage:hover.galeryImage::after {
-  opacity: 0;
-}
-
-.galeryImage:hover {
-  box-shadow: 0 0 5px rgb(59, 59, 59);
-}
-
-.halfLi {
-  width: 49%
-}
-
-.even-odd-tabel td:nth-child(2) .bold {
-  font-size: 15px;
-  /* color: #bc8e5e !important;
-      text-shadow: 0 0 3px #ffd7ae; */
-}
-
-@media (min-width:960px) and (max-width:1263px) {
-  .main-div {
-    margin-top: -245px;
-  }
-
-  .countryNmae {
-    font-size: 46px;
-  }
-
-  .tourImageBackground {
-    height: 97.5%;
-  }
-}
-
-@media (min-width:600px) and (max-width:959px) {
-  .main-div {
-    margin-top: -205px;
-  }
-
-  .tourImageBackground {
-    height: 96.5%;
-  }
-
-  .countryNmae {
-    font-size: 40px;
-  }
-
-  .tour-date {
-    font-size: 16px;
-  }
-
-  .tabTitles {
-    font-size: 15px !important;
-  }
-
-  .tabelTour {
-    width: 80% !important
-  }
-
-  .text-tour {
-    font-size: 14px;
-  }
-
-  .tabel-tour-title {
-    font-size: 18px !important;
-  }
-
-  .text-tour-call-us {
-    font-size: 16px;
-  }
-
-  .galeryImageParent {
-    width: 45%;
-  }
-
-  .halfLi {
-    width: 100%
-  }
-
-  @media (max-width:774px) {
-    .main-div {
-      margin-top: -155px;
-    }
+<style scoped>
+    *{
+      letter-spacing: -0.7px !important;
+    } 
 
     .tourImageBackground {
-      height: 96.5%;
+      position: absolute;
+      width: 100%;
+      height: 98.5%;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.55) 0,
+        rgba(0, 0, 0, 0.55) 1%,
+        transparent 56%,
+        transparent 74%
+      );
+    }
+    
+    .tourPageTitle h3, .tourPageTitle span{
+      color: #fff;
+      position: relative;
+      z-index: 1;
     }
 
-    .countryNmae {
-      font-size: 24px;
-      margin-right: -35px;
-      padding-right: 35px !important;
+    .tourPageTitle h3:hover {
+      color: rgb(44, 44, 44);
+      background: #fff;
+    }
+    
+    .tourPageTitle h3:hover .lighter{
+      /* content: ""; */
+      /* position: absolute; */
+      /* height: 15px;
+      width: 67%; */
+      background:#ffeb3b !important;
+      /* top: 47%;
+      right: 16%;
+      z-index: -1; */
+    }
+    
+    .tourPageTitle span{
+      color: rgb(44, 44, 44);
+    }
+
+  
+
+    .tabTitles{
+      color: #fff;
+    }
+
+    .activeTab {
+      color: rgb(44, 44, 44) !important;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .activeTab::before {
+      content: "";
+      position: absolute;
+      height: 15px;
+      width: 67%;
+      background:#74c0f53d;
+      top: 47%;
+      right: 16%;
+      z-index: -1;
+    }
+
+    .countryNmae{
+      margin-right:-52px;
+      /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
+      font-size: 62px;
+      font-weight: bold;
     }
 
     .tour-date {
-      font-size: 12px;
-      margin-right: -35px;
-      padding-right: 35px !important;
+      margin-right:-52px;
+      /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
     }
 
-    .tabTitles {
-      font-size: 13px !important;
+    .main-div{
+      margin-top:-300px;
     }
-  }
-}
 
-@media (max-width:599px) {
-  .indexDiv {
-    width: 95% !important;
-  }
+    .logo-tour-title{
+      height: 35px;
+    }
 
-  .main-div {
-    margin-top: -170px;
-  }
+    .see-more{
+      font-weight: normal;
+      font-size: small;
+      text-decoration: underline;
+    }
 
-  .backgroundImageTour {
-    width: 200%;
-  }
+    .even-odd-tabel tbody tr:nth-child(even) {
+      background-color: #74c0f524 !important;
+    }
 
-  .countryNmae {
-    font-size: 26px;
-    margin-right: -35px;
-    padding-right: 35px !important;
-  }
+    .even-odd-tabel th {
+      background-color: #007cd77a !important;
+    }
 
-  .tour-date {
-    font-size: 14px;
-    margin-right: -35px;
-    padding-right: 35px !important;
-  }
+    .theme--light.v-data-table .v-data-footer,.v-application--is-ltr .v-data-footer__pagination{
+      direction: ltr !important;
+    }
 
-  .tabTitles {
-    font-size: 14px;
-    /* background: #fff; */
-    /* border: 1px solid #b37b63; */
-  }
+    .v-application--is-ltr .v-data-footer__select {
+      margin-left: 14px;
+      margin-right: auto;
+    }
 
-  .tabelTour {
-    width: 100% !important
-  }
+    .even-odd-tabel{
+      width: 100% !important;
+    }
 
-  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
-    min-height: 35px !important;
-  }
+    .v-data-table,.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+      border: 1px solid #050505;
+      font-weight: bold;
+    }
 
-  .v-application--is-ltr .v-data-table__mobile-row__cell {
-    text-align: center;
-  }
+    .galeryImageParent{
+      width: 24%;
+    }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
-    display: flex;
-    width: 100%;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
+    .galeryImage{
+      position: relative;
+    }
+    
+    .galeryImage::after{
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      /* background-color: #0000006e; */
+      z-index: 2222;
+      top: 0;
+      opacity: 1;
+    }
+    
+    .galeryImage:hover.galeryImage::after{
+      opacity: 0;
+    }
+    
+    .galeryImage:hover{
+      box-shadow: 0 0 5px rgb(59, 59, 59);
+    }
 
-  .tabelTour * {
-    font-size: 13px;
-  }
+    .halfLi{
+      width:49%
+    }
 
-  .text-tour {
-    font-size: 14px;
-  }
+    .even-odd-tabel td:nth-child(2) .bold{
+      font-size: 15px;
+      /* color: #0356a6 !important;
+      text-shadow: 0 0 3px #41b0ff; */
+    }
+    
+    @media (min-width:960px) and (max-width:1263px){
+      .main-div{
+        margin-top:-245px;
+      }
+      
+      .countryNmae{
+        font-size: 46px;
+      }
 
-  .tabel-tour-title {
-    font-size: 16px !important;
-  }
+      .tourImageBackground {
+        height: 97.5%;
+      }
+    }
+    
+    @media (min-width:600px) and (max-width:959px) {
+      .main-div{
+        margin-top:-205px;
+      }      
+      
+      .tourImageBackground {
+        height: 96.5%;
+      }
 
-  .text-tour-call-us {
-    font-size: 14px;
-  }
+      .countryNmae{
+        font-size: 40px;
+      }
 
-  .tourPageTitle h3,
-  .tourPageTitle span {
-    /* color:black !important */
-  }
+      .tour-date{
+        font-size: 16px;
+      }
 
-  .tourImageBackground {
-    height: 97.5%;
-  }
+      .tabTitles {
+        font-size: 15px !important;
+      }
 
-  .logo-tour-title {
-    height: 30px;
-  }
+      .tabelTour{
+        width:80% !important
+      }
+      
+      .text-tour{
+        font-size: 14px;
+      }
 
-  .tourPageTitle {
-    /* background-color: #fff; */
-  }
+      .tabel-tour-title {
+        font-size: 18px !important;
+      }
 
-  .tourPageTitle {
-    width: 500px;
-  }
+      .text-tour-call-us{
+        font-size: 16px ;
+      }
 
-  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
-    border: unset;
-  }
+      .galeryImageParent{
+        width: 45%;
+      }
 
-  .galeryImageParent {
-    width: 95%;
-  }
+      .halfLi{
+        width:100%
+      }
+      
+      @media (max-width:774px) {
+        .main-div{
+          margin-top:-155px;
+        }
 
-  .halfLi {
-    width: 100%
-  }
-}
-</style> 
+        .tourImageBackground {
+          height: 96.5%;
+        }
+
+        .countryNmae{
+          font-size: 24px;
+          margin-right: -35px;
+          padding-right: 35px!important;
+        }
+
+        .tour-date{
+          font-size: 12px;
+          margin-right: -35px;
+          padding-right: 35px!important;
+        }
+
+        .tabTitles {
+          font-size: 13px !important;
+        }
+      }
+    }
+
+    @media (max-width:599px) {
+      .indexDiv{
+        width: 95% !important;
+      }
+
+      .main-div{
+        margin-top:-170px;
+      }
+
+      .backgroundImageTour{
+        width: 200%;
+      }
+
+      .countryNmae{
+        font-size: 26px;
+        margin-right: -35px;
+        padding-right: 35px!important;
+      }
+
+      .tour-date{
+        font-size: 14px;
+        margin-right: -35px;
+        padding-right: 35px!important;
+      }
+
+      .tabTitles{
+        font-size: 14px;
+        /* background: #fff; */
+        /* border: 1px solid #b37b63; */
+      }
+      
+      .tabelTour{
+        width:100% !important
+      }
+      
+      .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row{
+        min-height: 35px !important;
+        justify-content: center;
+      }
+
+      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row{
+        display: inline-block;
+        width: 50%;
+        position: relative;
+      }
+
+      .v-application--is-ltr .v-data-table__mobile-row__cell{
+        text-align: center;
+      }
+      
+      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1){
+        display: flex;
+        width: 100%;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before{
+        content: '<-----------------------------------------------';
+        position: absolute;
+        width: 46%;
+        right: 80%;
+        text-align: right;
+        overflow: hidden;
+        white-space: nowrap;
+        direction: ltr;
+        display: flex;
+        justify-content: start;
+      }
+      
+      .tabelTour *{
+        font-size: 13px;
+      }
+
+      .text-tour{
+        font-size: 14px;
+      }
+
+      .tabel-tour-title {
+        font-size: 16px !important;
+      }
+      
+      .text-tour-call-us{
+        font-size: 14px ;
+      }
+
+      .tourPageTitle h3, .tourPageTitle span{
+        /* color:black !important */
+      }
+
+      .tourImageBackground {
+        height: 97.5%;
+      }
+
+      .logo-tour-title{
+        height: 30px;
+      }
+
+      .tourPageTitle{
+        /* background-color: #fff; */
+      }
+
+      .tourPageTitle {
+        width: 500px;
+      }
+      
+      .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+        border: unset;
+      }
+
+      .galeryImageParent{
+        width: 95%;
+      }
+
+      .halfLi{
+        width:100%
+      }
+
+    }
+  </style>
+
 <script>
 export default {
-  name: 'Dubai-3-night',
+  name: 'Dubai-3night',
+  metaInfo: {
+    meta: [
+      { name: 'description', content: "شرکت آهوان با بیش از 50 سال سابقه مجری مستقیم انواع تورهای دبی است. تورهای ارزان تا لوکس دبی به همراه لیست قیمت هتل‌ها از تهران و سایر شهرها" },
+    ]
+  },
   components: {
 
   },
   data: () => ({
-    activeTab: 0,
     tab: 0,
     pricesHeaderDubai: [
       // { text: '', sortable: false, value: 'image', align: 'center', },
@@ -588,7 +586,7 @@ export default {
   },
   created() {
     // console.log(store);
-    document.title = 'تورهای 1402 دبی'
+    document.title = 'تور 3 شب دبی|تور لحظه آخری دبی'
     let newObjectDate4 = [
       {
         نام: ' ROYAL TULIP ',

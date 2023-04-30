@@ -14,11 +14,17 @@
     </v-row>
   </div>
 </template>
-<style></style> 
+
+
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 export default {
   name: 'MoscowTour',
+  metaInfo: {
+    meta: [
+      { name: 'description', content: "تور تایلند یکی از محبوب ترین تورها در امسال خواهد بود. این کشور به دلیل جذابیت های خاص توریستی همواره مورد توجه توریست های ایرانی بوده است." }  
+    ]
+  },
   components: {
     MainTourCard
 
@@ -33,8 +39,8 @@ export default {
         hotelStar: ' 5 ',
         nights: '3 شب کوالالامپور + 5شب پوکت +',
         nights2: '2 شب بانکوک',
-        route: '/tour/Thailand-Malaysia/تور-ترکیبی-تایلند-مالزی',
-        download: '@/assets/image/tour/تایلند-مالزی.jpeg'
+        route: '/Thailand-Malaysia-10nights',
+        download: require('@/assets/image/tour/تایلند-مالزی.jpeg')
       },
     ]
   }),

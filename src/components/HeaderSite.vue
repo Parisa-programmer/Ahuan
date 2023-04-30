@@ -3,7 +3,9 @@
     <v-row class="header grey lighten-3 " justify="center">
       <div class="indexDiv py-1 py-sm-3">
         <v-row>
-          <a href="/"><img src="@/assets/image/logo-header.png" alt="صفحه اصلی" style="height:20px"></a>
+          <router-link to="/">
+            <img src="@/assets/image/logo-header.png" alt="صفحه اصلی" style="height:20px">
+          </router-link>
           <span class="headerSpan d-none d-sm-inline-block mt-2">رزرو آنلاین خدمات گردشگری</span>
           <v-spacer></v-spacer>
           <span class="ml-3 ml-sm-0 headerText grey--text text--darken-3">
@@ -27,10 +29,10 @@
           <v-skeleton-loader class="textLoader d-inline-block relative" type="chip" :loading="isLoading">
             <v-skeleton-loader class="textLoader d-inline-block show-sub-menu-parent" type="chip" :loading="isLoading">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
-                @click="activeLinkMenuHeader != 'تورنوروز' ? activeLinkMenuHeader = 'تورنوروز' : activeLinkMenuHeader = ''">تور
+                @click="activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = ''">تور
               </span>
-              <div class="absolute show-sub-menu" style="right:-70%;width:400px;">
-                <v-list nav dense style="height: 900px;">
+              <div class="absolute show-sub-menu" style="right:-70%;width:150px;">
+                <v-list nav dense style="">
                   <div v-for="(link, i) in links" :key="i" class="">
                     <v-list-item v-for="sublink in link.subLinks" :key="sublink.text"
                       class="cursorPointer titleHeader py-0">
@@ -41,12 +43,12 @@
                         :style="{ width: sublink.text == 'اروپا' ? '252px' : '150px' }">
                         <v-row v-for="(sub2, k) in sublink.sub2" :key="k" class="caption pa-2 submenu2"
                           style="font-family:Byekan !important;font-weight: bold;">
-                          <a class="relative" :href="sub2.link" style="text-decoration:none;color:rgb(39, 39, 39)">
+                          <router-link class="relative" :to="sub2.link" style="text-decoration:none;color:rgb(39, 39, 39)">
                             <img class="absolute" v-if="sub2.new" src="@/assets/image/newYearcard2.png" alt=""
                               style="left: -40px;top: -12px;height:33px;    transform: rotate(-38deg);">
                             <v-icon size="9" color="red" class="mx-2">mdi-circle</v-icon>
                             {{ sub2.text }}
-                          </a>
+                          </router-link>
                         </v-row>
                       </div>
                     </v-list-item>
@@ -65,20 +67,20 @@
             <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'مجله'">مجله گردشگری</span>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
-            <a href="/visa" class="text-decoration-none">
+            <router-link to="/Visa" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'ویزا'">خدمات ویزا</span>
-            </a>
+            </router-link>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
-            <a href="/office-protector-customer-interests" class="text-decoration-none">
+            <router-link to="/office-protector-customer-interests/" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'دفتر'">دفتر حافظ منافع
                 مشتری</span>
-            </a>
+            </router-link>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
-            <a href="/contact-us/" class="text-decoration-none">
+            <router-link to="/contact-us" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'اخبار'">تماس با ما</span>
-            </a>
+            </router-link>
           </v-skeleton-loader>
           <span></span>
           <v-skeleton-loader class="textLoader d-inline-block " :class="isLoading && 'mt-2'" type="chip"
@@ -103,73 +105,73 @@
           <v-navigation-drawer v-model="showMenuSmall" fixed right class="menue-list" temporary style="z-index:2;">
             <v-list nav dense>
               <v-list-item-group v-model="activePage" active-class="red--text text--accent-4 ">
-                  <a href="/flight" class="text-decoration-none">
-                    <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                      <v-icon class="ml-2">mdi-airplane</v-icon>
-                      <v-list-item-title>
-                        پرواز
-                      </v-list-item-title>
-                    </v-list-item>
-                  </a>
-                  <v-list-item
-                    @click="activeLinkMenuHeader != 'تورنوروز' ? activeLinkMenuHeader = 'تورنوروز' : activeLinkMenuHeader = ''"
-                    :style="{ background: activeLinkMenuHeader == 'تورنوروز' ? '#f6d2cb' : '' }" class="rounded-lg">
-                    <v-icon class="ml-2">mdi-account-group</v-icon>
-                    <v-list-item-title>تور</v-list-item-title>
-
-                  </v-list-item>
-                  <div v-if="activeLinkMenuHeader == 'تورنوروز'">
-                    <div v-for="(link, i) in links[0].subLinks" :key="i" class="my-2">
-                      <v-list-group :key="link.text" no-action :value="false">
-                        <template v-slot:activator>
-                          <v-list-item-title>
-                            <span>{{ link.text }}</span>
-                          </v-list-item-title>
-                        </template>
-                        <v-list-item v-for="sublink in link.sub2" :key="sublink.text" class="cursorPointer titleHeader">
-                          <a class="relative widthAll d-flex" :href="sublink.link"
-                            style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
-                            <v-list-item-title class="topMenu" style="font-weight: bold;">
-                              <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                              {{ sublink.text }}
-                              <img class="absolute" v-if="sublink.new" height="43" src="@/assets/image/newYearcard2.png"
-                                alt="" style="left: 32px;top: -5px;    transform: rotate(-38deg);">
-                            </v-list-item-title>
-                          </a>
-                        </v-list-item>
-                      </v-list-group>
-                    </div>
-                  </div>
-                  <a href="/iranhotels" class="text-decoration-none">
-                    <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                      <v-icon class="ml-2">mdi-hospital-building</v-icon>
-                      <v-list-item-title>هتل آهوان</v-list-item-title>
-                    </v-list-item>
-                  </a>
-
+                <a href="/flight" class="text-decoration-none">
                   <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                    <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon>
-                    <v-list-item-title>مجله گردشگری</v-list-item-title>
+                    <v-icon class="ml-2">mdi-airplane</v-icon>
+                    <v-list-item-title>
+                      پرواز
+                    </v-list-item-title>
                   </v-list-item>
-                  <a href="/visa" class="text-decoration-none">
-                    <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                      <v-icon class="ml-2">mdi-checkbook</v-icon>
-                      <v-list-item-title>خدمات ویزا</v-list-item-title>
-                    </v-list-item>
-                  </a>
-                  <a href="/office-protector-customer-interests/" class="text-decoration-none">
-                    <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                      <v-icon class="ml-2">mdi-book-open-page-variant</v-icon>
-                      <v-list-item-title>دفتر حافظ منافع مشتری</v-list-item-title>
-                    </v-list-item>
-                  </a>
-                  <a href="/contact-us/" class="text-decoration-none">
-                    <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
-                      <v-icon class="ml-2">mdi-newspaper-variant-outline</v-icon>
-                      <v-list-item-title>تماس با ما</v-list-item-title>
-                    </v-list-item>
-                  </a>
-                </v-list-item-group>
+                </a>
+                <v-list-item
+                  @click="activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = ''"
+                  :style="{ background: activeLinkMenuHeader == 'تور' ? '#f6d2cb' : '' }" class="rounded-lg">
+                  <v-icon class="ml-2">mdi-account-group</v-icon>
+                  <v-list-item-title>تور</v-list-item-title>
+
+                </v-list-item>
+                <div v-if="activeLinkMenuHeader == 'تور'">
+                  <div v-for="(link, i) in links[0].subLinks" :key="i" class="my-2">
+                    <v-list-group :key="link.text" no-action :value="false">
+                      <template v-slot:activator>
+                        <v-list-item-title>
+                          <span>{{ link.text }}</span>
+                        </v-list-item-title>
+                      </template>
+                      <v-list-item v-for="sublink in link.sub2" :key="sublink.text" class="cursorPointer titleHeader">
+                        <a class="relative widthAll d-flex" :href="sublink.link"
+                          style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
+                          <v-list-item-title class="topMenu" style="font-weight: bold;">
+                            <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
+                            {{ sublink.text }}
+                            <img class="absolute" v-if="sublink.new" height="43" src="@/assets/image/newYearcard2.png"
+                              alt="" style="left: 32px;top: -5px;    transform: rotate(-38deg);">
+                          </v-list-item-title>
+                        </a>
+                      </v-list-item>
+                    </v-list-group>
+                  </div>
+                </div>
+                <a href="/iranhotels" class="text-decoration-none">
+                  <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
+                    <v-icon class="ml-2">mdi-hospital-building</v-icon>
+                    <v-list-item-title>هتل آهوان</v-list-item-title>
+                  </v-list-item>
+                </a>
+
+                <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
+                  <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon>
+                  <v-list-item-title>مجله گردشگری</v-list-item-title>
+                </v-list-item>
+                <router-link to="/Visa" class="text-decoration-none">
+                  <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
+                    <v-icon class="ml-2">mdi-checkbook</v-icon>
+                    <v-list-item-title>خدمات ویزا</v-list-item-title>
+                  </v-list-item>
+                </router-link>
+                <router-link to="/office-protector-customer-interests/" class="text-decoration-none">
+                  <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
+                    <v-icon class="ml-2">mdi-book-open-page-variant</v-icon>
+                    <v-list-item-title>دفتر حافظ منافع مشتری</v-list-item-title>
+                  </v-list-item>
+                </router-link>
+                <router-link to="/contact-us" class="text-decoration-none">
+                  <v-list-item @click="showMenuSmall = false; activeLinkMenuHeader = ''">
+                    <v-icon class="ml-2">mdi-newspaper-variant-outline</v-icon>
+                    <v-list-item-title>تماس با ما</v-list-item-title>
+                  </v-list-item>
+                </router-link>
+              </v-list-item-group>
             </v-list>
           </v-navigation-drawer>
           <v-spacer></v-spacer>
@@ -372,47 +374,51 @@ export default {
   data: () => ({
     links: [
       {
-        text: 'تور نوروز 1402',
+        text: 'تور',
         subLinks: [
           {
             text: 'اروپا',
             active: false,
             sub2: [
               {
-                text: 'فرانسه و ترکیه(9 روز)',
-                link: '/tour/Europe/تور-ترکیه-فرانسه/'
+                text: 'فرانسه و امارات(9روز)',
+                link: '/France-UAE-9days'
               },
               {
-                text: 'فرانسه-ایتالیا-ترکیه(11روز)',
-                link: '/tour/Europe/تور-فرانسه-ایتالیا-ترکیه/'
+                text: 'فرانسه - اسپانیا و امارات(11روز)',
+                link: '/France-Spain-UAE-11days'
               },
               {
-                text: 'فرانسه - اسپانیا - ایتالیا - ترکیه(16روز)',
-                link: '/tour/Europe/تور-فرانسه-اسپانیا-ایتالیا-ترکیه/'
+                text: 'سوئیس - فرانسه و امارات(11روز)',
+                link: '/Switzerland-France-UAE-11days'
               },
               {
-                text: 'اسپانیا - سوئیس - ترکیه(12روز)',
-                link: '/tour/Europe/تور-اسپانیا-سوئیس-ترکیه/'
+                text: 'فرانسه-بلژیک-هلند و امارات(12روز)',
+                link: '/France-Belgium-Netherlands-UAE-12days'
               },
               {
-                text: 'اسپانیا - ترکیه(13روز)',
-                link: '/tour/Europe/تور-اسپانیا-ترکیه/'
+                text: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
+                link: '/France-Italy-Spain-UAE-14days'
               },
               {
-                text: 'سوئیس - ترکیه(11 روز)',
-                link: '/tour/Europe/تور-سوئیس-ترکیه/'
+                text: 'سوئیس - ایتالیا و امارات(10روز)',
+                link: '/Switzerland-Italy-UAE-10days'
               },
               {
-                text: 'اسپانیا - فرانسه - ترکیه(13روز)',
-                link: '/tour/Europe/تور-اسپانیا-فرانسه-ترکیه/'
+                text: 'اسپانیا - ترکیه(11روز)',
+                link: '/Spain-Turkiye-11days'
+              },
+              {
+                text: 'اسپانیا - ایتالیا - ترکیه(13روز)',
+                link: '/Spain-Italy-Turkey-13days'
+              },
+              {
+                text: 'گرندتور سوئیس(10روز)',
+                link: '/Swiss-grandtour-10days'
               },
               {
                 text: 'سوئیس - ترکیه(8روز)',
-                link: '/tour/Europe/تور-سوئیس/'
-              },
-              {
-                text: 'دور اروپا(23 روز)',
-                link: '/tour/Europe/تور-دور-اروپا/'
+                link: '/Switzerland-Turkiye-8days'
               },
             ]
           },
@@ -422,7 +428,7 @@ export default {
             sub2: [
               {
                 text: '14 شب و 15 روز',
-                link: '/tour/Srilanka/تور-سریلانکا-15روز/'
+                link: '/SrilankaTour'
               },
             ]
           },
@@ -431,8 +437,12 @@ export default {
             active: false,
             sub2: [
               {
-                text: '4 شب و 5 روز',
-                link: '/tour/Moscow/RUS-1401-Z-017/'
+                text: 'مسکو',
+                link: '/Moscow-5days'
+              },
+              {
+                text: 'مسکو+سنت پترزبورگ',
+                link: '/Moscow-St.Petersburg-9days'
               },
             ]
           },
@@ -441,8 +451,8 @@ export default {
             active: false,
             sub2: [
               {
-                text: '4 شب و 5 روز',
-                link: '/tour/Thailand/thai-1401-n19/'
+                text: 'بانکوک - پاتایا - پوکت',
+                link: '/ThailandTour'
               },
             ]
           },
@@ -451,8 +461,8 @@ export default {
             active: false,
             sub2: [
               {
-                text: '11 شب',
-                link: ''
+                text: 'کوالالامپور - پوکت - بانکوک',
+                link: '/Thailand-Malaysia-10nights'
               },
             ]
           },
@@ -461,31 +471,16 @@ export default {
             active: false,
             sub2: [
               {
-                text: '5 شب و 6 روز',
-                link: '/tour/Istanbul/تور-5-شب-ویژه-نوروز/',
-                new: true,
-              },
-              {
-                text: '6 شب و 7 روز',
-                link: '/tour/Istanbul/تور-6-شب-ویژه-نوروز/',
-                new: true,
-              },
-              {
-                text: '7 شب و 8 روز',
-                link: '/tour/Istanbul/تور-7-شب-ویژه-نوروز/',
-                new: true,
-              },
-              {
                 text: '3 شب و 4 روز',
-                link: '/tour/Istanbul/003-4/',
+                link: '/istanbul-3night',
               },
               {
                 text: '4 شب و 5 روز',
-                link: '/tour/Istanbul/004-5/',
+                link: '/istanbul-4night',
               },
               {
                 text: '5 شب و 6 روز',
-                link: '/tour/Istanbul/005-6/',
+                link: '/istanbul-5night',
               },
             ]
           },
@@ -494,21 +489,16 @@ export default {
             active: false,
             sub2: [
               {
-                text: '5 شب و 6 روز',
-                link: '/tour/Dubai/تور-5-شب-ویژه-نوروز/',
-                new: true,
-              },
-              {
                 text: '3 شب و 4 روز',
-                link: '/tour/Dubai/تور-3-شب-دبی/'
+                link: '/dubai-3night'
               },
               {
                 text: '4 شب و 5 روز',
-                link: '/tour/Dubai/تور-4-شب-دبی/'
+                link: '/dubai-4night'
               },
               {
                 text: '5 شب و 6 روز',
-                link: '/tour/Dubai/تور-5-شب-دبی/'
+                link: '/dubai-5night'
               },
             ]
           },
@@ -780,7 +770,7 @@ export default {
       }
     },
     logOut() {
-      window.location.href = 'https://ahuan.ir/profile'
+      window.location.href = '/profile'
       // var self = this
       // axios.put('https://ahuan.ir/api/login')
       //   .then(function (response) {
