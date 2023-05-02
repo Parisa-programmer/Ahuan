@@ -13,6 +13,22 @@
   </div>
 </template>
 
+<style scoped>
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+</style> 
+
 
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
@@ -31,7 +47,7 @@ export default {
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'مراسم سال نو + 15 دقیقه spa رایگان',
         route: '/SrilankaTour',
-        download: '@/assets/image/tour/Srilanka-tour.jpg'
+        download: require('@/assets/image/tour/Srilanka-tour.jpg')
       },
     ]
   }),
@@ -39,6 +55,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     document.title = 'تورهای 1402 سریلانکا'
 
   }

@@ -13,7 +13,7 @@
 
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 * {
@@ -97,6 +97,11 @@ body {
 * {
   direction: rtl !important;
   color: black;
+}
+
+
+.vpd-header *{
+  color:#fff
 }
 
 .ltr {
@@ -401,8 +406,12 @@ input::-webkit-inner-spin-button {
   left: 0;
   min-width: 280px;
   background: #fff;
+}
+
+.vpd-main * {
   display: none;
 }
+
 
 .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
   border-color: transparent !important;
@@ -1023,6 +1032,11 @@ input::-webkit-inner-spin-button {
 
 .show-sub-menu-parent:hover .show-sub-menu{
   display: block;
+}
+
+.v-application .primary--text {
+  color: #6e6e6e !important;
+  caret-color: #6e6e6e !important;
 }
 
 @media (min-width:1601px) and (max-width:1800px) {

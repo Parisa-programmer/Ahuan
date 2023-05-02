@@ -76,6 +76,7 @@
       transparent 74%);
 }
 </style> 
+
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 export default {
@@ -124,6 +125,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     document.title = 'تورهای 1402 دبی'
 
   }

@@ -14,7 +14,7 @@
               حائز شرایط کشور متبوع برای شما ویزا صادر می‌کند.
               در این صفحه وبسایت ، ما شما را با مراحل دریافت وقت از سفارت بصورت کامل آشنا می‌کنیم.
             </p>
-            <router-link to="/Visline" class="text-decoration-none">
+            <router-link to="/visline" class="text-decoration-none">
               <v-btn dark class="px-12 mt-lg-6 bold" color="#bf0000">سنجش شانس اخذ ویزا</v-btn>
             </router-link>
           </div>
@@ -245,6 +245,7 @@ export default {
   },
   created() {
     document.title = 'وقت سفارت'
+    window.scrollTo(0, 0);
 
   }
 }

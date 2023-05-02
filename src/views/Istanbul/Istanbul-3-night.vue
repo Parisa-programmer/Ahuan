@@ -599,6 +599,7 @@ export default {
 
   },
   created() {
+  window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور 3 شب استانبول|تور لحظه آخری استانبول'
     let newObjectDate = [

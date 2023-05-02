@@ -86,6 +86,23 @@
   </div>
 </template>
  
+<style scoped>
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+</style> 
+
+
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
 import axios from 'axios'
@@ -112,8 +129,8 @@ export default {
         hotelStar: '4 و 5',
         nights: '6 شب پاریس + 2 شب دبی',
         route: '/France-UAE-9days',
-
-        download: process.env.BASE_URL + 'فرانسه-امارات.pdf'
+        download:'/pdf/فرانسه-امارات.pdf'
+        // download:'/pdf/فرانسه-امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-002.jpg'),
@@ -124,7 +141,7 @@ export default {
         nights: '4 شب پاریس + 4 شب بارسلون',
         nights2: '+ 2 شب دبی',
         route: '/France-Spain-UAE-11days',
-        download: process.env.BASE_URL + 'فرانسه - اسپانیا - امارات.pdf'
+        download:'/pdf/فرانسه - اسپانیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-003.jpg'),
@@ -135,7 +152,7 @@ export default {
         nights: '4 شب زوریخ-لوسرن + 4 شب پاریس',
         nights2: '+ 2 شب دبی',
         route: '/Switzerland-France-UAE-11days',
-        download: process.env.BASE_URL + 'سوئیس - فرانسه - امارات.pdf'
+        download:'/pdf/سوئیس - فرانسه - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-004.jpg'),
@@ -146,7 +163,7 @@ export default {
         nights: '4 شب پاریس + 2 شب بروکسل',
         nights2: '+ 3 شب آمستردام + 2 شب دبی',
         route: '/France-Belgium-Netherlands-UAE-12days',
-        download: process.env.BASE_URL +  'فرانسه - بلژیک - هلند - امارات.pdf'
+        download: '/pdf/فرانسه - بلژیک - هلند - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-005.jpg'),
@@ -157,7 +174,7 @@ export default {
         nights: '4 شب پاریس + 4 شب رم',
         nights2: '+ 3 شب بارسلون + 2 شب دبی',
         route: '/France-Italy-Spain-UAE-14days',
-        download:  process.env.BASE_URL + 'فرانسه - ایتالیا - اسپانیا - امارات.pdf'
+        download: '/pdf/فرانسه - ایتالیا - اسپانیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-007.jpg'),
@@ -168,7 +185,7 @@ export default {
         nights: '3 شب زوریخ-لوسرن + 2 شب لوگانو',
         nights2: '+ 2 شب میلان-ونیز + 2 شب دبی',
         route: '/Switzerland-Italy-UAE-10days',
-        download: process.env.BASE_URL +  'سوئیس - ایتالیا - امارات.pdf'
+        download: '/pdf/سوئیس - ایتالیا - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-006.jpg'),
@@ -179,7 +196,7 @@ export default {
         nights: '2 شب مادرید + 2 شب والنسیا',
         nights2: '+ 4 شب بارسلون + 2 شب استانبول',
         route: '/Spain-Turkiye-11days',
-        download:  process.env.BASE_URL + 'اسپانیا - ترکیه.pdf'
+        download: '/pdf/اسپانیا - ترکیه.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-008.jpg'),
@@ -190,7 +207,7 @@ export default {
         nights: '5 شب بارسلون + 2 شب رم + 1 شب فلورانس',
         nights2: '+ 2 شب ونیز + 2 شب استانبول',
         route: '/Spain-Italy-Turkey-13days',
-        download:  process.env.BASE_URL + 'اسپانیا - ایتالیا - ترکیه.pdf'
+        download: '/pdf/اسپانیا - ایتالیا - ترکیه.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-009.jpg'),
@@ -202,7 +219,7 @@ export default {
         nights2: '1شب زرمات + 1شب سن موریس + 1شب لوگانو +',
         nights3: '1شب لوسرن + 1شب زوریخ + 2شب استانبول',
         route: '/Swiss-grandtour-10days',
-        download:  process.env.BASE_URL + 'گرندتور سوئیس.pdf'
+        download: '/pdf/گرندتور سوئیس.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-002.jpg'),
@@ -212,7 +229,7 @@ export default {
         hotelStar: '4  و 5 ',
         nights: '5 شب زوریخ-لوسرن + 2شب استانبول',
         route: '/Switzerland-Turkiye-8days',
-        download:  process.env.BASE_URL + 'سوئیس - ترکیه.pdf'
+        download: '/pdf/سوئیس - ترکیه.pdf'
       },
     ]
   }),
@@ -220,6 +237,7 @@ export default {
   
   },
   created() {
+    window.scrollTo(0, 0);
     document.title = 'تورهای 1402 اروپا'
 
   }

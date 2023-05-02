@@ -93,7 +93,7 @@
                         :search-input.sync="originSearchInput" :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'"
                         class="font-small-xs hideArrow headerCityes"
                         :class="originCity && originCity.length ? 'pt-2' : 'pt-0'" prepend-inner-icon="mdi-map-marker"
-                        @click="hidePeaple" @change="changeHeaderInput('originCity')">
+                        @click="viiblePeaple = false" @change="changeHeaderInput('originCity')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -110,13 +110,13 @@
                         :menu-props="{ closeOnClick: true, }" :rules="emptyRules2" class="font-small-xs hideArrow"
                         :search-input.sync="destinationSearchInput"
                         :class="destinationInternal && destinationInternal.length ? 'pt-2' : 'pt-0'"
-                        :items="selectedSection.title == 'هتل' ? hotels : selectedSection.title == 'آهوان' ? hotels : (external ? otherCityesOrigin2 : persianCityes2)"
-                        :label="selectedSection.title == 'هتل' ? 'نام هتل' : selectedSection.title == 'آهوان' ? 'نام هتل' : byReturn == 3 ? 'مقصد اول' : 'مقصد'"
-                        prepend-inner-icon="mdi-map-marker" append-inner-icon="mdi-map-marker" @click="hidePeaple"
-                        @change="changeHeaderInput('destinationInternal')">
+                        :items="selectedSection.title == 'هتل' ? persianCityes2 : selectedSection.title == 'آهوان' ? hotels : (external ? otherCityesOrigin2 : persianCityes2)"
+                        :label="selectedSection.title == 'هتل' ? 'نام شهر' : selectedSection.title == 'آهوان' ? 'نام هتل' : byReturn == 3 ? 'مقصد اول' : 'مقصد'"
+                        prepend-inner-icon="mdi-map-marker" append-inner-icon="mdi-map-marker"
+                        @click="viiblePeaple = false" @change="changeHeaderInput('destinationInternal')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">
-                            {{ selectedSection.title == 'هتل' ? 'هتل' : selectedSection.title == 'آهوان' ? 'هتل' :
+                            {{ selectedSection.title == 'هتل' ? 'شهر' : selectedSection.title == 'آهوان' ? 'هتل' :
                               byReturn
                                 == 3 ? 'شهر' : 'شهر' }}
                             مورد نظر یافت نشد!
@@ -133,16 +133,12 @@
                   <div
                     class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
                     style="background-color: #f5f5f5;border-radius: 5px;">
-
-
-                    <!-- <input id="my-custom-editable-input" type="text" placeholder="YYYY/MM/DD" /> -->
-
-                    <!-- <date-picker v-model="date" :editable="true" format="YYYY-MM-DD"
-                      display-format="jYYYY/jMM/jDD" custom-input="#my-custom-editable-input" @close="" /> -->
-                    <date-picker :show="show" ref="date1" format="YYYY-MM-DD" clearable v-model="date1" locale="fa,en"
-                      :locale-config="localeConfig" popover="right" auto-submit :min="minDate"
+                    <date-picker  :show="show" ref="date1" color="#e91e63" format="YYYY-MM-DD" clearable: true
+                      v-model="date1" locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit
+                      :min="minDate"
                       :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
-                      style="opacity:0" @close="show = false; changeDate1()" />
+                      style=""  @close="show = false; changeDate1()"
+                      @open=" viiblePeaple = false " />
                     <div @click=" show = show == true ? false : true "
                       class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
                       style="z-index:22;padding: 10px 4px;color:#424242;top:0">
@@ -157,11 +153,12 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <div class="relative">
-                    <v-text-field readOnly v-model=" allPeaples " prepend-inner-icon="mdi-account" @click=" showPeaple() "
+                    <v-text-field readOnly v-model=" allPeaples " prepend-inner-icon="mdi-account"
+                      @click=" viiblePeaple = !viiblePeaple "
                       class="font-small-xs form-control headerBoxFields hideEventPeaple darkInput"></v-text-field>
-                    <div id="showPeaple" class="allPeaplesAfter rounded-lg hideOver widthAll absolute white"
+                    <div v-if=" viiblePeaple " class="allPeaplesAfter rounded-lg hideOver widthAll absolute white"
                       style="z-index: 3;top: 40px;">
-                      <div v-for="(   room, i   ) in     headerRooms    " :key=" i " class="my-3">
+                      <div v-for="(      room, i      ) in        headerRooms       " :key=" i " class="my-3">
                         <v-row align="center"
                           v-if=" selectedSection.title != 'پرواز' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار' && selectedSection.title != 'بیمه' ">
                           <v-col>
@@ -243,7 +240,8 @@
                       </div>
                       <v-divider></v-divider>
                       <div class="pa-3">
-                        <v-btn @click=" hidePeaple() " class="widthAll" color="red" dark>تایید - {{ allPeaples }}</v-btn>
+                        <v-btn @click=" viiblePeaple = false " class="widthAll" color="red" dark>تایید - {{ allPeaples
+                          }}</v-btn>
                       </div>
                     </div>
                   </div>
@@ -271,7 +269,7 @@
                         :search-input.sync=" originSearchInput2 " label="مبدا دوم"
                         class="font-small-xs hideArrow headerCityes"
                         :class=" allFlights[0].originCity && allFlights[0].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('originCity0') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -289,7 +287,7 @@
                         :search-input.sync=" destinationSearchInput2 "
                         :class=" allFlights[0].destinationInternal && allFlights[0].destinationInternal.length ? 'pt-2' : 'pt-0' "
                         :items=" otherCityesOrigin4 " :rules=" byReturn == 3 ? emptyRules2 : [] " label="مقصد دوم"
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('destinationInternal0') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -302,6 +300,22 @@
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
+                  <!-- <div
+                    class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
+                    style="background-color: #f5f5f5;border-radius: 5px;">
+                    <date-picker :show="show" ref="date1" format="YYYY-MM-DD" clearable v-model="date1" locale="fa,en"
+                      :locale-config="localeConfig" popover="right" auto-submit :min="minDate"
+                      :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
+                      style="opacity:0" @close="show = false; changeDate1()" />
+                    <div @click=" show = show == true ? false : true "
+                      class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
+                      style="z-index:22;padding: 10px 4px;color:#424242;top:0">
+                      <v-icon class="showPopup" style="color:#424242;">
+                        mdi-calendar-month
+                      </v-icon>
+                      {{ (date1 && date1.length) ? selectedDate : 'انتخاب تاریخ' }}
+                    </div>
+                  </div> -->
                   <div class="input-group relative font-small-xs form-control headerBoxFields grey rounded-xl"
                     style="background-color: #f5f5f5;border-radius: 10px;">
                     <input type="text" ref="dtp2" value="" data-name="dtp2-text"
@@ -343,7 +357,7 @@
                         :search-input.sync=" originSearchInput3 " label="مبدا سوم"
                         class="font-small-xs hideArrow headerCityes"
                         :class=" allFlights[1].originCity && allFlights[1].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('originCity1') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -362,7 +376,7 @@
                         :class=" allFlights[1].destinationInternal && allFlights[1].destinationInternal.length ? 'pt-2' : 'pt-0' "
                         :items=" otherCityesOrigin6 "
                         :rules=" (byReturn == 3 && flightCityes.length > 1) ? emptyRules2 : [] " label="مقصد سوم"
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('destinationInternal1') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -416,7 +430,7 @@
                         :search-input.sync=" originSearchInput4 " label="مبدا چهارم"
                         class="font-small-xs hideArrow headerCityes"
                         :class=" allFlights[2].originCity && allFlights[2].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('originCity2') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -435,7 +449,7 @@
                         :class=" allFlights[2].destinationInternal && allFlights[2].destinationInternal.length ? 'pt-2' : 'pt-0' "
                         :items=" otherCityesOrigin8 "
                         :rules=" (byReturn == 3 && flightCityes.length > 2) ? emptyRules2 : [] " label="مقصد چهارم"
-                        prepend-inner-icon="mdi-map-marker" @click=" hidePeaple "
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
                         @change=" changeHeaderInput('destinationInternal2') ">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
@@ -522,7 +536,6 @@ export default {
       this.originCity = ''
       this.destinationInternal = '';
       // this.byReturn = 1
-      // this.hidePeaple()
       this.date1 = ''
       if (this.external) {
         // 
@@ -532,7 +545,8 @@ export default {
     selectedDate() {
       if (this.date1.length) {
         $('.showPopup').css("color", "#424242");
-        $('#showPeaple').show()
+        this.viiblePeaple = true
+
       } else {
         $('.showPopup').css("color", "red");
       }
@@ -733,7 +747,7 @@ export default {
     },
     destinationSearchInput() {
       var self = this
-      if (self.destinationSearchInput && (self.selectedSection.title != 'هتل' && self.selectedSection.title != 'آهوان')) {
+      if (self.destinationSearchInput && (self.selectedSection.title != 'آهوان')) {
         $('.v-select-list').removeClass("sugestCity")
         if (self.external) {
           axios.get('https://ahuan.ir/api/IntAirport?airportCode=' + self.destinationSearchInput)
@@ -769,7 +783,7 @@ export default {
         } else {
           this.persianCityes2 = this.AllpersianCityes
         }
-      } else if (self.selectedSection.title != 'هتل' && self.selectedSection.title != 'آهوان') {
+      } else if (self.selectedSection.title != 'آهوان') {
         $('.v-select-list').addClass("sugestCity")
         self.persianCityes2 = [
           { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
@@ -907,11 +921,12 @@ export default {
     },
   },
   data: () => ({
+    viiblePeaple: false,
     selectedRooms: 1,
     showAlert: false,
     alertType: 'error',
     alertText: '',
-    date1: '',
+    date1: null,
     show: false,
     showDate1: false,
     allSections: [
@@ -953,7 +968,7 @@ export default {
     ],
     selectedSection: {
       icon: 'mdi-airplane',
-      title: 'پرواز',
+      title: 'هتل',
       active: true,
     },
     showSection: true,
@@ -1108,6 +1123,9 @@ export default {
   }),
   methods: {
     changeActiveSection(index) {
+      this.viiblePeaple = false
+      this.$refs.headerInputForm.resetValidation()
+      $('.showPopup , .showPopup2 , .showPopup3 , .showPopup4').css("color", '#424242')
       this.showSection = this.allSections[index].active && this.showSection ? false : true
       this.allSections = this.allSections.map((x) => {
         return {
@@ -1131,10 +1149,9 @@ export default {
       this.$refs.date1.setDate(null)
       this.external = false
       this.changeRoomValue()
-      this.hidePeaple()
+
     },
     changeDate1() {
-      // this.showPeaple()
       let date = this.$refs.date1.value
       let variabel = ''
       let options = { day: 'numeric', month: 'long' };
@@ -1198,9 +1215,11 @@ export default {
         //   },
         // ]
       }
+      this.date1 = ''
+      // this.$refs.date1.setDate(null)
     },
     exchangeCity(index) {
-      this.hidePeaple()
+      this.viiblePeaple = false
       if (isNaN(index)) {
         if (this.external) {
           let cityes = this.AllotherCityes
@@ -1305,7 +1324,7 @@ export default {
     },
     searchInHeaderBox() {
       var self = this
-      this.hidePeaple()
+      this.viiblePeaple = false
       if (!this.$refs.headerInputForm.validate()
         || !this.selectedDate.length
         || (self.byReturn == 3 && (!self.allFlights[0].date || self.flightCityes.length > 1 && !self.allFlights[1].date || self.flightCityes.length > 2 && !self.allFlights[2].date))
@@ -1492,11 +1511,8 @@ export default {
         dateMoment.locale('en').format('dddd') === 'Friday'
       )
     },
-    hidePeaple() {
-      $('#showPeaple').hide()
-    },
     showPeaple() {
-      $('#showPeaple').toggle()
+      this.viiblePeaple = !this.viiblePeaple
     },
     jquery() {
       //   // jquery codes
@@ -1974,17 +1990,27 @@ export default {
       //   this.showDate1 = true
       this.$refs.date1.focus()
       // }
-    }
+    },
   },
   created() {
+    window.scrollTo(0, 0);
     this.getWidth();
-    // this.getCityesExternal();
+    this.getCityesExternal();
 
     this.minDate = (
       new Date().getFullYear() + '-' +
       (new Date().getMonth() + 1) + '-' +
       new Date().getDate()
     )
+
+    setTimeout(() => {
+      this.selectedSection= {
+      icon: 'mdi-airplane',
+      title: 'پرواز',
+      active: true,
+    }
+    }, 1000);
+    
 
 
   },

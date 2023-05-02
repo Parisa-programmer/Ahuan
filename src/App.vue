@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <!-- header -->
-    <header-site style="z-index:10" />
+    <header-site style="z-index:100" />
     <!-- main -->
     <v-main class=" mt-2" style="min-height:80vh">      
       <router-view />

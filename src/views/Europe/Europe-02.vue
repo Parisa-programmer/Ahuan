@@ -361,7 +361,7 @@
                 <v-row justify="center" class="heightAll mb-9 align-center">
                   <v-col cols="12" sm="6" class="pa-0">
                     <v-row class="justify-center justify-sm-end">
-                      <a href="@/assets/image/tour/Documents-the-France-Embassy.jpg" download
+                      <a :href="require('@/assets/image/tour/Documents-the-France-Embassy.jpg')" download
                         class="text-decoration-none">
                         <v-btn color="red " outlined dark>دانلود مدارک مورد نیاز سفارت فرانسه</v-btn>
                       </a>
@@ -369,7 +369,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" class="pa-0">
                     <v-row class="justify-center justify-sm-start">
-                      <a href="@/assets/image/tour/Documents-the-Spain-Embassy.jpg" download
+                      <a :href="require('@/assets/image/tour/Documents-the-Spain-Embassy.jpg')" download
                         class="text-decoration-none mr-sm-2">
                         <v-btn color="red " outlined dark>دانلود مدارک مورد نیاز سفارت اسپانیا</v-btn>
                       </a>
@@ -901,6 +901,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور ترکیبی فرانسه و امارات'
     let newObjectDate = [

@@ -749,6 +749,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور ترکیبی اسپانیا-ایتالیا-ترکیه'
     let newObjectDate = [

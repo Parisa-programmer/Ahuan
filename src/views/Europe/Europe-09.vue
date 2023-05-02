@@ -817,6 +817,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'گرندتور سوئیس'
     let newObjectDate = [

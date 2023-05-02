@@ -14,6 +14,11 @@ const routes = [
     component: () => import('../views/HomeView.vue')
   },
   {
+    path: '/tour',
+    name: 'tour-page',
+    component: () => import('../views/TourPage.vue')
+  },
+  {
     path: '/Istanbul',
     name: 'istanbul',
     component: () => import('../views/Istanbul/Istanbul.vue')
@@ -159,6 +164,11 @@ const routes = [
     component: () => import('../views/contact-us.vue')
   },
   {
+    path: '/customer-club',
+    name: 'customer-club',
+    component: () => import('../views/CustomerClub.vue')
+  },
+  {
     path: '/Visa',
     name: 'Visa-page',
     component: () => import('../views/Visa-page/Visa-page.vue')
@@ -208,10 +218,15 @@ const routes = [
     name: 'office-protector',
     component: () => import('../views/OfficeProtector.vue')
   },
+  // {
+  //   path: '/tour/:id',
+  //   name: 'tour-slug',
+  //   component: () => import('../views/tour.vue')
+  // },
   {
-    path: '/tour/:id',
-    name: 'tour-slug',
-    component: () => import('../views/tour.vue')
+    path: '/test-page',
+    name: 'test-page',
+    component: () => import('../views/TestPage.vue')
   },
 ]
 

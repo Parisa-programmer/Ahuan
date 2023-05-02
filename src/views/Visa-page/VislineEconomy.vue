@@ -21,7 +21,7 @@ export default {
   },
   created() {
     document.title = 'سنجش شانس اخذ ویزا'
-
+    window.scrollTo(0, 0);
   }
 }
 </script>

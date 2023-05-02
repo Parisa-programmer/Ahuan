@@ -126,6 +126,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     document.title = 'تورهای 1402 استانبول'
 
   }

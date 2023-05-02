@@ -40,12 +40,12 @@
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 5 && 'activeTab'" @click="tab = 5">گالری تصاویر</h3>
             </v-slide-item>
-            <v-slide-item>
-              <a href="@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg" class="text-decoration-none " download>
+            <!-- <v-slide-item>
+              <a :href="require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg')" class="text-decoration-none " download>
                 <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative">دانلود پکیج</h3>
               </a>
 
-            </v-slide-item>
+            </v-slide-item> -->
           </v-slide-group>
         </v-row>
         <v-row class="white py-md-9 px-6">
@@ -712,10 +712,10 @@ export default {
         src: require('@/assets/image/tour/moscow-005.jpg'),
         title: 'آسمن خراش های هفت خواهران مسکو'
       },
-      {
-        src: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
-        title: 'پکیج مسکو'
-      },
+      // {
+      //   src: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
+      //   title: 'پکیج مسکو'
+      // },
     ],
     imageDialog: false,
   }),
@@ -723,6 +723,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور 9 روز مسکو-سنت‌پترزبورگ|تور لحظه آخری مسکو'
     let newObjectDate = [

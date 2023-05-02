@@ -41,9 +41,9 @@
               <v-col cols="12" md="4" lg="3" class="pr-md-8" style="border-right:2px solid rgb(223, 223, 223)">
                 <v-row>
                   <div class="widthAll  mb-2">
-                    <a href="/Visline/">
+                    <router-link to="/visline">
                       <img class="rounded-xl widthAll d-none d-md-block" src="@/assets/image/visline gif.gif" alt="">
-                    </a>
+                    </router-link>
 
                     <!-- <v-btn color="red" class="widthAll py-8 mt-12" dark>
                       <v-icon>mdi-text-box-edit-outline</v-icon>
@@ -149,10 +149,10 @@
             </v-row>
             <v-row justify="center">
               <div class="indexDiv mt-6 mt-lg-12 mb-12">
-                <a href="/Visline/">
+                <router-link to="/visline">
                   <img class="widthAll rounded-xl d-none d-md-block" src="@/assets/image/ویزلاین2.jpg" alt="">
                   <img class="widthAll rounded-xl d-block d-md-none" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
-                </a>
+                </router-link>
               </div>
             </v-row>
           </div>
@@ -194,7 +194,7 @@ export default {
   },
   created() {
     document.title = 'وقت سفارت کانادا'
-
+    window.scrollTo(0, 0);
   }
 }
 </script>

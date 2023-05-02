@@ -585,6 +585,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور 3 شب دبی|تور لحظه آخری دبی'
     let newObjectDate4 = [

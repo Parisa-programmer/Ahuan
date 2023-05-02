@@ -15,6 +15,22 @@
   </div>
 </template>
 
+<style scoped>
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+</style> 
+
 
 <script>
 import MainTourCard from '@/components/MainTourCard.vue'
@@ -33,7 +49,7 @@ export default {
         hotelStar: '4  و 5 ',
         nights: 'شروع قیمت از 22.700.000 تومان',
         route: '/Moscow-5days',
-        download: '@/assets/image/پکیج مسکو.jpg',
+        download: require('@/assets/image/پکیج مسکو.jpg'),
         date:'روز‌های پرواز: همه‌روزه'
       },
       {
@@ -43,7 +59,7 @@ export default {
         hotelStar: '4',
         nights: 'شروع قیمت از 48.900.000 تومان',
         route: '/Moscow-St.Petersburg-9days',
-        download: '@/assets/image/پکیج مسکو.jpg',
+        download: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
         date:'تاریخ حرکت: 11 خرداد (تور گروهی)'
       },
     ]
@@ -52,6 +68,7 @@ export default {
 
   },
   created() {
+    window.scrollTo(0, 0);
     document.title = 'تورهای 1402 مسکو'
 
   }
