@@ -38,7 +38,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Istanbul">
+              <router-link to="/tour/Istanbul">
                 <v-img height="220" src="../assets/image/tourSlider/0001.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -57,7 +57,7 @@
           <v-col cols="12" sm="6" md="8" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-top"
               data-aos-duration="2000">
-              <router-link to="/Europe">
+              <router-link to="/tour/Europe">
                 <v-img height="220" src="../assets/image/tourSlider/0004.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -76,7 +76,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-left"
               data-aos-duration="2000">
-              <router-link to="/Dubai">
+              <router-link to="/tour/Dubai">
                 <v-img height="220" src="../assets/image/tourSlider/0003.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -95,7 +95,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 ml-md-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Srilanka">
+              <router-link to="/tour/Srilanka">
                 <v-img height="220" src="../assets/image/tourSlider/0002.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -114,7 +114,7 @@
           <v-col cols="12" sm="12" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-md-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Moscow">
+              <router-link to="/tour/Moscow">
                 <v-img height="220" src="../assets/image/tourSlider/0006.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -133,7 +133,7 @@
           <v-col cols="12" sm="6" md="8" class="scroll-reveal box left pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-top"
               data-aos-duration="2000">
-              <router-link to="/Thailand">
+              <router-link to="/tour/Thailand">
                 <v-img height="220" src="../assets/image/tourSlider/0007.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -152,7 +152,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-left"
               data-aos-duration="2000">
-              <router-link to="/Thailand-Malaysia">
+              <router-link to="/tour/Thailand-Malaysia">
                 <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -631,37 +631,37 @@ export default {
         image: require('../assets/image/magazine-turkiye.jpg'),
         title: 'جاذبه های استانبول',
         text: 'تور استانبول، به دلیل خدمات تفریحی‌ای که برای افراد به همراه داره، می‌تونه به شما در روند تجربه یک سفر متفاوت کمک کنه. تور استانبول از تمام شهرهای ایران، در میان تورهای پرطرفداری قرار می‌گیره که هزینه نسبتا مناسبی برای افراد...',
-        link: '/Istanbul'
+        link: '/tour/Istanbul'
       },
       {
         image: require('../assets/image/magazine-urope.jpg'),
         title: 'اروپا و جذابیت‌های آن',
         text: 'سفر با تور اروپا بدون شک یکی از زیباترین و بهترین تجربیات زندگی هر فرد می‌باشد. این قاره یکی از مقاصد زیبا برای سفر است که در سالهای اخیر به یکی از محبوب‌ترین مقاصد توریستی جهان تبدیل‌شده‌است. در بین تمامی مردم جهان...',
-        link: '/Europe'
+        link: '/tour/Europe'
       },
       {
         image: require('../assets/image/magazine-dubai.jpg'),
         title: 'جاذبه های دبی',
         text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-        link: '/Dubai'
+        link: '/tour/Dubai'
       },
       {
         image: require('../assets/image/magazine-thailand.jpg'),
         title: 'تور تایلند',
         text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-        link: '/Thailand'
+        link: '/tour/Thailand'
       },
       {
         image: require('../assets/image/magazine-dubai.jpg'),
         title: 'جاذبه های دبی',
         text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-        link: '/Dubai'
+        link: '/tour/Dubai'
       },
       {
         image: require('../assets/image/magazine-thailand.jpg'),
         title: 'تور تایلند',
         text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-        link: '/Thailand'
+        link: '/tour/Thailand'
       },
       // {
       //   image: '/tour/Srilanka/',

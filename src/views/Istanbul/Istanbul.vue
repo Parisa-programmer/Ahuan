@@ -99,7 +99,7 @@ export default {
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 5.550.000 تومان',
-        route: '/istanbul-3night',
+        route: '/tour/istanbul/istanbul-3night',
         AllDayFlight:true
       },
       {
@@ -108,7 +108,7 @@ export default {
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 6.100.000 تومان',
-        route: '/istanbul-4night',
+        route: '/tour/istanbul/istanbul-4night',
         AllDayFlight:true
       },
       {
@@ -117,7 +117,7 @@ export default {
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 6.790.000 تومان',
-        route: '/istanbul-5night',
+        route: '/tour/istanbul/istanbul-5night',
         AllDayFlight:true
       },
     ]

@@ -98,7 +98,7 @@ export default {
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 12.200.000 تومان',
-        route: '/dubai-3night',
+        route: '/tour/dubai/dubai-3night',
         AllDayFlight: true
       },
       {
@@ -107,7 +107,7 @@ export default {
         airline: 'ترکیش-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 13.900.000 تومان',
-        route: '/dubai-4night',
+        route: '/tour/dubai/dubai-4night',
         AllDayFlight: true
       },
       {
@@ -116,7 +116,7 @@ export default {
         airline: 'قشم-ایر-ماهان-ایران-ایر',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'شروع قیمت از 15.200.000 تومان',
-        route: '/dubai-5night',
+        route: '/tour/dubai/dubai-5night',
         AllDayFlight: true
       },
     ]

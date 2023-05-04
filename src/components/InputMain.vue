@@ -133,12 +133,16 @@
                   <div
                     class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
                     style="background-color: #f5f5f5;border-radius: 5px;">
-                    <date-picker  :show="show" ref="date1" color="#e91e63" format="YYYY-MM-DD" clearable: true
+                    <date-picker  :show="show" ref="date1" color="#bf0000" format="YYYY-MM-DD" clearable: true
                       v-model="date1" locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit
                       :min="minDate"
                       :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
                       style=""  @close="show = false; changeDate1()"
-                      @open=" viiblePeaple = false " />
+                      @open=" viiblePeaple = false " >
+                      <template #header-date="{  formattedDate }">
+    {{date1.length ? formattedDate : 'انتخاب تاریخ'}}
+  </template>
+                      </date-picker>
                     <div @click=" show = show == true ? false : true "
                       class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
                       style="z-index:22;padding: 10px 4px;color:#424242;top:0">

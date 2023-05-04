@@ -398,43 +398,43 @@ export default {
             sub2: [
               {
                 text: 'فرانسه و امارات(9روز)',
-                link: '/France-UAE-9days'
+                link: '/tour/europe/France-UAE-9days'
               },
               {
                 text: 'فرانسه - اسپانیا و امارات(11روز)',
-                link: '/France-Spain-UAE-11days'
+                link: '/tour/europe/France-Spain-UAE-11days'
               },
               {
                 text: 'سوئیس - فرانسه و امارات(11روز)',
-                link: '/Switzerland-France-UAE-11days'
+                link: '/tour/europe/Switzerland-France-UAE-11days'
               },
               {
                 text: 'فرانسه-بلژیک-هلند و امارات(12روز)',
-                link: '/France-Belgium-Netherlands-UAE-12days'
+                link: '/tour/europe/France-Belgium-Netherlands-UAE-12days'
               },
               {
                 text: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
-                link: '/France-Italy-Spain-UAE-14days'
+                link: '/tour/europe/France-Italy-Spain-UAE-14days'
               },
               {
                 text: 'سوئیس - ایتالیا و امارات(10روز)',
-                link: '/Switzerland-Italy-UAE-10days'
+                link: '/tour/europe/Switzerland-Italy-UAE-10days'
               },
               {
                 text: 'اسپانیا - ترکیه(11روز)',
-                link: '/Spain-Turkiye-11days'
+                link: '/tour/europe/Spain-Turkiye-11days'
               },
               {
                 text: 'اسپانیا - ایتالیا - ترکیه(13روز)',
-                link: '/Spain-Italy-Turkey-13days'
+                link: '/tour/europe/Spain-Italy-Turkey-13days'
               },
               {
                 text: 'گرندتور سوئیس(10روز)',
-                link: '/Swiss-grandtour-10days'
+                link: '/tour/europe/Swiss-grandtour-10days'
               },
               {
                 text: 'سوئیس - ترکیه(8روز)',
-                link: '/Switzerland-Turkiye-8days'
+                link: '/tour/europe/Switzerland-Turkiye-8days'
               },
             ]
           },
@@ -444,7 +444,7 @@ export default {
             sub2: [
               {
                 text: '14 شب و 15 روز',
-                link: '/SrilankaTour'
+                link: '/tour/srilanka/SrilankaTour'
               },
             ]
           },
@@ -454,11 +454,11 @@ export default {
             sub2: [
               {
                 text: 'مسکو',
-                link: '/Moscow-5days'
+                link: '/tour/moscow/Moscow-5days'
               },
               {
                 text: 'مسکو+سنت پترزبورگ',
-                link: '/Moscow-St.Petersburg-9days'
+                link: '/tour/moscow/Moscow-St.Petersburg-9days'
               },
             ]
           },
@@ -468,7 +468,7 @@ export default {
             sub2: [
               {
                 text: 'بانکوک - پاتایا - پوکت',
-                link: '/ThailandTour'
+                link: '/tour/thailand/ThailandTour'
               },
             ]
           },
@@ -478,7 +478,7 @@ export default {
             sub2: [
               {
                 text: 'کوالالامپور - پوکت - بانکوک',
-                link: '/Thailand-Malaysia-10nights'
+                link: '/tour/thailand/Thailand-Malaysia-10nights'
               },
             ]
           },
@@ -488,15 +488,15 @@ export default {
             sub2: [
               {
                 text: '3 شب و 4 روز',
-                link: '/istanbul-3night',
+                link: '/tour/istanbul/istanbul-3night',
               },
               {
                 text: '4 شب و 5 روز',
-                link: '/istanbul-4night',
+                link: '/tour/istanbul/istanbul-4night',
               },
               {
                 text: '5 شب و 6 روز',
-                link: '/istanbul-5night',
+                link: '/tour/istanbul/istanbul-5night',
               },
             ]
           },
@@ -506,15 +506,15 @@ export default {
             sub2: [
               {
                 text: '3 شب و 4 روز',
-                link: '/dubai-3night'
+                link: '/tour/dubai/dubai-3night'
               },
               {
                 text: '4 شب و 5 روز',
-                link: '/dubai-4night'
+                link: '/tour/dubai/dubai-4night'
               },
               {
                 text: '5 شب و 6 روز',
-                link: '/dubai-5night'
+                link: '/tour/dubai/dubai-5night'
               },
             ]
           },

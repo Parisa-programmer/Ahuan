@@ -2,13 +2,13 @@
   <div class="mt-9 mt-sm-12 pt-12">
           <v-row justify="center">
             <div class="widthAll relative">
-              <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background14.jpg" alt="">
+              <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background19.jpg" alt="">
               <div class="tourImageBackground"></div>
             </div>
             <div class="mb-12 indexDiv main-div" style="z-index: 3">
-              <h1 class="white--text countryNmae px-12 d-inline-block">فرانسه - بلژیک - هلند - امارات</h1>
+              <h1 class="white--text countryNmae px-12 d-inline-block">فرانسه - ایتالیا - اسپانیا - امارات</h1>
               <br>
-              <b class="white--text px-12 tour-date">تاریخ حرکت : 12 خرداد</b>
+              <b class="white--text px-12 tour-date">تاریخ حرکت : 21 مرداد</b>
               <!-- <v-row style="overflow-x: scroll;">
                 <div>
                   <v-row class="tourPageTitle mt-12 mt-sm-0 mt-lg-12 pt-sm-6 pt-md-12">
@@ -48,10 +48,9 @@
                   <v-row>
                     <v-col cols="12" md="6">
                       <ul class="mt-md-9 mr-md-6">
-                        
-                        <li class="my-3 grey--text text--darken-3 bold text-tour">اخذ ويزاي دبی</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour">اخذ ويزاي شنگن</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">بيمه ي مسافرتي</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour">هزینه اخذ ويزاي دبی</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour">هزینه اخذ ويزاي شنگن</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">ترانسفر فرودگاهی با اتوبوس هاي توريستي</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">اقامت در هتل هاي چهار و پنج ستاره همراه با صبحانه</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">بلیط رفت و برگشت هواپیمادر مسیرهای بین المللی و داخلی</li>
@@ -103,30 +102,36 @@
                         ﮔﺸﺖ ﺷﻬﺮﯼ پاریس، ﺑﺎﺯﺩﯾﺪ ﺍﺯ موزه لوور
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز چهارم :</b>
-                        تور اختیاری-دیزنی‌لند
+                        تور اختیاری-دیزنی لند
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز پنجم :</b>
-                        ترانسفر زمینی به بروکسل و انتقال به هتل
+                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ به ونیز و انتقال به هتل
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز ششم :</b>
-                        گشت شهری بروکسل
+                        گشت شهری ونیز
                       </p>
-                      <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز هفتم :</b>
-                        ترانسفر زمینی به آمستردام ، انتقال به هتل
+                      <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز هفتم :</b>
+                        ترانسفر زمینی به رم و انتقال به هتل
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز هشتم :</b>
-                        گشت شهری آمستردام همراه با قایق سواری در کانال های شهر آمستردام
+                        گشت شهری رم و بازدید از کولوسئوم
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز نهم :</b>
-                        بازدید از دهکده گردشگری و توریستی زانس سخانس (Zaanse Schans)
+                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ بارسلون و انتقال به هتل
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز دهم :</b>
-                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ دبی،انتقال به هتل
+                        گشت شهری بارسلون و بازدید از کلیسای ساگرادافامیلیا
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز یازدهم :</b>
-                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ دبی،انتقال به هتل
+                        گشت شهری بارسلون و بازدید از تپه Montjuic و تله کابین
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز دوازدهم :</b>
+                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ دبی ،انتقال به هتل
+                      </p>
+                      <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز سیزدهم :</b>
+                        وقت آزاد با صرف شام
+                      </p>
+                      <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز چهاردهم :</b>
                         ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ تهران
                       </p>
                     </v-col>
@@ -135,7 +140,7 @@
                     </div>
                     <v-col cols="12" lg="6">
                       <v-row class="mb-7" justify="center">
-                        <h2 class="tabel-tour-title"> حرکت 12 خرداد هواپیمایی</h2>
+                        <h2 class="tabel-tour-title"> حرکت 13 خرداد هواپیمایی</h2>
                         <img src="@/assets/image/tour/emarat_logo.png" class="mr-3 logo-tour-title" alt="">
                       </v-row>
                       <v-row justify="center">
@@ -178,61 +183,128 @@
                           3 قطعه عکس جدید 5/4*5/3 (3 ماه اخیر) رنگی با زمینه سفید، مستقیم رو به دوربین، 80 درصد عکس صورت باشد و در هیچ پاسپورت یا ویزای قبلی استفاده نشده باشد.
                         </li>
                       </ul>
-                      <h3  class="tabel-tour-title red--text">مدارک شغلی</h3>
-                      <ul class="my-6">
+                      <h3  v-if="showMore1" class="tabel-tour-title red--text">مدارک شغلی</h3>
+                      <ul v-if="showMore1" class="my-6">
                         <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پزشکان، مهندسین، وکلا: پروانه مطب، نظام مهندسی، وکالت+ کارتهای صنفی مربوطه
                         </li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارمندان دولتی: حکم کارگزینی با مهر + 3 فیش حقوقی آخر با مهر 
-                          <span v-if="!showMore2"> ...</span>
-                          <span v-if="!showMore2" class="see-more mx-3 cursorPointer" @click="showMore2 = true">مشاهده بیشتر</span>
-                          <span v-if="showMore2" class="grey--text text--darken-3">+ گواهی اشتغال به کار</span>
+                          + گواهی اشتغال به کار
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارمندان شرکت های خصوصی: گواهی اشتغال به کار + لیست سوابق بیمه با مهر سازمان تامین اجتماعی + قرارداد کارو 3 فیش حقوقی آخر (در صورت وجود)
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارمندان شرکت های خصوصی: گواهی اشتغال به کار + لیست سوابق بیمه با مهر سازمان تامین اجتماعی + قرارداد کارو 3 فیش حقوقی آخر (در صورت وجود)
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">کسبه: جواز کسب یا کارت مباشرت(در صورت داشتن کارت مباشرت اصل جواز کسب الزامی است)
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کسبه: جواز کسب یا کارت مباشرت(در صورت داشتن کارت مباشرت اصل جواز کسب الزامی است)
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">اعضای هیئت مدیره شرکت ها: گواهی اشتغال به کار + روزنامه رسمی  (آگهی تاسیس و آخرین تغییرات)
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اعضای هیئت مدیره شرکت ها: گواهی اشتغال به کار + روزنامه رسمی  (آگهی تاسیس و آخرین تغییرات)
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">سازندگان ساختمان: پروانه ساختمان یا پایان کار
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">سازندگان ساختمان: پروانه ساختمان یا پایان کار
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">موجر: اجاره نامه معتبر با کد رهگیری + سند املاک مربوطه
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">موجر: اجاره نامه معتبر با کد رهگیری + سند املاک مربوطه
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">بازنشستگان: حکم بازنشستگی یا آخرین حکم افزایش حقوق + 3 فیش حقوقی آخر
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">بازنشستگان: حکم بازنشستگی یا آخرین حکم افزایش حقوق + 3 فیش حقوقی آخر
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">اساتید و اعضا هیات علمی دانشگاه: گواهی اشتغال به کار + حکم کارگزینی با مهر + 3 فیش حقوقی آخر با مهر
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اساتید و اعضا هیات علمی دانشگاه: گواهی اشتغال به کار + حکم کارگزینی با مهر + 3 فیش حقوقی آخر با مهر
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">سند ملک (در صورت عدم وجود سند ملک، جهت دریافت اطلاعات برای شرایط گرفتن ویزا با کارشناسان فروش تماس حاصل فرمایید.)
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">سند ملک (در صورت عدم وجود سند ملک، جهت دریافت اطلاعات برای شرایط گرفتن ویزا با کارشناسان فروش تماس حاصل فرمایید.)
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمام گواهی ها باید حتما خطاب به سفارت مربوطه و در یکماه اخیر صادر شده باشند و در خصوص اشتغال، باید نام و مشخصات و شماره پاسپورت و سمت و تاریخ شروع به کار و میزان حقوق و تاریخ مرخصی بر اساس زمان سفر ذکر شود.
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمام گواهی ها باید حتما خطاب به سفارت مربوطه و در یکماه اخیر صادر شده باشند و در خصوص اشتغال، باید نام و مشخصات و شماره پاسپورت و سمت و تاریخ شروع به کار و میزان حقوق و تاریخ مرخصی بر اساس زمان سفر ذکر شود.
                         </li>
-                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">دانشجویان و دانش آموزان: گواهی اشتغال به تحصیل در سال تحصیلی جاری یا ثبت نام سال آینده
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">دانشجویان و دانش آموزان: گواهی اشتغال به تحصیل در سال تحصیلی جاری یا ثبت نام سال آینده
                         </li>
                       </ul>
-                      <h3 class="tabel-tour-title red--text">مدارک مالی</h3>
-                      <ul class="my-6">
+                      <h3 v-if="showMore1" class="tabel-tour-title red--text">مدارک مالی</h3>
+                      <ul v-if="showMore1" class="my-6">
                         <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">نامه تمکن به انگلیسی + گردش 3 ماه آخر همان حساب به انگلیسی با مهر و امضاء بانک صادر شده در کمتر از 10 روز قبل از تاریخ انگشت نگاری (به ازای هر نفرحداقل 100 میلیون تومان)
                         </li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورتیکه فرزند زیر 18 سال بدون یکی از والدین سفر می کند، رضایت نامه
-                          <span v-if="!showMore3"> ...</span>
-                          <span v-if="!showMore3" class="see-more mx-3 cursorPointer" @click="showMore3 = true">مشاهده بیشتر</span>
-                          <span v-if="showMore3" class="grey--text text--darken-3">محضری از هر کدام از والدین که در سفر نیستند، الزامی است .(ترجمه رضایت نامه با تاییدیه دادگستری و امور خارجه مورد قبول است.)</span>
+                          محضری از هر کدام از والدین که در سفر نیستند، الزامی است .(ترجمه رضایت نامه با تاییدیه دادگستری و امور خارجه مورد قبول است.)
                         </li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">برای تایید رضایت نامه، علاوه بر اصل رضایت نامه، اصل شناسنامه کسانی که اسامی آنها در رضایت نامه ذکر شده، الزامی است.
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">برای تایید رضایت نامه، علاوه بر اصل رضایت نامه، اصل شناسنامه کسانی که اسامی آنها در رضایت نامه ذکر شده، الزامی است.
                         </li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">واکسن های مورد تایید فرانسه: فایزر، مدرنا، آسترازنکا، جانسون اند جانسون</li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">ارائه اصل تمامی مدارک به شرکت آهوان الزامیست، تمام مدارک ارائه شده تا پایان سفر نزد شرکت آهوان باقی می ماند.
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">واکسن های مورد تایید فرانسه: فایزر، مدرنا، آسترازنکا، جانسون اند جانسون</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">ارائه اصل تمامی مدارک به شرکت رزآبی الزامیست، تمام مدارک ارائه شده تا پایان سفر نزد شرکت رزآبی باقی می ماند.
                         </li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت صلاحدید کارشناسان و یا سفارت مربوطه، مسافر موظف به ارائه مدارک تکمیلی می باشد.
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت صلاحدید کارشناسان و یا سفارت مربوطه، مسافر موظف به ارائه مدارک تکمیلی می باشد.
                         </li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">لزوم ارائه ضمانت نامه بانکی جهت بازگشت از سفر و مبلغ آن به ازای هر نفر پس از بررسی مدارک متقاضی به ایشان اعلام می گردد.</li>
-                        <li v-if="showMore3" class="my-3 grey--text text--darken-3 bold text-tour text-justify">با توجه به این نکته که کلیه مدارک ارائه شده توسط شرکت مجری و سفارت مورد استعلام قرار می گیرد، توصیه می گردد، کلیه مدارک مستند و قابل استعلام باشند.</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">لزوم ارائه ضمانت نامه بانکی جهت بازگشت از سفر و مبلغ آن به ازای هر نفر پس از بررسی مدارک متقاضی به ایشان اعلام می گردد.</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">با توجه به این نکته که کلیه مدارک ارائه شده توسط شرکت مجری و سفارت مورد استعلام قرار می گیرد، توصیه می گردد، کلیه مدارک مستند و قابل استعلام باشند.</li>
+                      </ul>
+                      <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز سفارت اسپانیا</h3>
+                      <ul class="my-6">
+                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل شناسنامه ها + اصل کارت ملی</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمام کپی ها در سایز A4 و یک رو گرفته شوند. 
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل پاسپورت های قدیمی + کپی از تمام صفحات استفاده شده
+                          <span v-if="!showMore2"> ...</span>
+                          <span v-if="!showMore2" class=" mx-3 cursorPointer see-more" @click="showMore2 = true">مشاهده بیشتر</span>
+                          <span v-if="showMore2" class="grey--text text--darken-3">پاسپورتهای قدیمی (ویزا و مهرهای ورود و خروج)</span>
+                        </li>
+                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمام مدارک فارسی جهت ارائه به سفارت اسپانیا باید به زبان انگلیسی ترجمه شوند. تمکن و گواهی اشتغال صادر شده به زبان انگلیسی پذیرفته می شوند.</li>
+                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">3 قطعه عکس جدید 5/4*5/3 (3 ماه اخیر) رنگی با زمینه سفید، مستقیم رو به دوربین، 80 درصد عکس صورت باشد و در هیچ پاسپورت یا ویزای قبلی استفاده نشده باشد.</li>
+                        <li v-if="showMore2" class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                          اصل پاسپورت امضا شده با حداقل 7 ماه اعتبار از پایان سفر و 2 صفحه خالی رو به روی هم + کپی از صفحه اطلاعات و تمام صفحات استفاده شده ( ویزا و مهرهای ورود و خروج)
+                        </li>
+                      </ul>
+                      <h3 v-if="showMore2" class="tabel-tour-title red--text">مدارک شغلی</h3>
+                      <ul v-if="showMore2" class="my-6">
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پزشکان، مهندسین، وکلا: پروانه مطب، نظام مهندسی، وکالت+ کارتهای صنفی مربوطه
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارمندان دولتی: حکم کارگزینی با مهر + 3 فیش حقوقی آخر با مهر + گواهی اشتغال به کار</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارمندان شرکت های خصوصی: گواهی اشتغال به کار + لیست سوابق بیمه با مهر سازمان تامین اجتماعی + قرارداد کار و فیش حقوقی (در صورت وجود)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کسبه: جواز کسب یا کارت مباشرت(در صورت داشتن کارت مباشرت اصل جواز کسب الزامی است)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اعضای هیئت مدیره شرکت ها: گواهی اشتغال به کار + روزنامه رسمی  (آگهی تاسیس و آخرین تغییرات)</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">سازندگان ساختمان: پروانه ساختمان یا پایان کار
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">موجر: اجاره نامه معتبر با کد رهگیری + سند املاک مربوطه
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">بازنشستگان: حکم بازنشستگی یا آخرین حکم افزایش حقوق + آخرین فیش حقوقی</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اساتید و اعضا هیات علمی دانشگاه: گواهی اشتغال به کار + حکم کارگزینی با مهر + فیش حقوقی آخر با مهر
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">سند ملک (در صورت عدم وجود سند ملک، جهت دریافت اطلاعات برای شرایط گرفتن ویزا با کارشناسان فروش تماس حاصل فرمایید.)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمام گواهی ها باید حتما خطاب به سفارت مربوطه و در یکماه اخیر صادر شده باشند و در خصوص اشتغال، باید نام و مشخصات و شماره پاسپورت و سمت و تاریخ شروع به کار و میزان حقوق و تاریخ مرخصی بر اساس زمان سفر ذکر شود.
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">دانشجویان و دانش آموزان: گواهی اشتغال به تحصیل در سال تحصیلی جاری یا ثبت نام سال آینده
+                        </li>
+                      </ul>
+                      <h3 v-if="showMore2" class="tabel-tour-title red--text">مدارک مالی</h3>
+                      <ul v-if="showMore2" class="my-6">
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">نامه تمکن به انگلیسی + گردش 3 ماه آخر همان حساب به انگلیسی با مهر و امضاء بانک صادر شده در کمتر از 10 روز قبل از تاریخ انگشت نگاری (به ازای هر نفرحداقل 100 میلیون تومان)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                          برای فرزندان بالای 18 سال ارائه تمکن بانکی مجزا به نام خودشان الزامی می باشد. (حداقل 10 تا 15 میلیون تومان)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورتیکه فرزند زیر 18 سال بدون یکی از والدین سفر می کند، رضایت نامه
+                          محضری از هر کدام از والدین که در سفر نیستند، الزامی است .(ترجمه رضایت نامه با تاییدیه دادگستری و امور خارجه مورد قبول است.)
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">برای تایید رضایت نامه، علاوه بر اصل رضایت نامه، اصل شناسنامه کسانی که اسامی آنها در رضایت نامه ذکر شده، الزامی است.
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">واکسن های مورد تایید سوئیس: فایزر، مدرنا، آسترازنکا، جانسون اند جانسون،سینوفارم،سینواک
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">ارائه اصل تمامی مدارک به شرکت آهوان الزامیست، تمام مدارک ارائه شده تا پایان سفر نزد شرکت رزآبی باقی می ماند.
+                        </li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت صلاحدید کارشناسان و یا سفارت مربوطه، مسافر موظف به ارائه مدارک تکمیلی می باشد.</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">لزوم ارائه ضمانت نامه بانکی جهت بازگشت از سفر و مبلغ آن به ازای هر نفر پس از بررسی مدارک متقاضی به ایشان اعلام می گردد.
+                        </li>
                       </ul>
                     </v-col>
                     <v-col cols="12" md="12" >
                       <v-row justify="center" class="heightAll mb-9 align-center">
-                        <a download :href="require('@/assets/image/tour/Documents-the-France-Embassy.jpg')" class="text-decoration-none mr-sm-2">
-                          <v-btn color="red " outlined dark >دانلود مدارک مورد نیاز سفارت فرانسه</v-btn>
-                        </a>
+                        <v-col cols="12" sm="6" class="pa-0">
+                          <v-row class="justify-center justify-sm-end">
+                            <a :href="require('@/assets/image/tour/Documents-the-France-Embassy.jpg')" download class="text-decoration-none">
+                              <v-btn color="red " outlined dark >دانلود مدارک مورد نیاز سفارت فرانسه</v-btn>
+                            </a>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="pa-0">
+                          <v-row class="justify-center justify-sm-start">
+                            <a :href="require('@/assets/image/tour/Documents-the-Spain-Embassy.jpg')" download class="text-decoration-none mr-sm-2">
+                              <v-btn color="red " outlined dark >دانلود مدارک مورد نیاز سفارت اسپانیا</v-btn>
+                            </a>
+                          </v-row>
+                        </v-col>              
                       </v-row>
                     </v-col>
                   </v-row>
@@ -274,7 +346,7 @@
                           v-for="(item,i) in urope005Images" 
                           :key="i"
                         >
-                          <img :src="item.src" :alt="item.title" >
+                          <img :src="item.src" :alt="item.title" alt="">
                         </v-carousel-item> -->
                       </v-carousel>
                       <v-icon class="absolute cursorPointer" color="white" @click="imageDialog=false" style="top:5px;right:5px">mdi-close</v-icon>
@@ -639,10 +711,10 @@
 
 <script>
 export default {
-  name: 'Europe-04',
+  name: 'Europe-05',
   metaInfo: {
     meta: [
-      { name: 'description', content: "تور ترکیبی فرانسه - بلژیک - هلند - امارات شرکت آهوان یک تور خاص برای افراد خاص است. جهت خرید این تور می‌توانید با شماره تلفن 021-41889 تماس بگیرید." }  
+      { name: 'description', content: "تور ترکیبی فرانسه - اسپانیا - ایتالیا - امارات شرکت آهوان یک تور خاص برای افراد خاص است. جهت خرید این تور می‌توانید با شماره تلفن 021-41889 تماس بگیرید." }  
     ]
   },
   components: {
@@ -663,19 +735,19 @@ export default {
     prices: [
       {
         name: 'هرنفر در اتاق 2 تخته',
-        calories: '2,790 یورو + 39,990,000 تومان',
+        calories: '3,390 یورو + 39,990,000 تومان',
       },
       {
         name: 'هرنفر در اتاق 1 تخته',
-        calories: '3,890 یورو + 39,990,000 تومان',
+        calories: '4,490 یورو + 39,990,000 تومان',
       },
       {
         name: 'کودک 4-11 ساله با تخت',
-        calories: '1,990 یورو + 29,990,000 تومان',
+        calories: '2,490 یورو + 29,990,000 تومان',
       },
       {
         name: 'کودک 4-2 ساله بدون تخت',
-        calories: '1.090 یورو + 29,990,000 تومان',
+        calories: '1,390 یورو + 29,990,000 تومان',
       },
     ],
     flightHeaders: [
@@ -703,15 +775,15 @@ export default {
         text2: 'DXBCDG'
       },
       {
-        from: 'پرواز از آمستردام به دبی',
-        time1: '15:20',
-        time2: '23:59',
-        text1: 'EK148',
-        text2: 'AMSDXB'
+        from: 'پرواز از بارسلون به دبی',
+        time1: '15:30',
+        time2: '00:15',
+        text1: 'EK256',
+        text2: 'BCNDXB'
       },
       {
         from: 'پرواز از دبی به تهران',
-        time1: '15:00',
+        time1: '05:00',
         time2: '17:40',
         text1: 'EK979',
         text2: 'DXBIKA'
@@ -753,9 +825,9 @@ export default {
 
   },
   created() {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
     // console.log(store);
-    document.title =  'تور ترکیبی فرانسه-بلژیک-هلند-امارات'
+    document.title = 'تور ترکیبی فرانسه-ایتالیا-اسپانیا-امارات'
     let newObjectDate = [
       {
         نام: 'Fideh hotel',

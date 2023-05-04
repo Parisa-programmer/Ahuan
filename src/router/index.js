@@ -19,142 +19,152 @@ const routes = [
     component: () => import('../views/TourPage.vue')
   },
   {
-    path: '/Istanbul',
+    path: '/tour/Istanbul',
     name: 'istanbul',
     component: () => import('../views/Istanbul/Istanbul.vue')
   },
   {
-    path: '/Europe',
+    path: '/tour/Europe',
     name: 'europe',
     component: () => import('../views/Europe/Europe.vue')
   },
   {
-    path: '/Dubai',
+    path: '/tour/Dubai',
     name: 'dubai',
     component: () => import('../views/Dubai/Dubai.vue')
   },
   {
-    path: '/Srilanka',
+    path: '/tour/Srilanka',
     name: 'srilanka',
     component: () => import('../views/Srilanka/Srilanka.vue')
   },
   {
-    path: '/SrilankaTour',
+    path: '/tour/srilanka/SrilankaTour',
     name: 'srilanka-tour',
     component: () => import('../views/Srilanka/SrilankaTour.vue')
   },
   {
-    path: '/Moscow',
+    path: '/tour/Moscow',
     name: 'moscow',
     component: () => import('../views/Moscow/Moscow.vue')
   },
   {
-    path: '/Thailand',
+    path: '/tour/Thailand',
     name: 'thailand',
     component: () => import('../views/Thailand/Thailand.vue')
   },
   {
-    path: '/ThailandTour',
+    path: '/tour/thailand/ThailandTour',
     name: 'thailand-tour',
     component: () => import('../views/Thailand/ThailandTour.vue')
   },
   {
-    path: '/Thailand-Malaysia',
+    path: '/tour/Thailand-Malaysia',
     name: 'thailand-Malaysia',
     component: () => import('../views/Thailand-Malaysia/Thailand-Malaysia.vue')
   },
   {
-    path: '/Thailand-Malaysia-10nights',
+    path: '/tour/thailand/Thailand-Malaysia-10nights',
     name: 'Thailand-Malaysia-10nights',
     component: () => import('../views/Thailand-Malaysia/Thailand-Malaysia-10nights.vue')
   },
   {
-    path: '/dubai-3night',
+    path: '/tour/dubai/dubai-3night',
     name: 'dubai-3night',
     component: () => import('../views/Dubai/Dubai-3-night.vue')
   },
   {
-    path: '/dubai-4night',
+    path: '/tour/dubai/dubai-4night',
     name: 'dubai-4night',
     component: () => import('../views/Dubai/Dubai-4-night.vue')
   },
   {
-    path: '/dubai-5night',
+    path: '/tour/dubai/dubai-5night',
     name: 'dubai-5night',
     component: () => import('../views/Dubai/Dubai-5-night.vue')
   },
   {
-    path: '/istanbul-3night',
+    path: '/tour/istanbul/istanbul-3night',
     name: 'istanbul-3night',
     component: () => import('../views/Istanbul/Istanbul-3-night.vue')
   },
   {
-    path: '/istanbul-4night',
+    path: '/tour/istanbul/istanbul-4night',
     name: 'istanbul-4night',
     component: () => import('../views/Istanbul/Istanbul-4-night.vue')
   },
   {
-    path: '/istanbul-5night',
+    path: '/tour/istanbul/istanbul-5night',
     name: 'istanbul-5night',
     component: () => import('../views/Istanbul/Istanbul-5-night.vue')
   },
   {
-    path: '/France-UAE-9days',
+    path: '/tour/europe/France-UAE-9days',
     name: 'Europe-01',
     component: () => import('../views/Europe/Europe-01.vue')
   },
   {
-    path: '/France-Spain-UAE-11days',
+    path: '/tour/europe/France-Spain-UAE-11days',
     name: 'Europe-02',
     component: () => import('../views/Europe/Europe-02.vue')
   },
   {
-    path: '/Switzerland-France-UAE-11days',
+    path: '/tour/europe/Switzerland-France-UAE-11-days',
+    name: 'Europe-03',
+    component: () => import('../views/Europe/Europe-03-2.vue')
+  },
+  {
+    path: '/tour/europe/Switzerland-France-UAE-11days',
     name: 'Europe-03',
     component: () => import('../views/Europe/Europe-03.vue')
   },
   {
-    path: '/France-Belgium-Netherlands-UAE-12days',
+    path: '/tour/europe/France-Belgium-Netherlands-UAE-12days',
     name: 'Europe-04',
     component: () => import('../views/Europe/Europe-04.vue')
   },
   {
-    path: '/France-Italy-Spain-UAE-14days',
+    path: '/tour/europe/France-Italy-Spain-UAE-14-days',
+    name: 'Europe-05',
+    component: () => import('../views/Europe/Europe-05-2.vue')
+  },
+  {
+    path: '/tour/europe/France-Italy-Spain-UAE-14days',
     name: 'Europe-05',
     component: () => import('../views/Europe/Europe-05.vue')
   },
   {
-    path: '/Switzerland-Italy-UAE-10days',
+    path: '/tour/europe/Switzerland-Italy-UAE-10days',
     name: 'Europe-06',
     component: () => import('../views/Europe/Europe-06.vue')
   },
   {
-    path: '/Spain-Turkiye-11days',
+    path: '/tour/europe/Spain-Turkiye-11days',
     name: 'Europe-07',
     component: () => import('../views/Europe/Europe-07.vue')
   },
   {
-    path: '/Spain-Italy-Turkey-13days',
+    path: '/tour/europe/Spain-Italy-Turkey-13days',
     name: 'Europe-08',
     component: () => import('../views/Europe/Europe-08.vue')
   },
   {
-    path: '/Swiss-grandtour-10days',
+    path: '/tour/europe/Swiss-grandtour-10days',
     name: 'Europe-09',
     component: () => import('../views/Europe/Europe-09.vue')
   },
   {
-    path: '/Switzerland-Turkiye-8days',
+    path: '/tour/europe/Switzerland-Turkiye-8days',
     name: 'Europe-10',
     component: () => import('../views/Europe/Europe-10.vue')
   },
   {
-    path: '/Moscow-5days',
+    path: '/tour/moscow/Moscow-5days',
     name: 'moscow-5days',
     component: () => import('../views/Moscow/Moscow-5days.vue')
   },
   {
-    path: '/Moscow-St.Petersburg-9days',
+    path: '/tour/moscow/Moscow-St.Petersburg-9days',
     name: 'Moscow-St-Petersburg',
     component: () => import('../views/Moscow/Moscow-St-Petersburg.vue')
   },

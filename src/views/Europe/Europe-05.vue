@@ -8,7 +8,7 @@
             <div class="mb-12 indexDiv main-div" style="z-index: 3">
               <h1 class="white--text countryNmae px-12 d-inline-block">فرانسه - ایتالیا - اسپانیا - امارات</h1>
               <br>
-              <b class="white--text px-12 tour-date">تاریخ حرکت : 13 خرداد</b>
+              <b class="white--text px-12 tour-date">تاریخ حرکت : 21 مرداد</b>
               <!-- <v-row style="overflow-x: scroll;">
                 <div>
                   <v-row class="tourPageTitle mt-12 mt-sm-0 mt-lg-12 pt-sm-6 pt-md-12">
@@ -48,10 +48,9 @@
                   <v-row>
                     <v-col cols="12" md="6">
                       <ul class="mt-md-9 mr-md-6">
-                        
-                        <li class="my-3 grey--text text--darken-3 bold text-tour">اخذ ويزاي دبی</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour">اخذ ويزاي شنگن</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">بيمه ي مسافرتي</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour">هزینه اخذ ويزاي دبی</li>
+                        <li class="my-3 grey--text text--darken-3 bold text-tour">هزینه اخذ ويزاي شنگن</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">ترانسفر فرودگاهی با اتوبوس هاي توريستي</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">اقامت در هتل هاي چهار و پنج ستاره همراه با صبحانه</li>
                         <li class="my-3 grey--text text--darken-3 bold text-tour">بلیط رفت و برگشت هواپیمادر مسیرهای بین المللی و داخلی</li>
@@ -106,16 +105,16 @@
                         تور اختیاری-شهر بروکسل
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز پنجم :</b>
-                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ به رم و انتقال به هتل
+                        ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ به ونیز و انتقال به هتل
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز ششم :</b>
-                        گشت شهری رم و بازدید از کولوسئوم
+                        گشت شهری ونیز
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز هفتم :</b>
-                        گشت شهری رم و بازدید از واتیکان
+                        ترانسفر زمینی به رم و انتقال به هتل
                       </p>
                       <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز هشتم :</b>
-                        وقت آزاد
+                        گشت شهری رم و بازدید از کولوسئوم
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز نهم :</b>
                         ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ بارسلون و انتقال به هتل
@@ -130,7 +129,7 @@
                         ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ دبی ،انتقال به هتل
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز سیزدهم :</b>
-                        وقت آزاد همراه با صرف شام
+                        گشت شهری دبی همراه با صرف شام
                       </p>
                       <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b class="grey--text text--darken-3">روز چهاردهم :</b>
                         ﺍﻧﺘﻘﺎﻝ ﺑﻪ ﻓﺮﻭﺩﮔﺎﻩ ﺟﻬﺖ ﭘﺮﻭﺍﺯ ﺑﻪ تهران
@@ -736,19 +735,19 @@ export default {
     prices: [
       {
         name: 'هرنفر در اتاق 2 تخته',
-        calories: '3,190 یورو + 39,990,000 تومان',
+        calories: '3,390 یورو + 149,990,000 تومان',
       },
       {
         name: 'هرنفر در اتاق 1 تخته',
-        calories: '4,390 یورو + 39,990,000 تومان',
+        calories: '4,490 یورو + 149,990,000 تومان',
       },
       {
         name: 'کودک 4-11 ساله با تخت',
-        calories: '2,390 یورو + 36,990,000 تومان',
+        calories: '2,490 یورو + 112,990,000 تومان',
       },
       {
         name: 'کودک 4-2 ساله بدون تخت',
-        calories: '1,290 یورو + 36,990,000 تومان',
+        calories: '1,390 یورو + 112,990,000 تومان',
       },
     ],
     flightHeaders: [
@@ -763,7 +762,7 @@ export default {
     flights: [
       {
         from: 'پرواز از تهران به دبی',
-        time1: '05:30',
+        time1: '04:30',
         time2: '07:20',
         text1: 'EK978',
         text2: 'IKADXB'

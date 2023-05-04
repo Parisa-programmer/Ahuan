@@ -55,7 +55,7 @@ export default {
         hotelStar: ' 5 ',
         nights: '3 شب کوالالامپور + 5شب پوکت +',
         nights2: '2 شب بانکوک',
-        route: '/Thailand-Malaysia-10nights',
+        route: '/tour/thailand/Thailand-Malaysia-10nights',
         download: require('@/assets/image/tour/تایلند-مالزی.jpeg')
       },
     ]

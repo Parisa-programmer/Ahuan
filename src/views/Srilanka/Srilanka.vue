@@ -46,7 +46,7 @@ export default {
         date: '27 و 29 اسفند- 5 و 7 فروردین',
         hotelStar: ' 3 و 4 و 5 ',
         nights: 'مراسم سال نو + 15 دقیقه spa رایگان',
-        route: '/SrilankaTour',
+        route: '/tour/srilanka/SrilankaTour',
         download: require('@/assets/image/tour/Srilanka-tour.jpg')
       },
     ]

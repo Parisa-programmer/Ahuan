@@ -408,8 +408,8 @@ input::-webkit-inner-spin-button {
   background: #fff;
 }
 
-.vpd-main * {
-  display: none;
+.vpd-input-group {
+  opacity: 0 !important;
 }
 
 

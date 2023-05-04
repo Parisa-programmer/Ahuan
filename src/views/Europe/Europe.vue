@@ -120,28 +120,40 @@ export default {
   data: () => ({
     publicPath: process.env.BASE_URL,
     cards: [
+      // {
+      //   image: require('@/assets/image/tour/europ-001.jpg'),
+      //   title: 'فرانسه و امارات(9روز)',
+      //   airline: 'امارات',
+      //   date: '31 فروردین - 28 اردیبهشت',
+      //   date2: '11 خرداد و 25 خرداد',
+      //   hotelStar: '4 و 5',
+      //   nights: '6 شب پاریس + 2 شب دبی',
+      //   route: '/tour/europe/France-UAE-9days',
+      //   download:'/pdf/فرانسه-امارات.pdf'
+      //   // download:'/pdf/فرانسه-امارات.pdf'
+      // },
+      // {
+      //   image: require('@/assets/image/tour/europ-002.jpg'),
+      //   title: 'فرانسه - اسپانیا و امارات(11روز)',
+      //   airline: 'امارات',
+      //   date: 'تاریخ رفت: 11 خرداد',
+      //   hotelStar: '4 و 5',
+      //   nights: '4 شب پاریس + 4 شب بارسلون',
+      //   nights2: '+ 2 شب دبی',
+      //   route: '/tour/europe/France-Spain-UAE-11days',
+      //   download:'/pdf/فرانسه - اسپانیا - امارات.pdf'
+      // },
       {
-        image: require('@/assets/image/tour/europ-001.jpg'),
-        title: 'فرانسه و امارات(9روز)',
+        image: require('@/assets/image/tour/europ-003.jpg'),
+        title: 'سوئیس - فرانسه و امارات(11روز)',
         airline: 'امارات',
-        date: '31 فروردین - 28 اردیبهشت',
-        date2: '11 خرداد و 25 خرداد',
+        date: '14 تیر - 18 مرداد',
+        date2: 'و 15 شهریور',
         hotelStar: '4 و 5',
-        nights: '6 شب پاریس + 2 شب دبی',
-        route: '/France-UAE-9days',
-        download:'/pdf/فرانسه-امارات.pdf'
-        // download:'/pdf/فرانسه-امارات.pdf'
-      },
-      {
-        image: require('@/assets/image/tour/europ-002.jpg'),
-        title: 'فرانسه - اسپانیا و امارات(11روز)',
-        airline: 'امارات',
-        date: 'تاریخ رفت: 11 خرداد',
-        hotelStar: '4 و 5',
-        nights: '4 شب پاریس + 4 شب بارسلون',
+        nights: '4 شب زوریخ-لوسرن + 4 شب پاریس',
         nights2: '+ 2 شب دبی',
-        route: '/France-Spain-UAE-11days',
-        download:'/pdf/فرانسه - اسپانیا - امارات.pdf'
+        route: '/tour/europe/Switzerland-France-UAE-11-days',
+        download:'/pdf/سوئیس - فرانسه - امارات.jpeg'
       },
       {
         image: require('@/assets/image/tour/europ-003.jpg'),
@@ -151,30 +163,41 @@ export default {
         hotelStar: '4 و 5',
         nights: '4 شب زوریخ-لوسرن + 4 شب پاریس',
         nights2: '+ 2 شب دبی',
-        route: '/Switzerland-France-UAE-11days',
+        route: '/tour/europe/Switzerland-France-UAE-11days',
         download:'/pdf/سوئیس - فرانسه - امارات.pdf'
       },
       {
         image: require('@/assets/image/tour/europ-004.jpg'),
         title: 'فرانسه-بلژیک-هلند و امارات(12روز)',
         airline: 'امارات',
-        date: 'تاریخ رفت: 12 خرداد',
+        date: '13 مرداد و 17 شهریور',
         hotelStar: '4 و 5',
         nights: '4 شب پاریس + 2 شب بروکسل',
         nights2: '+ 3 شب آمستردام + 2 شب دبی',
-        route: '/France-Belgium-Netherlands-UAE-12days',
-        download: '/pdf/فرانسه - بلژیک - هلند - امارات.pdf'
+        route: '/tour/europe/France-Belgium-Netherlands-UAE-12days',
+        download: '/pdf/فرانسه - بلژیک - هلند - امارات.jpeg'
       },
       {
         image: require('@/assets/image/tour/europ-005.jpg'),
         title: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
         airline: 'امارات',
-        date: 'تاریخ رفت: 13 خرداد',
+        date: '23 تیر و 18 شهریور',
         hotelStar: '4 و 5',
-        nights: '4 شب پاریس + 4 شب رم',
-        nights2: '+ 3 شب بارسلون + 2 شب دبی',
-        route: '/France-Italy-Spain-UAE-14days',
-        download: '/pdf/فرانسه - ایتالیا - اسپانیا - امارات.pdf'
+        nights: '4 شب پاریس + 2 شب ونیز',
+        nights2: '2 شب رم+ 3 شب بارسلون + 2 شب دبی',
+        route: '/tour/europe/France-Italy-Spain-UAE-14-days',
+        download: '/pdf/فرانسه - ایتالیا - اسپانیا - امارات-2.jpeg'
+      },
+      {
+        image: require('@/assets/image/tour/europ-005.jpg'),
+        title: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
+        airline: 'امارات',
+        date: 'تاریخ رفت: 21 مرداد',
+        hotelStar: '4 و 5',
+        nights: '4 شب پاریس + 2 شب ونیز',
+        nights2: '2 شب رم+ 3 شب بارسلون + 2 شب دبی',
+        route: '/tour/europe/France-Italy-Spain-UAE-14days',
+        download: '/pdf/فرانسه - ایتالیا - اسپانیا - امارات.jpeg'
       },
       {
         image: require('@/assets/image/tour/europ-007.jpg'),
@@ -184,7 +207,7 @@ export default {
         hotelStar: '4 و 5',
         nights: '3 شب زوریخ-لوسرن + 2 شب لوگانو',
         nights2: '+ 2 شب میلان-ونیز + 2 شب دبی',
-        route: '/Switzerland-Italy-UAE-10days',
+        route: '/tour/europe/Switzerland-Italy-UAE-10days',
         download: '/pdf/سوئیس - ایتالیا - امارات.pdf'
       },
       {
@@ -195,7 +218,7 @@ export default {
         hotelStar: ' 5 ',
         nights: '2 شب مادرید + 2 شب والنسیا',
         nights2: '+ 4 شب بارسلون + 2 شب استانبول',
-        route: '/Spain-Turkiye-11days',
+        route: '/tour/europe/Spain-Turkiye-11days',
         download: '/pdf/اسپانیا - ترکیه.pdf'
       },
       {
@@ -206,7 +229,7 @@ export default {
         hotelStar: '4  و 5 ',
         nights: '5 شب بارسلون + 2 شب رم + 1 شب فلورانس',
         nights2: '+ 2 شب ونیز + 2 شب استانبول',
-        route: '/Spain-Italy-Turkey-13days',
+        route: '/tour/europe/Spain-Italy-Turkey-13days',
         download: '/pdf/اسپانیا - ایتالیا - ترکیه.pdf'
       },
       {
@@ -218,7 +241,7 @@ export default {
         nights: 'زوریخ + 1شب اینترلاکن+1شب مونتخو+',
         nights2: '1شب زرمات + 1شب سن موریس + 1شب لوگانو +',
         nights3: '1شب لوسرن + 1شب زوریخ + 2شب استانبول',
-        route: '/Swiss-grandtour-10days',
+        route: '/tour/europe/Swiss-grandtour-10days',
         download: '/pdf/گرندتور سوئیس.pdf'
       },
       {
@@ -228,7 +251,7 @@ export default {
         date: 'تاریخ رفت: 12 خرداد',
         hotelStar: '4  و 5 ',
         nights: '5 شب زوریخ-لوسرن + 2شب استانبول',
-        route: '/Switzerland-Turkiye-8days',
+        route: '/tour/europe/Switzerland-Turkiye-8days',
         download: '/pdf/سوئیس - ترکیه.pdf'
       },
     ]

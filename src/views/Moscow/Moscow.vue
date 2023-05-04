@@ -48,7 +48,7 @@ export default {
         airline: 'ماهان',
         hotelStar: '4  و 5 ',
         nights: 'شروع قیمت از 22.700.000 تومان',
-        route: '/Moscow-5days',
+        route: '/tour/moscow/Moscow-5days',
         download: require('@/assets/image/پکیج مسکو.jpg'),
         date:'روز‌های پرواز: همه‌روزه'
       },
@@ -58,7 +58,7 @@ export default {
         airline: 'ماهان',
         hotelStar: '4',
         nights: 'شروع قیمت از 48.900.000 تومان',
-        route: '/Moscow-St.Petersburg-9days',
+        route: '/tour/moscow/Moscow-St.Petersburg-9days',
         download: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
         date:'تاریخ حرکت: 11 خرداد (تور گروهی)'
       },

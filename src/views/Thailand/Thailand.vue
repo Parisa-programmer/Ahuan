@@ -112,7 +112,7 @@ export default {
         nights: '2 شب بانکوک + 3شب پاتایا ',
         nights2:'+ 5 شب پوکت + 1 شب بانکوک',
         airline:'کویتی',
-        route: '/ThailandTour',
+        route: '/tour/thailand/ThailandTour',
       },
     ]
   }),
