@@ -7,7 +7,7 @@
       </div>
       <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <div>
-          <span class="white--text countryNmae px-12">مسکو + سنت پترزبورگ </span>
+          <span class="white--text countryNmae px-12"> 5 شب مسکو + 4 شب سنت پترزبورگ </span>
         </div>
         <div>
           <b class="white--text px-12 tour-date">
@@ -34,7 +34,7 @@
             </v-slide-item>
             <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 4 && 'activeTab'" @click="tab = 4">جزئیات پرواز</h3>
+                :class="tab == 4 && 'activeTab'" @click="tab = 4">جزئیات سفر</h3>
             </v-slide-item>
             <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
@@ -48,8 +48,57 @@
             </v-slide-item> -->
           </v-slide-group>
         </v-row>
-        <v-row class="white py-md-9 px-6">
+        <v-row class="white py-md-9 px-sm-6">
           <div class="widthAll" v-if="tab == 0">
+            <v-row>
+              <v-col cols="12" md="6" class="pr-6 pr-sm-0">
+                <ul class="mt-md-9 mr-md-6">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour">قیمت های اعلام شده بر حسب تومان می باشد.</li>
+                  <li class="my-3 red--text text--darken-3 bold text-tour"> پرواز ماهان ایر رفت به مسکو و برگشت از
+                    سنت پترزبورگ</li>
+                  <li class="my-3 red--text text--darken-3 bold text-tour">تور بصورت گروهی و لیدر فارسی زبان از تهران تا
+                    برگشت همراه مسافر می باشد.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour"> به کلیه سنین حتی کودکان زیر 2 سال مبلغ 100$
+                    بابت ویزای توریستی اضافه خواهد شد.</li>
+                </ul>
+                <v-row justify="center" class="mt-6">
+                  <v-btn @click="tab = 4" dark class="red px-9">مشاهده جزئیات سفر</v-btn>
+                </v-row>
+              </v-col>
+              <div class="d-md-none widthAll my-sm-4 px-12">
+                <hr class=" mx-12 my-4">
+              </div>
+              <v-col cols="12" md="6" class="mb-6 mb-md-0">
+                <!-- <v-row class="" justify="center">
+                        هتل های 5 ستاره
+                      </v-row> -->
+                <v-row class="mb-2" justify="center">
+                  <h3 class="tabel-tour-title"><span class="red--text mr-2"> هتل مسکو :</span> 4 * Novotel moscow center
+                  </h3>
+                  <h3 class="tabel-tour-title"><span class="red--text"> هتل سنت‌پترزبورگ:</span> 4 * Holiday inn Vorota
+                  </h3>
+
+                  <!-- <img src="@/assets/image/tour/Turkish_Airlines_logo.png" height="35" class="mr-3" alt=""> -->
+                </v-row>
+                <v-row class="mt-3" justify="center">
+                  <v-data-table hide-default-footer hide-default-header style="box-shadow: 0 0 21px #dbdbdb !important;"
+                    :headers="priceHeaders" :items="prices" class="even-odd-tabel rounded-lg hideOver tabelTour">
+                    <template v-slot:footer>
+                      <div>
+                        <v-row class="py-4 body-2 text-center" justify="center"
+                          style="font-family: Byekan !important;border-top:1px solid rgb(212, 212, 212)">
+
+                          نرخ INF (زیر 2 سال) 3.600.000 تومان + 100 دلار
+                        </v-row>
+                      </div>
+                    </template>
+                  </v-data-table>
+                </v-row>
+              </v-col>
+            </v-row>
+
+          </div>
+          <!-- <div class="widthAll" v-if="tab == 0">
             <h4 class="mb-4 mt-4 mt-md-0">
               <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
               قیمت های اعلام شده بر حسب تومان می باشد.
@@ -73,17 +122,10 @@
             <v-row>
               <v-col cols="12" lg="12">
                 <v-row class="mb-2" justify="center">
-                  <v-data-table :headers="pricesHeaderMoskow" hide-default-footer :items="pricesItemsMoskow"
+                  <v-data-table :headers="pricesHeaderMoskow" hide-default-footer :items="prices"
                     :items-per-page="50" class=" rounded-lg even-odd-tabel tabelTourId"
                     style="box-shadow: 0 0px 21px #dbdbdb !important;border: 2px solid #9d9d9b !important;">
-                    <!-- <template #item="{ item }">
-                            div
-                            <tr>      
-                              <td class="bold text-center" v-for="(col,key) in item" :key="key">
-                                  {{ col }}
-                              </td>
-                            </tr>
-                        </template> -->
+                    
                     <template v-slot:[`item.name`]="{ item }">
                       <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
 
@@ -93,7 +135,7 @@
                 </v-row>
               </v-col>
             </v-row>
-          </div>
+          </div> -->
           <div class="widthAll" v-else-if="tab == 1">
             <v-row>
               <v-col cols="12" md="12">
@@ -101,16 +143,16 @@
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاه</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیط هواپیمایی ماهان ایر
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز بین مسکو و سنت
-                    پترزبورگ</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز بین سنت
+                    مسکو و سپترزبورگ</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی تا سقف
                     10.000 یورو</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">8 شب اقامت در هتل با
-                    صبحانه بوفه</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">9 شب اقامت در هتل با
+                    صبحانه بوفه(5 شب مسکو + 4 شب سنت پترزبورگ)</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">لیدر فارسی زبان از تهران
                     تا برگشت همراه مسافر</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">4 روز گشت کامل 8 ساعته
-                    طبق برنامه سفر با ناهار (بازدید از 35 مکان دیدنی)</li>
+                    طبق برنامه سفر با ناهار (بازدید از 35 مکان دیدنی - 2 روز مسکو و 2 روز سنت‌پترزبورگ)</li>
                 </ul>
               </v-col>
             </v-row>
@@ -139,17 +181,14 @@
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
                 هتل و پرواز گارانتی و غیر قابل استرداد می باشد.</li>
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                نرخ کودک زیر دو سال 1.600.000 تومان می باشد.
+                نرخ کودک زیر دو سال 3.600.000 تومان می باشد.
               </li>
 
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                کمیسیون کودک زیر 12 سال نصف بزرگسالان است.
-              </li>
+
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
                 پرواز ماهان ایر رفت به مسکو و برگشت از سنت پترزبورگ
               </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                مسئولیت کنترل پاسپورت به عهده آژانس همکار می باشد.</li>
+
 
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
                 پرداخت 70% کل مبلغ تور در ابتدای ثبت نام ضروری است.
@@ -160,26 +199,132 @@
 
 
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                به کلیه سنین حتی کودکان زیر 2 سال مبلغ 120$ بابت ویزای توریستی اضافه خواهد شد.
+                به کلیه سنین حتی کودکان زیر 2 سال مبلغ 100$ بابت ویزای توریستی اضافه خواهد شد.
               </li>
               <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل زمان لازم جهت اخذ ویزای عادی 8
                 روز کاری و ما به تفاوت ویزای فوری 150$ می‌باشد.</li>
             </ul>
           </div>
           <div class="widthAll" v-else-if="tab == 4">
-            <!-- <v-row class="mb-7 mt-7 mt-sm-0" justify="center">
-                    <h2 class="tabel-tour-title">تنها پرواز مستقیم مسکو</h2>
-                    <img src="@/assets/image/tour/mahan-logo2.jpg" width="150" class="mr-3 logo-tour-title" alt="">
-                  </v-row>
-                  <v-row justify="center">
-                    <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;"
-                      hide-default-footer
-                      :headers="moscowFlightHeaders"
-                      :items="moscowFlights"
-                      class="even-odd-tabel rounded-lg hideOver tabelTour tourPlan tabelTourId"
-                    >
-                    </v-data-table>
-                  </v-row> -->
+            <v-row class="px-6 ">
+              <v-col cols="12">
+                <h3 class="widthAll mb-6 red--text text--darken-2">برنامه سفر:</h3>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  <b class="grey--text text--darken-3">روز اول :</b>
+                  استقبال در فرودگاه مسکو
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز دوم :</b>
+                  حرکت با مترو و بازدید از چند ایستگاه مترو و حرکت به سمت میدان سرخ – سرباز گمنام – باغ الکساندر – نمای
+                  بیرونی کلیسای سنت باسیل – مقبره لنین و در صورت باز بودن فروشگاه تاریخی گوم و ... و بازدید از کرملین(از
+                  داخل کرملین)-صرف ناهار فست فود
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز سوم :</b>
+                  گشت شهری مسکو – بازدید از خیابان قدیمی اربات – پارک پیروزی – تپه گنجشک (بام مسکو) – کلیسای منجی –
+                  ساختمان امور خارجه (نمای بیرونی) - صرف ناهار فست فود
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز چهارم :</b>
+                  زمان آزاد ( استفاده از برنامه های اختیاری )
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز پنجم :</b>
+                  پرواز به سمت شهر سنت پترزبورگ - حرکت به سمت فرودگاه برای انتقال به شهر سنت پترزبورگ (طول مسیر حداقل یک
+                  ساعت)
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز ششم :</b>
+                  گشت شهری سنت پترزبورگ و بازدید از موزه ارمیتاژ - بازدید از خیابان نوسکی – جزیره واسیلی – کلیسای کازان –
+                  بندرگاه قدیمی – میدان نیکلای – میدان قیام – مجسمه کاترین – رود نوا – مجسمه انیچکوف – صرف ناهار - ساختمان
+                  گمرک - کلیسای سنت اسحاق (نمای بیرونی) - میدان قصر - گشت
+                  موزه هرمیتاژ(از داخل موزه) – بازدید از فروشگاه صنایع دستی
+                </p>
+                <p class="mt-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز هفتم :</b>
+                  گشت شب سنت‌پترزبورگ با قایق سواری بهمراه شام در رستوران - بازدید از نمای بیرونی کلیسای خون ریخته شده در
+                  نور پردازی شب -یک ساعت و نیم قایق سواری در رودخانه نوا و کانال های سنت‌پترزبورگ و باز شدن پل ها - بازدید
+                  از پل های معروف شهر
+                </p>
+                <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز هشتم :</b>
+                  زمان آزاد و استفاده از برنامه های اختیاری(باله دریاچه قو - بتغ پترهوف - بازدید از کاخ و باغ پوشکین)
+                </p>
+                <p class="mt-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b
+                    class="grey--text text--darken-3">روز نهم :</b>
+                  حرکت به سمت فرودگاه و پرواز به سمت تهران
+                </p>
+              </v-col>
+              <!-- <v-col cols="12" md="6" class="pr-md-12">
+                <h3 class="red--text text--darken-2 widthAll mb-6">تاریخ های اجرای تور گروهی روسیه :</h3>
+
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  1 – رفت 11 خرداد و برگشت 19 خرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  2 - رفت 18 خرداد و برگشت 26 خرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  3 – رفت 25 خرداد و برگشت 2 تیر
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  4 – حرکت 1 تیر و برگشت 9 تیر
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  5 – حرکت 8 تیر و برگشت 16 تیر
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  6 – حرکت 15 تیر و برگشت 23 تیر
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  7 – حرکت 22 تیر و برگشت 30 تیر
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  8 – حرکت 29 تیر و برگشت 6 مرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  9 – حرکت 5 مرداد و برگشت 13 مرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  10 – حرکت 12 مرداد و برگشت 20 مرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  11 – حرکت 19 مرداد و برگشت 27 مرداد
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  12 – حرکت 26 مرداد و برگشت 3 شهریور
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  13 – حرکت 2 شهریور و برگشت 10 شهریور
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  14 – حرکت 9 شهریور و برگشت 17 شهریور
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  15 – حرکت 16 شهریور و برگشت 24 شهریور
+                </p>
+                <p class="mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour widthAll"
+                  style="font-family:Byekan !important">
+                  16 – حرکت 23 شهریور و برگشت 31 شهریور
+                </p>
+              </v-col> -->
+            </v-row>
           </div>
           <div class="widthAll" v-else-if="tab == 5">
             <v-row justify="center">
@@ -298,7 +443,7 @@
 .countryNmae {
   margin-right: -52px;
   background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
-  font-size: 62px;
+  font-size: 52px;
   font-weight: bold;
 }
 
@@ -399,7 +544,7 @@
   }
 
   .countryNmae {
-    font-size: 46px;
+    font-size: 26px;
   }
 
   .tourImageBackground {
@@ -417,7 +562,7 @@
   }
 
   .countryNmae {
-    font-size: 40px;
+    font-size: 20px;
   }
 
   .tour-date {
@@ -462,7 +607,7 @@
     }
 
     .countryNmae {
-      font-size: 24px;
+      font-size: 14px;
       margin-right: -35px;
       padding-right: 35px !important;
     }
@@ -498,7 +643,7 @@
   }
 
   .countryNmae {
-    font-size: 26px;
+    font-size: 16px;
     margin-right: -35px;
     padding-right: 35px !important;
   }
@@ -614,6 +759,341 @@
   }
 }
 </style>
+<style>
+* {
+  letter-spacing: -0.7px !important;
+}
+
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 98.5%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+
+.tourPageTitle h3,
+.tourPageTitle span {
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.tourPageTitle h3:hover {
+  color: rgb(44, 44, 44);
+  background: #fff;
+}
+
+.tourPageTitle h3:hover .lighter {
+  /* content: ""; */
+  /* position: absolute; */
+  /* height: 15px;
+      width: 67%; */
+  background: #ffeb3b !important;
+  /* top: 47%;
+      right: 16%;
+      z-index: -1; */
+}
+
+.tourPageTitle span {
+  color: rgb(44, 44, 44);
+}
+
+.v-slide-group__wrapper .v-slide-group__content {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.tabTitles {
+  color: #fff;
+}
+
+.active {
+  color: rgb(44, 44, 44) !important;
+  background: #fff;
+  z-index: 1;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 67%;
+  background: #4973c03a;
+  top: 47%;
+  right: 16%;
+  z-index: -1;
+}
+
+.countryNmae {
+  margin-right: -52px;
+  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+  font-size: 62px;
+  font-weight: bold;
+}
+
+.tour-date {
+  margin-right: -52px;
+  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+}
+
+.main-div {
+  margin-top: -300px;
+}
+
+.logo-tour-title {
+  height: 35px;
+}
+
+.see-more {
+  font-weight: normal;
+  font-size: small;
+  text-decoration: underline;
+}
+
+.galeryImageParent {
+  width: 24%;
+}
+
+.galeryImage {
+  position: relative;
+}
+
+.galeryImage::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  /* background-color: #0000006e; */
+  z-index: 2222;
+  top: 0;
+  opacity: 1;
+}
+
+.galeryImage:hover.galeryImage::after {
+  opacity: 0;
+}
+
+.galeryImage:hover {
+  box-shadow: 0 0 5px rgb(59, 59, 59);
+}
+
+.even-odd-tabel tbody tr:nth-child(even) {
+  /* background-color: #4972c017 !important; */
+}
+
+.active::before {
+  background: #faf2e8;
+}
+
+@media (min-width:960px) and (max-width:1263px) {
+  .main-div {
+    margin-top: -265px;
+  }
+
+  .countryNmae {
+    font-size: 46px;
+  }
+
+  .tourImageBackground {
+    height: 97.5%;
+  }
+}
+
+@media (min-width:600px) and (max-width:959px) {
+  .main-div {
+    margin-top: -210px;
+  }
+
+  .tourImageBackground {
+    height: 96.5%;
+  }
+
+  .countryNmae {
+    font-size: 40px;
+  }
+
+  .tour-date {
+    font-size: 16px;
+  }
+
+  .tabTitles {
+    font-size: 15px !important;
+  }
+
+  .tabelTour {
+    width: 80% !important
+  }
+
+  .text-tour {
+    font-size: 14px;
+  }
+
+  .tabel-tour-title {
+    font-size: 18px !important;
+  }
+
+  .text-tour-call-us {
+    font-size: 16px;
+  }
+
+  .galeryImageParent {
+    width: 45%;
+  }
+
+  @media (max-width:774px) {
+    .main-div {
+      margin-top: -164px;
+    }
+
+    .tourImageBackground {
+      height: 96.5%;
+    }
+
+    .countryNmae {
+      font-size: 24px;
+      margin-right: -35px;
+      padding-right: 35px !important;
+    }
+
+    .tour-date {
+      font-size: 12px;
+      margin-right: -35px;
+      padding-right: 35px !important;
+    }
+
+    .tabTitles {
+      font-size: 13px !important;
+    }
+  }
+}
+
+@media (max-width:599px) {
+  .indexDiv {
+    width: 95% !important;
+  }
+
+  .main-div {
+    margin-top: -200px;
+  }
+
+  .backgroundImageTour {
+    width: 200%;
+  }
+
+  .countryNmae {
+    font-size: 26px;
+    margin-right: -35px;
+    padding-right: 35px !important;
+  }
+
+  .tour-date {
+    font-size: 14px;
+    margin-right: -35px;
+    padding-right: 35px !important;
+  }
+
+  .tabTitles {
+    font-size: 14px;
+    /* background: #fff; */
+    /* border: 1px solid #b37b63; */
+  }
+
+  .tabelTour {
+    width: 100% !important
+  }
+
+  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
+    min-height: 35px !important;
+    justify-content: center;
+  }
+
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
+    display: inline-block;
+    width: 50%;
+    position: relative;
+  }
+
+  .v-application--is-ltr .v-data-table__mobile-row__cell {
+    text-align: center;
+  }
+
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
+    content: '<-----------------------------------------------';
+    position: absolute;
+    width: 46%;
+    right: 80%;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap;
+    direction: ltr;
+    display: flex;
+    justify-content: start;
+  }
+
+  .tabelTour * {
+    font-size: 13px;
+  }
+
+  .text-tour {
+    font-size: 14px;
+  }
+
+  .tabel-tour-title {
+    font-size: 16px !important;
+  }
+
+  .text-tour-call-us {
+    font-size: 14px;
+  }
+
+  .tourPageTitle h3,
+  .tourPageTitle span {
+    /* color:black !important */
+  }
+
+  .tourImageBackground {
+    height: 97.5%;
+  }
+
+  .logo-tour-title {
+    height: 30px;
+  }
+
+  .tourPageTitle {
+    /* background-color: #fff; */
+  }
+
+  .tourPageTitle {
+    width: 500px;
+  }
+
+  .galeryImageParent {
+    width: 95%;
+  }
+
+  @media (max-width:400px) {
+    .main-div {
+      margin-top: -185px;
+    }
+  }
+}
+</style>
+
+
 <script>
 export default {
   name: 'Moscow-St.Petersburg-9days',
@@ -623,7 +1103,7 @@ export default {
   data: () => ({
     tab: 0,
 
-    pricesHeaderMoskow: [
+    priceHeader: [
       { text: 'ردیف', align: 'center', sortable: true, value: 'id', width: '90px' },
       { text: 'هتل', filterable: true, align: 'center', sortable: true, value: 'name' },
       { text: 'درجه', sortable: true, value: 'star', align: 'center', width: '100px', },
@@ -632,8 +1112,8 @@ export default {
       { text: 'کودک با تخت', sortable: true, value: 'baby', align: 'center', },
       { text: 'کودک بدون تخت', sortable: false, value: 'baby2', align: 'center', },
     ],
-    pricesItemsMoskow: [],
-    moscowFlightHeaders: [
+    // prices: [],
+    flights: [
       { text: 'ردیف', sortable: true, value: 'id', align: 'center', width: 10 },
       { text: 'مسیر', align: 'center', sortable: false, value: 'from' },
       { text: 'شنبه', sortable: false, value: 'time1', align: 'center', },
@@ -718,6 +1198,34 @@ export default {
       // },
     ],
     imageDialog: false,
+    priceHeaders: [
+      {
+        text: 'درجه هتل ها',
+        align: 'center',
+        sortable: false,
+        value: 'name',
+      },
+      { text: '5 ستاره', sortable: false, value: 'calories', align: 'center', },
+
+    ],
+    prices: [
+      {
+        name: 'هرنفر در اتاق 2 تخته',
+        calories: '53,900,000 تومان',
+      },
+      {
+        name: 'هرنفر در اتاق 1 تخته',
+        calories: '62,900,000 تومان',
+      },
+      {
+        name: 'کودک با تخت 6 تا 12 ساله',
+        calories: '45,700,000 تومان',
+      },
+      {
+        name: 'کودک بدون تخت',
+        calories: '30,500,000 تومان',
+      },
+    ],
   }),
   methods: {
 
@@ -726,31 +1234,40 @@ export default {
     window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور 9 روز مسکو-سنت‌پترزبورگ|تور لحظه آخری مسکو'
-    let newObjectDate = [
-      {
-        نام: 'Vega Hotel-Holiday inn Vorota',
-        درجه: 4,
-        دوتخته: '48.900.000',
-        تکنفره: '68.000.000',
-        کودک: '43.700.000',
-        کودک2: '28.500.000',
-        کمیسیون: '1.600.000'
-      },
-    ]
-    var pricesItemsMoskow = []
-    for (let i = 0; i < newObjectDate.length; i++) {
-      pricesItemsMoskow.push({
-        id: i + 1,
-        name: newObjectDate[i].نام,
-        star: newObjectDate[i].درجه,
-        coosion: newObjectDate[i].کمیسیون,
-        duble: newObjectDate[i].دوتخته,
-        single: newObjectDate[i].تکنفره,
-        baby: newObjectDate[i].کودک,
-        baby2: newObjectDate[i].کودک2,
-      })
-      this.pricesItemsMoskow = pricesItemsMoskow;
-    }
+    // let newObjectDate = [
+    //   {
+    //     نام: 'Vega Hotel',
+    //     درجه: 4,
+    //     دوتخته: '48.900.000',
+    //     تکنفره: '68.000.000',
+    //     کودک: '43.700.000',
+    //     کودک2: '28.500.000',
+    //     کمیسیون: '1.600.000'
+    //   },
+    //   {
+    //     نام: 'Holiday inn Vorota',
+    //     درجه: 4,
+    //     دوتخته: '48.900.000',
+    //     تکنفره: '68.000.000',
+    //     کودک: '43.700.000',
+    //     کودک2: '28.500.000',
+    //     کمیسیون: '1.600.000'
+    //   },
+    // ]
+    // var prices = []
+    // for (let i = 0; i < newObjectDate.length; i++) {
+    //   prices.push({
+    //     id: i + 1,
+    //     name: newObjectDate[i].نام,
+    //     star: newObjectDate[i].درجه,
+    //     coosion: newObjectDate[i].کمیسیون,
+    //     duble: newObjectDate[i].دوتخته,
+    //     single: newObjectDate[i].تکنفره,
+    //     baby: newObjectDate[i].کودک,
+    //     baby2: newObjectDate[i].کودک2,
+    //   })
+    //   this.prices = prices;
+    // }
 
   }
 }

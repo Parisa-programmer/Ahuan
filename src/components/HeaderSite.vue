@@ -436,6 +436,18 @@ export default {
                 text: 'سوئیس - ترکیه(8روز)',
                 link: '/tour/europe/Switzerland-Turkiye-8days'
               },
+              {
+                text: 'فرانسه - ایتالیا - امارات(13روز)',
+                link: '/tour/europe/France-Italy-UAE-9days'
+              },
+              {
+                text: 'فرانسه - سوئیس - ایتالیا - امارات(14روز)',
+                link: '/tour/europe/France-Switzerland-Italy-UAE-14days'
+              },
+              {
+                text: 'سوئیس - اتریش - اسلواکی - مجارستان - امارات(13روز)',
+                link: '/tour/europe/Switzerland-Austria-Slovakia-Hungary-Emirates-13days'
+              },
             ]
           },
           {

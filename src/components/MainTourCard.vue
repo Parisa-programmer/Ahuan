@@ -13,6 +13,7 @@
           <v-col cols="12" sm="6" lg="3">
             <v-row justify="center">
               <h4 class="" style="font-family:Byekan !important">{{ item.title }} </h4>
+              <h4 v-if="item.title2" class="" style="font-family:Byekan !important">{{ item.title2 }} </h4>
             </v-row>
             <v-row v-if="item.airline && item.airline == 'ترکیش-ماهان-ایران-ایر'" justify="center" class="mt-1 mt-sm-4">
               <img src="@/assets/image/tour/Turkish_Airlines_logo2.png" class="mx-2" width='70' alt="">

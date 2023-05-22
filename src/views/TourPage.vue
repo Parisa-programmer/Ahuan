@@ -11,7 +11,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Istanbul">
+              <router-link to="/tour/Istanbul">
                 <v-img height="220" src="../assets/image/tourSlider/0001.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -30,7 +30,7 @@
           <v-col cols="12" sm="6" md="8" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-top"
               data-aos-duration="2000">
-              <router-link to="/Europe">
+              <router-link to="/tour/Europe">
                 <v-img height="220" src="../assets/image/tourSlider/0004.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -49,7 +49,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-left"
               data-aos-duration="2000">
-              <router-link to="/Dubai">
+              <router-link to="/tour/Dubai">
                 <v-img height="220" src="../assets/image/tourSlider/0003.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -68,7 +68,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 ml-md-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Srilanka">
+              <router-link to="/tour/Srilanka">
                 <v-img height="220" src="../assets/image/tourSlider/0002.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -87,7 +87,7 @@
           <v-col cols="12" sm="12" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-md-2 rounded-lg hideOver" data-aos="fade-right"
               data-aos-duration="2000">
-              <router-link to="/Moscow">
+              <router-link to="/tour/Moscow">
                 <v-img height="220" src="../assets/image/tourSlider/0006.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -96,7 +96,7 @@
                       <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور روسیه</h1>
                     </v-row>
                     <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 19.900 میلیون</span>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 22.700 میلیون</span>
                     </v-row>
                   </div>
                 </v-row>
@@ -106,7 +106,7 @@
           <v-col cols="12" sm="6" md="8" class="scroll-reveal box left pa-0">
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-top"
               data-aos-duration="2000">
-              <router-link to="/Thailand">
+              <router-link to="/tour/Thailand">
                 <v-img height="220" src="../assets/image/tourSlider/0007.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -125,7 +125,7 @@
           <v-col cols="12" sm="6" md="4" class="pa-0">
             <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-left"
               data-aos-duration="2000">
-              <router-link to="/Thailand-Malaysia">
+              <router-link to="/tour/Thailand-Malaysia">
                 <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
@@ -147,7 +147,29 @@
     </v-row>
   </div>
 </template>
- 
+<style scoped>
+.maintourImages {
+  opacity: 0;
+  transition: all 400ms;
+}
+
+.maintourImages:hover {
+  opacity: 1;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7231267507002801) 0%, rgba(0, 0, 0, 0.08727240896358546) 100%);
+}
+
+.v-expansion-panel:before {
+  box-shadow: 0 0 0;
+}
+
+@media (max-width: 960px) {
+  .maintourImages {
+    opacity: 1;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7231267507002801) 0%, rgba(0, 0, 0, 0.08727240896358546) 100%);
+  }
+}
+</style>
+
 <script>
 import axios from 'axios'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'

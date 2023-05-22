@@ -88,10 +88,10 @@
                   <v-row class="grey lighten-4 rounded-lg relative" style="height: 45px;" justify="center" align="center">
                     <v-col cols="5" v-if="selectedSection.title != 'هتل' && selectedSection.title != 'آهوان'"
                       class="originCityParent relative">
-                      <v-autocomplete top v-model="originCity" id="originCity" :menu-props="{ closeOnClick: true, }"
-                        ref="originCity" :rules="emptyRules2" :items="external ? otherCityesOrigin : persianCityes"
-                        :search-input.sync="originSearchInput" :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'"
-                        class="font-small-xs hideArrow headerCityes"
+                      <v-autocomplete :menu-props="{ closeOnClick: true, bottom: false, offsetY: true }" location="end"
+                        v-model="originCity" id="originCity" ref="originCity" :rules="emptyRules2"
+                        :items="external ? otherCityesOrigin : persianCityes" :search-input.sync="originSearchInput"
+                        :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'" class="font-small-xs hideArrow headerCityes"
                         :class="originCity && originCity.length ? 'pt-2' : 'pt-0'" prepend-inner-icon="mdi-map-marker"
                         @click="viiblePeaple = false" @change="changeHeaderInput('originCity')">
                         <template v-slot:no-data>
@@ -133,17 +133,16 @@
                   <div
                     class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
                     style="background-color: #f5f5f5;border-radius: 5px;">
-                    <date-picker  :show="show" ref="date1" color="#bf0000" format="YYYY-MM-DD" clearable: true
+                    <date-picker :show="show" ref="date1" color="#bf0000" format="YYYY-MM-DD" clearable: true
                       v-model="date1" locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit
                       :min="minDate"
                       :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
-                      style=""  @close="show = false; changeDate1()"
-                      @open=" viiblePeaple = false " >
-                      <template #header-date="{  formattedDate }">
-    {{date1.length ? formattedDate : 'انتخاب تاریخ'}}
-  </template>
-                      </date-picker>
-                    <div @click=" show = show == true ? false : true "
+                      style="" @close="show = false; changeDate1()" @open=" viiblePeaple = false">
+                      <template #header-date="{ formattedDate }">
+                        {{ date1.length ? formattedDate : 'انتخاب تاریخ' }}
+                      </template>
+                    </date-picker>
+                    <div @click=" show = show == true ? false : true"
                       class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
                       style="z-index:22;padding: 10px 4px;color:#424242;top:0">
                       <v-icon class="showPopup" style="color:#424242;">
@@ -157,25 +156,25 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <div class="relative">
-                    <v-text-field readOnly v-model=" allPeaples " prepend-inner-icon="mdi-account"
-                      @click=" viiblePeaple = !viiblePeaple "
+                    <v-text-field readOnly v-model="allPeaples" prepend-inner-icon="mdi-account"
+                      @click=" viiblePeaple = !viiblePeaple"
                       class="font-small-xs form-control headerBoxFields hideEventPeaple darkInput"></v-text-field>
-                    <div v-if=" viiblePeaple " class="allPeaplesAfter rounded-lg hideOver widthAll absolute white"
+                    <div v-if="viiblePeaple" class="allPeaplesAfter rounded-lg hideOver widthAll absolute white"
                       style="z-index: 3;top: 40px;">
-                      <div v-for="(      room, i      ) in        headerRooms       " :key=" i " class="my-3">
+                      <div v-for="(      room, i      ) in        headerRooms       " :key="i" class="my-3">
                         <v-row align="center"
-                          v-if=" selectedSection.title != 'پرواز' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار' && selectedSection.title != 'بیمه' ">
+                          v-if="selectedSection.title != 'پرواز' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار' && selectedSection.title != 'بیمه'">
                           <v-col>
                             <h3 class="pa-3 float-right">اتاق {{ i == 0 ? 'اول' : i == 1 ? 'دوم' : i == 2 ? 'سوم' :
                               'چهارم'
-                              }}</h3>
+                            }}</h3>
                           </v-col>
                           <v-col>
                             <v-icon class="pt-2 pl-3 float-left red--text cursorPointer"
-                              @click=" headerRooms.length > 1 ? headerRooms.splice(i, 1) : ''; selectedRooms.length > 1 ? selectedRooms = [] : ''; roomTab = null; changeRoomValue() ">mdi-delete</v-icon>
+                              @click=" headerRooms.length > 1 ? headerRooms.splice(i, 1) : ''; selectedRooms.length > 1 ? selectedRooms = [] : ''; roomTab = null; changeRoomValue()">mdi-delete</v-icon>
                             <span class="mt-3 float-left caption red--text cursorPointer"
                               style="font-family:Byekan !important;"
-                              @click=" headerRooms.length > 1 ? headerRooms.splice(i, 1) : ''; selectedRooms.length > 1 ? selectedRooms = [] : ''; roomTab = null; changeRoomValue() ">حذف</span>
+                              @click=" headerRooms.length > 1 ? headerRooms.splice(i, 1) : ''; selectedRooms.length > 1 ? selectedRooms = [] : ''; roomTab = null; changeRoomValue()">حذف</span>
                           </v-col>
                         </v-row>
                         <v-row class="my-4 my-sm-6 body-2 px-2" style="font-family: Byekan !important;">
@@ -185,12 +184,12 @@
                               بالا)</span>
                           </v-col>
                           <v-col>
-                            <v-icon @click=" room.peaple > 1 ? room.peaple-- : ''; changeRoomValue() "
+                            <v-icon @click=" room.peaple > 1 ? room.peaple-- : ''; changeRoomValue()"
                               class="green--text float-left" light>
                               mdi-minus-circle
                             </v-icon>
                             <h4 class="float-left mx-3 ">{{ room.peaple }}</h4>
-                            <v-icon @click=" room.peaple++; changeRoomValue() " class="green--text float-left" light>
+                            <v-icon @click=" room.peaple++; changeRoomValue()" class="green--text float-left" light>
                               mdi-plus-circle
                             </v-icon>
                           </v-col>
@@ -201,13 +200,13 @@
                             <span class="caption grey--text " style="font-family: Byekan !important;">(2-12 سال)</span>
                           </v-col>
                           <v-col>
-                            <v-icon @click=" room.child > 0 ? room.child-- : ''; changeRoomValue() "
+                            <v-icon @click=" room.child > 0 ? room.child-- : ''; changeRoomValue()"
                               class="green--text float-left" light>
                               mdi-minus-circle
                             </v-icon>
                             <h4 class="float-left mx-3">{{ room.child }}</h4>
                             <v-icon
-                              @click=" (((room.peaple * 2) - (room.child) - (room.baby)) > 0) && room.child++; changeRoomValue() "
+                              @click=" (((room.peaple * 2) - (room.child) - (room.baby)) > 0) && room.child++; changeRoomValue()"
                               class="green--text float-left" light>
                               mdi-plus-circle
                             </v-icon>
@@ -222,59 +221,58 @@
                               سال)</span>
                           </v-col>
                           <v-col>
-                            <v-icon @click=" room.baby > 0 ? room.baby-- : ''; changeRoomValue() "
+                            <v-icon @click=" room.baby > 0 ? room.baby-- : ''; changeRoomValue()"
                               class="green--text float-left" light>
                               mdi-minus-circle
                             </v-icon>
                             <h4 class="float-left mx-3">{{ room.baby }}</h4>
                             <v-icon
-                              @click=" (((room.peaple * 2) - (room.child) - (room.baby)) > 0) && room.baby++; changeRoomValue() "
+                              @click=" (((room.peaple * 2) - (room.child) - (room.baby)) > 0) && room.baby++; changeRoomValue()"
                               class="green--text float-left" light>
                               mdi-plus-circle
                             </v-icon>
                           </v-col>
                         </v-row>
-                        <v-divider v-if=" i < headerRooms.length - 1 "></v-divider>
+                        <v-divider v-if="i < headerRooms.length - 1"></v-divider>
                       </div>
                       <div class="my-2"
-                        v-if=" selectedSection.title != 'پرواز' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار' && selectedSection.title != 'بیمه' ">
-                        <span v-if=" headerRooms.length < 4 " class="mr-4 caption cursorPointer red--text"
-                          @click=" headerRooms.push({ peaple: 1, child: 0, baby: 0 }); changeRoomValue() "
+                        v-if="selectedSection.title != 'پرواز' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار' && selectedSection.title != 'بیمه'">
+                        <span v-if="headerRooms.length < 4" class="mr-4 caption cursorPointer red--text"
+                          @click=" headerRooms.push({ peaple: 1, child: 0, baby: 0 }); changeRoomValue()"
                           style="font-family:Byekan !important;">+افزودن اتاق</span>
                       </div>
                       <v-divider></v-divider>
                       <div class="pa-3">
-                        <v-btn @click=" viiblePeaple = false " class="widthAll" color="red" dark>تایید - {{ allPeaples
-                          }}</v-btn>
+                        <v-btn @click=" viiblePeaple = false" class="widthAll" color="red" dark>تایید - {{ allPeaples
+                        }}</v-btn>
                       </div>
                     </div>
                   </div>
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4"
-                :lg=" selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3 "
-                :xl=" selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3 "
-                class="px-2 py-1" :class=" byReturn == 3 && 'd-none d-lg-block' ">
+                :lg="selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
+                :xl="selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
+                class="px-2 py-1" :class="byReturn == 3 && 'd-none d-lg-block'">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-btn dark color="red" class="widthAll mt-md-4 mt-lg-0 pt-6 pb-5 ronded-xl searchInHeaderBox"
-                    @click=" searchInHeaderBox " style="border-radius: 7px;"
-                    :class=" byReturn == 3 && 'd-none d-lg-flex' ">جستجو</v-btn>
+                    @click="searchInHeaderBox" style="border-radius: 7px;"
+                    :class="byReturn == 3 && 'd-none d-lg-flex'">جستجو</v-btn>
                 </v-skeleton-loader>
               </v-col>
             </v-row>
-            <v-row align="center" v-show=" byReturn == 3 "
-              class="justify-center justify-lg-start borderFlight rounded-lg'">
+            <v-row align="center" v-if="byReturn == 3" class="justify-center justify-lg-start borderFlight rounded-lg'">
               <v-col cols="12" sm="6" md="4" lg="4" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-row class="grey lighten-4 rounded-lg relative" style="height: 45px;" justify="center" align="center">
                     <v-col cols="5" class="originCityParent2 relative">
-                      <v-autocomplete v-model=" allFlights[0].originCity " id="originCity2" :items=" otherCityesOrigin3 "
-                        ref="originCity2" :rules=" byReturn == 3 ? emptyRules2 : [] "
-                        :search-input.sync=" originSearchInput2 " label="مبدا دوم"
+                      <v-autocomplete v-model="allFlights[0].originCity" id="originCity2" :items="otherCityesOrigin3"
+                        ref="originCity2" :rules="byReturn == 3 ? emptyRules2 : []"
+                        :search-input.sync="originSearchInput2" label="مبدا دوم"
                         class="font-small-xs hideArrow headerCityes"
-                        :class=" allFlights[0].originCity && allFlights[0].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('originCity0') ">
+                        :class="allFlights[0].originCity && allFlights[0].originCity.length ? 'pt-2' : 'pt-0'"
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('originCity0')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -282,17 +280,17 @@
                       </v-autocomplete>
                     </v-col>
                     <v-col cols="2">
-                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(0) "> mdi-swap-horizontal
+                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(0)"> mdi-swap-horizontal
                       </v-icon>
                     </v-col>
                     <v-col cols="5" class="destinationInternalParent2 relative">
-                      <v-autocomplete v-model=" allFlights[0].destinationInternal " ref="destinationInternal2"
+                      <v-autocomplete v-model="allFlights[0].destinationInternal" ref="destinationInternal2"
                         id="destinationInternal2" class="font-small-xs hideArrow"
-                        :search-input.sync=" destinationSearchInput2 "
-                        :class=" allFlights[0].destinationInternal && allFlights[0].destinationInternal.length ? 'pt-2' : 'pt-0' "
-                        :items=" otherCityesOrigin4 " :rules=" byReturn == 3 ? emptyRules2 : [] " label="مقصد دوم"
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('destinationInternal0') ">
+                        :search-input.sync="destinationSearchInput2"
+                        :class="allFlights[0].destinationInternal && allFlights[0].destinationInternal.length ? 'pt-2' : 'pt-0'"
+                        :items="otherCityesOrigin4" :rules="byReturn == 3 ? emptyRules2 : []" label="مقصد دوم"
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('destinationInternal0')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -304,43 +302,34 @@
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
-                  <!-- <div
-                    class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
-                    style="background-color: #f5f5f5;border-radius: 5px;">
-                    <date-picker :show="show" ref="date1" format="YYYY-MM-DD" clearable v-model="date1" locale="fa,en"
-                      :locale-config="localeConfig" popover="right" auto-submit :min="minDate"
-                      :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
-                      style="opacity:0" @close="show = false; changeDate1()" />
-                    <div @click=" show = show == true ? false : true "
-                      class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
-                      style="z-index:22;padding: 10px 4px;color:#424242;top:0">
-                      <v-icon class="showPopup" style="color:#424242;">
-                        mdi-calendar-month
-                      </v-icon>
-                      {{ (date1 && date1.length) ? selectedDate : 'انتخاب تاریخ' }}
+                  <v-skeleton-loader class="inputLoader" type="card-heading">
+                    <div class="input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
+                      style="background-color: #f5f5f5;border-radius: 5px;">
+                      <date-picker :show="showDate2" ref="date2" color="#bf0000" format="YYYY-MM-DD" clearable: true
+                        v-model="allFlights[0].date" locale="fa,en" :locale-config="localeConfig" popover="right"
+                        auto-submit :min="minDate" :range="false" style="" @close="showDate2 = false; changeDate2()"
+                        @open=" viiblePeaple = false">
+                        <template #header-date="{ formattedDate }">
+                          {{ allFlights[0].date && allFlights[0].date.length ? formattedDate : 'انتخاب تاریخ' }}
+                        </template>
+                      </date-picker>
+                      <div @click=" showDate2 = showDate2 == true ? false : true"
+                        class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup2 absolute"
+                        style="z-index:22;padding: 10px 4px;color:#424242;top:0">
+                        <v-icon class="showPopup2" style="color:#424242;">
+                          mdi-calendar-month
+                        </v-icon>
+                        {{ (allFlights[0].date && allFlights[0].date.length) ? selectedDate2 : 'انتخاب تاریخ' }}
+                      </div>
                     </div>
-                  </div> -->
-                  <div class="input-group relative font-small-xs form-control headerBoxFields grey rounded-xl"
-                    style="background-color: #f5f5f5;border-radius: 10px;">
-                    <input type="text" ref="dtp2" value="" data-name="dtp2-text"
-                      class="cursorPointer heightAll widthAll absolute dtp " readOnly
-                      style="top:0;left:50%;opacity: 0;width:0;z-index:1;width:100%" id="dtp2">
-                    <input class="d-none" data-name="dtp2-date">
-                    <div class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup2"
-                      style="z-index:22;padding: 10px 4px;color:#424242">
-                      <v-icon class="showPopup2" style="color:#424242">
-                        mdi-calendar-month
-                      </v-icon>
-                      {{ allFlights[0].date ? allFlights[0].date : 'انتخاب تاریخ' }}
-                    </div>
-                  </div>
+                  </v-skeleton-loader>
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-btn color="white" outlined
                     class="widthAll mt-sm-4 mt-md-0 pt-6 pb-5 ronded-xl red--text addFlightButton"
-                    @click=" addFlight(0, flightCityes.length > 1 ? 'delete' : 'add') " style="border-radius: 7px;">
+                    @click=" addFlight(0, flightCityes.length > 1 ? 'delete' : 'add')" style="border-radius: 7px;">
                     <v-icon right color="red">
                       mdi-plus
                     </v-icon>
@@ -349,20 +338,19 @@
                 </v-skeleton-loader>
               </v-col>
             </v-row>
-            <v-row align="center" v-show=" byReturn == 3 && flightCityes.length > 1 "
+            <v-row align="center" v-if="byReturn == 3 && flightCityes.length > 1"
               class="justify-center justify-lg-start borderFlight rounded-lg'">
               <v-col cols="12" sm="6" md="4" lg="4" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-row class="grey lighten-4 rounded-lg relative" style="height: 45px;" justify="center" align="center">
                     <v-col cols="5" class="originCityParent3 relative">
-                      <v-autocomplete v-model=" allFlights[1].originCity " id="originCity3" ref="originCity3"
-                        :items=" otherCityesOrigin5 "
-                        :rules=" (byReturn == 3 && flightCityes.length > 1) ? emptyRules2 : [] "
-                        :search-input.sync=" originSearchInput3 " label="مبدا سوم"
+                      <v-autocomplete v-model="allFlights[1].originCity" id="originCity3" ref="originCity3"
+                        :items="otherCityesOrigin5" :rules="(byReturn == 3 && flightCityes.length > 1) ? emptyRules2 : []"
+                        :search-input.sync="originSearchInput3" label="مبدا سوم"
                         class="font-small-xs hideArrow headerCityes"
-                        :class=" allFlights[1].originCity && allFlights[1].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('originCity1') ">
+                        :class="allFlights[1].originCity && allFlights[1].originCity.length ? 'pt-2' : 'pt-0'"
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('originCity1')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -370,18 +358,17 @@
                       </v-autocomplete>
                     </v-col>
                     <v-col cols="2">
-                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(1) "> mdi-swap-horizontal
+                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(1)"> mdi-swap-horizontal
                       </v-icon>
                     </v-col>
                     <v-col cols="5" class="destinationInternalParent3 relative">
-                      <v-autocomplete v-model=" allFlights[1].destinationInternal " ref="destinationInternal3"
+                      <v-autocomplete v-model="allFlights[1].destinationInternal" ref="destinationInternal3"
                         id="destinationInternal3" class="font-small-xs hideArrow"
-                        :search-input.sync=" destinationSearchInput3 "
-                        :class=" allFlights[1].destinationInternal && allFlights[1].destinationInternal.length ? 'pt-2' : 'pt-0' "
-                        :items=" otherCityesOrigin6 "
-                        :rules=" (byReturn == 3 && flightCityes.length > 1) ? emptyRules2 : [] " label="مقصد سوم"
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('destinationInternal1') ">
+                        :search-input.sync="destinationSearchInput3"
+                        :class="allFlights[1].destinationInternal && allFlights[1].destinationInternal.length ? 'pt-2' : 'pt-0'"
+                        :items="otherCityesOrigin6" :rules="(byReturn == 3 && flightCityes.length > 1) ? emptyRules2 : []"
+                        label="مقصد سوم" prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('destinationInternal1')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -392,7 +379,7 @@
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
-                <v-skeleton-loader class="inputLoader" type="card-heading">
+                <!-- <v-skeleton-loader class="inputLoader" type="card-heading">
                   <div class="input-group relative font-small-xs form-control headerBoxFields grey rounded-xl"
                     style="background-color: #f5f5f5;border-radius: 10px;">
                     <input type="text" ref="dtp3" value="" data-name="dtp3-text"
@@ -407,13 +394,34 @@
                       {{ allFlights[1].date ? allFlights[1].date : 'انتخاب تاریخ' }}
                     </div>
                   </div>
+                </v-skeleton-loader> -->
+                <v-skeleton-loader class="inputLoader" type="card-heading">
+                  <div class="input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
+                    style="background-color: #f5f5f5;border-radius: 5px;">
+                    <date-picker :show="showDate3" ref="date3" color="#bf0000" format="YYYY-MM-DD" clearable: true
+                      v-model="allFlights[1].date" locale="fa,en" :locale-config="localeConfig" popover="right"
+                      auto-submit :min="minDate" :range="false" style="" @close="showDate3 = false; changeDate3()"
+                      @open=" viiblePeaple = false">
+                      <template #header-date="{ formattedDate }">
+                        {{ allFlights[1].date && allFlights[1].date.length ? formattedDate : 'انتخاب تاریخ' }}
+                      </template>
+                    </date-picker>
+                    <div @click=" showDate3 = showDate3 == true ? false : true"
+                      class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup3 absolute"
+                      style="z-index:22;padding: 10px 4px;color:#424242;top:0">
+                      <v-icon class="showPopup3" style="color:#424242;">
+                        mdi-calendar-month
+                      </v-icon>
+                      {{ (allFlights[1].date && allFlights[1].date.length) ? selectedDate3 : 'انتخاب تاریخ' }}
+                    </div>
+                  </div>
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-btn color="white" outlined
                     class="widthAll mt-sm-4 mt-md-0 pt-6 pb-5 ronded-xl red--text addFlightButton"
-                    @click=" addFlight(1, flightCityes.length > 2 ? 'delete' : 'add') " style="border-radius: 7px;">
+                    @click=" addFlight(1, flightCityes.length > 2 ? 'delete' : 'add')" style="border-radius: 7px;">
                     <v-icon right color="red">
                       mdi-plus
                     </v-icon>
@@ -422,20 +430,19 @@
                 </v-skeleton-loader>
               </v-col>
             </v-row>
-            <v-row align="center" v-show=" byReturn == 3 && flightCityes.length > 2 "
+            <v-row align="center" v-if="byReturn == 3 && flightCityes.length > 2"
               class="justify-center justify-lg-start borderFlight rounded-lg'">
               <v-col cols="12" sm="6" md="4" lg="4" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-row class="grey lighten-4 rounded-lg relative" style="height: 45px;" justify="center" align="center">
                     <v-col cols="5" class="originCityParent4 relative">
-                      <v-autocomplete v-model=" allFlights[2].originCity " id="originCity4" ref="originCity4"
-                        :items=" otherCityesOrigin7 "
-                        :rules=" (byReturn == 3 && flightCityes.length > 2) ? emptyRules2 : [] "
-                        :search-input.sync=" originSearchInput4 " label="مبدا چهارم"
+                      <v-autocomplete v-model="allFlights[2].originCity" id="originCity4" ref="originCity4"
+                        :items="otherCityesOrigin7" :rules="(byReturn == 3 && flightCityes.length > 2) ? emptyRules2 : []"
+                        :search-input.sync="originSearchInput4" label="مبدا چهارم"
                         class="font-small-xs hideArrow headerCityes"
-                        :class=" allFlights[2].originCity && allFlights[2].originCity.length ? 'pt-2' : 'pt-0' "
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('originCity2') ">
+                        :class="allFlights[2].originCity && allFlights[2].originCity.length ? 'pt-2' : 'pt-0'"
+                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('originCity2')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -443,18 +450,17 @@
                       </v-autocomplete>
                     </v-col>
                     <v-col cols="2">
-                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(2) "> mdi-swap-horizontal
+                      <v-icon class="rounded-circle grey lighten-2 pa-1" @click=" exchangeCity(2)"> mdi-swap-horizontal
                       </v-icon>
                     </v-col>
                     <v-col cols="5" class="destinationInternalParent4 relative">
-                      <v-autocomplete v-model=" allFlights[2].destinationInternal " ref="destinationInternal4"
+                      <v-autocomplete v-model="allFlights[2].destinationInternal" ref="destinationInternal4"
                         id="destinationInternal4" class="font-small-xs hideArrow"
-                        :search-input.sync=" destinationSearchInput4 "
-                        :class=" allFlights[2].destinationInternal && allFlights[2].destinationInternal.length ? 'pt-2' : 'pt-0' "
-                        :items=" otherCityesOrigin8 "
-                        :rules=" (byReturn == 3 && flightCityes.length > 2) ? emptyRules2 : [] " label="مقصد چهارم"
-                        prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false "
-                        @change=" changeHeaderInput('destinationInternal2') ">
+                        :search-input.sync="destinationSearchInput4"
+                        :class="allFlights[2].destinationInternal && allFlights[2].destinationInternal.length ? 'pt-2' : 'pt-0'"
+                        :items="otherCityesOrigin8" :rules="(byReturn == 3 && flightCityes.length > 2) ? emptyRules2 : []"
+                        label="مقصد چهارم" prepend-inner-icon="mdi-map-marker" @click=" viiblePeaple = false"
+                        @change=" changeHeaderInput('destinationInternal2')">
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -465,7 +471,7 @@
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
-                <v-skeleton-loader class="inputLoader" type="card-heading">
+                <!-- <v-skeleton-loader class="inputLoader" type="card-heading">
                   <div class="input-group relative font-small-xs form-control headerBoxFields grey rounded-xl"
                     style="background-color: #f5f5f5;border-radius: 10px;">
                     <input type="text" ref="dtp4" value="" data-name="dtp4-text"
@@ -480,13 +486,34 @@
                       {{ allFlights[2].date ? allFlights[2].date : 'انتخاب تاریخ' }}
                     </div>
                   </div>
+                </v-skeleton-loader> -->
+                <v-skeleton-loader class="inputLoader" type="card-heading">
+                  <div class="input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
+                    style="background-color: #f5f5f5;border-radius: 5px;">
+                    <date-picker :show="showDate4" ref="date4" color="#bf0000" format="YYYY-MM-DD" clearable: true
+                      v-model="allFlights[2].date" locale="fa,en" :locale-config="localeConfig" popover="right"
+                      auto-submit :min="minDate" :range="false" style="" @close="showDate4 = false; changeDate4()"
+                      @open=" viiblePeaple = false">
+                      <template #header-date="{ formattedDate }">
+                        {{ allFlights[2].date && allFlights[2].date.length ? formattedDate : 'انتخاب تاریخ' }}
+                      </template>
+                    </date-picker>
+                    <div @click=" showDate4 = showDate4 == true ? false : true"
+                      class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup4 absolute"
+                      style="z-index:22;padding: 10px 4px;color:#424242;top:0">
+                      <v-icon class="showPopup4" style="color:#424242;">
+                        mdi-calendar-month
+                      </v-icon>
+                      {{ (allFlights[2].date && allFlights[2].date.length) ? selectedDate4 : 'انتخاب تاریخ' }}
+                    </div>
+                  </div>
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-btn color="white" outlined
                     class="widthAll mt-sm-4 mt-md-0 pt-6 pb-5 ronded-xl red--text addFlightButton"
-                    @click=" addFlight(2, 'delete') " style="border-radius: 7px;">
+                    @click=" addFlight(2, 'delete')" style="border-radius: 7px;">
                     <v-icon right color="red">
                       mdi-plus
                     </v-icon>
@@ -503,14 +530,14 @@
               </v-col>
             </v-row> -->
           </v-card>
-          <v-card v-show=" selectedSection.title == 'بیمه' " class=" rounded-lg px-4 py-4 py-ms-8 py-md-12 text-center">
+          <v-card v-show="selectedSection.title == 'بیمه'" class=" rounded-lg px-4 py-4 py-ms-8 py-md-12 text-center">
             <h3 class="grey--text text--darken-2 font-small-xs">این قسمت از سایت در حال توسعه میباشد...</h3>
           </v-card>
         </v-form>
       </div>
     </v-row>
     <!-- alert -->
-    <v-alert v-if=" showAlert " dark class="white--text fixed" :type=" alertType "
+    <v-alert v-if="showAlert" dark class="white--text fixed" :type="alertType"
       style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">{{ alertText }}</v-alert>
   </div>
 </template>
@@ -555,15 +582,37 @@ export default {
         $('.showPopup').css("color", "red");
       }
     },
+    selectedDate2() {
+      if (this.allFlights[0].date && this.allFlights[0].date.length) {
+        $('.showPopup2').css("color", "#424242");
+      } else {
+        $('.showPopup2').css("color", "red");
+      }
+    },
+    selectedDate3() {
+      if (this.allFlights[1].date && this.allFlights[1].date.length) {
+        $('.showPopup3').css("color", "#424242");
+
+      } else {
+        $('.showPopup3').css("color", "red");
+      }
+    },
+    selectedDate4() {
+      if (this.allFlights[2].date && this.allFlights[2].date.length) {
+        $('.showPopup4').css("color", "#424242");
+
+      } else {
+        $('.showPopup4').css("color", "red");
+      }
+    },
     byReturn() {
       this.flightCityes = [
         {
           originCity: '',
           destinationInternal: '',
           date: ''
-        }
+        },
       ]
-      console.log(this.$refs.date1);
       this.date1 = ''
       this.$refs.date1.setDate(null)
 
@@ -932,7 +981,10 @@ export default {
     alertText: '',
     date1: null,
     show: false,
+    showDate2: false,
+    showDate3: false,
     showDate1: false,
+    showDate4: false,
     allSections: [
       {
         icon: 'mdi-airplane',
@@ -1071,6 +1123,9 @@ export default {
       { label: "Zahedan, ZAH - زاهدان", code: "Zahedan, ZAH", text: "زاهدان" }
     ],
     selectedDate: '',
+    selectedDate2: '',
+    selectedDate3: '',
+    selectedDate4: '',
     headerRooms: [
       {
         peaple: 1,
@@ -1095,25 +1150,14 @@ export default {
         date: '',
         timestamp: 0
       },
-      {
-        originCity: '',
-        destinationInternal: '',
-        date: '',
-        timestamp: 0
-      },
-      {
-        originCity: '',
-        destinationInternal: '',
-        date: '',
-        timestamp: 0
-      },
+
     ],
     flightCityes: [
       {
         originCity: '',
         destinationInternal: '',
         date: ''
-      }
+      },
     ],
     destinationSearchInput3: '',
     destinationSearchInput4: '',
@@ -1166,6 +1210,51 @@ export default {
 
       }
       this.selectedDate = variabel
+    },
+    changeDate2() {
+      let date = this.$refs.date2.value
+      let variabel = ''
+      let options = { day: 'numeric', month: 'long' };
+      if (date && date.length == 2) {
+        variabel = (new Date(date[0]).toLocaleDateString('fa-IR', options) + ' الی ' + new Date(date[1]).toLocaleDateString('fa-IR', options));
+
+      } else if (date) {
+        variabel = new Date(date).toLocaleDateString('fa-IR', options);
+      } else {
+        $('.showPopup2').css("color", "red");
+      }
+
+      this.selectedDate2 = variabel
+    },
+    changeDate3() {
+      let date = this.$refs.date3.value
+      let variabel = ''
+      let options = { day: 'numeric', month: 'long' };
+      if (date && date.length == 2) {
+        variabel = (new Date(date[0]).toLocaleDateString('fa-IR', options) + ' الی ' + new Date(date[1]).toLocaleDateString('fa-IR', options));
+
+      } else if (date) {
+        variabel = new Date(date).toLocaleDateString('fa-IR', options);
+      } else {
+        $('.showPopup3').css("color", "red");
+      }
+
+      this.selectedDate3 = variabel
+    },
+    changeDate4() {
+      let date = this.$refs.date4.value
+      let variabel = ''
+      let options = { day: 'numeric', month: 'long' };
+      if (date && date.length == 2) {
+        variabel = (new Date(date[0]).toLocaleDateString('fa-IR', options) + ' الی ' + new Date(date[1]).toLocaleDateString('fa-IR', options));
+
+      } else if (date) {
+        variabel = new Date(date).toLocaleDateString('fa-IR', options);
+      } else {
+        $('.showPopup4').css("color", "red");
+      }
+
+      this.selectedDate4 = variabel
     },
     changeRoomValue() {
       var rooms = this.headerRooms
@@ -1453,7 +1542,14 @@ export default {
               '&adl=' + adl +
               '&chd=' + childs +
               '&inf=' + inf
-            window.location.href = self.searchLink;
+            if (self.byReturn != 3) {
+              window.location.href = self.searchLink;
+            } else {
+              self.alertText = 'این قسمت از سایت در حال توسعه میباشد!';
+              self.alertType = 'success';
+              self.showAlert = true;
+            }
+
             break;
           default:
             break;
@@ -1481,7 +1577,38 @@ export default {
             this.$refs.date1.focus()
           }
           break;
+        case 'originCity0':
+          if (self.allFlights[0].originCity) {
+            self.$refs.destinationInternal2.$refs.menu.isActive = true;
+          }
 
+          break;
+        case 'destinationInternal0':
+          if (self.allFlights[0].destinationInternal) {
+            this.showDate2 = true
+          }
+          break;
+        case 'originCity1':
+          if (self.allFlights[1].originCity) {
+            self.$refs.destinationInternal3.$refs.menu.isActive = true;
+          }
+
+          break;
+        case 'destinationInternal1':
+          if (self.allFlights[1].destinationInternal) {
+            this.showDate3 = true
+          }
+          break;
+        case 'originCity2':
+          if (self.allFlights[2].originCity) {
+            self.$refs.destinationInternal4.$refs.menu.isActive = true;
+          }
+          break;
+        case 'destinationInternal2':
+          if (self.allFlights[2].destinationInternal) {
+            this.showDate4 = true
+          }
+          break;
         default:
           break;
       }
@@ -1504,8 +1631,10 @@ export default {
         $('.showPopup , .showPopup2 , .showPopup3 , .showPopup4').css("color", '#424242')
       }
       else {
+        console.log(this.flightCityes[index], this.allFlights[index]);
         this.flightCityes.splice(index, 1)
         this.allFlights.splice(index, 1)
+        console.log(this.flightCityes, this.allFlights);
       }
     },
     disabelDate(formatted, dateMoment, checkingFor) {
@@ -1518,475 +1647,7 @@ export default {
     showPeaple() {
       this.viiblePeaple = !this.viiblePeaple
     },
-    jquery() {
-      //   // jquery codes
-      //   // create datepicker
-      //   var self = this
-      //   var showDatePicker1 = false
-      //   var showDatePicker2 = false
-      //   var showDatePicker3 = false
-      //   var showDatePicker4 = false
-      //   setTimeout(() => {
-      //     const dtp1 = new mds.MdsPersianDateTimePicker(document.getElementById('dtp1'), {
-      //       targetTextSelector: '[data-name="dtp1-text"]',
-      //       targetDateSelector: '[data-name="dtp1-date"]',
-      //       disableBeforeDate: new Date(),
-      //     });
 
-      //     // const dtp2 = new mds.MdsPersianDateTimePicker(document.getElementById('dtp2'), {
-      //     //   targetTextSelector: '[data-name="dtp2-text"]',
-      //     //   targetDateSelector: '[data-name="dtp2-date"]',
-      //     //   disableBeforeDate: new Date(),
-      //     // });
-
-      //     // const dtp3 = new mds.MdsPersianDateTimePicker(document.getElementById('dtp3'), {
-      //     //   targetTextSelector: '[data-name="dtp3-text"]',
-      //     //   targetDateSelector: '[data-name="dtp3-date"]',
-      //     //   disableBeforeDate: new Date(),
-      //     // });
-
-      //     // const dtp4 = new mds.MdsPersianDateTimePicker(document.getElementById('dtp4'), {
-      //     //   targetTextSelector: '[data-name="dtp4-text"]',
-      //     //   targetDateSelector: '[data-name="dtp4-date"]',
-      //     //   disableBeforeDate: new Date(),
-      //     // });
-
-      //     // // define it for geoargian or solar button
-      //     // var firstAppend = 0
-      //     // var firstAppend2 = 0
-      //     // var firstAppend3 = 0
-      //     // var firstAppend4 = 0
-
-      //     // $(document).on('hide.bs.popover', '#dtp1', function () {
-      //     //   $('#dtp1').attr('value', dtp1.getText())
-      //     //   var selectedDate = dtp1.getText()
-      //     //   selectedDate = selectedDate.split(' - ')
-      //     //   let options = { day: 'numeric', month: 'long' };
-      //     //   self.fromDate = new Date(selectedDate[0]).toLocaleDateString('en-US', options);
-      //     //   self.fromDatePersian = new Date(selectedDate[0]).toLocaleDateString('fa-IR', options);
-      //     //   self.toDate = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('en-US', options) : '';
-      //     //   self.toDatePersian = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('fa-IR', options) : '';
-      //     //   self.timestampDate = new Date(selectedDate[0]).getTime()
-      //     //   if (dtp1.setting.isGregorian) {
-      //     //     self.selectedDate = selectedDate[0] ? (self.fromDate + (self.toDate && ' to ' + self.toDate)) : '';
-      //     //   } else {
-      //     //     self.selectedDate = selectedDate[0] ? (self.fromDatePersian + (self.toDatePersian && ' الی ' + self.toDatePersian)) : '';
-      //     //   }
-      //     //   // showDatePicker1 = false
-      //     // })
-
-      //     // $(document).on('shown.bs.popover', '#dtp1', function () {
-      //     //   // showDatePicker1 = true
-      //     // })
-
-      //     // $(document).on('hide.bs.popover', '#dtp2', function () {
-      //     //   $('#dtp2').attr('value', dtp2.getText())
-      //     //   var selectedDate = dtp2.getText()
-      //     //   if (selectedDate) {
-      //     //     $('.showPopup2').css("color", '#424242')
-      //     //   }
-      //     //   selectedDate = selectedDate.split(' - ')
-      //     //   let options = { day: 'numeric', month: 'long' };
-      //     //   let fromDate = new Date(selectedDate[0]).toLocaleDateString('en-US', options);
-      //     //   let fromDatePersian = new Date(selectedDate[0]).toLocaleDateString('fa-IR', options);
-      //     //   let toDate = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('en-US', options) : '';
-      //     //   let toDatePersian = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('fa-IR', options) : '';
-      //     //   self.allFlights[0].timestamp = new Date(selectedDate[0]).getTime()
-      //     //   if (dtp2.setting.isGregorian) {
-      //     //     self.allFlights[0].date = selectedDate[0] ? (fromDate + (toDate && ' to ' + toDate)) : '';
-      //     //   } else {
-      //     //     self.allFlights[0].date = selectedDate[0] ? (fromDatePersian + (toDatePersian && ' الی ' + toDatePersian)) : '';
-      //     //   }
-      //     // })
-
-      //     // $(document).on('hide.bs.popover', '#dtp3', function () {
-      //     //   $('#dtp3').attr('value', dtp3.getText())
-      //     //   var selectedDate = dtp3.getText()
-      //     //   if (selectedDate) {
-      //     //     $('.showPopup3').css("color", '#424242')
-      //     //   }
-      //     //   selectedDate = selectedDate.split(' - ')
-      //     //   let options = { day: 'numeric', month: 'long' };
-      //     //   let fromDate = new Date(selectedDate[0]).toLocaleDateString('en-US', options);
-      //     //   let fromDatePersian = new Date(selectedDate[0]).toLocaleDateString('fa-IR', options);
-      //     //   let toDate = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('en-US', options) : '';
-      //     //   let toDatePersian = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('fa-IR', options) : '';
-      //     //   self.allFlights[1].timestamp = new Date(selectedDate[0]).getTime()
-      //     //   if (dtp3.setting.isGregorian) {
-      //     //     self.allFlights[1].date = selectedDate[0] ? (fromDate + (toDate && ' to ' + toDate)) : '';
-      //     //   } else {
-      //     //     self.allFlights[1].date = selectedDate[0] ? (fromDatePersian + (toDatePersian && ' الی ' + toDatePersian)) : '';
-      //     //   }
-      //     // })
-
-      //     // $(document).on('hide.bs.popover', '#dtp4', function () {
-      //     //   $('#dtp4').attr('value', dtp4.getText())
-      //     //   var selectedDate = dtp4.getText()
-      //     //   if (selectedDate) {
-      //     //     $('.showPopup4').css("color", '#424242')
-      //     //   }
-      //     //   selectedDate = selectedDate.split(' - ')
-      //     //   let options = { day: 'numeric', month: 'long' };
-      //     //   let fromDate = new Date(selectedDate[0]).toLocaleDateString('en-US', options);
-      //     //   let fromDatePersian = new Date(selectedDate[0]).toLocaleDateString('fa-IR', options);
-      //     //   let toDate = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('en-US', options) : '';
-      //     //   let toDatePersian = selectedDate[1] ? new Date(selectedDate[1]).toLocaleDateString('fa-IR', options) : '';
-      //     //   self.allFlights[2].timestamp = new Date(selectedDate[0]).getTime()
-      //     //   if (dtp4.setting.isGregorian) {
-      //     //     self.allFlights[2].date = selectedDate[0] ? (fromDate + (toDate && ' to ' + toDate)) : '';
-      //     //   } else {
-      //     //     self.allFlights[2].date = selectedDate[0] ? (fromDatePersian + (toDatePersian && ' الی ' + toDatePersian)) : '';
-      //     //   }
-      //     // })
-
-      //     // $('.sections').click(function () {
-      //     //   $('.v-select-list').removeClass("sugestCity")
-      //     //   $('.showPopup , .showPopup2 , .showPopup3 , .showPopup4').css("color", '#424242')
-      //     //   self.$refs.headerInputForm.resetValidation()
-      //     // })
-
-      //     // $('.showPopup').click(function () {
-      //     //   $('#showPeaple').hide();
-      //     //   defultShowDatePicker()
-      //     //   setTimeout(() => {
-      //     //     if (showDatePicker1) {
-      //     //       dtp1.hide();
-      //     //       showDatePicker1 = false
-      //     //     } else {
-      //     //       dtp1.show()
-      //     //       showDatePicker1 = true
-      //     //       if (firstAppend == 0) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="georgian" >میلادی</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       if (firstAppend == 2) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="solar" >solar</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //     }
-      //     //   }, 500);
-      //     // })
-
-      //     // async function defultShowDatePicker() {
-      //     //   var title = self.selectedSection.title
-      //     //   if (title == 'هتل' || title == 'تور' || title == 'آهوان' || self.byReturn == 2) {
-      //     //     dtp1.updateOptions({
-      //     //       rangeSelector: true,
-      //     //       rangeSelectorMonthsToShow: [0, 1],
-      //     //       selectedDateToShow: new Date(),
-      //     //     })
-      //     //   } else if ((title == 'پرواز' || title == 'اتوبوس' || title == 'قطار') && (self.byReturn != 2)) {
-      //     //     dtp1.updateOptions({
-      //     //       rangeSelector: false,
-      //     //       rangeSelectorMonthsToShow: [0, 0],
-      //     //       selectedDateToShow: new Date(),
-      //     //     })
-      //     //   }
-
-      //     // }
-
-      //     // $('.showPopup2').click(function () {
-      //     //   $('#showPeaple').hide();
-      //     //   if (showDatePicker2) {
-      //     //     dtp2.hide()
-      //     //     showDatePicker2 = false
-      //     //   } else {
-      //     //     setTimeout(() => {
-      //     //       dtp2.show()
-      //     //       if (firstAppend2 == 0) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="georgian" >میلادی</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       if (firstAppend2 == 2) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="solar" >solar</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       self.allFlights[0].date = ''
-      //     //       showDatePicker2 = true
-      //     //     }, 500);
-      //     //   }
-
-      //     // })
-
-      //     // $('.showPopup3').click(function () {
-      //     //   $('#showPeaple').hide();
-      //     //   if (showDatePicker3) {
-      //     //     dtp3.hide()
-      //     //     showDatePicker3 = false
-      //     //   } else {
-      //     //     setTimeout(() => {
-      //     //       dtp3.show()
-      //     //       if (firstAppend3 == 0) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="georgian" >میلادی</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       if (firstAppend3 == 2) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="solar" >solar</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       self.allFlights[1].date = ''
-      //     //       showDatePicker3 = true
-      //     //     }, 500);
-
-      //     //   }
-
-      //     // })
-
-      //     // $('.showPopup4').click(function () {
-      //     //   $('#showPeaple').hide();
-      //     //   if (showDatePicker4) {
-      //     //     dtp4.hide()
-      //     //     showDatePicker4 = false
-      //     //   } else {
-      //     //     setTimeout(() => {
-      //     //       dtp4.show()
-      //     //       if (firstAppend4 == 0) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="georgian" >میلادی</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       if (firstAppend4 == 2) {
-      //     //         var r = $('<v-btn class="georgian cursorPointer" id="solar" >solar</v-btn>');
-      //     //         $(".popover").append(r);
-      //     //       }
-      //     //       self.allFlights[2].date = ''
-      //     //       showDatePicker4 = true
-      //     //     }, 500);
-      //     //   }
-
-      //     // })
-
-      //     // $(document).on('click', '#georgian', function () {
-      //     //   dtp1.updateOptions({
-      //     //     isGregorian: true
-      //     //   });
-      //     //   dtp2.updateOptions({
-      //     //     isGregorian: true
-      //     //   });
-      //     //   dtp3.updateOptions({
-      //     //     isGregorian: true
-      //     //   });
-      //     //   dtp4.updateOptions({
-      //     //     isGregorian: true
-      //     //   });
-      //     //   $(".popover").removeClass('persianDate')
-      //     //   $(".popover").addClass('solarDate')
-      //     //   firstAppend = 2
-      //     //   firstAppend2 = 2
-      //     //   firstAppend3 = 2
-      //     //   firstAppend4 = 2
-      //     //   showDatePicker1 = false
-      //     //   showDatePicker2 = false
-      //     //   showDatePicker3 = false
-      //     //   showDatePicker4 = false
-      //     // });
-
-      //     // $(document).on('click', '#solar', function () {
-      //     //   dtp1.updateOptions({
-      //     //     isGregorian: false
-      //     //   });
-      //     //   dtp2.updateOptions({
-      //     //     isGregorian: false
-      //     //   });
-      //     //   dtp3.updateOptions({
-      //     //     isGregorian: false
-      //     //   });
-      //     //   dtp4.updateOptions({
-      //     //     isGregorian: false
-      //     //   });
-      //     //   $(".popover").removeClass('solarDate')
-      //     //   $(".popover").addClass('persianDate')
-      //     //   firstAppend = 0
-      //     //   firstAppend2 = 0
-      //     //   firstAppend3 = 0
-      //     //   firstAppend4 = 0
-      //     //   showDatePicker1 = false
-      //     //   showDatePicker2 = false
-      //     //   showDatePicker3 = false
-      //     //   showDatePicker4 = false
-      //     // });
-
-      //     // $('.hideEventPeaple').click(function () {
-      //     //   $('#showPeaple').toggle()
-      //     // })
-
-
-
-      //     // $(document).on('click', '.originCityParent', function () {
-      //     //   if (self.external) {
-      //     //     let index = self.AllotherCityes.findIndex(x => x.text == self.originCity)
-      //     //     if (!self.originCity || index != (-1)) {
-      //     //       $('.v-select-list').addClass("sugestCity")
-      //     //       self.otherCityesOrigin = self.AllotherCityes
-      //     //     } else {
-      //     //       $('.v-select-list').removeClass("sugestCity")
-      //     //     }
-      //     //   } else if (self.selectedSection.title != 'هتل' || self.selectedSection.title != 'آهوان') {
-      //     //     let variabel = [
-      //     //       { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-      //     //       { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-      //     //       { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-      //     //       { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-      //     //       { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-      //     //       { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-      //     //       { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
-      //     //     ]
-      //     //     if (self.originCity) {
-      //     //       let index = variabel.findIndex(x => x.text == self.originCity)
-      //     //       if (index == (-1)) {
-      //     //         self.persianCityes = self.AllpersianCityes
-      //     //         $('.v-select-list').removeClass("sugestCity")
-      //     //       } else {
-      //     //         $('.v-select-list').addClass("sugestCity")
-      //     //         self.persianCityes = variabel
-      //     //       }
-      //     //     } else {
-      //     //       $('.v-select-list').addClass("sugestCity")
-      //     //       self.persianCityes = variabel
-      //     //     }
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.originCityParent2', function () {
-      //     //   let variabel = self.allFlights[0].originCity
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == variabel)
-      //     //   if (!self.allFlights[0].originCity || index != (-1)) {
-      //     //     $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin3 = self.AllotherCityes
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.originCityParent3', function () {
-
-      //     //   let variabel = self.allFlights[1].originCity
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == variabel)
-      //     //   if (!self.allFlights[1].originCity || index != (-1)) {
-      //     //     $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin5 = self.AllotherCityes
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.originCityParent4', function () {
-
-      //     //   let variabel = self.allFlights[2].originCity
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == variabel)
-      //     //   if (!self.allFlights[2].originCity || index != (-1)) {
-      //     //     $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin7 = self.AllotherCityes
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.destinationInternalParent', function () {
-      //     //   if (self.external) {
-      //     //     let index = self.AllotherCityes.findIndex(x => x.text == self.destinationInternal)
-      //     //     if (!self.destinationInternal || index != (-1)) {
-      //     //       $('.v-select-list').addClass("sugestCity")
-      //     //       self.otherCityesOrigin2 = self.AllotherCityes
-      //     //     } else {
-      //     //       $('.v-select-list').removeClass("sugestCity")
-      //     //     }
-      //     //   } else if (self.selectedSection.title != 'هتل' && self.selectedSection.title != 'آهوان') {
-      //     //     let variabel = [
-      //     //       { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-      //     //       { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-      //     //       { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-      //     //       { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-      //     //       { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-      //     //       { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-      //     //       { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
-      //     //     ]
-      //     //     if (self.destinationInternal) {
-      //     //       let index = variabel.findIndex(x => x.text == self.destinationInternal)
-      //     //       if (index == (-1)) {
-      //     //         self.persianCityes2 = self.AllpersianCityes
-      //     //         // $('.v-select-list').removeClass("sugestCity")
-      //     //       } else {
-      //     //         // $('.v-select-list').addClass("sugestCity")
-      //     //         self.persianCityes2 = variabel
-      //     //       }
-      //     //     } else {
-      //     //       $('.v-select-list').addClass("sugestCity")
-      //     //       self.persianCityes2 = variabel
-      //     //     }
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.destinationInternalParent2', function () {
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == self.allFlights[0].destinationInternal)
-      //     //   if (!self.allFlights[0].destinationInternal || index != (-1)) {
-      //     //     // $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin4 = self.AllotherCityes
-      //     //   } else {
-      //     //     // $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.destinationInternalParent3', function () {
-
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == self.allFlights[1].destinationInternal)
-      //     //   if (!self.allFlights[1].destinationInternal || index != (-1)) {
-      //     //     $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin6 = self.AllotherCityes
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // $(document).on('click', '.destinationInternalParent4', function () {
-      //     //   let index = self.AllotherCityes.findIndex(x => x.text == self.allFlights[2].destinationInternal)
-      //     //   if (!self.allFlights[2].destinationInternal || index != (-1)) {
-      //     //     $('.v-select-list').addClass("sugestCity")
-      //     //     self.otherCityesOrigin8 = self.AllotherCityes
-      //     //   } else {
-      //     //     $('.v-select-list').removeClass("sugestCity")
-      //     //   }
-      //     // })
-
-      //     // // $(".slick-tour").slick({
-      //     // //   slidesToShow: self.windowWidth > 1400 ? 4 : (self.windowWidth <= 1400 && self.windowWidth > 960) ? 3 : (self.windowWidth <= 960 && self.windowWidth > 774) ? 3 : (self.windowWidth <= 774 && self.windowWidth > 599) ? 2 : 1,
-      //     // //   slidesToScroll: 1,
-      //     // //   rtl: true,
-      //     // //   autoplay: true,
-      //     // //   autoplaySpeed: 2000,
-      //     // // });
-
-      //     // $(".slick-title").slick({
-      //     //   slidesToShow: self.windowWidth > 1400 ? 3 : (self.windowWidth <= 1400 && self.windowWidth > 960) ? 3 : (self.windowWidth <= 960 && self.windowWidth > 599) ? 2 : 1,
-      //     //   slidesToScroll: 1,
-      //     //   rtl: true,
-      //     //   autoplay: true,
-      //     //   autoplaySpeed: 2500,
-      //     // });
-
-      //     // $(".slick-logo").slick({
-      //     //   slidesToShow: self.windowWidth > 1400 ? 5 : (self.windowWidth <= 1400 && self.windowWidth > 960) ? 4 : (self.windowWidth <= 960 && self.windowWidth > 775) ? 3 : (self.windowWidth <= 775 && self.windowWidth > 599) ? 2 : 1,
-      //     //   slidesToScroll: 1,
-      //     //   rtl: true,
-      //     //   autoplay: true,
-      //     //   autoplaySpeed: 2500,
-      //     // });
-      //     // self.showSlider = true;
-      //     // self.startTypeAnimation = true
-      //     // // var typed = new Typed('#typed', {
-      //     // //   stringsElement: '#typed-strings',
-      //     // //   typeSpeed: 200,
-      //     // //   backSpeed: 80,
-      //     // //   backDelay: 2000,
-      //     // //   startDelay: 2000,
-      //     // //   loop: true,
-      //     // // });
-
-
-      //   }, 1000);
-      //   self.isLoading = false
-    },
     toggleDate() {
       // if (this.showDate1) {
       //   this.showDate1 = false
@@ -2008,13 +1669,13 @@ export default {
     )
 
     setTimeout(() => {
-      this.selectedSection= {
-      icon: 'mdi-airplane',
-      title: 'پرواز',
-      active: true,
-    }
+      this.selectedSection = {
+        icon: 'mdi-airplane',
+        title: 'پرواز',
+        active: true,
+      }
     }, 1000);
-    
+
 
 
   },

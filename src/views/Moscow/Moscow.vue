@@ -7,9 +7,9 @@
     </div>
     <v-row justify="center">
       <div class="my-6 indexDiv">
-        
+
         <main-tour-card :cards="cards" />
-        
+
       </div>
     </v-row>
   </div>
@@ -50,17 +50,17 @@ export default {
         nights: 'شروع قیمت از 22.700.000 تومان',
         route: '/tour/moscow/Moscow-5days',
         download: require('@/assets/image/پکیج مسکو.jpg'),
-        date:'روز‌های پرواز: همه‌روزه'
+        date: 'همه‌روزه بغیر از شنبه‌ها'
       },
       {
         image: require('@/assets/image/tour/rus-1.jpg'),
-        title: 'مسکو+سنت پترزبورگ (9 روز)',
+        title: 'مسکو + سنت پترزبورگ (10 روز)',
         airline: 'ماهان',
         hotelStar: '4',
-        nights: 'شروع قیمت از 48.900.000 تومان',
+        nights: 'شروع قیمت از 53.900.000 تومان',
         route: '/tour/moscow/Moscow-St.Petersburg-9days',
         download: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
-        date:'تاریخ حرکت: 11 خرداد (تور گروهی)'
+        date: 'ویژه 10 خرداد (تور گروهی)'
       },
     ]
   }),

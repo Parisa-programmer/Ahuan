@@ -95,7 +95,7 @@
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">4‌ شب اقامت در هتل با
                     صبحانه</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر دو طرفه فرودگاهی
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر اختصاصی فرودگاهی
                     به هتل</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیت رفت و برگشت پرواز
                     ماهان ایر</li>
@@ -117,45 +117,36 @@
             </v-row>
           </div>
           <div class="widthAll" v-else-if="tab == 3">
-            <ul class="my-3 mr-9">
-              <h3 class="tabel-tour-title red--text mb-6 mt-12 mt-sm-0">نکات ضروری تورهای روسیه</h3>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify ">
-                نرخ ها به تومان محاسبه شده است.
-              </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">هتل و پرواز گارانتی و غیر قابل
-                استرداد می باشد.</li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                کمیسیون کودک زیر 12 سال نصف بزرگسالان است.
-              </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">مسئولیت کنترل پاسپورت به عهده آژانس
-                همکار می باشد.</li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                پرداخت 70% کل مبلغ تور در ابتدای ثبت نام ضروری است.
-              </li>
+                  <ul class="my-3 mr-9">
+                    <h3 class="tabel-tour-title red--text mb-6 mt-12 mt-sm-0">نکات ضروری تورهای روسیه</h3>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify ">
+                      نرخ ها به تومان محاسبه شده است.
+                    </li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">هتل و پرواز گارانتی و غیر قابل استرداد می باشد.</li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                      پرداخت 70% کل مبلغ تور در ابتدای ثبت نام ضروری است.
+                    </li>
+                    
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                      بیمه افراد بالای 60 سال الزامی است و هزینه مازاد خواهد داشت.
+                    </li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پروازهای ماهان ایر در روزهای یکشنبه ، دوشنبه ، چهارشنبه و جمعه از از فرودگاه 
+                      <span class="red--text">SHERMITOVA</span>
+                      <!--  -->
+                      مسکو انجام می‌شود.پروازهای ماهان ایر در روزهای سه‌شنبه و پنجشنبه از از فرودگاه
+                      <span class="red--text">VENOCOVA</span>
+                      مسکو انجام می‌شود.
+                    </li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت درخواست مسافر با مدت اقامت طولانی تر قابل محاسبه و توسط مشاوران اجرا خواهد شد.</li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                      قیمت‌های موجود در پکیج با نرخ دلار 45.000 تومان
 
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                بیمه افراد بالای 60 سال الزامی است و هزینه مازاد خواهد داشت.
-              </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پروازهای ماهان ایر در روزهای یکشنبه ،
-                دوشنبه ، چهارشنبه و جمعه از از فرودگاه
-                <span class="red--text">SHERMITOVA</span>
-                <!--  -->
-                مسکو انجام می‌شود.پروازهای ماهان ایر در روزهای سه‌شنبه و پنجشنبه از از فرودگاه
-                <span class="red--text">VENOCOVA</span>
-                مسکو انجام می‌شود.
-              </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت درخواست مسافر با مدت اقامت
-                طولانی تر قابل محاسبه و توسط مشاوران اجرا خواهد شد.</li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                قیمت‌های موجود در پکیج با نرخ دلار 45.000 تومان
-
-                محاسبه شده است در صورت هرگونه افزایش
-                نرخ مابه التفاوت محاسبه خواهد شد.
-              </li>
-              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل زمان لازم جهت اخذ ویزای عادی 8
-                روز کاری و ما به تفاوت ویزای فوری 150$ می‌باشد.</li>
-            </ul>
-          </div>
+                      محاسبه شده است در صورت هرگونه افزایش
+                      نرخ مابه التفاوت محاسبه خواهد شد.
+                    </li>
+                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل زمان لازم جهت اخذ ویزای عادی 8 روز کاری و ما به تفاوت ویزای فوری 150$ می‌باشد.</li>
+                  </ul>
+                </div>
           <div class="widthAll" v-else-if="tab == 4">
             <v-row class="mb-7 mt-7 mt-sm-0" justify="center">
               <h2 class="tabel-tour-title">تنها پرواز مستقیم مسکو</h2>
@@ -607,7 +598,6 @@ export default {
       { text: 'یک تخته', sortable: true, value: 'single', align: 'center', },
       { text: 'کودک با تخت', sortable: true, value: 'baby', align: 'center', },
       { text: 'کودک بدون تخت', sortable: false, value: 'baby2', align: 'center', },
-      { text: 'کمیسیون', sortable: true, value: 'coosion', align: 'center', },
 
     ],
     pricesItemsMoskow: [],

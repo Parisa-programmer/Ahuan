@@ -8,7 +8,7 @@
       <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <h1 class="white--text countryNmae px-12 d-inline-block">فرانسه - امارات</h1>
         <br>
-        <b class="white--text px-12 tour-date">تاریخ حرکت : 31 فروردین</b>
+        <b class="white--text px-12 tour-date">2 شهریور - 9 شهریور -16 شهریور - 23 شهریور</b>
         <!-- <v-row style="overflow-x: scroll;">
                 <div>
                   <v-row class="tourPageTitle mt-12 mt-sm-0 mt-lg-12 pt-sm-6 pt-md-12">
@@ -140,7 +140,7 @@
               </div>
               <v-col cols="12" lg="6">
                 <v-row class="mb-7" justify="center">
-                  <h2 class="tabel-tour-title"> حرکت 31 فروردین هواپیمایی</h2>
+                  <h2 class="tabel-tour-title"> 2 - 9 - 16 - 23 (شهریور) هواپیمایی</h2>
                   <img src="@/assets/image/tour/emarat_logo.png" class="mr-3 logo-tour-title" alt="">
                 </v-row>
                 <v-row justify="center">
@@ -701,19 +701,19 @@ export default {
     prices: [
       {
         name: 'هرنفر در اتاق 2 تخته',
-        calories: '1,790 یورو + 37,990,000 تومان',
+        calories: '1,890 یورو + 39,990,000 تومان',
       },
       {
         name: 'هرنفر در اتاق 1 تخته',
-        calories: '2,490 یورو + 37,990,000 تومان',
+        calories: '2,890 یورو + 39,990,000 تومان',
       },
       {
         name: 'کودک 4-11 ساله با تخت',
-        calories: '1,290 یورو + 34,990,000 تومان',
+        calories: '1,490 یورو + 29,990,000 تومان',
       },
       {
         name: 'کودک 4-2 ساله بدون تخت',
-        calories: '690 یورو + 34,990,000 تومان',
+        calories: '1.390 یورو + 34,990,000 تومان',
       },
     ],
     flightHeaders: [
@@ -728,7 +728,7 @@ export default {
     flights: [
       {
         from: 'پرواز از تهران به دبی',
-        time1: '05:30',
+        time1: '04:30',
         time2: '07:20',
         text1: 'EK978',
         text2: 'IKADXB'
@@ -751,7 +751,7 @@ export default {
         from: 'پرواز از دبی به تهران',
         time1: '01:20',
         time2: '04:00',
-        text1: 'EK979',
+        text1: 'EK977',
         text2: 'DXBIKA'
       },
     ],

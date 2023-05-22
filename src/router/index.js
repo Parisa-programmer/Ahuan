@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 
 const routes = [
-  
+
   {
     path: '/',
     name: 'home',
@@ -104,13 +104,28 @@ const routes = [
     component: () => import('../views/Europe/Europe-01.vue')
   },
   {
+    path: '/tour/europe/France-Italy-UAE-9days',
+    name: 'Europe-01-01',
+    component: () => import('../views/Europe/Europe-11.vue')
+  },
+  {
+    path: '/tour/europe/France-Switzerland-Italy-UAE-14days',
+    name: 'Europe-12',
+    component: () => import('../views/Europe/Europe-12.vue')
+  },
+  {
+    path: '/tour/europe/Switzerland-Austria-Slovakia-Hungary-Emirates-13days',
+    name: 'Europe-13',
+    component: () => import('../views/Europe/Europe-13.vue')
+  },
+  {
     path: '/tour/europe/France-Spain-UAE-11days',
     name: 'Europe-02',
     component: () => import('../views/Europe/Europe-02.vue')
   },
   {
     path: '/tour/europe/Switzerland-France-UAE-11-days',
-    name: 'Europe-03',
+    name: 'Europe-03-03',
     component: () => import('../views/Europe/Europe-03-2.vue')
   },
   {
@@ -125,7 +140,7 @@ const routes = [
   },
   {
     path: '/tour/europe/France-Italy-Spain-UAE-14-days',
-    name: 'Europe-05',
+    name: 'Europe-05-05',
     component: () => import('../views/Europe/Europe-05-2.vue')
   },
   {
@@ -214,9 +229,19 @@ const routes = [
     component: () => import('../views/Visa-page/VislineEconomy.vue')
   },
   {
+    path: '/flight',
+    name: 'flight-page',
+    component: () => import('../views/FlightPage.vue')
+  },
+  {
     path: '/visline/vip',
     name: 'visline-vip',
     component: () => import('../views/Visa-page/VislineVip.vue')
+  },
+  {
+    path: '/visline/vip/FIT',
+    name: 'visline-vip-fit',
+    component: () => import('../views/Visa-page/VislineFit')
   },
   {
     path: '/visline/permium',
@@ -227,6 +252,11 @@ const routes = [
     path: '/office-protector-customer-interests',
     name: 'office-protector',
     component: () => import('../views/OfficeProtector.vue')
+  },
+  {
+    path: '/final-tour',
+    name: 'final-tour',
+    component: () => import('../views/FinalTour.vue')
   },
   // {
   //   path: '/tour/:id',

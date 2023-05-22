@@ -16,7 +16,7 @@
       <img src="../assets/image/main-page-image7.jpg" :style="{ opacity: selectedSection.title == 'بیمه' ? '1' : '0' }"
         class="mt-1 absolute" width="100%" alt="" style="transition: all 500ms;">
     </v-row>
-    <input-main @changeActiveSection="changeSection($event)" />
+    <input-main @changeActiveSection="changeSection($event)" page="main" />
     <!-- visline -->
     <v-row justify="center">
       <div class="indexDiv">
@@ -123,7 +123,7 @@
                       <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور روسیه</h1>
                     </v-row>
                     <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 19.900 میلیون</span>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 22.700 میلیون</span>
                     </v-row>
                   </div>
                 </v-row>
@@ -410,7 +410,7 @@
   opacity: .75;
   color: rgb(0, 0, 0);
   font-size: 25px;
-    font-weight: bolder;
+  font-weight: bolder;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -430,7 +430,7 @@
 
 [dir='rtl'] .slick-prev:before {
   content: '←';
-  color:red
+  color: red
 }
 
 .slick-next {
@@ -570,6 +570,8 @@ import InputMain from '@/components/InputMain.vue'
 import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
 const $ = require('jquery');
+import axios from 'axios'
+axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 
 export default {
@@ -680,11 +682,22 @@ export default {
     getWidth() {
       this.windowWidth = window.innerWidth
     },
+    getTours() {
+      axios.get('https://panel.ahuantours.com/api/package/all')
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+    }
 
 
   },
   created() {
-  window.scrollTo(0, 0);
+    this.getTours()
+    window.scrollTo(0, 0);
     this.getWidth();
     this.slickOptions = {
       slidesToShow: this.windowWidth > 1400 ? 3 : (this.windowWidth <= 1400 && this.windowWidth > 960) ? 3 : (this.windowWidth <= 960 && this.windowWidth > 599) ? 2 : 1,
