@@ -78,7 +78,7 @@
             <v-row>
               <div class="widthAll  mb-2">
                 <router-link to="/visline">
-                  <img class="rounded-xl widthAll d-none d-md-block" src="@/assets/image/visline gif.gif" alt="">
+                  <img class="rounded-xl widthAll d-md-block" src="@/assets/image/visline gif.gif" alt="">
                 </router-link>
 
                 <!-- <v-btn color="red" class="widthAll py-8 mt-12" dark>

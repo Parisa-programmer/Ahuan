@@ -184,6 +184,11 @@ const routes = [
     component: () => import('../views/Moscow/Moscow-St-Petersburg.vue')
   },
   {
+    path: '/tour/moscow/Moscow-St.Petersburg-7days',
+    name: 'Moscow-St-Petersburg-7',
+    component: () => import('../views/Moscow/Moscow-St-Petersburg-7days.vue')
+  },
+  {
     path: '/contact-us',
     name: 'contact-us',
     component: () => import('../views/contact-us.vue')

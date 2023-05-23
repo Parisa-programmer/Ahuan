@@ -67,7 +67,11 @@
             </a>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
-            <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'مجله'">مجله گردشگری</span>
+            <router-link to="/final-tour" class="text-decoration-none">
+              <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0 red--text bold" @click="activeLinkMenuHeader = 'لیگ'">
+                تور فینال لیگ قهرمانی
+              </span>
+            </router-link>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <router-link to="/Visa" class="text-decoration-none">
@@ -104,12 +108,12 @@
           </v-skeleton-loader>
         </v-row>
         <v-row class="d-flex d-md-none humberger-header-menue">
-          <v-app-bar-nav-icon @click.stop=" showMenuSmall = !showMenuSmall " style="z-index:1"></v-app-bar-nav-icon>
-          <v-navigation-drawer v-model=" showMenuSmall " fixed right class="menue-list" temporary style="z-index:2;">
+          <v-app-bar-nav-icon @click.stop=" showMenuSmall = !showMenuSmall" style="z-index:1"></v-app-bar-nav-icon>
+          <v-navigation-drawer v-model="showMenuSmall" fixed right class="menue-list" temporary style="z-index:2;">
             <v-list nav dense>
-              <v-list-item-group v-model=" activePage " active-class="red--text text--accent-4 ">
+              <v-list-item-group v-model="activePage" active-class="red--text text--accent-4 ">
                 <a href="/flight" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-airplane</v-icon>
                     <v-list-item-title>
                       پرواز
@@ -117,59 +121,63 @@
                   </v-list-item>
                 </a>
                 <v-list-item
-                  @click=" activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = '' "
-                  :style=" { background: activeLinkMenuHeader == 'تور' ? '#f6d2cb' : '' } " class="rounded-lg">
+                  @click=" activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = ''"
+                  :style="{ background: activeLinkMenuHeader == 'تور' ? '#f6d2cb' : '' }" class="rounded-lg">
                   <v-icon class="ml-2">mdi-account-group</v-icon>
                   <v-list-item-title>تور</v-list-item-title>
 
                 </v-list-item>
-                <div v-if=" activeLinkMenuHeader == 'تور' ">
-                  <div v-for="( link, i ) in  links[0].subLinks " :key=" i " class="my-2">
-                    <v-list-group :key=" link.text " no-action :value=" false ">
+                <div v-if="activeLinkMenuHeader == 'تور'">
+                  <div v-for="( link, i ) in  links[0].subLinks " :key="i" class="my-2">
+                    <v-list-group :key="link.text" no-action :value="false">
                       <template v-slot:activator>
                         <v-list-item-title>
                           <span>{{ link.text }}</span>
                         </v-list-item-title>
                       </template>
-                      <v-list-item v-for=" sublink  in  link.sub2 " :key=" sublink.text " class="cursorPointer titleHeader">
-                        <a class="relative widthAll d-flex" :href=" sublink.link "
+                      <v-list-item v-for=" sublink  in  link.sub2 " :key="sublink.text" class="cursorPointer titleHeader">
+                        <router-link class="relative widthAll d-flex" :to="sublink.link"
                           style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
                           <v-list-item-title class="topMenu" style="font-weight: bold;">
                             <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
                             {{ sublink.text }}
-                            <img class="absolute" v-if=" sublink.new " height="43" src="@/assets/image/newYearcard2.png"
+                            <img class="absolute" v-if="sublink.new" height="43" src="@/assets/image/newYearcard2.png"
                               alt="" style="left: 32px;top: -5px;    transform: rotate(-38deg);">
                           </v-list-item-title>
-                        </a>
+                        </router-link>
                       </v-list-item>
                     </v-list-group>
                   </div>
                 </div>
                 <a href="/iranhotels" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-hospital-building</v-icon>
                     <v-list-item-title>هتل آهوان</v-list-item-title>
                   </v-list-item>
                 </a>
-
-                <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
-                  <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon>
-                  <v-list-item-title>مجله گردشگری</v-list-item-title>
-                </v-list-item>
+                <router-link to="/final-tour" class="text-decoration-none">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
+                    <v-icon class="ml-2" color="red">mdi-soccer</v-icon>
+                    <!-- <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon> -->
+                    <v-list-item-title>
+                      <h4 class="red--text">تور فینال لیگ قهرمانی</h4>
+                    </v-list-item-title>
+                  </v-list-item>
+                </router-link>
                 <router-link to="/Visa" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-checkbook</v-icon>
                     <v-list-item-title>خدمات ویزا</v-list-item-title>
                   </v-list-item>
                 </router-link>
                 <router-link to="/office-protector-customer-interests/" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-book-open-page-variant</v-icon>
                     <v-list-item-title>دفتر حافظ منافع مشتری</v-list-item-title>
                   </v-list-item>
                 </router-link>
                 <router-link to="/contact-us" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = '' ">
+                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-newspaper-variant-outline</v-icon>
                     <v-list-item-title>تماس با ما</v-list-item-title>
                   </v-list-item>
@@ -178,14 +186,14 @@
             </v-list>
           </v-navigation-drawer>
           <v-spacer></v-spacer>
-          <v-skeleton-loader class="textLoader d-inline-block " :class=" isLoading && 'mt-2' " type="chip"
-            :loading=" isLoading ">
-            <div v-if=" isLogin " class="cursorPointer" @click=" logOut ">
+          <v-skeleton-loader class="textLoader d-inline-block " :class="isLoading && 'mt-2'" type="chip"
+            :loading="isLoading">
+            <div v-if="isLogin" class="cursorPointer" @click="logOut">
               <span class="font-14 grey--text d-inline-block ml-4">
                 {{ userName }}
               </span>
             </div>
-            <div v-else class="cursorPointer" @click=" loginDialog = true; loginStep = 1; resetLoginForm() ">
+            <div v-else class="cursorPointer" @click=" loginDialog = true; loginStep = 1; resetLoginForm()">
               <v-icon color="grey darken-2" large class="icon-small-xs ml-3 ml-sm-0">
                 mdi-account-outline
               </v-icon>
@@ -198,140 +206,140 @@
       </div>
     </v-row>
     <!-- alert -->
-    <v-alert v-if=" showAlert " dark class="white--text fixed" :type=" alertType "
+    <v-alert v-if="showAlert" dark class="white--text fixed" :type="alertType"
       style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">{{ alertText }}</v-alert>
-    <v-dialog v-if=" loginDialog " class="rounded-lg loginDialog" v-model=" loginDialog " style="z-index: 2" width="450">
+    <v-dialog v-if="loginDialog" class="rounded-lg loginDialog" v-model="loginDialog" style="z-index: 2" width="450">
       <v-card class="pa-2 hideOver relative" style="border-radius: 10px;">
         <div class="rounded-xl absolute grey lighten-4" style="height: 50px;width:50px;bottom:20px;right: -20px;"></div>
         <div class="rounded-circle absolute red lighten-5" style="height: 50px;width:50px;top:-20px;left: -20px;"></div>
         <div class="rounded-xl absolute grey lighten-4" style="height: 45px;width: 106px;bottom: -38px;right: 50%;"></div>
-        <v-icon class="absolute black--text" @click=" loginDialog = false " style="top: 5px;right: 5px;">mdi-close</v-icon>
+        <v-icon class="absolute black--text" @click=" loginDialog = false" style="top: 5px;right: 5px;">mdi-close</v-icon>
         <div class="my-6">
-          <h3 v-if=" loginStep == 2 && UserType == 1 " class="text-center ">
+          <h3 v-if="loginStep == 2 && UserType == 1" class="text-center ">
             تایید شماره موبایل
           </h3>
           <h3
-            v-else-if=" (loginType == 'login' && loginStep != 3) && (UserType == 1 && loginStep == 1 && loginType == 'login') || (UserType == 2 && loginStep == 1 && loginType == 'login') "
+            v-else-if="(loginType == 'login' && loginStep != 3) && (UserType == 1 && loginStep == 1 && loginType == 'login') || (UserType == 2 && loginStep == 1 && loginType == 'login')"
             class="text-center mt-6">
             ورود به حساب کاربری
           </h3>
-          <h4 v-else-if=" loginStep != 3 && UserType == 1 || (UserType == 2 && loginStep == 1 && loginType == 'register') "
+          <h4 v-else-if="loginStep != 3 && UserType == 1 || (UserType == 2 && loginStep == 1 && loginType == 'register')"
             class="text-center mt-6">
             ثبت نام در سایت گردشگری آهوان
           </h4>
-          <span v-if=" showAlert " class="widthAll text-center d-block caption mt-2"
-            :class=" alertType == 'error' ? 'red--text' : 'green--text' " style="font-family: Byekan !important;">{{
-            alertText }}</span>
+          <span v-if="showAlert" class="widthAll text-center d-block caption mt-2"
+            :class="alertType == 'error' ? 'red--text' : 'green--text'" style="font-family: Byekan !important;">{{
+              alertText }}</span>
         </div>
-        <v-row v-if=" loginStep == 1 " justify="center">
+        <v-row v-if="loginStep == 1" justify="center">
           <div class="grey lighten-4 my-6 rounded-lg hideOver body-2" style="width:240px;font-family: Byekan !important;">
             <v-row>
-              <v-col class="py-3 text-center cursorPointer text-center " @click=" UserType = 1 "
-                :class=" UserType == 1 && 'red lighten-5' ">
-                <h4 :class=" UserType == 1 ? 'red--text' : 'grey--text text--darken-1' ">
+              <v-col class="py-3 text-center cursorPointer text-center " @click=" UserType = 1"
+                :class="UserType == 1 && 'red lighten-5'">
+                <h4 :class="UserType == 1 ? 'red--text' : 'grey--text text--darken-1'">
                   مسافر
                 </h4>
               </v-col>
-              <v-col class="py-3 text-center cursorPointer " @click=" UserType = 2 "
-                :class=" UserType == 2 && 'red lighten-5' ">
-                <h4 :class=" UserType == 2 ? 'red--text' : 'grey--text text--darken-1' ">
+              <v-col class="py-3 text-center cursorPointer " @click=" UserType = 2"
+                :class="UserType == 2 && 'red lighten-5'">
+                <h4 :class="UserType == 2 ? 'red--text' : 'grey--text text--darken-1'">
                   شرکت
                 </h4>
               </v-col>
             </v-row>
           </div>
         </v-row>
-        <v-row v-show=" loginStep == 1 " justify="center">
+        <v-row v-show="loginStep == 1" justify="center">
           <v-form ref="loginForm" lazy-validation>
-            <div v-if=" UserType == 1 ">
-              <v-text-field v-if=" loginType == 'register' " outlined class="mt-2 rounded-xl"
-                append-icon="mdi-account-outline" v-model=' loginForm.name ' label="نام" :rules=" nameRules "></v-text-field>
-              <v-text-field v-if=" loginType == 'register' " outlined class="mt-1 rounded-xl"
-                append-icon="mdi-account-outline" v-model=' loginForm.family ' label="نام خانوادگی"
-                :rules=" familyRules "></v-text-field>
+            <div v-if="UserType == 1">
+              <v-text-field v-if="loginType == 'register'" outlined class="mt-2 rounded-xl"
+                append-icon="mdi-account-outline" v-model='loginForm.name' label="نام" :rules="nameRules"></v-text-field>
+              <v-text-field v-if="loginType == 'register'" outlined class="mt-1 rounded-xl"
+                append-icon="mdi-account-outline" v-model='loginForm.family' label="نام خانوادگی"
+                :rules="familyRules"></v-text-field>
               <v-text-field outlined class="mt-1 rounded-xl" label="موبایل" pattern="\d*" type="number"
-                append-icon="mdi-phone" v-model=' loginForm.phone ' :rules=" phoneRules "></v-text-field>
+                append-icon="mdi-phone" v-model='loginForm.phone' :rules="phoneRules"></v-text-field>
             </div>
-            <div v-if=" UserType == 2 && loginType == 'login' " style="width:240px;">
+            <div v-if="UserType == 2 && loginType == 'login'" style="width:240px;">
               <v-row>
-                <v-text-field outlined class="mt-2 rounded-xl" append-icon="mdi-mail" v-model=' loginForm.mail '
-                  label="ایمیل" :rules=" emailRules "></v-text-field>
+                <v-text-field outlined class="mt-2 rounded-xl" append-icon="mdi-mail" v-model='loginForm.mail'
+                  label="ایمیل" :rules="emailRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" type="number" append-icon="mdi-phone" pattern="\d*"
-                  v-model=' loginForm.phone ' label="موبایل" :rules=" phoneRules "></v-text-field>
+                  v-model='loginForm.phone' label="موبایل" :rules="phoneRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" type="password" append-icon="mdi-star"
-                  v-model=' loginForm.password ' label="رمزعبور" :rules=" emptyRules "></v-text-field>
+                  v-model='loginForm.password' label="رمزعبور" :rules="emptyRules"></v-text-field>
               </v-row>
             </div>
-            <div v-if=" UserType == 2 && loginType == 'register' " style="width:240px;">
+            <div v-if="UserType == 2 && loginType == 'register'" style="width:240px;">
               <v-row>
-                <v-text-field outlined class="mt-2 rounded-xl" append-icon="mdi-account-outline" v-model=' loginForm.name '
-                  label="نام نماینده" :rules=" nameRules "></v-text-field>
+                <v-text-field outlined class="mt-2 rounded-xl" append-icon="mdi-account-outline" v-model='loginForm.name'
+                  label="نام نماینده" :rules="nameRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" append-icon="mdi-account-outline"
-                  v-model=' loginForm.family ' label="نام خانوادگی نماینده" :rules=" familyRules "></v-text-field>
+                  v-model='loginForm.family' label="نام خانوادگی نماینده" :rules="familyRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" append-icon="mdi-account-group"
-                  v-model=' loginForm.companeyName ' label="نام شرکت یا آژانس" :rules=" emptyRules "></v-text-field>
-                <v-select v-model=" loginForm.companeyWork " :items=" companeyWorkItems " :rules=" emptyRules " outlined
+                  v-model='loginForm.companeyName' label="نام شرکت یا آژانس" :rules="emptyRules"></v-text-field>
+                <v-select v-model="loginForm.companeyWork" :items="companeyWorkItems" :rules="emptyRules" outlined
                   class="mt-2 rounded-xl" append-icon="mdi-semantic-web" label="حوضه فعالیت شرکت"></v-select>
                 <v-text-field outlined class="mt-1 rounded-xl" type="number" append-icon="mdi-numeric"
-                  v-model=' loginForm.code ' pattern="\d*" label="کد ثبت شرکت" :rules=" emptyRules "></v-text-field>
+                  v-model='loginForm.code' pattern="\d*" label="کد ثبت شرکت" :rules="emptyRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" type="number" append-icon="mdi-phone"
-                  v-model=' loginForm.phone ' pattern="\d*" label="شماره موبایل نماینده" :rules=" phoneRules "></v-text-field>
-                <v-text-field outlined class="mt-1 rounded-xl" append-icon="mdi-mail" v-model=' loginForm.mail '
-                  label="آدرس ایمیل شرکت" :rules=" emailRules "></v-text-field>
+                  v-model='loginForm.phone' pattern="\d*" label="شماره موبایل نماینده" :rules="phoneRules"></v-text-field>
+                <v-text-field outlined class="mt-1 rounded-xl" append-icon="mdi-mail" v-model='loginForm.mail'
+                  label="آدرس ایمیل شرکت" :rules="emailRules"></v-text-field>
                 <v-text-field outlined class="mt-1 rounded-xl" type="password" append-icon="mdi-star"
-                  v-model=' loginForm.password ' label="رمزعبور" :rules=" emptyRules "></v-text-field>
+                  v-model='loginForm.password' label="رمزعبور" :rules="emptyRules"></v-text-field>
               </v-row>
             </div>
           </v-form>
         </v-row>
-        <v-row v-if=" loginStep == 2 && UserType != 2 " justify="center">
+        <v-row v-if="loginStep == 2 && UserType != 2" justify="center">
           <v-form ref="loginOtpForm" lazy-validation>
             <span class="body-2 text-center d-block" style="font-family: Byekan !important;">کد 4 رقمی ارسال شده بر روی
               شماره موبایل را لطفا وارد نمایید.</span>
             <div class="mb-2 mt-4 px-12">
-              <v-otp-input pattern="\d*" v-model=" loginForm.otp " class="mx-6 mx-md-12" length="4"></v-otp-input>
+              <v-otp-input pattern="\d*" v-model="loginForm.otp" class="mx-6 mx-md-12" length="4"></v-otp-input>
             </div>
           </v-form>
         </v-row>
         <v-row
-          v-if=" loginStep == 3 || (UserType == 2 && loginType == 'register' && loginStep == 2) || (UserType == 2 && loginStep == 2) "
+          v-if="loginStep == 3 || (UserType == 2 && loginType == 'register' && loginStep == 2) || (UserType == 2 && loginStep == 2)"
           justify="center">
           <img class="my-6" src="@/assets/image/success.png" alt="" width="130px">
-          <h5 v-if=" UserType == 2 && loginType == 'register' " class="green--text text--darken-2 my-3 text-center d-block">
+          <h5 v-if="UserType == 2 && loginType == 'register'" class="green--text text--darken-2 my-3 text-center d-block">
             اطلاعات شما با موفقیت دریافت شد.لطفا منتظر تایید باشید.</h5>
           <h4 v-else class="green--text text--darken-2 my-3 widthAll text-center">عملیات ورود با موفقیت انجام شد.</h4>
         </v-row>
         <v-row justify="center">
-          <span v-if=" resendSeconds != 0 && loginStep == 2 && UserType == 1 "
+          <span v-if="resendSeconds != 0 && loginStep == 2 && UserType == 1"
             class="body-2 text-center mb-2 widthAll text-center" style="font-family: Byekan !important;">امکان ارسال مجدد
             تا {{ resendSeconds }} ثانیه دیگر</span>
           <div class="widthAll">
             <v-row justify="center">
-              <div v-if=" resendSeconds == 0 && loginStep == 2 && UserType == 1 " @click=" resendSeconds = 60 "
+              <div v-if="resendSeconds == 0 && loginStep == 2 && UserType == 1" @click=" resendSeconds = 60"
                 class="body-2 blue--text text--darken-2 text-decoration-underline mb-3 cursorPointer d-inline-block mx-auto"
                 style="font-family: Byekan !important;">ارسال مجدد کد</div>
             </v-row>
           </div>
-          <span v-if=" loginType == 'login' && loginStep == 1 " class="body-2 text-center widthAll my-4"
+          <span v-if="loginType == 'login' && loginStep == 1" class="body-2 text-center widthAll my-4"
             style="font-family: Byekan !important;">
             قبلا ثبت نام نکرده اید؟
-            <span @click=" loginType = 'register' " class=" blue--text text--darken-2 cursorPointer"
+            <span @click=" loginType = 'register'" class=" blue--text text--darken-2 cursorPointer"
               style="text-decoration: underline;">ثبت نام</span>
           </span>
-          <span v-else-if=" loginStep == 2 && UserType != 2 " class="body text-center widthAll grey--text text--darken-1"
+          <span v-else-if="loginStep == 2 && UserType != 2" class="body text-center widthAll grey--text text--darken-1"
             style="font-family: Byekan !important;">
             {{ loginForm.phone }}
-            <span @click=" loginStep = 1 " v-if=" UserType == 1 " class="blue--text text--darken-2 cursorPointer"
+            <span @click=" loginStep = 1" v-if="UserType == 1" class="blue--text text--darken-2 cursorPointer"
               style="text-decoration: underline;">تغییر شماره</span>
           </span>
-          <span v-else-if=" loginType != 'login' && loginStep == 1 " class="body-2 text-center widthAll my-4"
+          <span v-else-if="loginType != 'login' && loginStep == 1" class="body-2 text-center widthAll my-4"
             style="font-family: Byekan !important;">
             قبلا ثبت نام کرده اید؟
-            <span @click=" loginType = 'login' " class=" blue--text text--darken-2 cursorPointer"
+            <span @click=" loginType = 'login'" class=" blue--text text--darken-2 cursorPointer"
               style="text-decoration: underline;">وارد شوید</span>
           </span>
-          <v-btn v-if=" loginStep == 1 || (loginStep == 2 && UserType == 1) "
-            :disabled=" loginStep == 2 && loginForm.otp.length < 4 " @click=" loginOrRegisterValidate() " dark
+          <v-btn v-if="loginStep == 1 || (loginStep == 2 && UserType == 1)"
+            :disabled="loginStep == 2 && loginForm.otp.length < 4" @click=" loginOrRegisterValidate()" dark
             class="widthAll red my-4 rounded-xl py-7 mt-1" style="width: 55%;">
             {{ (UserType == 2 && loginType == 'login' || (loginStep == 2 && UserType == 1)) ? 'ورود' : 'مرحله بعدی' }}
           </v-btn>
@@ -409,12 +417,20 @@ export default {
                 link: '/tour/europe/Switzerland-France-UAE-11days'
               },
               {
+                text: 'سوئیس - فرانسه و امارات(11روز)',
+                link: '/tour/europe/Switzerland-France-UAE-11-days'
+              },
+              {
                 text: 'فرانسه-بلژیک-هلند و امارات(12روز)',
                 link: '/tour/europe/France-Belgium-Netherlands-UAE-12days'
               },
               {
                 text: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
                 link: '/tour/europe/France-Italy-Spain-UAE-14days'
+              },
+              {
+                text: 'فرانسه-ایتالیا-اسپانیا و امارات(14روز)',
+                link: '/tour/europe/France-Italy-Spain-UAE-14-days'
               },
               {
                 text: 'سوئیس - ایتالیا و امارات(10روز)',
@@ -467,6 +483,10 @@ export default {
               {
                 text: 'مسکو',
                 link: '/tour/moscow/Moscow-5days'
+              },
+              {
+                text: 'سنت پترزبورگ+مسکو',
+                link: '/tour/moscow/Moscow-St.Petersburg-7days'
               },
               {
                 text: 'مسکو+سنت پترزبورگ',
