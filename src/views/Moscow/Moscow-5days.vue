@@ -59,9 +59,8 @@
             </h4>
             <h4 class="mb-4 mt-4 mt-md-0">
               <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
-              نرخ کودک زیر 2 سال (INF) 1.600.000 تومان می‌باشد.
+              نرخ کودک زیر 2 سال (INF) 3.600.000 تومان می‌باشد.
             </h4>
-
             <h4 class="mb-4 mt-4 mt-md-0">
               <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
               به کلیه سنین حتی کودکان زیر 2 سال مبلغ 120$ بابت ویزای توریستی اضافه خواهد شد.
@@ -92,11 +91,12 @@
             <v-row>
               <v-col cols="12" md="12">
                 <ul class=" mr-md-6">
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی تا سقف
+                    10.000 یورو</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">4‌ شب اقامت در هتل با
                     صبحانه</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر اختصاصی فرودگاهی
-                    به هتل</li>
+                  </li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیت رفت و برگشت پرواز
                     ماهان ایر</li>
                 </ul>
@@ -117,36 +117,41 @@
             </v-row>
           </div>
           <div class="widthAll" v-else-if="tab == 3">
-                  <ul class="my-3 mr-9">
-                    <h3 class="tabel-tour-title red--text mb-6 mt-12 mt-sm-0">نکات ضروری تورهای روسیه</h3>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify ">
-                      نرخ ها به تومان محاسبه شده است.
-                    </li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">هتل و پرواز گارانتی و غیر قابل استرداد می باشد.</li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                      پرداخت 70% کل مبلغ تور در ابتدای ثبت نام ضروری است.
-                    </li>
-                    
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                      بیمه افراد بالای 60 سال الزامی است و هزینه مازاد خواهد داشت.
-                    </li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پروازهای ماهان ایر در روزهای یکشنبه ، دوشنبه ، چهارشنبه و جمعه از از فرودگاه 
-                      <span class="red--text">SHERMITOVA</span>
-                      <!--  -->
-                      مسکو انجام می‌شود.پروازهای ماهان ایر در روزهای سه‌شنبه و پنجشنبه از از فرودگاه
-                      <span class="red--text">VENOCOVA</span>
-                      مسکو انجام می‌شود.
-                    </li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت درخواست مسافر با مدت اقامت طولانی تر قابل محاسبه و توسط مشاوران اجرا خواهد شد.</li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                      قیمت‌های موجود در پکیج با نرخ دلار 45.000 تومان
+            <ul class="my-3 mr-9">
+              <h3 class="tabel-tour-title red--text mb-6 mt-12 mt-sm-0">نکات ضروری تورهای روسیه</h3>
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">هتل و پرواز گارانتی و غیر قابل
+                استرداد می باشد.</li>
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                پرداخت 70% کل مبلغ تور در ابتدای ثبت نام ضروری است.
+              </li>
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                مسئولیت کنترل ممنوعیت خروج،بعده شخص مسافر می‌بلشد.
+              </li>
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                بیمه افراد بالای 60 سال الزامی است و هزینه مازاد خواهد داشت.
+              </li>
+              <!-- <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پروازهای ماهان ایر در روزهای یکشنبه ،
+                دوشنبه ، چهارشنبه و جمعه از از فرودگاه
+                <span class="red--text">SHERMITOVA</span>
+              مسکو انجام می‌شود.پروازهای ماهان ایر در روزهای سه‌شنبه و پنجشنبه از از فرودگاه
+              <span class="red--text">VENOCOVA</span>
+              مسکو انجام می‌شود.
+              </li> -->
 
-                      محاسبه شده است در صورت هرگونه افزایش
-                      نرخ مابه التفاوت محاسبه خواهد شد.
-                    </li>
-                    <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل زمان لازم جهت اخذ ویزای عادی 8 روز کاری و ما به تفاوت ویزای فوری 150$ می‌باشد.</li>
-                  </ul>
-                </div>
+              <!-- <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                قیمت‌های موجود در پکیج با نرخ دلار 45.000 تومان
+
+                محاسبه شده است در صورت هرگونه افزایش
+                نرخ مابه التفاوت محاسبه خواهد شد.
+              </li> -->
+
+
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل زمان لازم جهت اخذ ویزای عادی 8
+                روز کاری و ما به تفاوت ویزای فوری 150$ می‌باشد.</li>
+              <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">در صورت درخواست مسافر با مدت اقامت
+                طولانی تر قابل محاسبه و توسط مشاوران اجرا خواهد شد.</li>
+            </ul>
+          </div>
           <div class="widthAll" v-else-if="tab == 4">
             <v-row class="mb-7 mt-7 mt-sm-0" justify="center">
               <h2 class="tabel-tour-title">تنها پرواز مستقیم مسکو</h2>
@@ -203,9 +208,9 @@
 </template>
 
 <style scoped>
-*{
+* {
   letter-spacing: -0.7px !important;
-} 
+}
 
 .tourImageBackground {
   position: absolute;
@@ -214,16 +219,15 @@
   top: 0;
   left: 0;
   opacity: 1;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.55) 0,
-    rgba(0, 0, 0, 0.55) 1%,
-    transparent 56%,
-    transparent 74%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
 }
 
-.tourPageTitle h3, .tourPageTitle span{
+.tourPageTitle h3,
+.tourPageTitle span {
   color: #fff;
   position: relative;
   z-index: 1;
@@ -234,18 +238,18 @@
   background: #fff;
 }
 
-.tourPageTitle h3:hover .lighter{
+.tourPageTitle h3:hover .lighter {
   /* content: ""; */
   /* position: absolute; */
   /* height: 15px;
   width: 67%; */
-  background:#ffeb3b !important;
+  background: #ffeb3b !important;
   /* top: 47%;
   right: 16%;
   z-index: -1; */
 }
 
-.tourPageTitle span{
+.tourPageTitle span {
   color: rgb(44, 44, 44);
 }
 
@@ -254,7 +258,7 @@
   margin-bottom: 0 !important;
 }
 
-.tabTitles{
+.tabTitles {
   color: #fff;
 }
 
@@ -269,33 +273,33 @@
   position: absolute;
   height: 15px;
   width: 67%;
-  background:#0083bb29;
+  background: #0083bb29;
   top: 47%;
   right: 16%;
   z-index: -1;
 }
 
-.countryNmae{
-  margin-right:-52px;
+.countryNmae {
+  margin-right: -52px;
   background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
   font-size: 62px;
   font-weight: bold;
 }
 
 .tour-date {
-  margin-right:-52px;
+  margin-right: -52px;
   background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
 }
 
-.main-div{
-  margin-top:-300px;
+.main-div {
+  margin-top: -300px;
 }
 
-.logo-tour-title{
+.logo-tour-title {
   height: 35px;
 }
 
-.see-more{
+.see-more {
   font-weight: normal;
   font-size: small;
   text-decoration: underline;
@@ -309,7 +313,8 @@
   background-color: #0083bb56 !important;
 }
 
-.theme--light.v-data-table .v-data-footer,.v-application--is-ltr .v-data-footer__pagination{
+.theme--light.v-data-table .v-data-footer,
+.v-application--is-ltr .v-data-footer__pagination {
   direction: ltr !important;
 }
 
@@ -318,24 +323,30 @@
   margin-right: auto;
 }
 
-.even-odd-tabel{
+.even-odd-tabel {
   width: 100% !important;
 }
 
-.v-data-table,.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+.v-data-table,
+.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
+.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
   border: 1px solid #9d9d9d;
   font-weight: bold;
 }
 
-.galeryImageParent{
+.galeryImageParent {
   width: 24%;
 }
 
-.galeryImage{
+.galeryImage {
   position: relative;
 }
 
-.galeryImage::after{
+.galeryImage::after {
   content: '';
   position: absolute;
   height: 100%;
@@ -346,19 +357,19 @@
   opacity: 1;
 }
 
-.galeryImage:hover.galeryImage::after{
+.galeryImage:hover.galeryImage::after {
   opacity: 0;
 }
 
-.galeryImage:hover{
+.galeryImage:hover {
   box-shadow: 0 0 5px rgb(59, 59, 59);
 }
 
-.halfLi{
-  width:49%
+.halfLi {
+  width: 49%
 }
 
-.even-odd-tabel td:nth-child(2) .bold{
+.even-odd-tabel td:nth-child(2) .bold {
   font-size: 15px;
   /* color: #ff6062 !important;
   text-shadow: 0 0 3px #ff7765; */
@@ -366,12 +377,12 @@
 
 
 
-@media (min-width:960px) and (max-width:1263px){
-  .main-div{
-    margin-top:-245px;
+@media (min-width:960px) and (max-width:1263px) {
+  .main-div {
+    margin-top: -245px;
   }
-  
-  .countryNmae{
+
+  .countryNmae {
     font-size: 46px;
   }
 
@@ -381,19 +392,19 @@
 }
 
 @media (min-width:600px) and (max-width:959px) {
-  .main-div{
-    margin-top:-205px;
-  }      
-  
+  .main-div {
+    margin-top: -205px;
+  }
+
   .tourImageBackground {
     height: 96.5%;
   }
 
-  .countryNmae{
+  .countryNmae {
     font-size: 40px;
   }
 
-  .tour-date{
+  .tour-date {
     font-size: 16px;
   }
 
@@ -401,11 +412,11 @@
     font-size: 15px !important;
   }
 
-  .tabelTour{
-    width:80% !important
+  .tabelTour {
+    width: 80% !important
   }
-  
-  .text-tour{
+
+  .text-tour {
     font-size: 14px;
   }
 
@@ -413,44 +424,44 @@
     font-size: 18px !important;
   }
 
-  .text-tour-call-us{
-    font-size: 16px ;
+  .text-tour-call-us {
+    font-size: 16px;
   }
 
-  .galeryImageParent{
+  .galeryImageParent {
     width: 45%;
   }
 
-  .halfLi{
-    width:100%
+  .halfLi {
+    width: 100%
   }
-  
+
   @media (max-width:774px) {
-    .main-div{
-      margin-top:-155px;
+    .main-div {
+      margin-top: -155px;
     }
 
     .tourImageBackground {
       height: 96.5%;
     }
 
-    .countryNmae{
+    .countryNmae {
       font-size: 24px;
       margin-right: -35px;
-      padding-right: 35px!important;
+      padding-right: 35px !important;
     }
 
-    .tour-date{
+    .tour-date {
       font-size: 12px;
       margin-right: -35px;
-      padding-right: 35px!important;
+      padding-right: 35px !important;
     }
 
     .tabTitles {
       font-size: 13px !important;
     }
 
-    .tabelParentFloat{
+    .tabelParentFloat {
       float: unset !important;
       width: 100%;
     }
@@ -458,56 +469,56 @@
 }
 
 @media (max-width:599px) {
-  .indexDiv{
+  .indexDiv {
     width: 95% !important;
   }
 
-  .main-div{
-    margin-top:-170px;
+  .main-div {
+    margin-top: -170px;
   }
 
-  .backgroundImageTour{
+  .backgroundImageTour {
     width: 200%;
   }
 
-  .countryNmae{
+  .countryNmae {
     font-size: 26px;
     margin-right: -35px;
-    padding-right: 35px!important;
+    padding-right: 35px !important;
   }
 
-  .tour-date{
+  .tour-date {
     font-size: 14px;
     margin-right: -35px;
-    padding-right: 35px!important;
+    padding-right: 35px !important;
   }
 
-  .tabTitles{
+  .tabTitles {
     font-size: 14px;
     /* background: #fff; */
     /* border: 1px solid #b37b63; */
   }
-  
-  .tabelTour{
-    width:100% !important
+
+  .tabelTour {
+    width: 100% !important
   }
-  
-  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row{
+
+  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
     min-height: 35px !important;
     /* justify-content: center; */
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row{
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
     /* display: inline-block;
     width: 50%;
     position: relative; */
   }
 
-  .v-application--is-ltr .v-data-table__mobile-row__cell{
+  .v-application--is-ltr .v-data-table__mobile-row__cell {
     text-align: center;
   }
-  
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1){
+
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
     display: flex;
     width: 100%;
     margin-bottom: 20px;
@@ -526,24 +537,25 @@
     display: flex;
     justify-content: start;
   } */
-  
-  .tabelTour *{
+
+  .tabelTour * {
     font-size: 13px;
   }
 
-  .text-tour{
+  .text-tour {
     font-size: 14px;
   }
 
   .tabel-tour-title {
     font-size: 16px !important;
   }
-  
-  .text-tour-call-us{
-    font-size: 14px ;
+
+  .text-tour-call-us {
+    font-size: 14px;
   }
 
-  .tourPageTitle h3, .tourPageTitle span{
+  .tourPageTitle h3,
+  .tourPageTitle span {
     /* color:black !important */
   }
 
@@ -551,31 +563,36 @@
     height: 97.5%;
   }
 
-  .logo-tour-title{
+  .logo-tour-title {
     height: 30px;
   }
 
-  .tourPageTitle{
+  .tourPageTitle {
     /* background-color: #fff; */
   }
 
   .tourPageTitle {
     width: 500px;
   }
-  
-  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+
+  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
     border: unset;
   }
 
-  .galeryImageParent{
+  .galeryImageParent {
     width: 95%;
   }
 
-  .halfLi{
-    width:100%
+  .halfLi {
+    width: 100%
   }
 
-  .tabelParentFloat{
+  .tabelParentFloat {
     float: unset !important;
     width: 100%;
   }
@@ -698,29 +715,42 @@ export default {
       {
         نام: 'HOLIDAY INN SELIGERSKAYA',
         درجه: 4,
-        دوتخته: '22.700.000',
-        تکنفره: '27.990.000',
-        کودک: '18.000.000',
-        کودک2: '12.000.000',
-        کمیسیون: 800000
+        دوتخته: '29.500.000',
+        تکنفره: '34.500.000',
+        کودک: '23.000.000',
+        کودک2: '17.000.000',
       },
       {
         نام: 'HOLIDAY INN SOKOLNIKI',
         درجه: 4,
-        دوتخته: '24.850.000',
-        تکنفره: '32.400.000',
-        کودک: '20.200.000',
-        کودک2: '12.000.000',
-        کمیسیون: 1200000
+        دوتخته: '32.500.000',
+        تکنفره: '37.900.000',
+        کودک: '24.000.000',
+        کودک2: '17.000.000',
       },
       {
-        نام: 'GOLDEN RING HOTEL MOSCOW',
+        نام: 'NOVOTEL CENTER HOTEL',
+        درجه: '4* LUX',
+        دوتخته: '34.500.000',
+        تکنفره: '43.700.000',
+        کودک: '27.500.000',
+        کودک2: 17000000,
+      },
+      {
+        نام: 'HOLIDAY INN TAGANSKY',
+        درجه: '4* LUX',
+        دوتخته: '35.500.000',
+        تکنفره: '45.000.000',
+        کودک: '28.000.000',
+        کودک2: 17000000,
+      },
+      {
+        نام: 'HILTON LENINGRADSKAYA',
         درجه: 5,
-        دوتخته: '34.000.000',
-        تکنفره: '50.800.000',
-        کودک: '23.500.000',
-        کودک2: 12000000,
-        کمیسیون: 1500000
+        دوتخته: '38.900.000',
+        تکنفره: '52.900.000',
+        کودک: '32.500.000',
+        کودک2: 17000000,
       },
     ]
     var pricesItemsMoskow = []

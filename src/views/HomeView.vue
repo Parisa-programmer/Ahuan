@@ -19,11 +19,26 @@
     <input-main @changeActiveSection="changeSection($event)" page="main" />
     <!-- visline -->
     <v-row justify="center">
-      <div class="indexDiv">
-        <router-link to="/visa">
-          <img class="widthAll rounded-xl d-none d-md-block" src="../assets/image/ویزلاین.jpg" alt="">
-          <img class="widthAll rounded-xl d-block d-md-none" src="../assets/image/ویزلاین موبایل.jpg" alt="">
-        </router-link>
+      <div class="indexDiv  d-none d-md-block">
+        <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+          <router-link to="/visa">
+            <v-carousel-item :src="require('@/assets/image/ویزلاین.jpg')"></v-carousel-item>
+          </router-link>
+          <router-link to="/final-tour">
+            <v-carousel-item :src="require('@/assets/image/karname/اسلایدر فوتبال صفحه اصلی1.jpg')"></v-carousel-item>
+          </router-link>
+        </v-carousel>
+      </div>
+      <div class="indexDiv d-block d-md-none">
+        <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+          <router-link to="/visa">
+            <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
+          </router-link>
+          <router-link to="/final-tour">
+            <v-carousel-item
+              :src="require('@/assets/image/karname/اسلایدر فوتبال موبایل صفحه اصلی1.jpg')"></v-carousel-item>
+          </router-link>
+        </v-carousel>
       </div>
     </v-row>
     <!-- tours -->
@@ -123,7 +138,7 @@
                       <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور روسیه</h1>
                     </v-row>
                     <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 22.700 میلیون</span>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 29.500 میلیون</span>
                     </v-row>
                   </div>
                 </v-row>
@@ -169,6 +184,116 @@
 
             </div>
           </v-col>
+        </v-row>
+      </div>
+    </v-row>
+    <!--  test tours -->
+    <v-row justify="center" align="center" class="mb-6 mt-12">
+      <div class="mt-1 ml-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
+      <h3 class="font-small-title-xs">تور های ویژه آهوان تست</h3>
+      <div class="mt-1 mr-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
+    </v-row>
+    <v-row justify="center" class="">
+      <div class="indexDiv">
+        <v-row>
+          <v-col v-for="(tourItem, i) in tours" :key="i" cols="12" sm="6" :md="tourItem.cols * 4" class="pa-0">
+            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
+              data-aos-duration="2000">
+              <router-link to="/tour/Istanbul">
+                <!-- <v-img height="220" :src="'https://ahuantours.com/images/' + tourItem.col1Image" alt=""></v-img> -->
+                <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
+                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
+                  style="z-index: 2;top: 0;cursor:pointer">
+                  <div>
+                    <v-row justify="center">
+                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور {{ tourItem.name }}</h1>
+                    </v-row>
+                    <v-row>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از {{ tourItem.price
+                      }}</span>
+                    </v-row>
+                  </div>
+                </v-row>
+              </router-link>
+            </div>
+          </v-col>
+          <!-- <v-col cols="12" sm="6" md="8" class="pa-0">
+            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-top"
+              data-aos-duration="2000">
+              <router-link to="/tour/Europe">
+                <v-img height="220" src="../assets/image/tourSlider/0004.jpg" alt=""></v-img>
+                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
+                  style="z-index: 2;top: 0;cursor:pointer">
+                  <div>
+                    <v-row justify="center">
+                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور اروپا</h1>
+                    </v-row>
+                    <v-row>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 1.890 یورو</span>
+                    </v-row>
+                  </div>
+                </v-row>
+              </router-link>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" md="4" class="pa-0">
+            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-left"
+              data-aos-duration="2000">
+              <router-link to="/tour/Dubai">
+                <v-img height="220" src="../assets/image/tourSlider/0003.jpg" alt=""></v-img>
+                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
+                  style="z-index: 2;top: 0;cursor:pointer">
+                  <div>
+                    <v-row justify="center">
+                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور دبی</h1>
+                    </v-row>
+                    <v-row>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 12.200 میلیون</span>
+                    </v-row>
+                  </div>
+                </v-row>
+              </router-link>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" md="8" class="scroll-reveal box left pa-0">
+            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-top"
+              data-aos-duration="2000">
+              <router-link to="/tour/Thailand">
+                <v-img height="220" src="../assets/image/tourSlider/0007.jpg" alt=""></v-img>
+                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
+                  style="z-index: 2;top: 0;cursor:pointer">
+                  <div>
+                    <v-row justify="center">
+                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور تایلند</h1>
+                    </v-row>
+                    <v-row>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 96.000 میلیون</span>
+                    </v-row>
+                  </div>
+                </v-row>
+              </router-link>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" md="4" class="pa-0">
+            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-left"
+              data-aos-duration="2000">
+              <router-link to="/tour/Thailand-Malaysia">
+                <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
+                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
+                  style="z-index: 2;top: 0;cursor:pointer">
+                  <div>
+                    <v-row justify="center">
+                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تایلند-مالزی</h1>
+                    </v-row>
+                    <v-row>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 5.550 میلیون</span>
+                    </v-row>
+                  </div>
+                </v-row>
+              </router-link>
+
+            </div>
+          </v-col> -->
         </v-row>
       </div>
     </v-row>
@@ -597,6 +722,7 @@ export default {
     },
   },
   data: () => ({
+    tours: [],
     selectedSection: {
       icon: 'mdi-airplane',
       title: 'پرواز',
@@ -683,9 +809,11 @@ export default {
       this.windowWidth = window.innerWidth
     },
     getTours() {
-      axios.get('https://panel.ahuantours.com/api/package/all')
+      let self = this
+      axios.get('https://panel.ahuantours.com/api/package/groups')
         .then(function (response) {
-          console.log(response);
+          console.log(response.data);
+          self.tours = response.data
         })
         .catch(function (error) {
           // handle error

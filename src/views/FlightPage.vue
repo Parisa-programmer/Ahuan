@@ -1454,9 +1454,7 @@ export default {
     },
     changeChoosedTicket(event) {
       this.choosedTicket = []
-
       this.choosedTicket.push(event)
-      console.log(this.choosedTicket);
     },
     removeFilters() {
       this.filter.time = [0, 4]
@@ -1591,6 +1589,7 @@ export default {
       this.beforeTickets = event
     },
     async addTickets(event) {
+      // console.log(event.type);
       if (!this.filter.airline.includes(event.Airline)) {
         this.filter.airline.push(event.Airline)
       }
@@ -1671,223 +1670,199 @@ export default {
     },
     complateSearch() {
       let beforeTickets = this.beforeTickets
-      let variabel1 = [
-        {
-          "Origin": "THR",
-          "Destination": "KIH",
-          "AdultTotalPrices": "RR:13593000",
-          "OperatingFlightNo": "7125",
-          "Airline": "Y9",
-          "ClassesStatus": "/RRA AIC AJC",
-          "FlightNo": 7125,
-          "Transit": false,
-          "ClassRefundStatus": "RR:Refundable",
-          "CurrencyCode": "IRR",
-          "DepartureDateTime": "2023-06-11",
-          "ArrivalDateTime": "2023-06-11 17:45:00",
-          "OperatingAirline": "Y9",
-          "AircraftTypeName": "",
-          "AircraftTypeCode": "MD8",
-          "DepartureTime": "16:00",
-          "ArrivalDate": "2023-06-11",
-          "ArrivalTime": "17:45",
-          "originCity": "تهران",
-          "destinationInternal": "کیش",
-          "dayName": "یکشنبه",
-          "fromDate": "۲۱ خرداد",
-          "type": "A",
-          "price": "13593000",
-          "fare": {
-            "AdultTotalPrice": "13593000",
-            "InfantTotalPrice": "1890000",
-            "EligibilityText": " ",
-            "CRCNRules": "از لحظه صدور تا 24 ساعت قبل از پرواز ,20,P/از 24ساعت قبل پرواز به بعد ,40,P/",
-            "InfantFare": "1626000",
-            "AdultTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1104000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:123000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildFare": "6133000",
-            "AdultFare": "12266000",
-            "ChildTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:552000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:62000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "InfantTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:147000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:17000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildTotalPrice": "6847000"
-          },
-          "capacity": "A",
-          "longDate1": "۲۱ خرداد ۱۴۰۲",
-          "longDate2": "۲۱ خرداد ۱۴۰۲",
-          "enLongDate1": "June 11",
-          "enLongDate2": "June 11"
-        },
-        {
-          "Origin": "THR",
-          "Destination": "KIH",
-          "AdultTotalPrices": "A:19869000 T:100000 P:-",
-          "OperatingFlightNo": "1224",
-          "Airline": "QB",
-          "ClassesStatus": "/AA TC PC",
-          "FlightNo": 1224,
-          "Transit": false,
-          "ClassRefundStatus": "A:Refundable T:Refundable P:Not refundable",
-          "CurrencyCode": "IRR",
-          "DepartureDateTime": "2023-06-11",
-          "ArrivalDateTime": "2023-06-11 09:45:00",
-          "OperatingAirline": "QB",
-          "AircraftTypeName": "",
-          "AircraftTypeCode": "100",
-          "DepartureTime": "08:00",
-          "ArrivalDate": "2023-06-11",
-          "ArrivalTime": "09:45",
-          "originCity": "تهران",
-          "destinationInternal": "کیش",
-          "dayName": "یکشنبه",
-          "fromDate": "۲۱ خرداد",
-          "type": "A",
-          "price": "19869000",
-          "fare": {
-            "AdultTotalPrice": "19869000",
-            "InfantTotalPrice": "2048000",
-            "EligibilityText": "",
-            "CRCNRules": "ازلحظه صدورتا12ظهر3روزقبل ازپرواز,30,P/از12ظهر3روزقبل پروازتا12ظهريک روزقبل از پرواز,40,P/از12ظهريک روزقبل ازپروازتا2ساعت به پرواز,60,P/از 2ساعت به پرواز و پس از آن,70,P/",
-            "InfantFare": "1798000",
-            "AdultTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1618000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:180000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
-            "ChildFare": "13479000",
-            "AdultFare": "17971000",
-            "ChildTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1214000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:135000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
-            "InfantTaxes": "V0:162000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:18000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
-            "ChildTotalPrice": "14928000"
-          },
-          "capacity": "A",
-          "longDate1": "۲۱ خرداد ۱۴۰۲",
-          "longDate2": "۲۱ خرداد ۱۴۰۲",
-          "enLongDate1": "June 11",
-          "enLongDate2": "June 11"
-        },
-        {
-          "Origin": "THR",
-          "Destination": "KIH",
-          "AdultTotalPrices": "YS:23002000 YU:21507000 YM:16028000 VO:19869000 LB:17367000 T:13592000 G:-",
-          "OperatingFlightNo": "4051",
-          "Airline": "ZV",
-          "ClassesStatus": "/YSC YUC YMC VOA LBA TC GC",
-          "FlightNo": 4051,
-          "Transit": false,
-          "ClassRefundStatus": "YS:Refundable YU:Refundable YM:Refundable VO:Refundable LB:Refundable T:Refundable G:-",
-          "CurrencyCode": "IRR",
-          "DepartureDateTime": "2023-06-11",
-          "ArrivalDateTime": "2023-06-11 13:15:00",
-          "OperatingAirline": "ZV",
-          "AircraftTypeName": "",
-          "AircraftTypeCode": "MD8",
-          "DepartureTime": "11:20",
-          "ArrivalDate": "2023-06-11",
-          "ArrivalTime": "13:15",
-          "originCity": "تهران",
-          "destinationInternal": "کیش",
-          "dayName": "یکشنبه",
-          "fromDate": "۲۱ خرداد",
-          "type": "A",
-          "price": "6011000",
-          "fare": {
-            "AdultTotalPrice": "6011000",
-            "InfantTotalPrice": "1495000",
-            "EligibilityText": " ",
-            "CRCNRules": "ازلحظه صدورتا15دقيقه بعدازصدور,0,P/از سه ساعت قبل از پرواز,90,P/تا سه ساعت قبل از پرواز ,80,P/تا12 ?ک روز قبل از پرواز,60,P/از 15 دقيقه بعد از صدور تا 12ظهر 3روز قبل از پرواز,50,P/",
-            "InfantFare": "1267000",
-            "AdultTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:484000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:54000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildFare": "4836000",
-            "AdultFare": "5373000",
-            "ChildTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:436000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:49000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "InfantTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:115000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:13000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildTotalPrice": "5421000"
-          },
-          "capacity": "A",
-          "longDate1": "۲۱ خرداد ۱۴۰۲",
-          "longDate2": "۲۱ خرداد ۱۴۰۲",
-          "enLongDate1": "June 11",
-          "enLongDate2": "June 11"
-        },
-        {
-          "Origin": "THR",
-          "Destination": "KIH",
-          "AdultTotalPrices": "YS:23002000 YU:21507000 YM:16028000 VO:19869000 LB:17367000 T:13592000 G:-",
-          "OperatingFlightNo": "4051",
-          "Airline": "ZV",
-          "ClassesStatus": "/YSC YUC YMC VOA LBA TC GC",
-          "FlightNo": 4051,
-          "Transit": false,
-          "ClassRefundStatus": "YS:Refundable YU:Refundable YM:Refundable VO:Refundable LB:Refundable T:Refundable G:-",
-          "CurrencyCode": "IRR",
-          "DepartureDateTime": "2023-06-11",
-          "ArrivalDateTime": "2023-06-11 13:15:00",
-          "OperatingAirline": "ZV",
-          "AircraftTypeName": "",
-          "AircraftTypeCode": "MD8",
-          "DepartureTime": "11:20",
-          "ArrivalDate": "2023-06-11",
-          "ArrivalTime": "13:15",
-          "originCity": "تهران",
-          "destinationInternal": "کیش",
-          "dayName": "یکشنبه",
-          "fromDate": "۲۱ خرداد",
-          "type": "A",
-          "price": "9597000",
-          "fare": {
-            "AdultTotalPrice": "9597000",
-            "InfantTotalPrice": "1495000",
-            "EligibilityText": " ",
-            "CRCNRules": "ازلحظه صدورتا15دقيقه بعدازصدور,0,P/از 15 دقيقه بعد از صدور تا 12ظهر 3روز قبل از پرواز,40,P/تا12 ?ک روز قبل از پرواز,50,P/تا سه ساعت قبل از پرواز ,60,P/از سه ساعت قبل از پرواز,70,P/",
-            "InfantFare": "1267000",
-            "AdultTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:777000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:87000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildFare": "7339000",
-            "AdultFare": "8633000",
-            "ChildTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:661000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:74000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "InfantTaxes": "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:115000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:13000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
-            "ChildTotalPrice": "8174000"
-          },
-          "capacity": "A",
-          "longDate1": "۲۱ خرداد ۱۴۰۲",
-          "longDate2": "۲۱ خرداد ۱۴۰۲",
-          "enLongDate1": "June 11",
-          "enLongDate2": "June 11"
-        }
-      ]
-      // let variabel1 = []
-      let variabel2 = []
-      // for (let i = 0; i < beforeTickets.length; i++) {
-      //   if (((beforeTickets[i].type != 'X') && (beforeTickets[i].type != 'C'))) {
-      //     variabel1.push(beforeTickets[i])
-      //     // console.log(beforeTickets[i].fare.AdultTotalPrice);
-      //   } else {
-      //     variabel2.push(beforeTickets[i])
+      // let variabel1 = [
+      //   {
+      //     Origin: "THR",
+      //     Destination: "KIH",
+      //     AdultTotalPrices: "RR:13593000",
+      //     OperatingFlightNo: "7125",
+      //     Airline: "Y9",
+      //     ClassesStatus: "/RRA AIC AJC",
+      //     FlightNo: 7125,
+      //     Transit: false,
+      //     ClassRefundStatus: "RR:Refundable",
+      //     CurrencyCode: "IRR",
+      //     DepartureDateTime: "2023-06-11",
+      //     ArrivalDateTime: "2023-06-11 17:45:00",
+      //     OperatingAirline: "Y9",
+      //     AircraftTypeName: "",
+      //     AircraftTypeCode: "MD8",
+      //     DepartureTime: "16:00",
+      //     ArrivalDate: "2023-06-11",
+      //     ArrivalTime: "17:45",
+      //     originCity: "تهران",
+      //     destinationInternal: "کیش",
+      //     dayName: "یکشنبه",
+      //     fromDate: "۲۱ خرداد",
+      //     type: "A",
+      //     price: 13593000,
+      //     fare: {
+      //       AdultTotalPrice: "13593000",
+      //       InfantTotalPrice: "1890000",
+      //       EligibilityText: " ",
+      //       CRCNRules: "از لحظه صدور تا 24 ساعت قبل از پرواز ,20,P/از 24ساعت قبل پرواز به بعد ,40,P/",
+      //       InfantFare: "1626000",
+      //       AdultTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1104000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:123000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildFare: "6133000",
+      //       AdultFare: "12266000",
+      //       ChildTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:552000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:62000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       InfantTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:147000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:17000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildTotalPrice: "6847000"
+      //     },
+      //     capacity: "A",
+      //     longDate1: "۲۱ خرداد ۱۴۰۲",
+      //     longDate2: "۲۱ خرداد ۱۴۰۲",
+      //     enLongDate1: "June 11",
+      //     enLongDate2: "June 11"
+      //   },
+      //   {
+      //     Origin: "THR",
+      //     Destination: "KIH",
+      //     AdultTotalPrices: "A:19869000 T:100000 P:-",
+      //     OperatingFlightNo: "1224",
+      //     Airline: "QB",
+      //     ClassesStatus: "/AA TC PC",
+      //     FlightNo: 1224,
+      //     Transit: false,
+      //     ClassRefundStatus: "A:Refundable T:Refundable P:Not refundable",
+      //     CurrencyCode: "IRR",
+      //     DepartureDateTime: "2023-06-11",
+      //     ArrivalDateTime: "2023-06-11 09:45:00",
+      //     OperatingAirline: "QB",
+      //     AircraftTypeName: "",
+      //     AircraftTypeCode: "100",
+      //     DepartureTime: "08:00",
+      //     ArrivalDate: "2023-06-11",
+      //     ArrivalTime: "09:45",
+      //     originCity: "تهران",
+      //     destinationInternal: "کیش",
+      //     dayName: "یکشنبه",
+      //     fromDate: "۲۱ خرداد",
+      //     type: "A",
+      //     price: 19869000,
+      //     fare: {
+      //       AdultTotalPrice: "19869000",
+      //       InfantTotalPrice: "2048000",
+      //       EligibilityText: "",
+      //       CRCNRules: "ازلحظه صدورتا12ظهر3روزقبل ازپرواز,30,P/از12ظهر3روزقبل پروازتا12ظهريک روزقبل از پرواز,40,P/از12ظهريک روزقبل ازپروازتا2ساعت به پرواز,60,P/از 2ساعت به پرواز و پس از آن,70,P/",
+      //       InfantFare: "1798000",
+      //       AdultTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1618000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:180000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
+      //       ChildFare: "13479000",
+      //       AdultFare: "17971000",
+      //       ChildTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:1214000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:135000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
+      //       InfantTaxes: "V0:162000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:18000.0,EN_Desc:HL Tax,FA_Desc:$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:$",
+      //       ChildTotalPrice: "14928000"
+      //     },
+      //     capacity: "A",
+      //     longDate1: "۲۱ خرداد ۱۴۰۲",
+      //     longDate2: "۲۱ خرداد ۱۴۰۲",
+      //     enLongDate1: "June 11",
+      //     enLongDate2: "June 11"
+      //   },
+      //   {
+      //     Origin: "THR",
+      //     Destination: "KIH",
+      //     AdultTotalPrices: "YS:23002000 YU:21507000 YM:16028000 VO:19869000 LB:17367000 T:13592000 G:-",
+      //     OperatingFlightNo: "4051",
+      //     Airline: "ZV",
+      //     ClassesStatus: "/YSC YUC YMC VOA LBA TC GC",
+      //     FlightNo: 4051,
+      //     Transit: false,
+      //     ClassRefundStatus: "YS:Refundable YU:Refundable YM:Refundable VO:Refundable LB:Refundable T:Refundable G:-",
+      //     CurrencyCode: "IRR",
+      //     DepartureDateTime: "2023-06-11",
+      //     ArrivalDateTime: "2023-06-11 13:15:00",
+      //     OperatingAirline: "ZV",
+      //     AircraftTypeName: "",
+      //     AircraftTypeCode: "MD8",
+      //     DepartureTime: "11:20",
+      //     ArrivalDate: "2023-06-11",
+      //     ArrivalTime: "13:15",
+      //     originCity: "تهران",
+      //     destinationInternal: "کیش",
+      //     dayName: "یکشنبه",
+      //     fromDate: "۲۱ خرداد",
+      //     type: "A",
+      //     price: 6011000,
+      //     fare: {
+      //       AdultTotalPrice: "6011000",
+      //       InfantTotalPrice: "1495000",
+      //       EligibilityText: " ",
+      //       CRCNRules: "ازلحظه صدورتا15دقيقه بعدازصدور,0,P/از سه ساعت قبل از پرواز,90,P/تا سه ساعت قبل از پرواز ,80,P/تا12 ?ک روز قبل از پرواز,60,P/از 15 دقيقه بعد از صدور تا 12ظهر 3روز قبل از پرواز,50,P/",
+      //       InfantFare: "1267000",
+      //       AdultTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:484000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:54000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildFare: "4836000",
+      //       AdultFare: "5373000",
+      //       ChildTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:436000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:49000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       InfantTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:115000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:13000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildTotalPrice: "5421000"
+      //     },
+      //     capacity: "A",
+      //     longDate1: "۲۱ خرداد ۱۴۰۲",
+      //     longDate2: "۲۱ خرداد ۱۴۰۲",
+      //     enLongDate1: "June 11",
+      //     enLongDate2: "June 11"
+      //   },
+      //   {
+      //     Origin: "THR",
+      //     Destination: "KIH",
+      //     AdultTotalPrices: "YS:23002000 YU:21507000 YM:16028000 VO:19869000 LB:17367000 T:13592000 G:-",
+      //     OperatingFlightNo: "4051",
+      //     Airline: "ZV",
+      //     ClassesStatus: "/YSC YUC YMC VOA LBA TC GC",
+      //     FlightNo: 4051,
+      //     Transit: false,
+      //     ClassRefundStatus: "YS:Refundable YU:Refundable YM:Refundable VO:Refundable LB:Refundable T:Refundable G:-",
+      //     CurrencyCode: "IRR",
+      //     DepartureDateTime: "2023-06-11",
+      //     ArrivalDateTime: "2023-06-11 13:15:00",
+      //     OperatingAirline: "ZV",
+      //     AircraftTypeName: "",
+      //     AircraftTypeCode: "MD8",
+      //     DepartureTime: "11:20",
+      //     ArrivalDate: "2023-06-11",
+      //     ArrivalTime: "13:15",
+      //     originCity: "تهران",
+      //     destinationInternal: "کیش",
+      //     dayName: "یکشنبه",
+      //     fromDate: "۲۱ خرداد",
+      //     type: "A",
+      //     price: 9597000,
+      //     fare: {
+      //       AdultTotalPrice: "9597000",
+      //       InfantTotalPrice: "1495000",
+      //       EligibilityText: " ",
+      //       CRCNRules: "ازلحظه صدورتا15دقيقه بعدازصدور,0,P/از 15 دقيقه بعد از صدور تا 12ظهر 3روز قبل از پرواز,40,P/تا12 ?ک روز قبل از پرواز,50,P/تا سه ساعت قبل از پرواز ,60,P/از سه ساعت قبل از پرواز,70,P/",
+      //       InfantFare: "1267000",
+      //       AdultTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:777000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:87000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildFare: "7339000",
+      //       AdultFare: "8633000",
+      //       ChildTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:661000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:74000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       InfantTaxes: "I6:30000.0,EN_Desc:PASSENGER SAFETY OVERSIGHT SERVICE,FA_Desc:PASSENGER SAFETY OVERSIGHT SERVICE$V0:115000.0,EN_Desc:VAT,FA_Desc:ماليات بر ارزش افزوده$HL:13000.0,EN_Desc:HELAL AHMAR TAX,FA_Desc:عوارض هلال احمر$LP:70000.0,EN_Desc:AIRPORT TAX,FA_Desc:فرودگاهي$",
+      //       ChildTotalPrice: "8174000"
+      //     },
+      //     capacity: "A",
+      //     longDate1: "۲۱ خرداد ۱۴۰۲",
+      //     longDate2: "۲۱ خرداد ۱۴۰۲",
+      //     enLongDate1: "June 11",
+      //     enLongDate2: "June 11"
       //   }
-      // }
-      variabel1 = variabel1.sort(this.dynamicSort("price"));
-      // variabel1 = variabel1.sort((a, b) => (a.fare.AdultTotalPrice > b.fare.AdultTotalPrice) ? 1 : ((b.fare.AdultTotalPrice > a.fare.AdultTotalPrice) ? -1 : 0))
-      this.tickets = variabel1
-      // for (let i = 0; i < variabel2.length; i++) {
-      //   this.tickets.push(variabel2[i])
-      // }
+      // ]
+      let variabel1 = []
+      let variabel2 = []
+      for (let i = 0; i < beforeTickets.length; i++) {
+        console.log(beforeTickets[i]);
+        if (((beforeTickets[i].type != 'X') && (beforeTickets[i].type != 'C'))) {
 
-      function dynamicSort(property) {
-        var sortOrder = 1;
-        if (property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1);
-        }
-        return function (a, b) {
-          /* next line works with strings and numbers, 
-           * and you may want to customize it to your needs
-           */
-          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-          return result * sortOrder;
+          variabel1.push(beforeTickets[i])
+        } else {
+          variabel2.push(beforeTickets[i])
         }
       }
-
-      var People = [
-        { Name: "Name", Surname: "Surname" },
-        { Name: "AAA", Surname: "ZZZ" },
-        { Name: "Name", Surname: "AAA" }
-      ];
-
-      console.log(People.sort(dynamicSort("Surname")));
+      variabel1 = variabel1.sort(this.dynamicSort("price"));
+      if (variabel1.length != 0) {
+        this.tickets = variabel1
+      }
 
     }
   },
@@ -1902,7 +1877,6 @@ export default {
       this.dayNumber(numberdate)
     }
     this.setDates()
-    this.complateSearch()
   },
 }
 </script>

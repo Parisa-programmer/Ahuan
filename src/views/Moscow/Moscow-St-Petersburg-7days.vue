@@ -153,7 +153,7 @@
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">لیدر فارسی زبان از تهران
                     تا برگشت همراه مسافر</li>
                   <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">4 روز گشت کامل 8 ساعته
-                    طبق برنامه سفر با ناهار (بازدید از 32 مکان دیدنی - 2 روز مسکو و 2 روز سنت‌پترزبورگ)</li>
+                    طبق برنامه سفر با 2 وعده ناهار (بازدید از 32 مکان دیدنی - 2 روز مسکو و 2 روز سنت‌پترزبورگ)</li>
                 </ul>
               </v-col>
             </v-row>
@@ -241,7 +241,7 @@
                   حرکت با مترو و بازدید از چند ایستگاه مترو و حرکت به سمت میدان سرخ – سرباز گمنام – باغ الکساندر – نمای
                   بیرونی کلیسای سنت باسیل – مقبره لنین در صورت باز بودن – بازار گوم و ... و بازدید از کرملین (از داخل
                   کرملین)
-                  صرف ناهار در فست فود
+                  صرف ناهار در <b class="red--text">رستوران</b>
 
                 </p>
                 <p class="my-3 grey--text text--darken-3 bold text-tour widthAll" style="font-family:Byekan !important"><b

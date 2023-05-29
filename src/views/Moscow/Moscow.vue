@@ -47,7 +47,7 @@ export default {
         title: 'مسکو (5 روز)',
         airline: 'ماهان',
         hotelStar: '4  و 5 ',
-        nights: 'شروع قیمت از 22.700.000 تومان',
+        nights: 'شروع قیمت از 29.500.000 تومان',
         route: '/tour/moscow/Moscow-5days',
         download: require('@/assets/image/پکیج مسکو.jpg'),
         date: 'همه‌روزه بغیر از شنبه‌ها'

@@ -38,9 +38,11 @@
                   <div v-for="(link, i) in links" :key="i" class="">
                     <v-list-item v-for="sublink in link.subLinks" :key="sublink.text"
                       class="cursorPointer titleHeader py-0">
-                      <v-list-item-title @click="sublink.active = !sublink.active" class="topMenu"
-                        style="font-weight: bold;width:100px">{{ sublink.text }}</v-list-item-title>
-                      <div class="absolute  submenu rounded-lg"
+                      <router-link :to="sublink.url" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="sublink.active = !sublink.active" class="topMenu"
+                          style="font-weight: bold;width:100px">{{ sublink.text }}</v-list-item-title>
+                      </router-link>
+                      <div class="absolute submenu rounded-lg"
                         style="right: 120px;white-space: nowrap;top: 0;border:1px solid rgb(172, 172, 172);background:#fff"
                         :style="{ minWidth: sublink.text == 'اروپا' ? '252px' : '150px' }">
                         <v-row v-for="(sub2, k) in sublink.sub2" :key="k" class="caption pa-2 submenu2"
@@ -69,7 +71,7 @@
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <router-link to="/final-tour" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0 red--text bold" @click="activeLinkMenuHeader = 'لیگ'">
-                تور فینال لیگ قهرمانی
+                لیگ قهرمانان اروپا
               </span>
             </router-link>
           </v-skeleton-loader>
@@ -160,7 +162,7 @@
                     <v-icon class="ml-2" color="red">mdi-soccer</v-icon>
                     <!-- <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon> -->
                     <v-list-item-title>
-                      <h4 class="red--text">تور فینال لیگ قهرمانی</h4>
+                      <h4 class="red--text">لیگ قهرمانان اروپا</h4>
                     </v-list-item-title>
                   </v-list-item>
                 </router-link>
@@ -391,7 +393,6 @@ export default {
           this.loginDialog = false
         }, 2000);
       }
-      console.log(this.$refs);
       this.$refs.loginForm.resetValidation()
     },
   },
@@ -403,6 +404,7 @@ export default {
           {
             text: 'اروپا',
             active: false,
+            url: '/tour/Europe',
             sub2: [
               {
                 text: 'فرانسه و امارات(9روز)',
@@ -469,6 +471,7 @@ export default {
           {
             text: 'سریلانکا',
             active: false,
+            url: '/tour/Srilanka',
             sub2: [
               {
                 text: '14 شب و 15 روز',
@@ -479,6 +482,7 @@ export default {
           {
             text: 'روسیه',
             active: false,
+            url: '/tour/Moscow',
             sub2: [
               {
                 text: 'مسکو',
@@ -497,6 +501,7 @@ export default {
           {
             text: 'تایلند',
             active: false,
+            url: '/tour/Thailand',
             sub2: [
               {
                 text: 'بانکوک - پاتایا - پوکت',
@@ -507,6 +512,7 @@ export default {
           {
             text: 'تایلند-مالزی',
             active: false,
+            url: '/tour/Thailand-Malaysia',
             sub2: [
               {
                 text: 'کوالالامپور - پوکت - بانکوک',
@@ -517,6 +523,7 @@ export default {
           {
             text: 'استانبول',
             active: false,
+            url: '/tour/Istanbul',
             sub2: [
               {
                 text: '3 شب و 4 روز',
@@ -535,6 +542,7 @@ export default {
           {
             text: 'دبی',
             active: false,
+            url: '/tour/Dubai',
             sub2: [
               {
                 text: '3 شب و 4 روز',
