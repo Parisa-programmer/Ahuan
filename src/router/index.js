@@ -14,7 +14,7 @@ const routes = [
     component: () => import('../views/HomeView.vue')
   },
   {
-    path: '/tour',
+    path: '/tour-page',
     name: 'tour-page',
     component: () => import('../views/TourPage.vue')
   },
@@ -263,11 +263,11 @@ const routes = [
     name: 'final-tour',
     component: () => import('../views/FinalTour.vue')
   },
-  // {
-  //   path: '/tour/:id',
-  //   name: 'tour-slug',
-  //   component: () => import('../views/tour.vue')
-  // },
+  {
+    path: '/tour/:id',
+    name: 'tour-slug',
+    component: () => import('../views/tour.vue')
+  },
   {
     path: '/test-page',
     name: 'test-page',

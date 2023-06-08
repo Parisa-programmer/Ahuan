@@ -1,159 +1,157 @@
 <template>
   <div class="mt-9 mt-sm-12 pt-12">
-          <v-row justify="center">
-            <div class="widthAll relative">
-              <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background7.jpg" alt="">
-              <div class="tourImageBackground"></div>
-            </div>
-            <div class="mb-12 indexDiv main-div" style="z-index: 3">
-              <div>
-                <span class="white--text countryNmae px-12">استانبول _ 4 شب و 5 روز</span>
-              </div>
-              <div>
-                <b class="white--text px-12 tour-date">تاریخ پرواز : همه روزه (اعتبار پکیج 
-                  تا <span class="white--text text-decoration-underline">9 اسفند</span>)</b>
-              </div>
-              <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
-                <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
-                  </v-slide-item>
-                </v-slide-group>
-              </v-row>
-              
-              <v-row class="white py-md-9 px-6">
-                <div class="widthAll" v-if="tab == 0">
-                  <h4 class="mb-4 mt-4 mt-md-0">
-                    <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
-                    قیمت های اعلام شده بر حسب تومان می باشد.
-                  </h4>
-                  <v-row>
-                    <v-col cols="12" lg="12">
-                      <v-row class="mb-2" justify="center">
-                        <v-data-table 
-                          :headers="pricesHeaderIstanbul"
-                          hide-default-footer
-                          :items="pricesItemsIstanbul"
-                          disable-pagination
-                          class=" rounded-lg even-odd-tabel tabelTourId"
-                          style="border: 2px solid #9d9d9b !important;"
-                        >
-                        <template v-slot:[`item.name`]="{ item }">
-                          <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
-                         </template>
-                        </v-data-table>
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 1">
-                  <v-row>
-                    <v-col cols="12" md="12">
-                      <ul class=" mr-md-6">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیت رفت و برگشت هواپیما</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">اقامت به همراه صبحانه</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاهی رفت و برگشت</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">به همراه تور لیدر فارسی زبان</li>   
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی تا سقف 10.000 یورو با پوشش کرونا</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">هدیه ویژه آهوان گشت رایگان خرید به همراه ناهار</li>                    
-                      </ul>
-                    </v-col>
-                  </v-row>
-                </div>
-                
-                <div class="widthAll" v-else-if="tab == 2">
-                  <v-row>
-                    <v-col cols="12" md="12">
-                      <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز تورهای استانبول</h3>
-                      <ul class="my-6 mr-9">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل گذرنامه به همراه حداقل 7 ماه اعتبار</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارت واکسن و یا تست پی سی آر منفی</li>
-                      </ul>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 3">
-                  <v-row>
-                    <v-col cols="12" md="12">
-                      <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای استانبول</h3>
-                      <ul class="my-6 mr-9">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">بار مجاز مسافر 30 کیلوگرم می باشد.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل اعتبار پاسپورت 7 ماه می باشد.</li>
-                        
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                          نرخ نوزاد زیر 2 سال 850.000 تومان می‌باشد.
-                        </li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify"> به نفر سوم در اتاق سرویس اضافه تعلق میگیرد.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                          پرداخت حداقل 50% مبلغ تور هنگام رزرو الزامی است.
-                        </li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                          مسئولیت کنترل ممنوعیت خروج بعهده مسافر می باشد.
-                        </li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                          بیمه افراد بالای 60 سال الزامی و هزینه آن جداگانه محاسبه می‌گردد.
-                        </li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اطلاعات ترانسفر و سالن خروجی مربوطه در فرودگاه استانبول در معرفی نامه هتل درج شده است.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                          قیمتهای موجود در پکیج با نرخ دلار 45.000 تومان
-
-                          محاسبه شده است در صورت هرگونه افزایش
-                          نرخ مابه التفاوت محاسبه خواهد شد.
-                        </li>
-                      </ul>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 4">
-                  <v-row justify="center">
-                    <div class="d-inline-block galeryImageParent" v-for="(item,i) in istanbulImages" :key="i">
-                      <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i;imageDialog = true" :src="item"></v-img>
-                    </div>
-                  </v-row>
-                  <v-dialog
-                    v-model="imageDialog"
-                    width="1000"
-                  >
-                    <div class="relative">
-                      <v-carousel v-model="imageNumber">
-                        <v-carousel-item
-                          v-for="(item,i) in istanbulImages" 
-                          :key="i"
-                        >
-                          <img :src="item" alt="">
-                        </v-carousel-item>
-                      </v-carousel>
-                      <v-icon class="absolute cursorPointer" color="white" @click="imageDialog=false" style="top:5px;right:5px">mdi-close</v-icon>
-                    </div>
-                  </v-dialog>
-                </div>
-              </v-row>
-              <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-                <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us" style="font-family: Byekan !important;">
-                  جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-                </b>
-                <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us" style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889" style="text-decoration:none">تلفن: 41889-021</a></b>
-              </v-row>
-              <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none" style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0;">
-                <b class="d-inline-block text-center text-tour-call-us" style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-                  <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a> 
-                </b>
-              </v-row>
-            </div>
-          </v-row>
+    <v-row justify="center">
+      <div class="widthAll relative">
+        <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background7.jpg" alt="">
+        <div class="tourImageBackground"></div>
+      </div>
+      <div class="mb-12 indexDiv main-div" style="z-index: 3">
+        <div>
+          <span class="white--text countryNmae px-12">استانبول _ 4 شب و 5 روز</span>
         </div>
+        <div>
+          <b class="white--text px-12 tour-date">تاریخ پرواز : همه روزه (اعتبار پکیج
+            تا <span class="white--text text-decoration-underline">9 اسفند</span>)</b>
+        </div>
+        <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
+          <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
+            </v-slide-item>
+          </v-slide-group>
+        </v-row>
+
+        <v-row class="white py-md-9 px-6">
+          <div class="widthAll" v-if="tab == 0">
+            <h4 class="mb-4 mt-4 mt-md-0">
+              <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
+              قیمت های اعلام شده بر حسب تومان می باشد.
+            </h4>
+            <v-row>
+              <v-col cols="12" lg="12">
+                <v-row class="mb-2" justify="center">
+                  <v-data-table :headers="pricesHeaderIstanbul" hide-default-footer :items="pricesItemsIstanbul"
+                    disable-pagination class=" rounded-lg even-odd-tabel tabelTourId"
+                    style="border: 2px solid #9d9d9b !important;">
+                    <template v-slot:[`item.name`]="{ item }">
+                      <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
+                    </template>
+                  </v-data-table>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 1">
+            <v-row>
+              <v-col cols="12" md="12">
+                <ul class=" mr-md-6">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیت رفت و برگشت هواپیما
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">اقامت به همراه صبحانه
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاهی رفت و
+                    برگشت</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">به همراه تور لیدر فارسی
+                    زبان</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی تا سقف
+                    10.000 یورو با پوشش کرونا</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">هدیه ویژه آهوان گشت
+                    رایگان خرید به همراه ناهار</li>
+                </ul>
+              </v-col>
+            </v-row>
+          </div>
+
+          <div class="widthAll" v-else-if="tab == 2">
+            <v-row>
+              <v-col cols="12" md="12">
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز تورهای استانبول</h3>
+                <ul class="my-6 mr-9">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل گذرنامه به همراه حداقل 7 ماه
+                    اعتبار</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارت واکسن و یا تست پی سی آر منفی
+                  </li>
+                </ul>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 3">
+            <v-row>
+              <v-col cols="12" md="12">
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای استانبول</h3>
+                <ul class="my-6 mr-9">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">بار مجاز مسافر 30 کیلوگرم می
+                    باشد.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل اعتبار پاسپورت 7 ماه می
+                    باشد.</li>
+
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                    نرخ نوزاد زیر 2 سال 850.000 تومان می‌باشد.
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify"> به نفر سوم در اتاق سرویس اضافه
+                    تعلق میگیرد.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                    پرداخت حداقل 50% مبلغ تور هنگام رزرو الزامی است.
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                    مسئولیت کنترل ممنوعیت خروج بعهده مسافر می باشد.
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                    بیمه افراد بالای 60 سال الزامی و هزینه آن جداگانه محاسبه می‌گردد.
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اطلاعات ترانسفر و سالن خروجی
+                    مربوطه در فرودگاه استانبول در معرفی نامه هتل درج شده است.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                    قیمتهای موجود در پکیج با نرخ دلار 45.000 تومان
+
+                    محاسبه شده است در صورت هرگونه افزایش
+                    نرخ مابه التفاوت محاسبه خواهد شد.
+                  </li>
+                </ul>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 4">
+            <v-row justify="center">
+              <div class="d-inline-block galeryImageParent" v-for="(item, i) in istanbulImages" :key="i">
+                <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i; imageDialog = true"
+                  :src="item"></v-img>
+              </div>
+            </v-row>
+            <v-dialog v-model="imageDialog" width="1000">
+              <div class="relative">
+                <v-carousel v-model="imageNumber">
+                  <v-carousel-item v-for="(item, i) in istanbulImages" :key="i">
+                    <img :src="item" alt="">
+                  </v-carousel-item>
+                </v-carousel>
+                <v-icon class="absolute cursorPointer" color="white" @click="imageDialog = false"
+                  style="top:5px;right:5px">mdi-close</v-icon>
+              </div>
+            </v-dialog>
+          </div>
+        </v-row>
+        <call-us />
+      </div>
+    </v-row>
+  </div>
 </template>
 
 <style scoped>
@@ -534,9 +532,11 @@
 </style>
 
 <script>
+import CallUs from '@/components/CallUs.vue';
 export default {
   name: 'Istanbul-4night',
   components: {
+    CallUs
 
   },
   data: () => ({
@@ -570,7 +570,7 @@ export default {
 
   },
   created() {
-  window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     // console.log(store);
     document.title = 'تور 4 شب استانبول|تور لحظه آخری استانبول'
     let newObjectDate = [

@@ -439,22 +439,7 @@
           <img class="widthAll rounded-xl d-none d-md-block mt-6" src="@/assets/image/ویزلاین2.jpg" alt="">
           <img class="widthAll rounded-xl d-block d-md-none mt-6" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
         </router-link>
-        <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-          <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;">
-            جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-          </b>
-          <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889"
-              style="text-decoration:none">تلفن: 41889-021</a></b>
-        </v-row>
-        <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none"
-          style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0;">
-          <b class="d-inline-block text-center text-tour-call-us"
-            style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-            <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a>
-          </b>
-        </v-row>
+        <call-us />
       </div>
     </v-row>
   </div>
@@ -796,6 +781,7 @@
 
 
 <script>
+import CallUs from '@/components/CallUs.vue';
 export default {
   name: 'Europe-05',
   metaInfo: {
@@ -804,6 +790,7 @@ export default {
     ]
   },
   components: {
+    CallUs
 
   },
   data: () => ({

@@ -28,7 +28,7 @@
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block relative" type="chip" :loading="isLoading">
             <v-skeleton-loader class="textLoader d-inline-block show-sub-menu-parent" type="chip" :loading="isLoading">
-              <router-link to="/tour" class="text-decoration-none">
+              <router-link to="/tour-page" class="text-decoration-none">
                 <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
                   @click="activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = ''">تور
                 </span>

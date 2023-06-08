@@ -20,19 +20,16 @@
           </div>
         </v-row>
         <v-row justify="center" class="parent py-6 py-sm-12 white">
-          <h2 class="relative widthAll text-center font-small-title-xs">
-            جایگاه و دسته‌بندی تماشاچیان در ورزشگاه المپیک آتاتورک
-          </h2>
-          <div class="title-child mt-4" style="height:3px;background-color: #bf0000 !important;width:300px">
+          <div class="indexDiv">
+            <h2 class="relative widthAll text-center font-small-title-xs px-1">
+              جایگاه و دسته‌بندی تماشاچیان در ورزشگاه المپیک آتاتورک
+            </h2>
+            <v-row justify="center">
+              <div class="title-child mt-4" style="height:3px;background-color: #bf0000 !important;width:300px">
+              </div>
+            </v-row>
           </div>
         </v-row>
-
-        <!-- <v-row justify="center" class="parent py-6 py-sm-12 white">
-          <p>
-            درباره بلیط استادیومالمپیک آتاتورک 
-            نام ورزشگاه : ورزشگاه المپیک آتاتورکتیم میزبان : استانبول
-          </p>
-        </v-row> -->
         <v-row justify="center" class="parent pb-12 white">
           <div class="indexDiv">
             <v-row justify="center">
@@ -95,18 +92,22 @@
             </v-row>
           </div>
         </v-row>
-        <v-row justify="center" class="parent py-6 py-sm-12 grey lighten-2" style="background:#150035">
-          <h2 class="relative widthAll text-center font-small-title-xs">
-            درباره استادیوم المپیک آتاتورک
-          </h2>
-          <div class="title-child mt-4" style="height:3px;background-color: #bf0000 !important;width:150px">
+        <v-row justify="center" class="parent py-6 pt-sm-12 grey lighten-2" style="background:#150035">
+          <div class="indexDiv">
+            <h2 class="relative widthAll text-center font-small-title-xs">
+              درباره استادیوم المپیک آتاتورک
+            </h2>
+            <v-row justify="center">
+              <div class="title-child mt-4" style="height:3px;background-color: #bf0000 !important;width:150px">
+              </div>
+            </v-row>
           </div>
         </v-row>
         <v-row justify="center" class="parent pb-6 grey lighten-2" style="background:#150035">
           <div class="indexDiv">
-            <v-row>
+            <v-row align="center">
               <v-col cols="12" md="6" class="order-2 order-md-1">
-                <v-row class="mb-4">
+                <!-- <v-row class="mb-4">
                   <span class="bold ml-2">نام ورزشگاه:</span>
                   <span>ورزشگاه المپیک آتاتورک</span>
                 </v-row>
@@ -138,14 +139,18 @@
                       خط اتوبوس 146 T در فاصله کوتاهی با پای پیاده توقف می کند.
                     </li>
                   </ul>
-                </v-row>
+                </v-row> -->
                 <v-row class="mb-4">
                   <p class="answerText">
-                    <span class="bold ml-2">توضیحات استادیوم:</span>
-                    بزرگترین ورزشگاه ترکیه با ظرفیت استانبول Büyüksehir Belediyespor است و به نام اولین رئیس جمهور
-                    نامگذاری شده است. این استادیوم برای پیشنهاد ناموفق ترکیه برای بازی های المپیک 2008 ساخته شد. ظرفیت
-                    عظیم
-                    امکانات مدرن آن باعث شد تا یوفا از عنوان "مجموعه ورزشی 5 ستاره" مطلع شود.
+                    <!-- <span class="bold ml-2">توضیحات استادیوم:</span> -->
+                    یک ورزشگاه واقع در استانبول ترکیه که در ناحیه غربی ایکیتلی می‌باشد، بزگترین ورزشگاه
+                    کشور است. این ورزشگاه به نام مصطفی کمال آتاتورک، بنیانگذار و اولین رئیس جمهوری ترکیه نام گذاری شده
+                    است. ساخت آن در سال 1999 آغاز شد و در سال 2002 با ظرفیت 74753 (صندلی) به پایان رسید. عنوان
+                    "مجموعه ورزشی ۵ ستاره" توسط یوفا در سال 2004 به آن اعطا شد و این مکان را برای میزبانی فینال مسابقات
+                    یوفا فراهم کرد .
+                    فینال لیگ قهرمانان اروپا در 2005 بین میلان و لیورپول در ورزشگاه المپیک آتاتورک در 25مه 2005برگزار شد
+                    که همچنین قرار است میزبان فینال لیگ
+                    قهرمانان اروپا در سال 2023 باشد.
                   </p>
 
                 </v-row>
@@ -166,74 +171,16 @@
             ظرفیت عظیم امکانات مدرن آن باعث شد تا یوفا از عنوان "مجموعه ورزشی 5 ستاره" مطلع شود. -->
           </div>
         </v-row>
-        <!-- <v-row justify="center" class="parent py-2 py-sm py-sm-6" style="background:#150035">
-          <h2 class="relative widthAll text-center font-small-title-xs white--text">
-            نرخ حدودی بلیط بازی فینال
-          </h2>
-          <div class="title-child mt-4 ml-1 ml-sm-4"
-            style="height:3px;background-color: #bf0000 !important;width:150px;transition: all 2s;">
-          </div>
-        </v-row>
-        <v-row justify="center" class="parent py-6 " style="background:#150035">
-          <div class="indexDiv">
-            <v-row justify="center">
-              <v-col cols="6" sm="3">
-                <v-row justify="center">
-                  <h3 class="red--text text-h6 px-3 py-1" style="border:1px solid red">CAT1</h3>
-                </v-row>
-                <v-row justify="center" class="bold">
-                  <img src="@/assets/image/test/ایکن یورو.png" class="ml-2 ml-sm-1 ml-md-2 ml-lg-3 euroIcon" alt="">
-                  <span class="textNormal white--text" style="white-space: nowrap;">شروع نرخ :
-                    <span class="text-h6 ml-2 mt-2 white--text">3500</span>
-                    <v-icon color="#fff" style="margin-top:-5px">mdi-currency-eur</v-icon>
-                  </span>
-                </v-row>
-              </v-col>
-              <v-col cols="6" sm="3">
-                <v-row justify="center">
-                  <h3 class="red--text text-h6 px-3 py-1" style="border:1px solid red">CAT2</h3>
-                </v-row>
-                <v-row justify="center" class="bold">
-                  <img src="@/assets/image/test/ایکن یورو.png" class="ml-2 ml-sm-1 ml-md-2 ml-lg-3 euroIcon" alt="">
-                  <span class="textNormal white--text" style="white-space: nowrap;">شروع نرخ :
-                    <span class="text-h6 ml-2 mt-2 white--text">2500</span>
-                    <v-icon color="#fff" style="margin-top:-5px">mdi-currency-eur</v-icon>
-                  </span>
-                </v-row>
-              </v-col>
-              <v-col cols="6" sm="3">
-                <v-row justify="center">
-                  <h3 class="red--text text-h6">CAT3</h3>
-                </v-row>
-                <v-row justify="center" class="bold">
-                  <img src="@/assets/image/test/ایکن یورو.png" class="ml-2 ml-sm-1 ml-md-2 ml-lg-3 euroIcon" alt="">
-                  <span class="textNormal white--text" style="white-space: nowrap;">شروع نرخ :
-                    <span class="text-h6 ml-2 mt-2 white--text">2000</span>
-                    <v-icon color="#fff" style="margin-top:-5px">mdi-currency-eur</v-icon>
-                  </span>
-                </v-row>
-              </v-col>
-              <v-col cols="6" sm="3">
-                <v-row justify="center">
-                  <h3 class="red--text text-h6">CAT4</h3>
-                </v-row>
-                <v-row justify="center" class="bold">
-                  <img src="@/assets/image/test/ایکن یورو.png" class="ml-2 ml-sm-1 ml-md-2 ml-lg-3 euroIcon" alt="">
-                  <span class="textNormal white--text" style="white-space: nowrap;">شروع نرخ :
-                    <span class="text-h6 ml-2 mt-2 white--text">1800</span>
-                    <v-icon color="#fff" style="margin-top:-5px">mdi-currency-eur</v-icon>
-                  </span>
-                </v-row>
-              </v-col>
-            </v-row>
-          </div>
-        </v-row> -->
         <v-row justify="center" class="parent py-4 py-sm-6 py-md-12 white">
-          <h2 class="relative widthAll text-center font-small-title-xs">
-            هتل‌های پیشنهادی ما در لیگ قهرمانی اروپا
-          </h2>
-          <div class="title-child mt-4 ml-1 ml-sm-4"
-            style="height:3px;background-color: #bf0000 !important;width:200px;transition: all 2s;">
+          <div class="indexDiv">
+            <h2 class="relative widthAll text-center font-small-title-xs">
+              هتل‌های پیشنهادی ما در لیگ قهرمانی اروپا
+            </h2>
+            <v-row justify="center">
+              <div class="title-child mt-4 ml-1 ml-sm-4"
+                style="height:3px;background-color: #bf0000 !important;width:200px;transition: all 2s;">
+              </div>
+            </v-row>
           </div>
         </v-row>
         <v-row justify="center" class="parent pb-12 white">
@@ -370,24 +317,6 @@
                   </v-card>
                 </v-row>
               </v-col>
-              <!-- <v-col cols="12" sm="6" md="3" data-aos="fade-right" data-aos-duration="2000">
-                <v-row justify="center" class="px-3 px-sm-1 px-md-2 px-lg-3">
-                  <img src="@/assets/image/test/4 ستاره تاپ.png" class="widthAll cursorPointer hoverShaddow rounded-xl"
-                    alt="">
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="6" md="3" data-aos="fade-left" data-aos-duration="2000">
-                <v-row justify="center" class="px-3 px-sm-1 px-md-2 px-lg-3">
-                  <img src="@/assets/image/test/4 ستاره لوکس .png" class="widthAll cursorPointer hoverShaddow rounded-xl"
-                    alt="">
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="6" md="3" data-aos="fade-left" data-aos-duration="2000">
-                <v-row justify="center" class="px-3 px-sm-1 px-md-2 px-lg-3">
-                  <img src="@/assets/image/test/5 ستاره.png" class="widthAll cursorPointer hoverShaddow rounded-xl"
-                    alt="">
-                </v-row>
-              </v-col> -->
             </v-row>
           </div>
         </v-row>
@@ -395,15 +324,15 @@
           <div class="indexDiv">
             <v-row justify="center">
               <v-col cols="12" md="6" class="order-2 order-md-1">
-                <div class="parent widthAll">
-                  <h2 class="mr-3 white--text font-small-title-xs">
+                <div class="parent indexDiv">
+                  <h2 class="mr-sm-3 white--text font-small-title-xs">
                     تاریخچه لیگ قهرمانان اروپا
                   </h2>
-                  <div class="title-child mr-3 mt-3"
+                  <div class="title-child mr-sm-3 mt-3"
                     style="bottom:-15px;height:3px;background-color: #fff !important;width:200px">
                   </div>
                 </div>
-                <p class=" pl-6 mt-4 mt-sm-6 white--text text-justify" style="line-height:26px">
+                <p class="pl-sm-4 pl-md-6 mt-4 mt-sm-6 white--text text-justify" style="line-height:26px">
                   مانند بسیاری از رقابت‌های مهم جهان فوتبال،شکل گیری لیگ قهرمانان اروپا نیز ایده یک فرانسوی بود.
                   گابریل هانو،سردبیر نشریه اکیپ با الهام از مسابقات جام باشگاه‌های آمریکای جنوبی،توانست به کمک ژان
                   فران،یوفا را متقاعد کند تا مسابقات جدیدی شکل دهد که متشکل از بهترین تیم های قاره اروپا است.
@@ -428,49 +357,58 @@
           </div>
         </v-row>
         <v-row justify="center" class="parent py-4 py-sm-6 py-md-12 white">
-          <h2 class="relative widthAll text-center font-small-title-xs">
-            کارنامه شرکت آهوان در برگزاری جام جهانی
-            <span style="font-family: Arial, Helvetica, sans-serif !important;">2022</span>
-            قطر
-          </h2>
-          <div class="title-child mt-4 ml-1 ml-sm-4"
-            style="height:3px;background-color: #bf0000 !important;width:300px;transition: all 2s;">
+          <div class="indexDiv">
+            <h2 class="relative widthAll text-center font-small-title-xs">
+              کارنامه شرکت آهوان در برگزاری جام جهانی
+              <span style="font-family: Arial, Helvetica, sans-serif !important;">2022</span>
+              قطر
+            </h2>
+            <v-row justify="center">
+              <div class="title-child mt-4 ml-1 ml-sm-4"
+                style="height:3px;background-color: #bf0000 !important;width:300px;transition: all 2s;">
+              </div>
+            </v-row>
           </div>
         </v-row>
-        <!-- <v-row justify="center">
-          <div class="indexDiv">
-            <v-carousel height="300" hide-delimiters cycle>
-              <v-carousel-item src="@/assets/image/karname/آهوان جام جهانی 1.jpg"></v-carousel-item>
-              <v-carousel-item src="@/assets/image/hotel4.jpg"></v-carousel-item>
-              <v-carousel-item src="@/assets/image/hotel4.jpg"></v-carousel-item>
-            </v-carousel>
-          </div>
-        </v-row> -->
         <v-row class="white pb-6" justify="center">
           <v-sheet max-width="100%" class="indexDiv transparent">
             <v-skeleton-loader class=" mt-4" type="image">
               <div class="widthAll slick-title slick-parent relative mt-8 mb-12">
-                <slick :options="slickOptions" class="">
+                <slick :options="slickOptions" class="hideArrowSm">
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 1.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 1.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 2.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 2.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 7.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 7.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 3.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 3.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 4.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 4.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 5.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-sm-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 5.jpg')" alt="">
+                    </v-row>
                   </div>
                   <div class="newesCardSlider px-3 px-md-4">
-                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 6.jpg')" alt="">
+                    <v-row justify="center">
+                      <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 6.jpg')" alt="">
+                    </v-row>
                   </div>
 
                   <!-- <div class="newesCardSlider px-3 px-md-4">
@@ -485,27 +423,24 @@
                   <div class="newesCardSlider px-3 px-md-4">
                     <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 11.jpg')" alt="">
                   </div>
+                  <div class="newesCardSlider px-3 px-md-4">
+                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 12.jpg')" alt="">
+                  </div>
+                  <div class="newesCardSlider px-3 px-md-4">
+                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 13.jpg')" alt="">
+                  </div>
+                  <div class="newesCardSlider px-3 px-md-4">
+                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 14.jpg')" alt="">
+                  </div>
+                  <div class="newesCardSlider px-3 px-md-4">
+                    <img class="mx-3 widthAll" :src="require('@/assets/image/karname/آهوان جام جهانی 15.jpg')" alt="">
+                  </div>
                 </slick>
               </div>
             </v-skeleton-loader>
           </v-sheet>
         </v-row>
-        <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-          <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;">
-            جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-          </b>
-          <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889"
-              style="text-decoration:none">تلفن: 41889-021</a></b>
-        </v-row>
-        <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none"
-          style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0; z-index:99999999">
-          <b class="d-inline-block text-center text-tour-call-us"
-            style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-            <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a>
-          </b>
-        </v-row>
+        <call-us />
       </div>
     </v-row>
 
@@ -617,6 +552,7 @@
 <script>
 import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
+import CallUs from '@/components/CallUs.vue';
 export default {
   name: 'final-tour',
   data() {
@@ -625,7 +561,8 @@ export default {
     }
   },
   components: {
-    Slick
+    Slick,
+    CallUs
   },
   computed: {
 

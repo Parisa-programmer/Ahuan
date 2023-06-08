@@ -42,261 +42,8 @@
       </div>
     </v-row>
     <!-- tours -->
-    <v-row justify="center" align="center" class="mb-6 mt-12">
-      <div class="mt-1 ml-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
-      <h3 class="font-small-title-xs">تور های ویژه آهوان</h3>
-      <div class="mt-1 mr-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
-    </v-row>
-    <v-row justify="center" class="">
-      <div class="indexDiv">
-        <v-row>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
-              data-aos-duration="2000">
-              <router-link to="/tour/Istanbul">
-                <v-img height="220" src="../assets/image/tourSlider/0001.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور ترکیه</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 5.550 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="8" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-top"
-              data-aos-duration="2000">
-              <router-link to="/tour/Europe">
-                <v-img height="220" src="../assets/image/tourSlider/0004.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور اروپا</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 1.890 یورو</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-left"
-              data-aos-duration="2000">
-              <router-link to="/tour/Dubai">
-                <v-img height="220" src="../assets/image/tourSlider/0003.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور دبی</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 12.200 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-sm-2 ml-md-2 rounded-lg hideOver" data-aos="fade-right"
-              data-aos-duration="2000">
-              <router-link to="/tour/Srilanka">
-                <v-img height="220" src="../assets/image/tourSlider/0002.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور سریلانکا</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 39.900 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="12" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-md-2 rounded-lg hideOver" data-aos="fade-right"
-              data-aos-duration="2000">
-              <router-link to="/tour/Moscow">
-                <v-img height="220" src="../assets/image/tourSlider/0006.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور روسیه</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 29.500 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="8" class="scroll-reveal box left pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-top"
-              data-aos-duration="2000">
-              <router-link to="/tour/Thailand">
-                <v-img height="220" src="../assets/image/tourSlider/0007.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور تایلند</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 96.000 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-left"
-              data-aos-duration="2000">
-              <router-link to="/tour/Thailand-Malaysia">
-                <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تایلند-مالزی</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 5.550 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
+    <tour-component />
 
-            </div>
-          </v-col>
-        </v-row>
-      </div>
-    </v-row>
-    <!--  test tours -->
-    <v-row justify="center" align="center" class="mb-6 mt-12">
-      <div class="mt-1 ml-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
-      <h3 class="font-small-title-xs">تور های ویژه آهوان تست</h3>
-      <div class="mt-1 mr-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
-    </v-row>
-    <v-row justify="center" class="">
-      <div class="indexDiv">
-        <v-row>
-          <v-col v-for="(tourItem, i) in tours" :key="i" cols="12" sm="6" :md="tourItem.cols * 4" class="pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
-              data-aos-duration="2000">
-              <router-link to="/tour/Istanbul">
-                <!-- <v-img height="220" :src="'https://ahuantours.com/images/' + tourItem.col1Image" alt=""></v-img> -->
-                <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور {{ tourItem.name }}</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از {{ tourItem.price
-                      }}</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <!-- <v-col cols="12" sm="6" md="8" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-top"
-              data-aos-duration="2000">
-              <router-link to="/tour/Europe">
-                <v-img height="220" src="../assets/image/tourSlider/0004.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور اروپا</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 1.890 یورو</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-left"
-              data-aos-duration="2000">
-              <router-link to="/tour/Dubai">
-                <v-img height="220" src="../assets/image/tourSlider/0003.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور دبی</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 12.200 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="8" class="scroll-reveal box left pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-top"
-              data-aos-duration="2000">
-              <router-link to="/tour/Thailand">
-                <v-img height="220" src="../assets/image/tourSlider/0007.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور تایلند</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 96.000 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" class="pa-0">
-            <div class="relative cursorPointer my-2 mr-sm-2 rounded-lg hideOver" data-aos="fade-left"
-              data-aos-duration="2000">
-              <router-link to="/tour/Thailand-Malaysia">
-                <v-img height="220" src="../assets/image/tourSlider/0008.jpg" alt=""></v-img>
-                <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
-                  style="z-index: 2;top: 0;cursor:pointer">
-                  <div>
-                    <v-row justify="center">
-                      <h1 class="white--text" style="text-shadow: 0 0 2px black;">تایلند-مالزی</h1>
-                    </v-row>
-                    <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 5.550 میلیون</span>
-                    </v-row>
-                  </div>
-                </v-row>
-              </router-link>
-
-            </div>
-          </v-col> -->
-        </v-row>
-      </div>
-    </v-row>
     <!-- about us -->
     <v-row justify="center" align="center" class="my-2 my-sm-6">
       <div class="indexDiv">
@@ -667,28 +414,7 @@
   z-index: 9;
 }
 </style>
-<style scoped>
-.maintourImages {
-  opacity: 0;
-  transition: all 400ms;
-}
 
-.maintourImages:hover {
-  opacity: 1;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7231267507002801) 0%, rgba(0, 0, 0, 0.08727240896358546) 100%);
-}
-
-.v-expansion-panel:before {
-  box-shadow: 0 0 0;
-}
-
-@media (max-width: 960px) {
-  .maintourImages {
-    opacity: 1;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7231267507002801) 0%, rgba(0, 0, 0, 0.08727240896358546) 100%);
-  }
-}
-</style>
 <script>
 import InputMain from '@/components/InputMain.vue'
 // import QuestionAnswer from '@/components/QuestionAnswer.vue'
@@ -696,6 +422,7 @@ import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
 const $ = require('jquery');
 import axios from 'axios'
+import TourComponent from '@/components/TourComponent.vue';
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 
@@ -710,7 +437,8 @@ export default {
   components: {
     InputMain,
     // QuestionAnswer,
-    Slick
+    Slick,
+    TourComponent
   },
   watch: {
     showAlert() {
@@ -722,38 +450,11 @@ export default {
     },
   },
   data: () => ({
-    tours: [],
     selectedSection: {
       icon: 'mdi-airplane',
       title: 'پرواز',
       active: true,
     },
-    // questions: [
-    //   {
-    //     question: 'چند روز قبل از پرواز، بلیط هواپیما را بخریم؟',
-    //     answer: 'امکان رزرو بلیط هواپیما از ماه‌ها قبل وجود دارد. اما گاهی اوقات قیمت بلیط هواپیما در روزهای نزدیک به پرواز ارزان‌تر می‌شود. بنابراین در صورتی که شرایطتان اجازه می‌دهد، رزرو آنلاین بلیط هواپیما را به روزهای نزدیک پرواز موکول کنید. البته اگر قصد سفر در ایام پرسفر نظیر تعطیلات را دارید، باید هر چه زودتر رزرو بلیط هواپیما را انجام دهید.'
-    //   },
-    //   {
-    //     question: 'در هر پرواز، میزان بار مجاز چقدر است؟',
-    //     answer: 'میزان مجاز بار به کلاس پرواز و کلاس نرخی بلیط بستگی دارد. هنگام خرید آنلاین بلیط هواپیما می‌توانید میزان بار مجاز را در اطلاعات بلیط ببینید. طبیعی است که اگر میزان بارتان بیش از حد مجاز باشد، باید جریمه پرداخت کنید.'
-    //   },
-    //   {
-    //     question: 'نرخ بلیط هواپیما برای نوزادان و کودکان زیر ۱۲ سال چگونه است؟',
-    //     answer: 'نرخ بلیط کودکان و نوزادان به کلاس پرواز و کلاس نرخی بستگی دارد. به صورت کلی، قیمت بلیط مسافر کودک (2 الی 12 سال) معادل 50 الی 100 درصد بلیط بزرگسال، و قیمت بلیط مسافر نوزاد (تا دو سال) 10 درصد بلیط بزرگسال است. هنگام تهیه بلیط هواپیما به این نکته توجه داشته باشید.'
-    //   },
-    //   {
-    //     question: 'رزرو آنلاین بلیط هواپیما هزینه بیشتری از خرید حضوری دارد؟',
-    //     answer: 'خیر؛ زمانی که از یک سایت معتبر خرید بلیط هواپیما، اقدام به خرید می‌کنید، نه تنها هزینه بیشتری پرداخت نمی‌کنید، حتی ممکن است تخفیف هم بگیرید. ضمنا با خرید آنلاین بلیط هواپیما از پشتیبانی نیز برخودار هستید.'
-    //   },
-    //   {
-    //     question: 'آیا پس از خرید اینترنتی بلیط هواپیما امکان استرداد آن وجود دارد؟',
-    //     answer: 'وقتی از آهوان یعنی بهترین سایت خرید بلیط هواپیما ، بلیطتان را رزرو می‌کنید، خیالتان آسوده است که امکان استرداد وجه در صورت کنسل کردن بلیط وجود دارد. میزان جریمه را هم هنگام رزرو آنلاین بلیط هواپیما در قسمت قوانین استرداد بخوانید. میزان جریمه به نوع بلیط، کلاس پروازی، کلاس نرخی و... بستگی دارد.'
-    //   },
-    //   {
-    //     question: 'آیا پس از خرید بلیط هواپیما، امکان تغییر نام یا نام خانوادگی وجود دارد؟',
-    //     answer: 'در پرواز داخلی یا خارجی، امکان تغییر نام و نام خانوادگی در بلیط سیستمی وجود ندارد. اما در بلیط چارتر، برخی از چارترکننده‌ها این تغییر را می‌پذیرند.'
-    //   },
-    // ],
     magazineItems: [
       {
         image: require('../assets/image/magazine-turkiye.jpg'),
@@ -808,23 +509,8 @@ export default {
     getWidth() {
       this.windowWidth = window.innerWidth
     },
-    getTours() {
-      let self = this
-      axios.get('https://panel.ahuantours.com/api/package/groups')
-        .then(function (response) {
-          console.log(response.data);
-          self.tours = response.data
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-    }
-
-
   },
   created() {
-    this.getTours()
     window.scrollTo(0, 0);
     this.getWidth();
     this.slickOptions = {

@@ -3,7 +3,12 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
 Vue.component('date-picker', VuePersianDatetimePicker);
+import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
 
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+Vue.use(vuetify, {
+  iconfont: 'mdi'
+})
 // import Vuex from 'Vuex'
 // const store = createStore({
 //   state () {
@@ -22,7 +27,7 @@ Vue.component('date-picker', VuePersianDatetimePicker);
 
 // axios
 import axios from 'axios'
-import VueAxios from 'vue-axios' 
+import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
 

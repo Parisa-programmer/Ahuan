@@ -116,7 +116,7 @@
                 </p>
                 <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز پنجم :</b>
-                    تور اختیاری-دیزنی‌لند
+                  تور اختیاری-دیزنی‌لند
                 </p>
                 <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز ششم :</b>
@@ -124,7 +124,7 @@
                 </p>
                 <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز هفتم :</b>
-                    گشت شهری ونیز و انتقال به هتل
+                  گشت شهری ونیز و انتقال به هتل
                 </p>
                 <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز هشتم :</b>
@@ -132,11 +132,11 @@
                 </p>
                 <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز نهم :</b>
-                    ترانسفر رمینی به رم و انتقال به هتل
+                  ترانسفر رمینی به رم و انتقال به هتل
                 </p>
                 <p class="mt-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز دهم :</b>
-                    گشت شهری رم  همراه با بازدید از کلوسئوم
+                  گشت شهری رم همراه با بازدید از کلوسئوم
                 </p>
                 <p class="my-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important"><b
                     class="grey--text text--darken-3">روز یازدهم :</b>
@@ -157,7 +157,7 @@
               <v-col cols="12" lg="6">
                 <v-row class="mb-7" justify="center">
                   <h2 class="tabel-tour-title">29 تیر - 26 مرداد و 13
-                     شهریور</h2>
+                    شهریور</h2>
                   <img src="@/assets/image/tour/emarat_logo.png" class="mr-3 logo-tour-title" alt="">
                 </v-row>
                 <v-row justify="center">
@@ -319,15 +319,15 @@
               </div>
             </v-row>
 
-            <v-dialog v-model=" imageDialog " width="1000">
+            <v-dialog v-model="imageDialog" width="1000">
               <div class="relative">
 
-                <v-carousel v-model=" imageNumber ">
-                  <v-carousel-item v-for="(   item, i   ) in    europeImages   " :key=" i ">
-                    <img :src=" item.src " :alt=" item.title ">
+                <v-carousel v-model="imageNumber">
+                  <v-carousel-item v-for="(   item, i   ) in    europeImages   " :key="i">
+                    <img :src="item.src" :alt="item.title">
                   </v-carousel-item>
                 </v-carousel>
-                <v-icon class="absolute cursorPointer" color="white" @click=" imageDialog = false "
+                <v-icon class="absolute cursorPointer" color="white" @click=" imageDialog = false"
                   style="top:5px;right:5px">mdi-close</v-icon>
               </div>
             </v-dialog>
@@ -337,22 +337,7 @@
           <img class="widthAll rounded-xl d-none d-md-block mt-6" src="@/assets/image/ویزلاین2.jpg" alt="">
           <img class="widthAll rounded-xl d-block d-md-none mt-6" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
         </router-link>
-        <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-          <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;">
-            جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-          </b>
-          <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889"
-              style="text-decoration:none">تلفن: 41889-021</a></b>
-        </v-row>
-        <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none"
-          style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0;">
-          <b class="d-inline-block text-center text-tour-call-us"
-            style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-            <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a>
-          </b>
-        </v-row>
+        <call-us />
       </div>
     </v-row>
   </div>
@@ -693,6 +678,7 @@
 </style>
 
 <script>
+import CallUs from '@/components/CallUs.vue';
 export default {
   name: 'Europe-01',
   metaInfo: {
@@ -701,6 +687,7 @@ export default {
     ]
   },
   components: {
+    CallUs
 
   },
   data: () => ({

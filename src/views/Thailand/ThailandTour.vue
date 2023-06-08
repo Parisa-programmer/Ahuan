@@ -1,58 +1,58 @@
 <template>
   <div class="mt-9 mt-sm-12 pt-12">
-          <v-row justify="center">
-            <div class="widthAll relative">
-              <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background21.jpg" alt="">
-              <div class="tourImageBackground"></div>
-            </div>
-            <div class="mb-12 indexDiv main-div" style="z-index: 3">
-              <div>
-                <span class="white--text countryNmae px-12">بانکوک - پاتایا - پوکت</span>
-              </div>
-              <div>
-                <b class="white--text px-12 tour-date">
-                  تاریخ حرکت : 3 فروردین
-                </b>
-              </div>
-              <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
-                <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
-                  </v-slide-item>
-                  <v-slide-item>
-                    <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative" :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
-                  </v-slide-item>
-                </v-slide-group>
-              </v-row>
-              <v-row class="white py-md-9 px-6">
-                <div class="widthAll" v-if="tab == 0">
-                  <ul class=" mr-md-6">
-                    <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">
-                      قیمت های اعلام شده بر حسب تومان می‌باشد.
-                    </li>
-                    
-                  </ul>
-                  <v-row>
-                    <v-col cols="12" lg="12">
-                      <v-row class="mb-2" justify="center">
-                        <v-data-table
-                          :headers="pricesHeader"
-                          hide-default-footer
-                          :items="pricesItems"
-                          :items-per-page="50"
-                          class=" rounded-lg even-odd-tabel tabelTourId"
-                          style="box-shadow: 0 0px 21px #dbdbdb !important;border: 2px solid #9d9d9b !important;"
-                        >
-                          <!-- <template #item="{ item }">
+    <v-row justify="center">
+      <div class="widthAll relative">
+        <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background21.jpg" alt="">
+        <div class="tourImageBackground"></div>
+      </div>
+      <div class="mb-12 indexDiv main-div" style="z-index: 3">
+        <div>
+          <span class="white--text countryNmae px-12">بانکوک - پاتایا - پوکت</span>
+        </div>
+        <div>
+          <b class="white--text px-12 tour-date">
+            تاریخ حرکت : 3 فروردین
+          </b>
+        </div>
+        <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
+          <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
+            </v-slide-item>
+            <v-slide-item>
+              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
+            </v-slide-item>
+          </v-slide-group>
+        </v-row>
+        <v-row class="white py-md-9 px-6">
+          <div class="widthAll" v-if="tab == 0">
+            <ul class=" mr-md-6">
+              <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">
+                قیمت های اعلام شده بر حسب تومان می‌باشد.
+              </li>
+
+            </ul>
+            <v-row>
+              <v-col cols="12" lg="12">
+                <v-row class="mb-2" justify="center">
+                  <v-data-table :headers="pricesHeader" hide-default-footer :items="pricesItems" :items-per-page="50"
+                    class=" rounded-lg even-odd-tabel tabelTourId"
+                    style="box-shadow: 0 0px 21px #dbdbdb !important;border: 2px solid #9d9d9b !important;">
+                    <!-- <template #item="{ item }">
                             div
                             <tr>      
                               <td class="bold text-center" v-for="(col,key) in item" :key="key">
@@ -60,117 +60,116 @@
                               </td>
                             </tr>
                         </template> -->
-                        <template v-slot:[`item.name`]="{ item }">
-                         <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
-                                  
-                             
-                        </template>
-                        </v-data-table>
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                  
-                </div>
-                <div class="widthAll" v-else-if="tab == 1">
-                  <v-row>
-                    <v-col cols="12" md="12">
-                      <ul class=" mr-md-6">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ویزای توریستی</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">سیم کارت به هر خانواده</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">11 شب اقامت به‌همراه صبحانه</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه سفر تا سقف 10.000 یورو</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاهی و بین شهری</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">مدت اقامت به‌همراه صبحانه 11 شب</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">گشت شهری 4 ساعته در تمامی شهرها</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز های داخلی (بانکوک - پوکت - بانکوک )</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز کویتی بهمراه اقامت در هتل 5 ستاره فرودگاه کویتدر رفت و برگشت</li>
-                      </ul>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 2">
-                  <v-row>
-                    <v-col cols="12" md="12">
-                      <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز تورهای تایلند</h3>
-                      <ul class="my-6 mr-9">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">یک قطعه عکس 4 * 6</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل پاسپورت با 7 ماه اعتبار</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">انجام واکسیناسیون هر 2 دوز</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کپی کارت ملی و تمام صفحات شناسنامه</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمکن مالی 6 ماهه با موجودی حداقل 50.000.000 تومان</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">همراه داشتن تست PCR تا 72 ساعت قبل از پرواز(از واکسن مرحله 2 حداقل 15 روز گذشته باشد)</li>
-                      </ul>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 3">
-                  <v-row>
-                    <v-col cols="12" md="6">
-                      <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای تایلند</h3>
-                      <ul class="my-6 mr-9">
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کلیه نرخ ها به تومان می‌باشد.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">واکسن‌های مورد تائید تایلند(سینوفارم - آستارزینکا - و ...)</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">مسئول کنترل پاسپورت به‌عهده آژانس همکار است.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">نرخ کودک زیر 2 سال (INF) 9.900.000 تومان می‌باشد.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پرداخت 70% کل مبلغ تور الزامیست در غیر این صورت چنانچه نوسانات دلار بالای 50% باشد شامل مسافرین محترم می‌شود.</li>
-                        <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پکیج چارتر و غیر قابل استرداد می‌باشد و با جایگزینی اسامی و پرداخت 20% مبلغ کل تور تا 10 روز قبل از پرواز امکان پذیر است.</li>
-                      </ul>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-row justify="center">
-                        <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;"
-                          hide-default-footer
-                          hide-default-header
-                          :headers="flightHeaders"
-                          :items="flights"
-                          class="even-odd-tabel rounded-lg hideOver tabelTour tourPlan mt-md-12"
-                        >
-                        </v-data-table>
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="widthAll" v-else-if="tab == 4">
-                  <v-row justify="center">
-                  
-                    <div class="d-inline-block galeryImageParent" v-for="(item,i) in thilandImages" :key="i">
-                      <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i;imageDialog = true" :src="item.src" :alt="item.title"></v-img>
-                    </div>
-                  </v-row>
-                  
-                  <v-dialog
-                    v-model="imageDialog"
-                    width="1000"
-                  >
-                    <div class="relative">
-                      
-                      <v-carousel v-model="imageNumber">
-                        <v-carousel-item
-                          v-for="(item,i) in thilandImages" 
-                          :key="i"
-                        >
-                          <img :src="item.src" :alt="item.title">
-                        </v-carousel-item>
-                      </v-carousel>
-                      <v-icon class="absolute cursorPointer" color="white" @click="imageDialog=false" style="top:5px;right:5px">mdi-close</v-icon>
-                    </div>
-                  </v-dialog>
-                </div>
-              </v-row>
-              <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-                <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us" style="font-family: Byekan !important;">
-                  جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-                </b>
-                <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us" style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889" style="text-decoration:none">تلفن: 41889-021</a></b>
-              </v-row>
-              <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none" style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0;">
-                <b class="d-inline-block text-center text-tour-call-us" style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-                  <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a> 
-                </b>
-              </v-row>
-            </div>
-          </v-row>
-        </div>
+                    <template v-slot:[`item.name`]="{ item }">
+                      <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
+
+
+                    </template>
+                  </v-data-table>
+                </v-row>
+              </v-col>
+            </v-row>
+
+          </div>
+          <div class="widthAll" v-else-if="tab == 1">
+            <v-row>
+              <v-col cols="12" md="12">
+                <ul class=" mr-md-6">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ویزای توریستی</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">سیم کارت به هر خانواده
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">11 شب اقامت به‌همراه
+                    صبحانه</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه سفر تا سقف 10.000
+                    یورو</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاهی و بین
+                    شهری</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">مدت اقامت به‌همراه
+                    صبحانه 11 شب</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">گشت شهری 4 ساعته در
+                    تمامی شهرها</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز های داخلی (بانکوک
+                    - پوکت - بانکوک )</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">پرواز کویتی بهمراه اقامت
+                    در هتل 5 ستاره فرودگاه کویتدر رفت و برگشت</li>
+                </ul>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 2">
+            <v-row>
+              <v-col cols="12" md="12">
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز تورهای تایلند</h3>
+                <ul class="my-6 mr-9">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">یک قطعه عکس 4 * 6</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل پاسپورت با 7 ماه اعتبار</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">انجام واکسیناسیون هر 2 دوز</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کپی کارت ملی و تمام صفحات
+                    شناسنامه</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">تمکن مالی 6 ماهه با موجودی حداقل
+                    50.000.000 تومان</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">همراه داشتن تست PCR تا 72 ساعت
+                    قبل از پرواز(از واکسن مرحله 2 حداقل 15 روز گذشته باشد)</li>
+                </ul>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 3">
+            <v-row>
+              <v-col cols="12" md="6">
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای تایلند</h3>
+                <ul class="my-6 mr-9">
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کلیه نرخ ها به تومان می‌باشد.
+                  </li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">واکسن‌های مورد تائید
+                    تایلند(سینوفارم - آستارزینکا - و ...)</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">مسئول کنترل پاسپورت به‌عهده آژانس
+                    همکار است.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">نرخ کودک زیر 2 سال (INF)
+                    9.900.000 تومان می‌باشد.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پرداخت 70% کل مبلغ تور الزامیست
+                    در غیر این صورت چنانچه نوسانات دلار بالای 50% باشد شامل مسافرین محترم می‌شود.</li>
+                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">پکیج چارتر و غیر قابل استرداد
+                    می‌باشد و با جایگزینی اسامی و پرداخت 20% مبلغ کل تور تا 10 روز قبل از پرواز امکان پذیر است.</li>
+                </ul>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-row justify="center">
+                  <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;" hide-default-footer hide-default-header
+                    :headers="flightHeaders" :items="flights"
+                    class="even-odd-tabel rounded-lg hideOver tabelTour tourPlan mt-md-12">
+                  </v-data-table>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="widthAll" v-else-if="tab == 4">
+            <v-row justify="center">
+
+              <div class="d-inline-block galeryImageParent" v-for="(item, i) in thilandImages" :key="i">
+                <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i; imageDialog = true"
+                  :src="item.src" :alt="item.title"></v-img>
+              </div>
+            </v-row>
+
+            <v-dialog v-model="imageDialog" width="1000">
+              <div class="relative">
+
+                <v-carousel v-model="imageNumber">
+                  <v-carousel-item v-for="(item, i) in thilandImages" :key="i">
+                    <img :src="item.src" :alt="item.title">
+                  </v-carousel-item>
+                </v-carousel>
+                <v-icon class="absolute cursorPointer" color="white" @click="imageDialog = false"
+                  style="top:5px;right:5px">mdi-close</v-icon>
+              </div>
+            </v-dialog>
+          </div>
+        </v-row>
+        <call-us />
+      </div>
+    </v-row>
+  </div>
 </template>
 
 <style scoped>
@@ -566,9 +565,11 @@
 </style>
 
 <script>
+import CallUs from '@/components/CallUs.vue';
 export default {
   name: 'thailand-tour',
   components: {
+    CallUs
 
   },
   data: () => ({

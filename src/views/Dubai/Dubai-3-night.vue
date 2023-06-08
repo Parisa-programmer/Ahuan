@@ -14,11 +14,11 @@
         </div>
         <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
           <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
-            <v-slide-item >
+            <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
             </v-slide-item>
-            <v-slide-item >
+            <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
             </v-slide-item>
@@ -26,7 +26,7 @@
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
             </v-slide-item>
-            <v-slide-item >
+            <v-slide-item>
               <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
                 :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
             </v-slide-item>
@@ -148,392 +148,388 @@
             </v-dialog>
           </div>
         </v-row>
-        <!-- <v-row class="white px-3 px-sm-9 py-5 mb-2 mb-sm-12 mt-2 mt-sm-6 rounded-xl justify-center d-none d-sm-flex">
-          <b class="d-inline-block grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;">
-            جهت اخذ اطلاعات بیشتر با کارشناسان ما تماس حاصل فرمایید.
-          </b>
-          <b class="d-inline-block  grey--text text-center text--darken-3 text-tour-call-us"
-            style="font-family: Byekan !important;"><a class="widthAll red--text mx-2" href="tel:02141889"
-              style="text-decoration:none">تلفن: 41889-021</a></b>
-        </v-row>
-        <v-row class="px-3 px-sm-9 py-5 justify-center d-sm-none"
-          style="background: #c1c1c1;position: fixed;bottom: 0;width: 100%;right: 0;">
-          <b class="d-inline-block text-center text-tour-call-us"
-            style="font-family: Byekan !important;text-decoration: underline;letter-spacing: 0px !important;">
-            <a href="tel:02141889" class="bold" style="color:#0a30ff">تماس با کارشناسان ما </a>
-          </b>
-        </v-row> -->
       </div>
     </v-row>
   </div>
 </template>
 
 <style scoped>
-    *{
-      letter-spacing: -0.7px !important;
-    } 
+* {
+  letter-spacing: -0.7px !important;
+}
 
-    .tourImageBackground {
-      position: absolute;
-      width: 100%;
-      height: 98.5%;
-      top: 0;
-      left: 0;
-      opacity: 1;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.55) 0,
-        rgba(0, 0, 0, 0.55) 1%,
-        transparent 56%,
-        transparent 74%
-      );
-    }
-    
-    .tourPageTitle h3, .tourPageTitle span{
-      color: #fff;
-      position: relative;
-      z-index: 1;
-    }
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 98.5%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
 
-    .tourPageTitle h3:hover {
-      color: rgb(44, 44, 44);
-      background: #fff;
-    }
-    
-    .tourPageTitle h3:hover .lighter{
-      /* content: ""; */
-      /* position: absolute; */
-      /* height: 15px;
+.tourPageTitle h3,
+.tourPageTitle span {
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.tourPageTitle h3:hover {
+  color: rgb(44, 44, 44);
+  background: #fff;
+}
+
+.tourPageTitle h3:hover .lighter {
+  /* content: ""; */
+  /* position: absolute; */
+  /* height: 15px;
       width: 67%; */
-      background:#ffeb3b !important;
-      /* top: 47%;
+  background: #ffeb3b !important;
+  /* top: 47%;
       right: 16%;
       z-index: -1; */
-    }
-    
-    .tourPageTitle span{
-      color: rgb(44, 44, 44);
+}
+
+.tourPageTitle span {
+  color: rgb(44, 44, 44);
+}
+
+
+
+.tabTitles {
+  color: #fff;
+}
+
+.activeTab {
+  color: rgb(44, 44, 44) !important;
+  background: #fff;
+  z-index: 1;
+}
+
+.activeTab::before {
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 67%;
+  background: #74c0f53d;
+  top: 47%;
+  right: 16%;
+  z-index: -1;
+}
+
+.countryNmae {
+  margin-right: -52px;
+  /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
+  font-size: 62px;
+  font-weight: bold;
+}
+
+.tour-date {
+  margin-right: -52px;
+  /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
+}
+
+.main-div {
+  margin-top: -300px;
+}
+
+.logo-tour-title {
+  height: 35px;
+}
+
+.see-more {
+  font-weight: normal;
+  font-size: small;
+  text-decoration: underline;
+}
+
+.even-odd-tabel tbody tr:nth-child(even) {
+  background-color: #74c0f524 !important;
+}
+
+.even-odd-tabel th {
+  background-color: #007cd77a !important;
+}
+
+.theme--light.v-data-table .v-data-footer,
+.v-application--is-ltr .v-data-footer__pagination {
+  direction: ltr !important;
+}
+
+.v-application--is-ltr .v-data-footer__select {
+  margin-left: 14px;
+  margin-right: auto;
+}
+
+.even-odd-tabel {
+  width: 100% !important;
+}
+
+.v-data-table,
+.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
+.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+  border: 1px solid #050505;
+  font-weight: bold;
+}
+
+.galeryImageParent {
+  width: 24%;
+}
+
+.galeryImage {
+  position: relative;
+}
+
+.galeryImage::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  /* background-color: #0000006e; */
+  z-index: 2222;
+  top: 0;
+  opacity: 1;
+}
+
+.galeryImage:hover.galeryImage::after {
+  opacity: 0;
+}
+
+.galeryImage:hover {
+  box-shadow: 0 0 5px rgb(59, 59, 59);
+}
+
+.halfLi {
+  width: 49%
+}
+
+.even-odd-tabel td:nth-child(2) .bold {
+  font-size: 15px;
+  /* color: #0356a6 !important;
+      text-shadow: 0 0 3px #41b0ff; */
+}
+
+@media (min-width:960px) and (max-width:1263px) {
+  .main-div {
+    margin-top: -245px;
+  }
+
+  .countryNmae {
+    font-size: 46px;
+  }
+
+  .tourImageBackground {
+    height: 97.5%;
+  }
+}
+
+@media (min-width:600px) and (max-width:959px) {
+  .main-div {
+    margin-top: -205px;
+  }
+
+  .tourImageBackground {
+    height: 96.5%;
+  }
+
+  .countryNmae {
+    font-size: 40px;
+  }
+
+  .tour-date {
+    font-size: 16px;
+  }
+
+  .tabTitles {
+    font-size: 15px !important;
+  }
+
+  .tabelTour {
+    width: 80% !important
+  }
+
+  .text-tour {
+    font-size: 14px;
+  }
+
+  .tabel-tour-title {
+    font-size: 18px !important;
+  }
+
+  .text-tour-call-us {
+    font-size: 16px;
+  }
+
+  .galeryImageParent {
+    width: 45%;
+  }
+
+  .halfLi {
+    width: 100%
+  }
+
+  @media (max-width:774px) {
+    .main-div {
+      margin-top: -155px;
     }
 
-  
-
-    .tabTitles{
-      color: #fff;
+    .tourImageBackground {
+      height: 96.5%;
     }
 
-    .activeTab {
-      color: rgb(44, 44, 44) !important;
-      background: #fff;
-      z-index: 1;
-    }
-
-    .activeTab::before {
-      content: "";
-      position: absolute;
-      height: 15px;
-      width: 67%;
-      background:#74c0f53d;
-      top: 47%;
-      right: 16%;
-      z-index: -1;
-    }
-
-    .countryNmae{
-      margin-right:-52px;
-      /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
-      font-size: 62px;
-      font-weight: bold;
+    .countryNmae {
+      font-size: 24px;
+      margin-right: -35px;
+      padding-right: 35px !important;
     }
 
     .tour-date {
-      margin-right:-52px;
-      /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%); */
+      font-size: 12px;
+      margin-right: -35px;
+      padding-right: 35px !important;
     }
 
-    .main-div{
-      margin-top:-300px;
+    .tabTitles {
+      font-size: 13px !important;
     }
+  }
+}
 
-    .logo-tour-title{
-      height: 35px;
-    }
+@media (max-width:599px) {
+  .indexDiv {
+    width: 95% !important;
+  }
 
-    .see-more{
-      font-weight: normal;
-      font-size: small;
-      text-decoration: underline;
-    }
+  .main-div {
+    margin-top: -170px;
+  }
 
-    .even-odd-tabel tbody tr:nth-child(even) {
-      background-color: #74c0f524 !important;
-    }
+  .backgroundImageTour {
+    width: 200%;
+  }
 
-    .even-odd-tabel th {
-      background-color: #007cd77a !important;
-    }
+  .countryNmae {
+    font-size: 26px;
+    margin-right: -35px;
+    padding-right: 35px !important;
+  }
 
-    .theme--light.v-data-table .v-data-footer,.v-application--is-ltr .v-data-footer__pagination{
-      direction: ltr !important;
-    }
+  .tour-date {
+    font-size: 14px;
+    margin-right: -35px;
+    padding-right: 35px !important;
+  }
 
-    .v-application--is-ltr .v-data-footer__select {
-      margin-left: 14px;
-      margin-right: auto;
-    }
+  .tabTitles {
+    font-size: 14px;
+    /* background: #fff; */
+    /* border: 1px solid #b37b63; */
+  }
 
-    .even-odd-tabel{
-      width: 100% !important;
-    }
+  .tabelTour {
+    width: 100% !important
+  }
 
-    .v-data-table,.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
-      border: 1px solid #050505;
-      font-weight: bold;
-    }
+  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
+    min-height: 35px !important;
+    justify-content: center;
+  }
 
-    .galeryImageParent{
-      width: 24%;
-    }
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
+    display: inline-block;
+    width: 50%;
+    position: relative;
+  }
 
-    .galeryImage{
-      position: relative;
-    }
-    
-    .galeryImage::after{
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      /* background-color: #0000006e; */
-      z-index: 2222;
-      top: 0;
-      opacity: 1;
-    }
-    
-    .galeryImage:hover.galeryImage::after{
-      opacity: 0;
-    }
-    
-    .galeryImage:hover{
-      box-shadow: 0 0 5px rgb(59, 59, 59);
-    }
+  .v-application--is-ltr .v-data-table__mobile-row__cell {
+    text-align: center;
+  }
 
-    .halfLi{
-      width:49%
-    }
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
 
-    .even-odd-tabel td:nth-child(2) .bold{
-      font-size: 15px;
-      /* color: #0356a6 !important;
-      text-shadow: 0 0 3px #41b0ff; */
-    }
-    
-    @media (min-width:960px) and (max-width:1263px){
-      .main-div{
-        margin-top:-245px;
-      }
-      
-      .countryNmae{
-        font-size: 46px;
-      }
+  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
+    content: '<-----------------------------------------------';
+    position: absolute;
+    width: 46%;
+    right: 80%;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap;
+    direction: ltr;
+    display: flex;
+    justify-content: start;
+  }
 
-      .tourImageBackground {
-        height: 97.5%;
-      }
-    }
-    
-    @media (min-width:600px) and (max-width:959px) {
-      .main-div{
-        margin-top:-205px;
-      }      
-      
-      .tourImageBackground {
-        height: 96.5%;
-      }
+  .tabelTour * {
+    font-size: 13px;
+  }
 
-      .countryNmae{
-        font-size: 40px;
-      }
+  .text-tour {
+    font-size: 14px;
+  }
 
-      .tour-date{
-        font-size: 16px;
-      }
+  .tabel-tour-title {
+    font-size: 16px !important;
+  }
 
-      .tabTitles {
-        font-size: 15px !important;
-      }
+  .text-tour-call-us {
+    font-size: 14px;
+  }
 
-      .tabelTour{
-        width:80% !important
-      }
-      
-      .text-tour{
-        font-size: 14px;
-      }
+  .tourPageTitle h3,
+  .tourPageTitle span {
+    /* color:black !important */
+  }
 
-      .tabel-tour-title {
-        font-size: 18px !important;
-      }
+  .tourImageBackground {
+    height: 97.5%;
+  }
 
-      .text-tour-call-us{
-        font-size: 16px ;
-      }
+  .logo-tour-title {
+    height: 30px;
+  }
 
-      .galeryImageParent{
-        width: 45%;
-      }
+  .tourPageTitle {
+    /* background-color: #fff; */
+  }
 
-      .halfLi{
-        width:100%
-      }
-      
-      @media (max-width:774px) {
-        .main-div{
-          margin-top:-155px;
-        }
+  .tourPageTitle {
+    width: 500px;
+  }
 
-        .tourImageBackground {
-          height: 96.5%;
-        }
+  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
+  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+    border: unset;
+  }
 
-        .countryNmae{
-          font-size: 24px;
-          margin-right: -35px;
-          padding-right: 35px!important;
-        }
+  .galeryImageParent {
+    width: 95%;
+  }
 
-        .tour-date{
-          font-size: 12px;
-          margin-right: -35px;
-          padding-right: 35px!important;
-        }
+  .halfLi {
+    width: 100%
+  }
 
-        .tabTitles {
-          font-size: 13px !important;
-        }
-      }
-    }
-
-    @media (max-width:599px) {
-      .indexDiv{
-        width: 95% !important;
-      }
-
-      .main-div{
-        margin-top:-170px;
-      }
-
-      .backgroundImageTour{
-        width: 200%;
-      }
-
-      .countryNmae{
-        font-size: 26px;
-        margin-right: -35px;
-        padding-right: 35px!important;
-      }
-
-      .tour-date{
-        font-size: 14px;
-        margin-right: -35px;
-        padding-right: 35px!important;
-      }
-
-      .tabTitles{
-        font-size: 14px;
-        /* background: #fff; */
-        /* border: 1px solid #b37b63; */
-      }
-      
-      .tabelTour{
-        width:100% !important
-      }
-      
-      .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row{
-        min-height: 35px !important;
-        justify-content: center;
-      }
-
-      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row{
-        display: inline-block;
-        width: 50%;
-        position: relative;
-      }
-
-      .v-application--is-ltr .v-data-table__mobile-row__cell{
-        text-align: center;
-      }
-      
-      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1){
-        display: flex;
-        width: 100%;
-        margin-bottom: 20px;
-        font-weight: bold;
-      }
-
-      .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before{
-        content: '<-----------------------------------------------';
-        position: absolute;
-        width: 46%;
-        right: 80%;
-        text-align: right;
-        overflow: hidden;
-        white-space: nowrap;
-        direction: ltr;
-        display: flex;
-        justify-content: start;
-      }
-      
-      .tabelTour *{
-        font-size: 13px;
-      }
-
-      .text-tour{
-        font-size: 14px;
-      }
-
-      .tabel-tour-title {
-        font-size: 16px !important;
-      }
-      
-      .text-tour-call-us{
-        font-size: 14px ;
-      }
-
-      .tourPageTitle h3, .tourPageTitle span{
-        /* color:black !important */
-      }
-
-      .tourImageBackground {
-        height: 97.5%;
-      }
-
-      .logo-tour-title{
-        height: 30px;
-      }
-
-      .tourPageTitle{
-        /* background-color: #fff; */
-      }
-
-      .tourPageTitle {
-        width: 500px;
-      }
-      
-      .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
-        border: unset;
-      }
-
-      .galeryImageParent{
-        width: 95%;
-      }
-
-      .halfLi{
-        width:100%
-      }
-
-    }
-  </style>
+}
+</style>
 
 <script>
 export default {
