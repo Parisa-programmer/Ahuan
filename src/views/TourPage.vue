@@ -22,6 +22,7 @@ export default {
   components: { TourComponent },
   computed: {},
   created() {
+    document.title = 'تورهای ویژه آهوان'
     window.scrollTo(0, 0);
   }
 }

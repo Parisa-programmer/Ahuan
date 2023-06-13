@@ -7,7 +7,7 @@
       </v-skeleton-loader>
     </div>
     <v-row justify="center">
-      <div class="mt-6 indexDiv">
+      <div v-if="descriptions.length > 0" class="mt-6 indexDiv">
         <v-skeleton-loader class="px-2 px-md-12" :loading="loadingMainTour" type="chip">
           <h1 v-if="descriptions.length > 0" class="">{{ descriptions[0].object.title }}</h1>
         </v-skeleton-loader>
@@ -28,7 +28,8 @@
       <div class="indexDiv" :class="loadingMainTour == true ? 'mt-6' : ''">
         <v-skeleton-loader class="px-2 px-md-12" :loading="loadingMainTour" type="chip">{{ loadingMainTour == true ? '.' :
           '' }}</v-skeleton-loader>
-        <v-skeleton-loader class="px-2 px-md-12 mt-8" :loading="loadingMainTour" type="sentences">
+        <v-skeleton-loader v-if="descriptions.length > 0" class="px-2 px-md-12 mt-8" :loading="loadingMainTour"
+          type="sentences">
           <div v-for="(item, i) in descriptions" :key="i">
             <h2 v-if="i != 0" class="">{{ item.object.title }}</h2>
             <p v-if="i != 0 && descriptions[i].type == 'text'" class="text-justify answerText mt-4 ">
@@ -78,12 +79,13 @@ export default {
       backgroundImage: '',
       loadingMainTour: true,
       loadingBackground: true,
+      nameRouter: ''
     }
   },
   methods: {
     getTours(id) {
       let self = this
-      axios.get('https://panel.ahuantours.com/api/package/group/notes/' + this.$route.params.id)
+      axios.get('https://panel.ahuantours.com/api/package/group/notes/' + id)
         .then(function (response) {
           let descriptionArray = []
           let description = response.data
@@ -118,21 +120,34 @@ export default {
             // for search by name
             let name = x.name.replace(/\s/g, '-')
             name = name.replace(/---/g, '-')
+            let dates = x.date ? x.date.split('/') : ''
+            let names = x.name ? x.name.split('~') : ''
+            let title = names[0].split('/')
+            let deses = x.description ? x.description.split('/') : ''
+            let nameRouter = self.nameRouter.replace(/\s/g, '-')
             // ___________________
             return {
               id: x.id,
-              image: require('@/assets/image/tour/europ-001.jpg'),
-              title: x.name,
-              airline: x.airlines,
-              date: x.date,
-              date2: x.date,
+              image: x.image,
+              title: title[0],
+              title2: title[1],
+              airline: x.airlines.split(', '),
+              date: dates[0],
+              date2: dates[1],
               hotelStar: x.hotel,
-              nights: x.description,
+              nights: deses[0],
+              nights2: deses[1],
               // route: '/tour' + '/Istanbul' + '/' + name,
-              route: '/tour' + '/Istanbul' + '/' + x.id,
-              download: '',
+              route: '/tour' + '/' + x.id + '/' + nameRouter,
+              download: x.pdf,
             };
           });
+          // for (let i = 0; i < response.data.length; i++) {
+          //   let dates = self.cards[i].date.split('/')
+          //   self.cards[i].date = dates[0]
+          //   self.cards[i].date2 = dates[1]
+          // }
+          // self.cards
           self.loadingMainTour = false
           // self.backgroundImage = 'https://panel.ahuantours.com/uploads/' + response.data.backImage
           // self.descriptions = response.data
@@ -148,7 +163,10 @@ export default {
       axios.get('https://panel.ahuantours.com/api/package/group/' + id)
         .then(function (response) {
           self.backgroundImage = 'https://panel.ahuantours.com/uploads/' + response.data.backImage
+          self.nameRouter = response.data.name
           self.loadingBackground = false
+          document.title = 'تورهای ویژه آهوان'
+          self.getCards(self.$route.params.id)
         })
         .catch(function (error) {
           // handle error
@@ -161,7 +179,6 @@ export default {
   created() {
     window.scrollTo(0, 0);
     this.getTours(this.$route.params.id)
-    this.getCards(this.$route.params.id)
     this.getImage(this.$route.params.id)
   }
 }

@@ -20,17 +20,20 @@
     <!-- visline -->
     <v-row justify="center">
       <div class="indexDiv  d-none d-md-block">
-        <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+        <router-link to="/visa">
+          <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین.jpg')" alt="">
+        </router-link>
+        <!-- <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
           <router-link to="/visa">
             <v-carousel-item :src="require('@/assets/image/ویزلاین.jpg')"></v-carousel-item>
           </router-link>
-          <router-link to="/final-tour">
-            <v-carousel-item :src="require('@/assets/image/karname/اسلایدر فوتبال صفحه اصلی1.jpg')"></v-carousel-item>
-          </router-link>
-        </v-carousel>
+        </v-carousel> -->
       </div>
       <div class="indexDiv d-block d-md-none">
-        <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+        <router-link to="/visa">
+          <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین موبایل.jpg')" alt="">
+        </router-link>
+        <!-- <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
           <router-link to="/visa">
             <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
           </router-link>
@@ -38,7 +41,7 @@
             <v-carousel-item
               :src="require('@/assets/image/karname/اسلایدر فوتبال موبایل صفحه اصلی1.jpg')"></v-carousel-item>
           </router-link>
-        </v-carousel>
+        </v-carousel> -->
       </div>
     </v-row>
     <!-- tours -->

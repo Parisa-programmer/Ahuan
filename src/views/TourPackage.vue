@@ -3,20 +3,20 @@
     <v-row justify="center">
       <div class="widthAll relative">
         <v-skeleton-loader :loading="loading" type="image">
-          <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background6.jpg" alt="">
+          <img class="widthAll backgroundImageTour" :src="'https://panel.ahuantours.com/uploads/' + tour.backImage"
+            alt="">
           <div class="tourImageBackground"></div>
         </v-skeleton-loader>
       </div>
       <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <div :class="loading == true ? 'pt-4' : ''">
           <v-skeleton-loader :class="loading == true ? 'mt-md-12 pt-lg-12' : ''" :loading="loading" type="chip">
-            <span class="white--text countryNmae px-12">{{ tour.name }}</span>
+            <span class="white--text countryNmae px-12">{{ tour.name1 }}</span>
           </v-skeleton-loader>
         </div>
         <div>
           <v-skeleton-loader :class="loading == true ? 'mt-2' : ''" :loading="loading" type="heading">
-            <b class="white--text px-12 tour-date">تاریخ پرواز : همه روزه (اعتبار پکیج
-              تا <span class="white--text text-decoration-underline">9 اسفند</span>)</b>
+            <b class="white--text px-12 tour-date">{{ tour.name2 }}</b>
           </v-skeleton-loader>
         </div>
         <v-row class='pt-6 pt-md-12' :class="loading == true ? '' : 'mt-9 mt-sm-0 mt-lg-12 '" style="">
@@ -90,7 +90,7 @@
                   </ul>
                 </v-skeleton-loader>
               </v-col>
-              <v-col v-else-if="tour.packagePersonPrices.length >= 0" cols="12" lg="6">
+              <v-col v-else-if="tour.packagePersonPrices.length > 0" cols="12" lg="6">
                 <ul class="mt-md-9 mr-md-6">
                   <li v-for="(item, i) in tour.packageServices" :key="i"
                     class="my-3 grey--text text--darken-3 bold text-tour">
@@ -98,10 +98,10 @@
                   </li>
                 </ul>
               </v-col>
-              <div v-if="tour.packagePersonPrices.length >= 0" class="d-md-none widthAll my-sm-4 px-12">
+              <div v-if="tour.packagePersonPrices.length > 0" class="d-md-none widthAll my-sm-4 px-12">
                 <hr class=" mx-12 my-4">
               </div>
-              <v-col v-if="tour.packagePersonPrices.length >= 0" cols="12" md="6" class="mb-6 mb-md-0">
+              <v-col v-if="tour.packagePersonPrices.length > 0" cols="12" md="6" class="mb-6 mb-md-0">
                 <v-row class="mb-2" justify="center">
                   <h2 class="tabel-tour-title">اقامت در هتل های<span class="red--text"> {{ tour.hotelStar }}
                       ستاره</span></h2>
@@ -743,9 +743,12 @@ export default {
   methods: {
     getTour(id) {
       let self = this
-      axios.get('https://panel.ahuantours.com/api/package/' + this.$route.params.id)
+      axios.get('https://panel.ahuantours.com/api/package/' + id)
         .then(function (response) {
           self.tour = response.data
+          let names = response.data.name ? response.data.name.split('~') : ''
+          self.tour.name1 = names[0]
+          self.tour.name2 = names[1]
           self.pricesItemsIstanbul = response.data.packageHotelPrices.map((x) => {
             return {
               name: x.hotel,
@@ -771,7 +774,7 @@ export default {
             };
           });
           self.loading = false
-          document.title = 'تور ' + self.tour.name + '|تور لحظه آخری'
+          document.title = 'تور ' + names[0] + ' | تور لحظه آخری '
           console.log(response.data);
         })
         .catch(function (error) {
@@ -783,8 +786,8 @@ export default {
   },
   created() {
     this.getTour(this.$route.params.id)
+    console.log(this.$route.params.id);
     window.scrollTo(0, 0);
-    // console.log(store);
     document.title = 'تور لحظه آخری'
 
     let newObjectDate = [
@@ -1171,7 +1174,6 @@ export default {
         baby2: newObjectDate[i].کودک2,
       })
     }
-    // this.pricesItemsIstanbul = pricesItemsIstanbul;
 
   }
 }

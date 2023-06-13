@@ -68,13 +68,13 @@
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'آهوان'">هتل آهوان</span>
             </a>
           </v-skeleton-loader>
-          <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
+          <!-- <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <router-link to="/final-tour" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0 red--text bold" @click="activeLinkMenuHeader = 'لیگ'">
                 لیگ قهرمانان اروپا
               </span>
             </router-link>
-          </v-skeleton-loader>
+          </v-skeleton-loader> -->
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <router-link to="/Visa" class="text-decoration-none">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'ویزا'">خدمات ویزا</span>
@@ -157,15 +157,14 @@
                     <v-list-item-title>هتل آهوان</v-list-item-title>
                   </v-list-item>
                 </a>
-                <router-link to="/final-tour" class="text-decoration-none">
+                <!-- <router-link to="/final-tour" class="text-decoration-none">
                   <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2" color="red">mdi-soccer</v-icon>
-                    <!-- <v-icon class="ml-2">mdi-book-open-page-variant-outline</v-icon> -->
                     <v-list-item-title>
                       <h4 class="red--text">لیگ قهرمانان اروپا</h4>
                     </v-list-item-title>
                   </v-list-item>
-                </router-link>
+                </router-link> -->
                 <router-link to="/Visa" class="text-decoration-none">
                   <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-checkbook</v-icon>

@@ -57,22 +57,11 @@ export default {
         title: 'سنت پترزبورگ + مسکو (7 روز)',
         airline: 'ماهان',
         hotelStar: '4',
-        nights: 'شروع قیمت از 49.600.000 تومان',
+        nights: 'شروع قیمت از 39.900.000 تومان',
         route: '/tour/moscow/Moscow-St.Petersburg-7days',
-        download: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
+        download: '/pdf/پکیج مسکو-سنت پترزبورگ.pdf',
         date: 'جمعه‌ها (تور گروهی)'
       },
-      {
-        image: require('@/assets/image/tour/rus-1.jpg'),
-        title: 'مسکو + سنت پترزبورگ (10 روز)',
-        airline: 'ماهان',
-        hotelStar: '4',
-        nights: 'شروع قیمت از 53.900.000 تومان',
-        route: '/tour/moscow/Moscow-St.Petersburg-9days',
-        download: require('@/assets/image/پکیج مسکو-سنت پترزبورگ.jpg'),
-        date: 'ویژه 10 خرداد (تور گروهی)'
-      },
-
     ]
   }),
   methods: {

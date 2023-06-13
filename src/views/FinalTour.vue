@@ -41,7 +41,7 @@
                     Category
                     1
                     <v-row align="center" class="" style="white-space: nowrap;">از
-                      <span class=" body-1 text-sm-h6 mx-1 ">3500</span>
+                      <span class=" body-1 text-sm-h6 mx-1 ">2500</span>
                       <v-icon size="18" color="black">mdi-currency-eur</v-icon>
                     </v-row>
                   </div>
@@ -55,7 +55,7 @@
                     Category
                     2
                     <v-row align="center" class="" style="white-space: nowrap;">از
-                      <span class="body-1 text-sm-h6 mx-1 ">2500</span>
+                      <span class="body-1 text-sm-h6 mx-1 ">2000</span>
                       <v-icon size="18" color="black">mdi-currency-eur</v-icon>
                     </v-row>
                   </div>
@@ -69,7 +69,7 @@
                     Category
                     3
                     <v-row align="center" justify="center" class="" style="white-space: nowrap;">از
-                      <span class="body-1 text-sm-h6 mx-1 ">2200</span>
+                      <span class="body-1 text-sm-h6 mx-1 ">1800</span>
                       <v-icon size="18" color="black">mdi-currency-eur</v-icon>
                     </v-row>
                   </div>
@@ -83,7 +83,7 @@
                     Category
                     4
                     <v-row align="center" class="" style="white-space: nowrap;">از
-                      <span class="body-1 text-sm-h6 mx-1 ">1900</span>
+                      <span class="body-1 text-sm-h6 mx-1 ">1600</span>
                       <v-icon size="18" color="black">mdi-currency-eur</v-icon>
                     </v-row>
                   </div>
