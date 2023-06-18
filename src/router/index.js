@@ -278,6 +278,11 @@ const routes = [
     name: 'test-page',
     component: () => import('../views/TestPage.vue')
   },
+  {
+    path: '/about-enland',
+    name: 'about-enland',
+    component: () => import('../views/AboutEnland.vue')
+  },
 ]
 
 const router = new VueRouter({

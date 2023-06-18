@@ -35,14 +35,13 @@
               </router-link>
               <div class="absolute show-sub-menu" style="right:-70%;min-width:150px;">
                 <v-list nav dense style="">
-                  <div v-for="(link, i) in links" :key="i" class="">
-                    <v-list-item v-for="sublink in link.subLinks" :key="sublink.text"
-                      class="cursorPointer titleHeader py-0">
-                      <router-link :to="sublink.url" style="text-decoration:none;" class="topMenu">
-                        <v-list-item-title @click="sublink.active = !sublink.active" class="topMenu"
-                          style="font-weight: bold;width:100px">{{ sublink.text }}</v-list-item-title>
+                  <div class="">
+                    <v-list-item v-for="(group, i) in tours" :key="i" class="cursorPointer titleHeader py-0">
+                      <router-link :to="'/tour/' + group.id" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
+                          style="font-weight: bold;width:100px">{{ group.name }}</v-list-item-title>
                       </router-link>
-                      <div class="absolute submenu rounded-lg"
+                      <!-- <div class="absolute submenu rounded-lg"
                         style="right: 120px;white-space: nowrap;top: 0;border:1px solid rgb(172, 172, 172);background:#fff"
                         :style="{ minWidth: sublink.text == 'اروپا' ? '252px' : '150px' }">
                         <v-row v-for="(sub2, k) in sublink.sub2" :key="k" class="caption pa-2 submenu2"
@@ -55,7 +54,7 @@
                             {{ sub2.text }}
                           </router-link>
                         </v-row>
-                      </div>
+                      </div> -->
                     </v-list-item>
                   </div>
                 </v-list>
@@ -396,6 +395,7 @@ export default {
     },
   },
   data: () => ({
+    tours: [],
     links: [
       {
         text: 'تور',
@@ -842,8 +842,32 @@ export default {
       //     console.log(error);
       //   })
     },
+    getTours() {
+      let self = this
+      axios.get('https://panel.ahuantours.com/api/package/groups')
+        .then(function (response) {
+          let res = response.data.map((x) => {
+            return {
+              id: x.id,
+              col1Image: x.col1Image,
+              name: x.name,
+              // route: '/tour' + '/Istanbul' + '/' + name,
+              route: '/tour/' + x.name.replace(/\s/g, '-'),
+              price: x.price,
+              cols: x.cols
+            };
+          });
+          self.$emit('getGroups', res)
+          self.tours = res
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+    }
   },
-  created() {
+  mounted() {
+    this.getTours()
     window.scrollTo(0, 0);
     if (localStorage.getItem('user-name')) {
       this.userName = localStorage.getItem('user-name')

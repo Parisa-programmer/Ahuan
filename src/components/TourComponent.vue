@@ -1,17 +1,17 @@
 <template>
   <div v-cloak class="widthAll">
-    <!--  test tours -->
-    <!-- <v-row justify="center" align="center" class="mb-6 mt-12">
+    <!-- test -->
+    <v-row justify="center" align="center" class="mb-6 mt-12">
       <div class="mt-1 ml-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
-      <h3 class="font-small-title-xs">تور های ویژه آهوان تست</h3>
+      <h3 class="font-small-title-xs">تور های ویژه آهوان</h3>
       <div class="mt-1 mr-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
     </v-row>
     <v-row justify="center" class="">
       <div class="indexDiv">
         <v-row>
           <v-col v-for="(tourItem, i) in tours" :key="i" cols="12" sm="6" :md="tourItem.cols * 4" class="pa-0">
-            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver" data-aos="fade-right"
-              data-aos-duration="2000">
+            <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver"
+              :data-aos="i % 2 == 0 ? 'fade-left' : 'fade-right'" data-aos-duration="2000">
               <router-link :to="'/tour/' + tourItem.id">
                 <v-img height="220" :src="'https://panel.ahuantours.com/uploads/' + tourItem.col1Image" alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
@@ -30,9 +30,9 @@
           </v-col>
         </v-row>
       </div>
-    </v-row> -->
+    </v-row>
     <!-- main -->
-    <v-row justify="center" align="center" class="mb-6 mt-12">
+    <!-- <v-row justify="center" align="center" class="mb-6 mt-12">
       <div class="mt-1 ml-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
       <h3 class="font-small-title-xs">تور های ویژه آهوان</h3>
       <div class="mt-1 mr-4 " style="height:3px;width:60px;background-color: #bf0000 !important;"></div>
@@ -71,7 +71,7 @@
                       <h1 class="white--text" style="text-shadow: 0 0 2px black;">تور اروپا</h1>
                     </v-row>
                     <v-row>
-                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 1.890 یورو</span>
+                      <span class="white--text ma-2" style="text-shadow: 0 0 2px black;">شروع قیمت از 1.490 یورو</span>
                     </v-row>
                   </div>
                 </v-row>
@@ -176,7 +176,7 @@
           </v-col>
         </v-row>
       </div>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
@@ -219,8 +219,19 @@ export default {
       let self = this
       axios.get('https://panel.ahuantours.com/api/package/groups')
         .then(function (response) {
-          console.log(response.data);
-          self.tours = response.data
+          let res = response.data.map((x) => {
+            return {
+              id: x.id,
+              col1Image: x.col1Image,
+              name: x.name,
+              // route: '/tour' + '/Istanbul' + '/' + name,
+              route: '/tour/' + x.name.replace(/\s/g, '-'),
+              price: x.price,
+              cols: x.cols
+            };
+          });
+          self.$emit('getGroups', res)
+          self.tours = res
         })
         .catch(function (error) {
           // handle error
@@ -229,7 +240,7 @@ export default {
     }
   },
   created() {
-    // this.getTours()
+    this.getTours()
   }
 
 }

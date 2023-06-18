@@ -9,7 +9,7 @@
     <v-row justify="center">
       <div v-if="descriptions.length > 0" class="mt-6 indexDiv">
         <v-skeleton-loader class="px-2 px-md-12" :loading="loadingMainTour" type="chip">
-          <h1 v-if="descriptions.length > 0" class="">{{ descriptions[0].object.title }}</h1>
+          <h1 v-if="descriptions.length > 0" class="font-small-title-xs">{{ descriptions[0].object.title }}</h1>
         </v-skeleton-loader>
         <v-skeleton-loader class="px-2 px-md-12 mt-4" :loading="loadingMainTour" type="sentences">
           <p class="text-justify answerText">
@@ -22,7 +22,7 @@
       </div>
       <div class="indexDiv" :class="loadingMainTour == true ? 'mt-6' : ''">
         <v-skeleton-loader class="px-2 px-md-12" :loading="loadingMainTour" height="200" type="image">
-          <main-tour-card :cards="cards" />
+          <main-tour-card2 :cards="cards" />
         </v-skeleton-loader>
       </div>
       <div class="indexDiv" :class="loadingMainTour == true ? 'mt-6' : ''">
@@ -31,7 +31,7 @@
         <v-skeleton-loader v-if="descriptions.length > 0" class="px-2 px-md-12 mt-8" :loading="loadingMainTour"
           type="sentences">
           <div v-for="(item, i) in descriptions" :key="i">
-            <h2 v-if="i != 0" class="">{{ item.object.title }}</h2>
+            <h2 v-if="i != 0" class="font-small-title-xs">{{ item.object.title }}</h2>
             <p v-if="i != 0 && descriptions[i].type == 'text'" class="text-justify answerText mt-4 ">
               {{ item.object.description }}
             </p>
@@ -60,16 +60,31 @@
       transparent 74%);
 }
 </style> 
+<style>
+.tourImageBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1%,
+      transparent 56%,
+      transparent 74%);
+}
+</style> 
 
 <script>
 import axios from 'axios'
-import MainTourCard from '@/components/MainTourCard.vue'
+import MainTourCard2 from '@/components/MainTourCard2.vue'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 export default {
   name: 'tour-slug',
   components: {
-    MainTourCard
+    MainTourCard2
   },
   data() {
     return {

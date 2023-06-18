@@ -1,17 +1,27 @@
 <template>
   <div class="widthAll">
-    <div class="" style="background: #150035;">
-      <v-row justify="center" align="center" class=" mb-md-12 py-6 py-sm-12">
-        <div class="nextToTitle rounded-circle ml-2"></div>
-        <h1 class="white--text font-small-title-xs" style="text-shadow: 0 0 15px #fff;">مجله گردشگری</h1>
-        <div class="nextToTitle rounded-circle mr-2"></div>
+    <div class="pt-6 relative" style="background: #150035;">
+      <v-row align="center" class="absolute heightAll" style="z-index: 2;">
+        <div @click="disableArrow == false && changeChecknumber('plus'); disableArrow = true"
+          class="py-6 cursorPointer mr-2 rounded-xl arrowSlider" style="background: #ffffff2a;">
+          <v-icon class="" color="#fff">mdi-arrow-right</v-icon>
+        </div>
+      </v-row>
+      <v-row align="center" class="absolute heightAll" style="z-index: 2;left:0">
+        <div @click="disableArrow == false && changeChecknumber('minuse'); disableArrow = true"
+          class="py-6 cursorPointer ml-2 rounded-xl arrowSlider" style="background: #ffffff2a;">
+          <v-icon class="" color="#fff">mdi-arrow-left</v-icon>
+        </div>
+      </v-row>
+      <v-row justify="center" align="center" class="mb-6">
+        <h1 class="white--text font-small-title-xs">مجله گردشگری</h1>
       </v-row>
       <input type="radio" class="d-none" name="testimonial" id="t-1" :checked="checknumber == 1 ? true : false">
       <input type="radio" class="d-none" name="testimonial" id="t-2" :checked="checknumber == 2 ? true : false">
       <input type="radio" class="d-none" name="testimonial" id="t-3" :checked="checknumber == 3 ? true : false">
       <input type="radio" class="d-none" name="testimonial" id="t-4" :checked="checknumber == 4 ? true : false">
       <input type="radio" class="d-none" name="testimonial" id="t-5" :checked="checknumber == 5 ? true : false">
-      <div class="testimonials " @mouseover="stoploop()" @mouseleave="startloop()">
+      <div class="testimonials hideOver">
         <div class="absolute curveRow"></div>
         <label class="item" :id="'fort-' + (i + 1)" v-for="(item, i) in cards" :key="i">
           <div class="relative">
@@ -33,13 +43,21 @@
           </v-row>
         </label>
         <img class="absolute sailor-command" src="@/assets/image/tourSlider/sailor command.png" alt="sailor command"
-          style="height:60px;width:60px;bottom: 20px;">
+          style="height:60px;width:60px;bottom: 5px;">
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.arrowSlider {
+  transition: all 0.5s;
+}
+
+.arrowSlider:hover {
+  background: #ffffff81 !important;
+}
+
 .curveRow {
   width: 390vw;
   height: 390vw;
@@ -49,14 +67,6 @@
   top: 150px;
   transform: rotate(0deg);
   animation: rotateCircle 130s infinite;
-}
-
-.nextToTitle {
-  height: 25px;
-  width: 25px;
-  background: #bbffba;
-  border: 2px solid #fff;
-  box-shadow: 0 0 15px #fff;
 }
 
 .sailor-command {
@@ -189,7 +199,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 600px;
+  min-height: 520px;
   /* perspective: 1000px; */
   /* overflow: hidden; */
 }
@@ -447,7 +457,6 @@
 }
 </style>
  
-
 <script>
 const $ = require('jquery');
 
@@ -470,8 +479,17 @@ export default {
   data: () => ({
     checknumber: 2,
     loopInterval: '',
+    disableArrow: false
   }),
   methods: {
+    changeChecknumber(type) {
+      this.stoploop()
+      this.checknumber = (type == 'plus') ? (this.checknumber + 1) : (this.checknumber - 1)
+      setTimeout(() => {
+        this.startloop()
+        this.disableArrow = false
+      }, 2000);
+    },
     startloop() {
       this.loopInterval = setInterval(() => {
         this.checknumber = this.checknumber < 5 ? (this.checknumber + 1) : 1

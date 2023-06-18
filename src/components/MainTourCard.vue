@@ -2,7 +2,7 @@
   <div class="widthAll">
     <v-row justify="center">
       <div class="px-2 px-md-12 mt-4 pa-2 widthAll d-inline-block" v-for="(item, i) in cards" :key="i">
-        <v-row  class="white rounded-lg hoverCard">
+        <v-row class="white rounded-lg hoverCard">
           <v-col cols="12" sm="6" lg="3">
             <v-row justify="center" class="rounded-lg hideOver">
               <div style="height:100px;width:250px">
@@ -87,7 +87,8 @@
               <h4 class="mt-2 mt-sm-3">روزهای پرواز: همه روزه</h4>
             </v-row>
             <v-row justify='center'>
-              <router-link :to="item.route" class="text-decoration-none" :class="item.route != '/ThailandTour' ? 'mt-5' : 'mt-sm-8'">
+              <router-link :to="item.route" class="text-decoration-none"
+                :class="item.route != '/ThailandTour' ? 'mt-5' : 'mt-sm-8'">
                 <v-btn color="red" class="pr-5" :outlined="!item.AllDayFlight" dark>مشاهده جزئیات</v-btn>
               </router-link>
             </v-row>

@@ -20,33 +20,34 @@
     <!-- visline -->
     <v-row justify="center">
       <div class="indexDiv  d-none d-md-block">
-        <router-link to="/visa">
+        <!-- <router-link to="/visa">
           <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین.jpg')" alt="">
-        </router-link>
-        <!-- <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+        </router-link> -->
+        <v-carousel height="300" hide-delimiters class="rounded-xl" cycle>
           <router-link to="/visa">
             <v-carousel-item :src="require('@/assets/image/ویزلاین.jpg')"></v-carousel-item>
           </router-link>
-        </v-carousel> -->
+          <router-link to="/tour/1020">
+            <v-carousel-item height="300" :src="require('@/assets/image/tour/site -russia.jpg')"></v-carousel-item>
+          </router-link>
+        </v-carousel>
       </div>
       <div class="indexDiv d-block d-md-none">
-        <router-link to="/visa">
+        <!-- <router-link to="/visa">
           <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین موبایل.jpg')" alt="">
-        </router-link>
-        <!-- <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
+        </router-link> -->
+        <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
           <router-link to="/visa">
             <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
           </router-link>
-          <router-link to="/final-tour">
-            <v-carousel-item
-              :src="require('@/assets/image/karname/اسلایدر فوتبال موبایل صفحه اصلی1.jpg')"></v-carousel-item>
+          <router-link to="/tour/1020">
+            <v-carousel-item :src="require('@/assets/image/tour/site -russia.jpg')"></v-carousel-item>
           </router-link>
-        </v-carousel> -->
+        </v-carousel>
       </div>
     </v-row>
     <!-- tours -->
     <tour-component />
-
     <!-- about us -->
     <v-row justify="center" align="center" class="my-2 my-sm-6">
       <div class="indexDiv">
@@ -144,82 +145,59 @@
       </div>
     </v-row>
     <!-- magazine -->
-    <v-row class="my-6 pb-6" justify="center" style="background: #150035;">
-      <v-sheet max-width="100%" class="indexDiv transparent">
-        <v-skeleton-loader class=" mt-4" type="image">
-          <h2 class="d-inline-block font-small-title-xs white--text mt-6">مجله گردشگری</h2>
-          <div class="widthAll slick-title slick-parent relative mt-8 mb-12">
-            <slick :options="slickOptions">
-              <div class="px-3 px-md-0" v-for="(item, i) in magazineItems" :key="i">
-                <v-card outlined class="newesCardSlider rounded-xl ">
-                  <div class="widthAll px-3 pt-3">
-                    <img class="rounded-xl" width="100%" :src="item.image">
-                    <h4 class="my-2 font-small-title-xs mt-3">{{ item.title }}</h4>
-                    <p class="text-justify grey--text text--darken-1 body-2 text-magazine"
-                      style="font-family:Byekan !important">
-                      {{ item.text }}
-                    </p>
-                    <v-row justify="end">
-                      <router-link :to="item.link" class="text-decoration-none">
-                        <v-btn dark color="#bf0000" class="py-0 mb-6 rounded-xl caption">مشاهده بیشتر</v-btn>
-                      </router-link>
-                    </v-row>
-                  </div>
-                </v-card>
-              </div>
-            </slick>
-
-          </div>
-        </v-skeleton-loader>
-      </v-sheet>
-    </v-row>
+    <circle-slider :cards="magazineItems" />
     <!--  -->
     <v-row class="pb-6 pt-12 white" justify="center">
       <v-sheet max-width="100%" class="indexDiv transparent">
+        <v-row justify="center" align="center" class="mb-2 mb-sm-4 mb-md-12">
+          <div class="d-inline-block red mt-1 ml-1 ml-sm-4 " style="height:3px;width:50px"></div>
+          <h3 class="text-center d-inline-block font-small-title-xs">شرکت‌های همکار</h3>
+          <div class="d-inline-block red mt-1 mr-1 mr-sm-4 " style="height:3px;width:50px"></div>
+        </v-row>
         <v-skeleton-loader class=" mt-4" type="image">
           <div class="widthAll slick-logo slick-parent relative my-6">
-            <slick :options="slickOptions2">
+            <slick :options="slickOptions2" class="colleagueSlick hideArrowSm">
               <div>
-                <v-row justify="center">
-                  <a href="https://www.holidayvillahotels.com/">
-                    <img src="../assets/image/header logo 1.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="https://www.holidayvillahotels.com/">
+                  <v-row justify="center">
+                    <img class="header-logo-1" src="../assets/image/header logo 1.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
               <div>
-                <v-row justify="center">
-                  <a href="https://all.accor.com">
-                    <img src="../assets/image/header logo 2.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="https://all.accor.com">
+                  <v-row justify="center">
+                    <img class="header-logo-2" src="../assets/image/header logo 2.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
               <div>
-                <v-row justify="center">
-                  <a href="https://www.tejaratbank.ir/">
-                    <img src="../assets/image/header logo 3.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="https://www.tejaratbank.ir/">
+                  <v-row justify="center">
+                    <img class="header-logo-3" src="../assets/image/header logo 3.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
               <div>
-                <v-row justify="center">
-                  <a href="https://alemadi.com.qa/">
-                    <img src="../assets/image/header logo 4.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="https://alemadi.com.qa/">
+                  <v-row justify="center">
+                    <img class="header-logo-4" src="../assets/image/header logo 4.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
               <div>
-                <v-row justify="center">
-                  <a href="https://www.mcth.ir/">
-                    <img src="../assets/image/header logo 5.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="https://www.mcth.ir/">
+                  <v-row justify="center">
+                    <img class="header-logo-5" src="../assets/image/header logo 5.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
               <div>
-                <v-row justify="center">
-                  <a href="/">
-                    <img src="../assets/image/header logo 6.jpg" alt="">
-                  </a>
-                </v-row>
+                <a style="width:fit-content" href="/">
+                  <v-row justify="center">
+                    <img class="header-logo-6" src="../assets/image/header logo 6.jpg" alt="">
+                  </v-row>
+                </a>
               </div>
             </slick>
           </div>
@@ -228,6 +206,7 @@
     </v-row>
   </div>
 </template>
+
 <style>
 /* Arrows */
 .slick-prev,
@@ -416,6 +395,37 @@
 .slick-arrow {
   z-index: 9;
 }
+
+@media (max-width:599px) {
+
+  .header-logo-5 {
+    width: 75px;
+    margin-top: 16px;
+  }
+
+  .header-logo-6 {
+    width: 84px;
+    margin-top: 17px;
+  }
+
+  .header-logo-1 {
+    width: 156px;
+    margin-top: 10px;
+  }
+
+
+  .header-logo-2 {
+    width: 185px;
+  }
+
+  .header-logo-3 {
+    width: 87px;
+  }
+
+  .header-logo-4 {
+    width: 140px;
+  }
+}
 </style>
 
 <script>
@@ -426,6 +436,7 @@ import 'slick-carousel/slick/slick.css';
 const $ = require('jquery');
 import axios from 'axios'
 import TourComponent from '@/components/TourComponent.vue';
+import CircleSlider from '@/components/CircleSlider.vue';
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 
@@ -441,7 +452,8 @@ export default {
     InputMain,
     // QuestionAnswer,
     Slick,
-    TourComponent
+    TourComponent,
+    CircleSlider
   },
   watch: {
     showAlert() {
@@ -453,6 +465,7 @@ export default {
     },
   },
   data: () => ({
+    groups: [],
     selectedSection: {
       icon: 'mdi-airplane',
       title: 'پرواز',
@@ -489,17 +502,6 @@ export default {
         text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
         link: '/tour/Dubai'
       },
-      {
-        image: require('../assets/image/magazine-thailand.jpg'),
-        title: 'تور تایلند',
-        text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-        link: '/tour/Thailand'
-      },
-      // {
-      //   image: '/tour/Srilanka/',
-      //   title: 'جاذبه های سریلانکا',
-      //   text: ''
-      // },
     ],
     windowWidth: 0,
     slickOptions: {},
@@ -524,7 +526,7 @@ export default {
       autoplaySpeed: 2500,
     }
     this.slickOptions2 = {
-      slidesToShow: this.windowWidth > 1400 ? 4 : (this.windowWidth <= 1400 && this.windowWidth > 960) ? 3 : (this.windowWidth <= 960 && this.windowWidth > 599) ? 2 : 1,
+      slidesToShow: this.windowWidth > 1400 ? 4 : (this.windowWidth <= 1400 && this.windowWidth > 960) ? 3 : (this.windowWidth <= 960 && this.windowWidth > 599) ? 2 : 2,
       slidesToScroll: 1,
       rtl: true,
       arrows: true,
