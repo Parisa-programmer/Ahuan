@@ -3,7 +3,7 @@
     <div class="widthAll relative">
       <v-skeleton-loader :loading="loadingBackground" type="image">
         <v-img class="widthAll backgroundImageTour" height="250" :src="backgroundImage" alt="برج ایفل فرانسه"></v-img>
-        <div class="tourImageBackground"></div>
+        <div class="tourImageBackgroundTour"></div>
       </v-skeleton-loader>
     </div>
     <v-row justify="center">
@@ -46,10 +46,10 @@
 </template>
 
 <style scoped>
-.tourImageBackground {
+.tourImageBackgroundTour {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100% !important;
   top: 0;
   left: 0;
   opacity: 1;
@@ -61,7 +61,7 @@
 }
 </style> 
 <style>
-.tourImageBackground {
+.tourImageBackgroundTour {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -152,8 +152,10 @@ export default {
               hotelStar: x.hotel,
               nights: deses[0],
               nights2: deses[1],
+              isActive: x.isActive,
               // route: '/tour' + '/Istanbul' + '/' + name,
-              route: '/tour' + '/' + x.id + '/' + nameRouter,
+              // route: '/tour' + '/' + x.id + '/' + nameRouter,
+              route: '/tour-page' + '/' + x.id,
               download: x.pdf,
             };
           });
@@ -181,20 +183,34 @@ export default {
           self.nameRouter = response.data.name
           self.loadingBackground = false
           document.title = 'تورهای ویژه آهوان'
-          self.getCards(self.$route.params.id)
         })
         .catch(function (error) {
           // handle error
           console.log(error);
           self.loadingBackground = false
         })
-
     }
+  },
+  // beforeRouteUpdate() {
+  //   console.log(this.$route.params.id);
+  // },
+  beforeRouteUpdate(to, from, next) {
+    this.cards = []
+    this.descriptions = []
+    this.backgroundImage = ''
+    this.loadingMainTour = true
+    this.loadingBackground = true
+    this.nameRouter = ''
+    this.getTours(to.params.id);
+    this.getImage(to.params.id);
+    this.getCards(to.params.id);
+    next()
   },
   created() {
     window.scrollTo(0, 0);
     this.getTours(this.$route.params.id)
     this.getImage(this.$route.params.id)
-  }
+    this.getCards(this.$route.params.id)
+  },
 }
 </script>

@@ -38,7 +38,8 @@ html {
 body::-webkit-scrollbar,
 #hotel::-webkit-scrollbar,
 #nextPage,
-.v-dialog::-webkit-scrollbar {
+.v-dialog::-webkit-scrollbar,
+.tour-package-items-parent::-webkit-scrollbar {
   display: none;
 }
 
@@ -57,6 +58,7 @@ label {
 
 #nextPage,
 #hotel,
+.tour-package-items-parent,
 .v-dialog {
   -ms-overflow-style: none;
   /* IE and Edge */

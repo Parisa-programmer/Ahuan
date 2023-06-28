@@ -11,6 +11,11 @@ module.exports = defineConfig({
   },
   devServer: {
     proxy: {
+      '/panel/': {
+        target: 'https://panel.ahuantours.com/api/',
+        pathRewrite: { '^/panel': '' },
+        secure: false
+      },
       '/ata/': {
         target: 'http://api.ataair.ir/ws1/',
         pathRewrite: { '^/ata': '' },

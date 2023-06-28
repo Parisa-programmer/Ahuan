@@ -1,8 +1,8 @@
 <template>
   <div class="widthAll">
     <v-row justify="center">
-      <div class="px-2 px-md-12 mt-4 pa-2 widthAll d-inline-block" v-for="(item, i) in cards" :key="i">
-        <v-row class="white rounded-lg hoverCard">
+      <div class="widthAll d-inline-block" v-for="(item, i) in cards" :key="i">
+        <v-row v-if="item.isActive == true" class="px-2 px-md-12 mt-4 pa-2 white rounded-lg hoverCard">
           <v-col cols="12" sm="6" lg="3">
             <v-row justify="center" class="rounded-lg hideOver">
               <div style="height:100px;width:250px">

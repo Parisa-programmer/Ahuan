@@ -268,10 +268,20 @@ const routes = [
     name: 'tour-slug',
     component: () => import('../views/tour.vue')
   },
+  // {
+  //   path: '/tour/:id/:name',
+  //   name: 'tour-package',
+  //   component: () => import('../views/TourPackage.vue')
+  // },
   {
-    path: '/tour/:id/:name',
+    path: '/tour-page/:id/',
     name: 'tour-package',
     component: () => import('../views/TourPackage.vue')
+  },
+  {
+    path: '/personal-photo-specifications',
+    name: 'personal-photo-specifications',
+    component: () => import('../views/PersonalPhotoSpecifications.vue')
   },
   {
     path: '/test-page',
@@ -279,9 +289,44 @@ const routes = [
     component: () => import('../views/TestPage.vue')
   },
   {
-    path: '/about-enland',
-    name: 'about-enland',
-    component: () => import('../views/AboutEnland.vue')
+    path: '/about-england',
+    name: 'about-england',
+    component: () => import('../views/AboutCountry/AboutEngland.vue')
+  },
+  {
+    path: '/england/souvenir',
+    name: 'about-england-souvenir',
+    component: () => import('../views/AboutCountry/AboutEnglandSouvenir.vue')
+  },
+  {
+    path: '/england/sights',
+    name: 'about-england-sights',
+    component: () => import('../views/AboutCountry/AboutEnglandSights.vue')
+  },
+  {
+    path: '/england/famous-cities',
+    name: 'about-england-famous-cities',
+    component: () => import('../views/AboutCountry/AboutEnglandFamousCities.vue')
+  },
+  {
+    path: '/england/best-cities',
+    name: 'about-england-best-cities',
+    component: () => import('../views/AboutCountry/AboutEnglandBestCities.vue')
+  },
+  {
+    path: '/england/student-cities',
+    name: 'about-england-student-cities',
+    component: () => import('../views/AboutCountry/AboutEnglandStudentCities.vue')
+  },
+  {
+    path: '/england/restaurants',
+    name: 'about-england-restaurants',
+    component: () => import('../views/AboutCountry/AboutEnglandRestaurants.vue')
+  },
+  {
+    path: '/england/shops',
+    name: 'about-england-shops',
+    component: () => import('../views/AboutCountry/AboutEnglandShops.vue')
   },
 ]
 

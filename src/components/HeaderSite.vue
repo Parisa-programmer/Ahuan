@@ -33,7 +33,7 @@
                   @click="activeLinkMenuHeader != 'تور' ? activeLinkMenuHeader = 'تور' : activeLinkMenuHeader = ''">تور
                 </span>
               </router-link>
-              <div class="absolute show-sub-menu" style="right:-70%;min-width:150px;">
+              <div class="absolute show-sub-menu" style="right:-100%;">
                 <v-list nav dense style="">
                   <div class="">
                     <v-list-item v-for="(group, i) in tours" :key="i" class="cursorPointer titleHeader py-0">
@@ -41,20 +41,19 @@
                         <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
                           style="font-weight: bold;width:100px">{{ group.name }}</v-list-item-title>
                       </router-link>
-                      <!-- <div class="absolute submenu rounded-lg"
-                        style="right: 120px;white-space: nowrap;top: 0;border:1px solid rgb(172, 172, 172);background:#fff"
-                        :style="{ minWidth: sublink.text == 'اروپا' ? '252px' : '150px' }">
-                        <v-row v-for="(sub2, k) in sublink.sub2" :key="k" class="caption pa-2 submenu2"
+                      <div class="absolute submenu rounded-lg"
+                        style="right: 90px;white-space: nowrap;top: 0;border:1px solid rgb(172, 172, 172);background:#fff;">
+                        <v-row v-for="(sub2, k) in group.packages" :key="k" class="caption pa-2 submenu2"
                           style="font-family:Byekan !important;font-weight: bold;">
-                          <router-link class="relative" :to="sub2.link"
+                          <!-- <router-link class="relative pl-2" :to="'/tour' + '/' + sub2.id + '/' + group.name"
+                            style="text-decoration:none;color:rgb(39, 39, 39)"> -->
+                          <router-link class="relative pl-2" :to="'/tour-page' + '/' + sub2.id"
                             style="text-decoration:none;color:rgb(39, 39, 39)">
-                            <img class="absolute" v-if="sub2.new" src="@/assets/image/newYearcard2.png" alt=""
-                              style="left: -40px;top: -12px;height:33px;    transform: rotate(-38deg);">
                             <v-icon size="9" color="red" class="mx-2">mdi-circle</v-icon>
-                            {{ sub2.text }}
+                            {{ sub2.package }}
                           </router-link>
                         </v-row>
-                      </div> -->
+                      </div>
                     </v-list-item>
                   </div>
                 </v-list>
@@ -126,24 +125,24 @@
                   :style="{ background: activeLinkMenuHeader == 'تور' ? '#f6d2cb' : '' }" class="rounded-lg">
                   <v-icon class="ml-2">mdi-account-group</v-icon>
                   <v-list-item-title>تور</v-list-item-title>
-
                 </v-list-item>
                 <div v-if="activeLinkMenuHeader == 'تور'">
-                  <div v-for="( link, i ) in  links[0].subLinks " :key="i" class="my-2">
-                    <v-list-group :key="link.text" no-action :value="false">
+                  <div v-for="( link, i ) in  tours " :key="i" class="my-2">
+                    <v-list-group :key="link.name" no-action :value="false">
                       <template v-slot:activator>
                         <v-list-item-title>
-                          <span>{{ link.text }}</span>
+                          <span>{{ link.name }}</span>
                         </v-list-item-title>
                       </template>
-                      <v-list-item v-for=" sublink  in  link.sub2 " :key="sublink.text" class="cursorPointer titleHeader">
-                        <router-link class="relative widthAll d-flex" :to="sublink.link"
+                      <v-list-item v-for=" sublink  in  link.packages " :key="sublink.text"
+                        class="cursorPointer titleHeader">
+                        <!-- <router-link class="relative widthAll d-flex" :to="'/tour' + '/' + sublink.id + '/' + link.name"
+                          style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;"> -->
+                        <router-link class="relative widthAll d-flex" :to="'/tour-page' + '/' + sublink.id"
                           style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
                           <v-list-item-title class="topMenu" style="font-weight: bold;">
                             <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                            {{ sublink.text }}
-                            <img class="absolute" v-if="sublink.new" height="43" src="@/assets/image/newYearcard2.png"
-                              alt="" style="left: 32px;top: -5px;    transform: rotate(-38deg);">
+                            {{ sublink.package }}
                           </v-list-item-title>
                         </router-link>
                       </v-list-item>
@@ -844,17 +843,14 @@ export default {
     },
     getTours() {
       let self = this
-      axios.get('https://panel.ahuantours.com/api/package/groups')
+      axios.get('https://panel.ahuantours.com/api/package/menu')
         .then(function (response) {
           let res = response.data.map((x) => {
             return {
               id: x.id,
-              col1Image: x.col1Image,
-              name: x.name,
-              // route: '/tour' + '/Istanbul' + '/' + name,
-              route: '/tour/' + x.name.replace(/\s/g, '-'),
-              price: x.price,
-              cols: x.cols
+              name: x.group,
+              packages: x.packages,
+              route: '/tour/' + x.group.replace(/\s/g, '-'),
             };
           });
           self.$emit('getGroups', res)

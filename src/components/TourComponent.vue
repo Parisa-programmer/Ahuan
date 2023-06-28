@@ -13,7 +13,8 @@
             <div class="relative cursorPointer my-2 ml-sm-2 rounded-lg hideOver"
               :data-aos="i % 2 == 0 ? 'fade-left' : 'fade-right'" data-aos-duration="2000">
               <router-link :to="'/tour/' + tourItem.id">
-                <v-img height="220" :src="'https://panel.ahuantours.com/uploads/' + tourItem.col1Image" alt=""></v-img>
+                <v-img height="220" width="100%" :src="'https://panel.ahuantours.com/uploads/' + tourItem.col1Image"
+                  alt=""></v-img>
                 <v-row align="end" justify="start" class="absolute heightAll widthAll maintourImages"
                   style="z-index: 2;top: 0;cursor:pointer">
                   <div>
