@@ -8,7 +8,7 @@
     <v-row justify="center">
       <div class="my-6 indexDiv">
 
-        <main-tour-card :cards="cards" />
+        <!-- <main-tour-card :cards="cards" /> -->
         <h2 class="px-12 mt-8"> با انتخاب تور تایلند از چه مکان هایی می توانید دیدن کنید؟</h2>
         <p class="text-justify answerText mt-4 px-12">
           کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد. در این بخش به مهمترن
@@ -90,16 +90,16 @@
 
 
 <script>
-import MainTourCard from '@/components/MainTourCard.vue'
+// import MainTourCard from '@/components/MainTourCard.vue'
 export default {
   name: 'ThailandTour',
   metaInfo: {
     meta: [
-      { name: 'description', content: "تور تایلند یکی از محبوب ترین تورها در امسال خواهد بود. این کشور به دلیل جذابیت های خاص توریستی همواره مورد توجه توریست های ایرانی بوده است." }  
+      { name: 'description', content: "تور تایلند یکی از محبوب ترین تورها در امسال خواهد بود. این کشور به دلیل جذابیت های خاص توریستی همواره مورد توجه توریست های ایرانی بوده است." }
     ]
   },
   components: {
-    MainTourCard
+    // MainTourCard
 
   },
   data: () => ({
@@ -110,8 +110,8 @@ export default {
         date: 'تاریخ رفت: 3 فروردین',
         hotelStar: '5 ',
         nights: '2 شب بانکوک + 3شب پاتایا ',
-        nights2:'+ 5 شب پوکت + 1 شب بانکوک',
-        airline:'کویتی',
+        nights2: '+ 5 شب پوکت + 1 شب بانکوک',
+        airline: 'کویتی',
         route: '/tour/thailand/ThailandTour',
       },
     ]

@@ -75,120 +75,7 @@
             </v-row>
           </v-col>
           <v-col cols="12" md="4" lg="3" class="pr-md-8" style="border-right:2px solid rgb(223, 223, 223)">
-            <v-row>
-              <div class="widthAll  mb-2">
-                <router-link to="/visline">
-                  <img class="rounded-xl widthAll d-md-block" src="@/assets/image/visline gif.gif" alt="">
-                </router-link>
-
-                <!-- <v-btn color="red" class="widthAll py-8 mt-12" dark>
-                      <v-icon>mdi-text-box-edit-outline</v-icon>
-                      سنجش شانس اخذ ویزا
-                    </v-btn> -->
-              </div>
-              <v-card class="widthAll mt-lg-4 pa-3 relative hideOver">
-                <div class="widthAll absolute"
-                  style="height:5px;right:127px;top:20px;border-bottom: 3px dotted #d8d8d8;z-index:1"></div>
-                <h3 style="z-index:2">مطالب مرتبط</h3>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/englandChecklist.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-6">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          چک لیست سفر به انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/tour/moscow-003.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-6">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          برترین مرکز خریدهای انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/england souvenir.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-6">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          لیست سوغاتی های انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/tour/moscow-003.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-4">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          حرفه ای ترین رستوران های انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/englad Must see places.jpg" class="rounded-lg float-right" height="63"
-                        width="86" alt="">
-                      <v-row class="pr-2 mt-4">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          اماکن دیدنی انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/tour/moscow-003.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-4">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          شهر های توریستی انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-                <v-divider class="mx-6 mt-5"></v-divider>
-                <a class="text-decoration-none">
-                  <v-row class="mt-6 cardItemsSide" align="center">
-                    <span>
-                      <img src="@/assets/image/tour/moscow-003.jpg" class="rounded-lg float-right" height="63" width="86"
-                        alt="">
-                      <v-row class="pr-2 mt-4">
-                        <b style="font-family: Byekan !important;    font-size: 11px;">
-                          شهر های دانشجویی انگلیس
-                        </b>
-                      </v-row>
-                    </span>
-                  </v-row>
-                </a>
-              </v-card>
-            </v-row>
+            <about-england-component />
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -223,6 +110,7 @@ label {
 </style>
     
 <script>
+import AboutEnglandComponent from '@/components/AboutEnglandComponent.vue';
 export default {
   name: 'visa-england',
   metaInfo: {
@@ -230,7 +118,7 @@ export default {
       { name: 'description', content: "باید توجه داشته باشین که جهت اخذ وقت سفارت انگلیس، تحویل مدارک و دریافت خدمات بایومتریک باید به یکی از دفاتر شرکت VFS. Global مراجعه کنین (Visa Facilitation Center Global)." }
     ]
   },
-  components: {},
+  components: { AboutEnglandComponent },
   data: () => ({
 
   }),

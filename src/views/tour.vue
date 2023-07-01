@@ -40,6 +40,7 @@
             </ul>
           </div>
         </v-skeleton-loader>
+        <call-us />
       </div>
     </v-row>
   </div>
@@ -79,12 +80,13 @@
 <script>
 import axios from 'axios'
 import MainTourCard2 from '@/components/MainTourCard2.vue'
+import CallUs from '@/components/CallUs.vue'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 export default {
   name: 'tour-slug',
   components: {
-    MainTourCard2
+    MainTourCard2, CallUs
   },
   data() {
     return {

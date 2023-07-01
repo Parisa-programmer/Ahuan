@@ -26,7 +26,7 @@
           برای این منظور تورهای گوناگونی برای شهر دبی در نظر گرفته است که می‌توانید طبق سلیقه و بودجه خود یکی از این موارد
           را انتخاب کنید. در ادامه توضیحات بیشتری در مورد تورهای دبی در اختیار شما قرار می‌دهیم.
         </p>
-        <main-tour-card :cards="cards" />
+        <!-- <main-tour-card :cards="cards" /> -->
         <h2 class="px-12 mt-8">معرفی تورهای دبی</h2>
         <p class="text-justify answerText mt-4 px-12">
           این مجموعه تور ویژه‌ای در نظر گرفته است تا مسافران چند روزی را به دور از مشغولیت‌های کاری در شهر
@@ -78,7 +78,7 @@
 </style> 
 
 <script>
-import MainTourCard from '@/components/MainTourCard.vue'
+// import MainTourCard from '@/components/MainTourCard.vue'
 export default {
   name: 'EuropeTour',
   metaInfo: {
@@ -87,7 +87,7 @@ export default {
     ]
   },
   components: {
-    MainTourCard
+    // MainTourCard
 
   },
   data: () => ({

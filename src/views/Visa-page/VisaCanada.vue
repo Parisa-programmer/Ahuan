@@ -205,7 +205,8 @@ label {
 
 .cardItemsSide:hover b {
   color: #ff0000
-}</style>
+}
+</style>
     
 <script>
 export default {

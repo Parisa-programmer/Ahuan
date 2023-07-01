@@ -53,6 +53,14 @@
     <!-- <div class="my-12" style="height:100px;width:100px;background-color: green;">
       <div style="height:80px;width:80px;background-color: red;"></div>
     </div> -->
+    <v-row justify="center">
+      <div class="indexDiv mt-6 mt-lg-12 mb-12">
+        <router-link to="/visline">
+          <img class="widthAll rounded-xl d-none d-md-block" src="@/assets/image/ویزلاین2.jpg" alt="">
+          <img class="widthAll rounded-xl d-block d-md-none" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
+        </router-link>
+      </div>
+    </v-row>
   </div>
 </template>
 

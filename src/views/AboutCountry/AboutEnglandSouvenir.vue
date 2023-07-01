@@ -33,7 +33,8 @@
                   <div class="absolute" style="width:90%;height:80%;left:-50px;top:-50px;z-index:1;background:#bf0000">
                   </div>
                   <div class="widthAll " style="box-shadow: 0 0px 12px #c2c2c2;">
-                    <v-img src="@/assets/image/test/souvenir-ukl.jpg" alt="" height="650" style="z-index: 2;"></v-img>
+                    <v-img class="firstImageParent" src="@/assets/image/test/souvenir-ukl.jpg" alt=""
+                      style="z-index: 2;"></v-img>
                   </div>
                 </div>
               </v-row>
@@ -89,16 +90,40 @@
         </div>
       </v-row>
     </div>
+    <v-row justify="center">
+      <div class="indexDiv mt-6 mt-lg-12 mb-12">
+        <router-link to="/visline">
+          <img class="widthAll rounded-xl d-none d-md-block" src="@/assets/image/ویزلاین2.jpg" alt="">
+          <img class="widthAll rounded-xl d-block d-md-none" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
+        </router-link>
+      </div>
+    </v-row>
   </div>
 </template>
 
 <style scoped>
+.firstImageParent {
+  height: 650px
+}
+
 .travelTitle {
   font-size: 60px;
 }
 
 .textTitle {
   max-width: 650px !important
+}
+
+@media (min-width:960px) and (max-width:1400px) {
+  .firstImageParent {
+    height: 500px
+  }
+}
+
+@media (max-width:959px) {
+  .firstImageParent {
+    height: 300px
+  }
 }
 </style>
 

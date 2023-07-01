@@ -182,9 +182,15 @@
                     <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">{{ pack.title }}</h3>
                     <ul class="my-6 mr-9">
                       <li v-for="(des, i) in pack.descriptions" :key="i"
-                        class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ des }}</li>
+                        class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ des }}
+                        <v-btn v-if="tour.packageGroup && tour.packageGroup.name == 'روسیه' && i == 0"
+                          to="/personal-photo-specifications" text color="red">(جهت مشاهده شرایط عکس
+                          3*4
+                          کلیک
+                          کنید)</v-btn>
+                      </li>
                     </ul>
-                    <v-btn to="/personal-photo-specifications" text color="red">جهت مشاهده شرایط عکس 3*4 کلیک کنید</v-btn>
+
                   </div>
                 </v-skeleton-loader>
               </v-col>
