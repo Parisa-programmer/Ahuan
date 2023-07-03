@@ -44,6 +44,10 @@
                 <router-link class="white--text text-decoration-none" to="/england/shops">بزرگترین مراکز خرید در
                   انگلستان</router-link>
               </li>
+              <li class="white--text my-2 cursorPointer" @click="tab = 4">
+                <router-link class="white--text text-decoration-none" to="/england/checklist">چک لیست‌های سفر به
+                  انگلستان</router-link>
+              </li>
             </ul>
             <img class="ml-2 ml-md-6 mt-3" src="@/assets/image/test/country-5.jpg" width="250" alt="">
           </div>

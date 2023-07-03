@@ -229,6 +229,21 @@ const routes = [
     component: () => import('../views/Visa-page/Visline.vue')
   },
   {
+    path: '/visline/need',
+    name: 'visline-video',
+    component: () => import('../views/Visa-page/VislineVideo.vue')
+  },
+  {
+    path: '/visline/product',
+    name: 'visline-video2',
+    component: () => import('../views/Visa-page/VislineVideo2.vue')
+  },
+  {
+    path: '/visline/teach',
+    name: 'visline-video3',
+    component: () => import('../views/Visa-page/VislineVideo3.vue')
+  },
+  {
     path: '/visline/economy',
     name: 'visline-economy',
     component: () => import('../views/Visa-page/VislineEconomy.vue')
@@ -294,6 +309,11 @@ const routes = [
     component: () => import('../views/AboutCountry/AboutEngland.vue')
   },
   {
+    path: '/england/checklist',
+    name: 'about-england-checklist',
+    component: () => import('../views/AboutCountry/AboutEnglandChecklist.vue')
+  },
+  {
     path: '/england/souvenir',
     name: 'about-england-souvenir',
     component: () => import('../views/AboutCountry/AboutEnglandSouvenir.vue')
@@ -327,6 +347,11 @@ const routes = [
     path: '/england/shops',
     name: 'about-england-shops',
     component: () => import('../views/AboutCountry/AboutEnglandShops.vue')
+  },
+  {
+    path: '*',
+    name: 'not-found',
+    component: () => import('../views/NotFound.vue')
   },
 ]
 

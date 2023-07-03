@@ -85,6 +85,14 @@ axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 export default {
   name: 'tour-slug',
+  metaInfo: function () {
+    return {
+      // title: this.testTitle,
+      meta: [
+        { name: 'description', content: this.descrptionMeta }
+      ]
+    }
+  },
   components: {
     MainTourCard2, CallUs
   },
@@ -96,7 +104,8 @@ export default {
       backgroundImage: '',
       loadingMainTour: true,
       loadingBackground: true,
-      nameRouter: ''
+      nameRouter: '',
+      descrptionMeta: ''
     }
   },
   methods: {
@@ -115,6 +124,10 @@ export default {
             })
           }
           self.descriptions = descriptionArray
+          if (descriptionArray.length > 0) {
+            self.metaDescription = 'test des'
+            self.descrptionMeta = descriptionArray[0].object.description.slice(0, 500)
+          }
         })
         .catch(function (error) {
           // handle error

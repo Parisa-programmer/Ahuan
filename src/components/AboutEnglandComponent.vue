@@ -18,7 +18,7 @@
         <router-link to="/about-england" class="text-decoration-none">
           <v-row class="mt-6 cardItemsSide" align="center">
             <span>
-              <img src="@/assets/image/englandChecklist.jpg" class="rounded-lg float-right" height="63" width="86" alt="">
+              <img src="@/assets/image/england flag.png" class="rounded-lg float-right" height="63" width="86" alt="">
               <v-row class="pr-2 mt-6">
                 <b style="font-family: Byekan !important;    font-size: 11px;">
                   همه چیز درباره‌ی سفر به انگلیس
@@ -28,7 +28,20 @@
           </v-row>
         </router-link>
         <v-divider class="mx-6 mt-5"></v-divider>
-        <router-link to="/england/shops" class="text-decoration-none">
+        <router-link to="/england/checklist" class="text-decoration-none">
+          <v-row class="mt-6 cardItemsSide" align="center">
+            <span>
+              <img src="@/assets/image/englandChecklist.jpg" class="rounded-lg float-right" height="63" width="86" alt="">
+              <v-row class="pr-2 mt-6">
+                <b style="font-family: Byekan !important;    font-size: 11px;">
+                  چک لیست‌های سفر به انگلیس
+                </b>
+              </v-row>
+            </span>
+          </v-row>
+        </router-link>
+        <v-divider class="mx-6 mt-5"></v-divider>
+        <router-link to="/england/best-cities" class="text-decoration-none">
           <v-row class="mt-6 cardItemsSide" align="center">
             <span>
               <img src="@/assets/image/tour/moscow-003.jpg" class="rounded-lg float-right" height="63" width="86" alt="">

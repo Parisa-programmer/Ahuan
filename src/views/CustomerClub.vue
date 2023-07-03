@@ -3,7 +3,7 @@
     <v-row justify="center" align="center" class="">
       <div class="indexDiv">
         <v-row class="my-12 ">
-          <v-col cols="12" md="6" class="">
+          <v-col cols="12" md="6" class="order-2 order-md-1">
             <v-row class="heightAll" align="center">
               <div class="px-6 relative">
                 <div class="absolute" style="top:-200px;right:-50px;z-index: 1;">
@@ -21,15 +21,16 @@
               </div>
             </v-row>
           </v-col>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="6" class="order-1 order-md-2">
             <v-row justify="center" class="mt-12">
               <div class="widthAll relative">
                 <div class="absolute" style="width:90%;height:80%;left:-50px;top:-50px;z-index:1;background:#bf0000">
                 </div>
                 <div class="widthAll " style="box-shadow: 0 0px 12px #c2c2c2;">
-                  <v-img src="@/assets/image/باشگاه-مشتریان2.png" alt="" height="650" style="z-index: 2;"></v-img>
+                  <v-img class="firstImageParent" src="@/assets/image/باشگاه-مشتریان2.png" alt=""
+                    style="z-index: 2;"></v-img>
                 </div>
-                <div class="absolute pa-4" style="width:300px;right:-30%;bottom:60px;z-index:3;background: #bf0000">
+                <div class="absolute pa-4 firstSectionBox" style="width:300px;z-index:3;background: #bf0000">
                   <h4 class="d-block font-small-title-xs text-center white--text">امکانات ویژه باشگاه مسافران</h4>
                   <v-row class="mt-4 justify-md-space-between ">
                     <v-col>
@@ -58,16 +59,16 @@
         </v-row>
       </div>
     </v-row>
-    <v-row class="mt-12" justify="center" style="background:#eeeeeb">
-      <div class="my-12 indexDiv">
+    <v-row class="" justify="center" style="background:#eeeeeb">
+      <div class="mt-4 my-md-12 indexDiv">
         <h3 class="text-center">
           به محض ثبت نام شما در سایت آهوان به مرحله نقره‌ای دست پیدا خواهید کرد
         </h3>
         <p class="mt-3 widthAll text-center body-2" style="font-family:Byekan !important">و هرچه پروفایل خود را تکمیل‌تر
           نمائید به درجات بیشتری دسترسی پیدا خواهید کرد و دست یافتن به سایر درجات برنز و طلائی راحت‌تر می‌شود.</p>
         <v-row class="my-12">
-          <v-col cols="4" class="px-2">
-            <div class="widthAll white py-2 mt-6 heightAll">
+          <v-col cols="12" sm="6" md="4" class="px-2">
+            <div class="widthAll white py-2 mt-sm-6 heightAll">
               <v-row justify="center" class="relative">
                 <div class="absolute rounded-circle" style="width:55px;height:55px;top:-35px;background:#bf0000">
                   <v-row class="heightAll" align="center">
@@ -87,7 +88,7 @@
             </div>
 
           </v-col>
-          <v-col cols="4" class="px-2">
+          <v-col cols="12" sm="6" md="4" class="px-2">
             <div class="widthAll white py-2 mt-6  heightAll">
               <v-row justify="center" class="relative">
                 <div class="absolute rounded-circle" style="width:55px;height:55px;top:-35px;background:#bf0000">
@@ -108,7 +109,7 @@
             </div>
 
           </v-col>
-          <v-col cols="4" class="px-2">
+          <v-col cols="12" md="4" class="px-2">
             <div class="widthAll white py-2 mt-6  heightAll">
               <v-row justify="center" class="relative">
                 <div class="absolute rounded-circle" style="width:55px;height:55px;top:-35px;background:#bf0000">
@@ -129,7 +130,6 @@
                 </ol>
               </v-row>
             </div>
-
           </v-col>
         </v-row>
       </div>
@@ -149,7 +149,7 @@
           </v-col>
           <v-col cols="12" md="1" class="">
             <v-row class="heightAll" align="center">
-              <div class="widthAll mx-6" style="height: 300px;background-color: #bf0000;"></div>
+              <div class="widthAll mx-6 divider" style="background-color: #bf0000;"></div>
             </v-row>
           </v-col>
           <v-col cols="12" md="6" class="">
@@ -174,10 +174,23 @@
       </div>
     </v-row>
     <question-answer :questions="questions" />
-    
+
   </div>
 </template>
-<style>
+<style scoped>
+.divider {
+  height: 300px
+}
+
+.firstSectionBox {
+  right: -30%;
+  bottom: 60px;
+}
+
+.firstImageParent {
+  height: 650px
+}
+
 .contact-card {
   width: 600px;
 }
@@ -185,6 +198,27 @@
 .mainParent {
   min-height: 500px;
   margin-top: -50px;
+}
+
+@media (min-width:960px) and (max-width:1400px) {
+  .firstImageParent {
+    height: 500px
+  }
+}
+
+@media (max-width:959px) {
+  .firstImageParent {
+    /* height: 300px */
+  }
+
+  .firstSectionBox {
+    right: 0;
+    bottom: 60px;
+  }
+
+  .divider {
+    height: 10px
+  }
 }
 
 @media (max-width:599px) {
@@ -216,25 +250,25 @@ export default {
   name: 'customer-club',
   data() {
     return {
-      questions:[
-      {
-        question: 'امتیازات در آهوان چگونه است؟',
-        answer: ''
-      }, 
-      {
-        question: 'باشگاه مسافران آهوان چه کاری انجام می‌دهد؟',
-        answer: ''
-      },    
-       {
-        question: 'چطور از وضعیت امتیازت خود در باشگاه آهوان مطلع شویم؟',
-        answer: ''
-      },   
-      {
-        question: 'هریک از کارت های نقره‌ای،برنز و طلایی چه ویژگی هایی دارند؟',
-        answer: ''
-      },    
-           
-    ]
+      questions: [
+        {
+          question: 'امتیازات در آهوان چگونه است؟',
+          answer: ''
+        },
+        {
+          question: 'باشگاه مسافران آهوان چه کاری انجام می‌دهد؟',
+          answer: ''
+        },
+        {
+          question: 'چطور از وضعیت امتیازت خود در باشگاه آهوان مطلع شویم؟',
+          answer: ''
+        },
+        {
+          question: 'هریک از کارت های نقره‌ای،برنز و طلایی چه ویژگی هایی دارند؟',
+          answer: ''
+        },
+
+      ]
     }
   },
   components: {

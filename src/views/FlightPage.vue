@@ -1589,7 +1589,7 @@ export default {
       this.beforeTickets = event
     },
     async addTickets(event) {
-      // console.log(event.type);
+
       if (!this.filter.airline.includes(event.Airline)) {
         this.filter.airline.push(event.Airline)
       }
@@ -1851,7 +1851,6 @@ export default {
       let variabel1 = []
       let variabel2 = []
       for (let i = 0; i < beforeTickets.length; i++) {
-        console.log(beforeTickets[i]);
         if (((beforeTickets[i].type != 'X') && (beforeTickets[i].type != 'C'))) {
 
           variabel1.push(beforeTickets[i])
@@ -1876,7 +1875,8 @@ export default {
       let numberdate = Math.floor(new Date().getTime() / 1000) * 1000
       this.dayNumber(numberdate)
     }
-    this.setDates()
+    this.setDates();
+
   },
 }
 </script>

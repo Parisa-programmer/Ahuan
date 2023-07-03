@@ -89,7 +89,7 @@
             <v-row class="mt-6" v-if="tour.packageEssentialTips2 && tour.packageEssentialTips2.length > 0">
               <h4 v-for="(item, n) in tour.packageEssentialTips2" :key="n" class="widthAll mb-4 mt-4 mt-md-0">
                 <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
-                {{ item.essentialTip }}
+                {{ item }}
               </h4>
             </v-row>
 
@@ -112,7 +112,7 @@
             <v-row class="mt-6" v-if="tour.packageEssentialTips2 && tour.packageEssentialTips2.length > 0">
               <h4 v-for="(item, n) in tour.packageEssentialTips2" :key="n" class="widthAll mb-4 mt-4 mt-md-0">
                 <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
-                {{ item.essentialTip }}
+                {{ item }}
               </h4>
             </v-row>
           </div>
@@ -1122,11 +1122,11 @@ export default {
           let packageEssentialTips3 = []
           for (let i = 0; i < response.data.packageEssentialTips.length; i++) {
             if (response.data.packageEssentialTips[i].essentialTip[0] == '~') {
-              packageEssentialTips3.push(response.data.packageEssentialTips[i])
+              // console.log();
+              packageEssentialTips3.push(response.data.packageEssentialTips[i].essentialTip.slice(1))
             } else {
               packageEssentialTips2.push(response.data.packageEssentialTips[i])
             }
-
           }
           self.tour.packageEssentialTips = packageEssentialTips2.sort((a, b) => {
             return a.essentialTip.length - b.essentialTip.length;
