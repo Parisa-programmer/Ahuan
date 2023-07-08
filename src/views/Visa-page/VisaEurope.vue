@@ -68,7 +68,7 @@
           <v-col cols="12" md="4" lg="3" class="pr-md-8" style="border-right:2px solid rgb(223, 223, 223)">
             <v-row>
               <div class="widthAll  mb-2">
-                <router-link to="/visline">
+                <router-link to="/visline/need">
                   <img class="rounded-xl widthAll d-md-block" src="@/assets/image/visline gif.gif" alt="">
                 </router-link>
 
@@ -184,7 +184,7 @@
         </v-row>
         <v-row justify="center">
           <div class="indexDiv mt-6 mt-lg-12 mb-12">
-            <router-link to="/visline">
+            <router-link to="/visline/need">
               <img class="widthAll rounded-xl d-none d-md-block" src="@/assets/image/ویزلاین2.jpg" alt="">
               <img class="widthAll rounded-xl d-block d-md-none" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
             </router-link>

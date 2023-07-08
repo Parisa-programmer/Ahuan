@@ -4,7 +4,7 @@
       <div class="heightAll widthAll absolute" style="bottom:0;">
         <v-img class="" width="100%" height="100%" src="@/assets/image/visa video backgroud.jpg" alt="" />
       </div>
-      <div class="heightAll widthAll absolute" style="z-index: 2;background:rgba(37, 37, 37, 0.808);bottom:0">
+      <div class="heightAll widthAll absolute" style="z-index: 2;background:#25252599;bottom:0">
       </div>
       <div class="indexDiv" style="z-index: 3;">
         <v-row class="heightAll" align="center">
@@ -17,8 +17,7 @@
 
               </video>
               <v-row v-show="play1 == false" @click="play1 = true; videoplay1()" justify="center" align="center"
-                class="heightAll widthAll absolute onVideo"
-                style="z-index: 2222222;bottom:0;background:rgba(61, 61, 61, 0.247);">
+                class="heightAll widthAll absolute onVideo" style="z-index: 2222222;bottom:0;">
                 <div class="rounded-circle cursorPointer" style="background:rgba(61, 61, 61, 0.527);">
                   <v-icon color="#fff" size="100">mdi-play</v-icon>
                 </div>
@@ -35,11 +34,11 @@
             <v-row class="">
               <h3 class="white--text">همین حالا ویزاتو بگیر!</h3>
             </v-row>
-            <v-row class="mt-4 mt-sm-6">
-              <router-link to="/visline" class="text-decoration-none">
+            <v-row class="mt-4 mt-sm-6" justify="space-between">
+              <h3 class="white--text">همین حالا ویزاتو بگیر!</h3>
+              <router-link to="/visline/need" class="text-decoration-none">
                 <v-btn class="px-12 rounded-lg bold" color="red" dark>شروع ویزلاین</v-btn>
               </router-link>
-
             </v-row>
           </v-col>
         </v-row>

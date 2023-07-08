@@ -2,7 +2,7 @@
   <div v-cloak class="widthAll">
     <v-row>
       <div class="widthAll  mb-2">
-        <router-link to="/visline">
+        <router-link to="/visline/need">
           <img class="rounded-xl widthAll d-md-block" src="@/assets/image/visline gif.gif" alt="">
         </router-link>
 

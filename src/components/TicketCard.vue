@@ -1,8 +1,9 @@
 <template>
   <div class="widthAll">
-    <div class="hideOver my-4" v-for="(item, i) in tickets" :key="i">
+    <div class="hideOver my-4" v-for="(item, i) in tickets" :key="i" :style="isFaild && 'cursor: context-menu;'">
       <v-skeleton-loader class="textLoader widthAll" type="image">
-        <div class="widthAll white relative " style="border: 1px solid ;border-color: #efefef !important;">
+        <div class="widthAll  relative " :class="isFaild ? 'grey lighten-2' : 'white'"
+          style="border: 1px solid ;border-color: #efefef !important;">
           <div class="absolute rounded-circle ticketCircle" style="right: -25px;top:50%;margin-top: -25px;">
           </div>
           <div class="absolute rounded-circle ticketCircle" style="left: -25px;top:50%;margin-top: -25px;">
@@ -18,13 +19,15 @@
                   :src="item.Airline == 'I3' ? require('@/assets/image/لوگوی_آتا.png') : item.Airline == 'Y9' ? require('@/assets/image/لوگوی_کیش ایر.png') : item.Airline == 'JI' ? require('@/assets/image/لوگوی_معراج.png') : item.Airline == 'QB' ? require('@/assets/image/لوگوی_قشم ایر.png') : item.Airline == 'IV' ? require('@/assets/image/لوگوی_کاسپین.png') : item.Airline == 'HH' ? require('@/assets/image/لوگوی_تابان.png') : item.Airline == 'EP' ? require('@/assets/image/لوگوآسمان2.jpg') : item.Airline == 'ZV' ? require('@/assets/image/zagros.png') : item.Airline == 'VR' ? require('@/assets/image/لوگوی_وارش.png') : item.Airline == 'NV' ? require('@/assets/image/لوگوی_نفت.png') : item.Airline == 'IRZ' ? require('@/assets/image/لوگوی_ساها.png') : ''"
                   alt="" class="rounded-circle pa-1" width="50" height="50" style="box-shadow: 1px 1px 4px #b3b3b3">
                 <div class="d-block relative">
-                  <span class="mx-2 mx-sm-2 body-2 absolute white px-4 mt-2 mt-sm-0"
-                    style="font-family: Byekan !important;">{{ item.originCity }}</span>
+                  <span class="mx-2 mx-sm-2 body-2 absolute px-4 mt-2 mt-sm-0"
+                    :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;">{{
+                      item.originCity }}</span>
                   <span class="absolute body-2 grey--text text--darken-1 dateTicket"
                     style="font-family: Byekan !important;bottom: 25px;">{{ item.dayName }} {{ item.fromDate }}</span>
                   <span class="absolute caption typeFlightTicket" style="font-family: Byekan !important;">سیستمی</span>
-                  <span class="mx-2 mx-sm-6 body-2 absolute white pr-4 pl-2 mt-2 mt-sm-0"
-                    style="font-family: Byekan !important;left:0">{{ item.destinationInternal }}</span>
+                  <span class="mx-2 mx-sm-6 body-2 absolute pr-4 pl-2 mt-2 mt-sm-0"
+                    :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;left:0">{{
+                      item.destinationInternal }}</span>
                   <img src="@/assets/image/flight-go-flesh.png" class="flight-go-flesh mt-4 mt-sm-0 mx-6" alt=""
                     height="12">
                 </div>
@@ -50,7 +53,7 @@
                     <span v-if="item.type == 'C'" class="red--text bold">تکمیل ظرفیت</span>
                     <span v-if="item.type == 'X'" class="red--text bold">کنسل شده</span>
                   </div>
-                  <div v-else class="ticketPrice mt-3 mt-sm-0">
+                  <div v-else-if="item.type != 'C' && item.type != 'X'" class="ticketPrice mt-3 mt-sm-0">
                     <span class="">
                       قیمت
                     </span>
@@ -81,7 +84,7 @@
         </div>
       </v-skeleton-loader>
     </div>
-    <v-dialog width="1400" v-model="ticketDetailsModal" style="z-index: 999999;">
+    <!-- <v-dialog width="1400" v-model="ticketDetailsModal" style="z-index: 999999;">
       <v-sheet class="relative pa-2" style="min-height:500px">
         <v-row align="start">
           <v-icon class="ma-1" @click="ticketDetailsModal = false">mdi-close</v-icon>
@@ -389,89 +392,11 @@
             </v-card>
           </v-tab-item>
           <v-tab-item>
-            <!-- <v-card class="mt-sm-8 py-4" flat>
-                      <v-row>
-                        <v-col cols="12" md="9" class="">
-                          <v-row>
-                            <v-col cols="12" sm="6" md="4" lg="3" class="mb-sm-2">
-                              <div class="grey lighten-3 rounded-lg ma-sm-4 pa-4">
-                                <v-row class="">
-                                  <span class="caption font-weight-bold blue--text d-block"
-                                    style="font-family: Byekan !important;">Mashhad به KishIsland</span>
-                                </v-row>
-                                <v-row class="">
-                                  <span class="caption font-weight-bold blue--text d-block"
-                                    style="font-family: Byekan !important;">شماره پرواز ZV4107</span>
-                                </v-row>
-                                <h3 class="mt-2">بزرگسال : 20 KG</h3>
-                              </div>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4" lg="3" class="mb-sm-2">
-                              <div class="grey lighten-3 rounded-lg ma-sm-4 pa-4">
-                                <v-row class="">
-                                  <span class="caption font-weight-bold blue--text d-block"
-                                    style="font-family: Byekan !important;">Mashhad به KishIsland</span>
-                                </v-row>
-                                <v-row class="">
-                                  <span class="caption font-weight-bold blue--text d-block"
-                                    style="font-family: Byekan !important;">شماره پرواز ZV4107</span>
-                                </v-row>
-                                <h3 class="mt-2">کودک : 20 KG</h3>
-                              </div>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-                        <v-col cols="12" md="3" class="px-6 px-sm-10 px-md-3">
-                          <v-card flat class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12">
-                            <div class="blue--text text--darken-1 text-center">
-                              جزییات قیمت (تومان)
-                            </div>
-                            <div class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
-                              <v-row align="center">
-                                <v-col cols="5">{{ Passenger.peaple }} بزرگسال</v-col>
-                                <v-col cols="2" class="">
-                                  <v-row justify="center">
-                                    <v-icon small>mdi-close</v-icon>
-                                  </v-row>
-                                </v-col>
-                                <v-col cols="5" class="ltr">1,800,000</v-col>
-                              </v-row>
-                            </div>
-                            <div v-if="Passenger.child" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
-                              <v-row>
-                                <v-col cols="5">{{ Passenger.child }} کودک</v-col>
-                                <v-col cols="2">
-                                  <v-row justify="center">
-                                    <v-icon small>mdi-close</v-icon>
-                                  </v-row>
-                                </v-col>
-                                <v-col cols="5" class="ltr"><span>1,200,000</span></v-col>
-                              </v-row>
-                            </div>
-                            <div v-if="Passenger.inf" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
-                              <v-row>
-                                <v-col cols="5">{{ Passenger.inf }} نوزاد</v-col>
-                                <v-col cols="2">
-                                  <v-row justify="center">
-                                    <v-icon small>mdi-close</v-icon>
-                                  </v-row>
-                                </v-col>
-                                <v-col cols="5" class="ltr">200,000</v-col>
-                              </v-row>
-                            </div>
-                            <h3 class="text-center mt-6 red--text ">
-                              مجموع 3,200,000 تومان
-                            </h3>
-                            <span class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
-                              style="font-family: Byekan !important;">ظرفیت 24 نفر</span>
-                          </v-card>
-                        </v-col>
-                      </v-row>
-                    </v-card> -->
+            
           </v-tab-item>
         </v-tabs-items>
       </v-sheet>
-    </v-dialog>
+    </v-dialog> -->
   </div>
 </template>
 
@@ -494,6 +419,9 @@ export default {
     },
   },
   props: {
+    isFaild: {
+      type: Boolean,
+    },
     tickets: {
       type: Array,
       require: true

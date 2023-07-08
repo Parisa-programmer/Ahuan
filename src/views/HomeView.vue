@@ -24,7 +24,7 @@
           <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین.jpg')" alt="">
         </router-link> -->
         <v-carousel height="300" hide-delimiters class="rounded-xl" cycle>
-          <router-link to="/visa">
+          <router-link to="/visline/need">
             <v-carousel-item :src="require('@/assets/image/ویزلاین.jpg')"></v-carousel-item>
           </router-link>
           <router-link to="/tour/1020">
@@ -37,7 +37,7 @@
           <img class="rounded-xl widthAll" :src="require('@/assets/image/ویزلاین موبایل.jpg')" alt="">
         </router-link> -->
         <v-carousel height="unset" min-height="280" hide-delimiters class="rounded-xl" cycle>
-          <router-link to="/visa">
+          <router-link to="/visline/need">
             <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
           </router-link>
           <router-link to="/tour/1020">
