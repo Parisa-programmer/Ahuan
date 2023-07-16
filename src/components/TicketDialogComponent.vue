@@ -46,18 +46,19 @@
               </div>
             </v-card>
           </v-row>
-          <v-row justify="center" v-if="bookStep != 3" class="mt-sm-9">
+          <v-row justify="center" v-if="bookStep != 3" class="mt-sm-6">
             <h5 class="d-block text-right widthAll mt-6 mb-2" style="width: 875px;">
               {{ tickets.length > 1 ? 'پروازهای انتخابی شما' : 'پرواز انتخابی شما' }}
             </h5>
             <div style="width: 875px;">
-              <ticket-card :isNextPage="true" :Passenger="Passenger" :tickets="choosedTicket"
-                @reserveTicket="reserveTicket" />
+              <ticket-card :Passenger="Passenger" :isNextPage="true" :tickets="choosedTicket"
+                @changeTicket="changeTicket()" @getAllprice="getAllprice($event)" />
             </div>
           </v-row>
-          <!-- <v-row justify="center" v-if="bookStep == 1">
+          <v-row justify="center" v-if="bookStep == 1">
             <v-card outlined class="mt-6" style="width: 875px;" v-for="(user, i) in users" :key="i">
               <v-row align="center">
+                <span class="d-none">{{ user.id = i }}</span>
                 <h5 class="ma-3">
                   {{ users.length == 1 ? 'مشخصات مسافر' : 'مشخصات مسافر ' + (i + 1) }}
                 </h5>
@@ -87,7 +88,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-4 py-2" v-else>
                   <label for="" class="mr-4">شماره پاسپورت</label>
-                  <v-text-field filled clsss="grey" v-model="user.passportNumber" :rules="emptyRules"></v-text-field>
+                  <v-text-field filled clsss="grey" v-model="user.nationalityCode" :rules="emptyRules"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-3 py-2">
                   <label for="" class="mr-2">جنسیت</label>
@@ -114,7 +115,8 @@
                       کنید.</span>
                   </v-row>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" class="px-2 px-lg-3 py-2" v-if="user.nationality != 'ایرانی'">
+                <v-col cols="12" sm="6" md="4" class="px-2 px-lg-3 py-2"
+                  v-if="user.nationality && user.nationality != 'ایرانی'">
                   <label for="" class="mr-4">تاریخ انقضا پاسپورت</label>
                   <v-row>
                     <v-col class="px-1">
@@ -135,7 +137,6 @@
                   </v-row>
                 </v-col>
               </v-row>
-
             </v-card>
           </v-row>
           <v-row class="hide-header-data-tabel" justify="center" v-if="bookStep == 2">
@@ -221,8 +222,7 @@
             </v-card>
           </v-row>
           <v-row justify="center" v-if="bookStep == 3" class="mt-12 mt-sm-6">
-            <div class="indexDiv rounded-xl mb-6 pa-4 mt-12 mt-sm-6"
-              style="max-width:875px;border: 5px solid #9ee9da;">
+            <div class="indexDiv rounded-xl mb-6 pa-4 mt-12 mt-sm-6" style="max-width:875px;border: 5px solid #9ee9da;">
               <v-row justify="center" class="px-12">
                 <img src="@/assets/image/check-mark.png" class="done-icon" alt="">
               </v-row>
@@ -264,8 +264,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-4 py-2" v-else>
                   <label for="" class="mr-4">شماره پاسپورت</label>
-                  <v-text-field filled clsss="grey" v-model="editUser.passportNumber"
-                    :rules="emptyRules"></v-text-field>
+                  <v-text-field filled clsss="grey" v-model="editUser.nationalityCode" :rules="emptyRules"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-3 py-2">
                   <label for="" class="mr-2">جنسیت</label>
@@ -309,7 +308,6 @@
                       کنید.</span>
                   </v-row>
                 </v-col>
-
               </v-row>
               <v-row justify="end">
                 <v-btn dark color="red darken-2" outlined class="px-12 py-4 my-2 ml-4"
@@ -345,7 +343,7 @@
             <v-row justify="center">
               <div class="indexDiv">
                 <v-row justify="center">
-                  <v-card outlined class="mt-6 pa-4" style="width: 875px;">
+                  <v-card outlined class="mt-6 mt-md-9 pa-4" style="width: 875px;">
                     <v-row align="center">
                       <span class=" mt-sm-4 mt-md-0">
                         در صورت داشتن کد تخفیف آن را وارد نمایید
@@ -355,8 +353,8 @@
                         <v-text-field placeholder="کد تخفیف" v-model="offCode" class="d-inline-block"
                           :loading="offCodeLoading"
                           :class="offCodeIsTrue == true ? 'codeCheckTrue' : offCodeIsTrue == false && 'codeCheckFalse'"></v-text-field>
-                        <v-btn :disabled="offCodeDisabledButton" color="red darken-2"
-                          class="px-0 px-sm-9 py-6 heightAll" dark @click="checkCode">اعمال کد</v-btn>
+                        <v-btn :disabled="offCodeDisabledButton" color="red darken-2" class="px-0 px-sm-9 py-6 heightAll"
+                          dark @click="checkCode">اعمال کد</v-btn>
                         <span v-if="offCode.length != 0 && offCodeIsTrue != undefined" class="absolute caption"
                           :class="offCodeIsTrue == true ? 'green--text' : offCodeIsTrue == false && 'red--text'"
                           style="bottom:-22px;right:0;font-family:Byekan !important">
@@ -382,18 +380,17 @@
             <v-row justify="center" class="mt-8 mb-12">
               <div class="indexDiv" style="max-width: 875px;">
                 <v-row align="end">
-                  <v-btn class="red--text red lighten-4 "
-                    @click="scrollTopNextPage(); bookStep = 1; dateError = false;">
+                  <v-btn class="red--text red lighten-4 " @click="scrollTopNextPage(); bookStep = 1; dateError = false;">
                     بازگشت به مرحله قبلی</v-btn>
                   <v-spacer></v-spacer>
                   <div class="relative" :class="offCodeIsTrue && 'offCodeIsTrue'">
                     <v-row justify="center" class="mb-1" align="center">
-                      <h3 :class="offCodeIsTrue && 'red--text'">{{ choosedTicket[0].allprisce }}</h3>
+                      <h3 :class="offCodeIsTrue && 'red--text'">{{ choosedTicket[0].allprice }}</h3>
                       <span class="caption mr-2 font-weight-bold" :class="offCodeIsTrue && 'red--text'"
                         style="font-family: Byekan !important;">ریال</span>
                     </v-row>
                     <v-row v-if="offCodeIsTrue" class="mb-3" justify="center" align="center">
-                      <h3>{{ choosedTicket[0] }}</h3>
+                      <h3>220.000</h3>
                       <span class="caption mr-2 font-weight-bold" style="font-family: Byekan !important;">ریال</span>
                     </v-row>
                     <v-btn class="green darken-2 px-9" dark @click="changeBookStep(3)"> تائید و پرداخت</v-btn>
@@ -401,116 +398,425 @@
                 </v-row>
               </div>
             </v-row>
-          </div> -->
+          </div>
         </div>
       </v-form>
     </v-row>
+    <v-alert v-if="showAlert" dark class="white--text fixed" :type="alertType"
+      style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">{{ alertText }}</v-alert>
   </div>
 </template>
-
 
 <script>
 import '@/assets/css/main.css'
 import axios from 'axios'
 import TicketCard from './TicketCard.vue'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
+const $ = require('jquery');
 
 export default {
   data() {
     return {
+      showAlert: false,
+      alertType: '',
+      alertText: '',
       bookStep: 1,
+      users: [],
+      nameRules: [
+        v => !!v || 'پر کردن فیلد نام اجباریست.',
+        v => (v || '').indexOf(0) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(1) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(2) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(3) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(4) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(5) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(6) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(7) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(8) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(9) < 0 || 'فرمت صحیح نیست',
+        v => !(/^[\u0600-\u06FF\s]+$/.test(v)) || 'فرمت صحیح نیست',
+      ],
+      familyRules: [
+        v => !!v || 'پر کردن فیلد نام خانوادگی اجباریست.',
+        v => (v || '').indexOf(0) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(1) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(2) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(3) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(4) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(5) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(6) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(7) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(8) < 0 || 'فرمت صحیح نیست',
+        v => (v || '').indexOf(9) < 0 || 'فرمت صحیح نیست',
+        v => !(/^[\u0600-\u06FF\s]+$/.test(v)) || 'فرمت صحیح نیست',
+      ],
+      nationalities: ['ایرانی', 'غیر ایرانی'],
+      nationalNumberRules: [
+        v => !!v || 'پر کردن این فیلد اجباریست.',
+        v => !!v && v.length == 10 || 'کد ملی صحیح نیست.',
+      ],
+      emptyRules: [
+        v => !!v || 'پر کردن این فیلد اجباریست.'
+      ],
+      genders: ['خانم', 'آقا'],
+      dateDays: [],
+      dateYears: [],
+      dateYearsPass: [],
+      dateMonthsPersian: [
+        {
+          text: 'فروردین',
+          value: 1
+        },
+        {
+          text: 'اردیبهشت',
+          value: 2
+        },
+        {
+          text: 'خرداد',
+          value: 3
+        },
+        {
+          text: 'تیر',
+          value: 4
+        },
+        {
+          text: 'مرداد',
+          value: 5
+        },
+        {
+          text: 'شهریور',
+          value: 6
+        },
+        {
+          text: 'مهر',
+          value: 7
+        },
+        {
+          text: 'آبان',
+          value: 8
+        },
+        {
+          text: 'آذر',
+          value: 9
+        },
+        {
+          text: 'دی',
+          value: 10
+        },
+        {
+          text: 'بهمن',
+          value: 11
+        },
+        {
+          text: 'اسفند',
+          value: 12
+        },
+      ],
+      dateError: false,
+      dateMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      contactInfo: [{
+        phone: '09054791374',
+        email: 'programmer.gha3mi@gmail.com',
+      }],
+      contactInfoHeaders: [
+        { text: 'تلفن', value: 'phone', sortable: false, width: '40%' },
+        { text: 'ایمیل', value: 'email', sortable: false, width: '40%' },
+        { text: 'عملیات', value: 'actions', sortable: false, width: '20%', align: 'center' }
+      ],
+      emailRules: [
+        v => /.+@.+\..+/.test(v) || 'ایمیل نادرست میباشد.',
+      ],
+      phoneRules: [
+        v => !!v || 'پر کردن فیلد تلفن اجباریست.',
+        v => (v.length == 11) || 'شماره تلفن صحیح نیست.',
+      ],
+      persianUsers: [],
+      otherUsers: [],
+      persianTebelHeaders: [
+        { text: 'نام', value: 'name' },
+        { text: 'نام خانوادگی', value: 'family' },
+        { text: 'ملیت', value: 'nationality' },
+        { text: 'کدملی', value: 'nationalityCode' },
+        { text: 'جنسیت', value: 'gender' },
+        { text: 'تاریخ تولد', value: 'birthday' },
+        { text: 'عملیات', value: 'actions', sortable: false, align: 'center' },
+      ],
+      otherTebelHeaders: [
+        { text: 'نام', value: 'name' },
+        { text: 'نام خانوادگی', value: 'family' },
+        { text: 'ملیت', value: 'nationality' },
+        { text: 'جنسیت', value: 'gender' },
+        { text: 'تاریخ تولد', value: 'birthday' },
+        { text: 'شماره پاسپورت', value: 'nationalityCode' },
+        { text: 'انقضا پاسپورت', value: 'expiredate', align: 'center' },
+        { text: 'عملیات', value: 'actions', sortable: false, align: 'center' },
+      ],
+      editTicketInfoDialog: false,
+      editUser: {},
+      ModalUserType: false,
+      editContact: {},
+      offCodeLoading: false,
+      offCodeIsTrue: undefined,
+      offCode: '',
+      acceptRulls: true,
+      offCodeDisabledButton: false,
+      allPrice: 0
     }
   },
   name: 'ticket-dialog-component',
   components: {
     TicketCard
-
   },
   props: {
     tickets: {
       type: Array,
       require: true
+    },
+    choosedTicket: {
+      type: Array
+    },
+    Passenger: {
+      defult: {}
+    }
+  },
+  watch: {
+    showAlert() {
+      if (this.showAlert == true) {
+        setTimeout(() => {
+          this.showAlert = false
+        }, 1000);
+      }
+
     }
   },
   computed: {},
   methods: {
     validateBookStep() {
-      //   if (this.$refs.nextPageForm.validate()) {
-      //     return true
-      //   } else {
-      //     return false
-      //   }
+      if (this.$refs.nextPageForm.validate()) {
+        return true
+      } else {
+        return false
+      }
     },
     changeBookStep(step) {
-      //   if (step == 2 && this.validateBookStep()) {
-      //     var users = this.users;
-      //     this.persianUsers = []
-      //     this.otherUsers = []
-      //     this.persianUsers = users.filter((x) => x.nationality == 'ایرانی');
-      //     this.otherUsers = users.filter((x) => x.nationality != 'ایرانی');
-      //     this.bookStep = step;
-      //     this.dateError = false
-      //     this.scrollTopNextPage();
-      //     this.scrollTop()
-      //   } else if (step == 3 && this.$refs.acceptRulls.validate()) {
-      //     this.bookStep = step;
-      //     this.dateError = false
-      //     this.scrollTopNextPage();
-      //   } else {
-      //     this.dateError = true
-      //     this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
-      //     this.alertType = 'error'
-      //     this.showAlert = true
-      //   }
+      if (step == 2 && this.validateBookStep()) {
+        var users = this.users;
+        this.persianUsers = []
+        this.otherUsers = []
+        this.persianUsers = users.filter((x) => x.nationality == 'ایرانی');
+        this.otherUsers = users.filter((x) => x.nationality != 'ایرانی');
+        this.bookStep = step;
+        this.dateError = false
+        window.scrollTo(0, 0);
+      } else if (step == 3 && this.$refs.acceptRulls.validate()) {
+        this.reserveTicket()
+        // this.bookStep = step;
+        // this.dateError = false
+        window.scrollTo(0, 0);
+      } else {
+        this.dateError = true
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
+        this.alertType = 'error'
+        this.showAlert = true
+      }
 
     },
     scrollTopNextPage() {
       //   this.$refs.nextPage.scrollTop = 0
     },
     editUserInfo(item, type) {
-      //   if (type == 'user') {
-      //     this.editUser = Object.assign({}, item)
-      //     this.ModalUserType = true
-      //   } else {
-      //     this.editContact = Object.assign({}, this.contactInfo[0])
-      //     this.ModalUserType = false
-      //   }
-      //   this.editTicketInfoDialog = true
+      if (type == 'user') {
+        this.editUser = Object.assign({}, item)
+        this.ModalUserType = true
+      } else {
+        this.editContact = Object.assign({}, this.contactInfo[0])
+        this.ModalUserType = false
+      }
+      this.editTicketInfoDialog = true
     },
     confirmEditUser(type) {
-      //   if (this.validateBookStep()) {
-      //     if (type == 'user') {
-      //       var index = this.users.findIndex((x) => x.id == this.editUser.id)
-      //       this.users[index] = this.editUser;
-      //       this.changeBookStep(2)
-      //     } else {
-      //       this.contactInfo = []
-      //       this.contactInfo.push(this.editContact)
-      //     }
-      //     this.editTicketInfoDialog = false
-      //   } else {
-      //     this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
-      //     this.alertType = 'error'
-      //     this.showAlert = true
-      //   }
+      if (this.validateBookStep()) {
+        if (type == 'user') {
+          var index = this.users.findIndex((x) => x.id == this.editUser.id)
+          this.users[index] = this.editUser;
+          this.changeBookStep(2)
+        } else {
+          this.contactInfo = []
+          this.contactInfo.push(this.editContact)
+        }
+        this.editTicketInfoDialog = false
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
+        this.alertType = 'error'
+        this.showAlert = true
+      }
     },
     checkCode() {
-      //   this.offCodeLoading = true
+      this.offCodeLoading = true
 
-      //   setTimeout(() => {
-      //     this.offCodeLoading = false
-      //     if (this.offCode == '1111') {
-      //       this.offCodeIsTrue = true
-      //       this.offCodeDisabledButton = true
-      //     } else {
-      //       this.offCodeIsTrue = false
-      //       this.offCodeDisabledButton = false
-      //     }
-      //   }, 1000);
+      setTimeout(() => {
+        this.offCodeLoading = false
+        if (this.offCode == '1111') {
+          this.offCodeIsTrue = true
+          this.offCodeDisabledButton = true
+        } else {
+          this.offCodeIsTrue = false
+          this.offCodeDisabledButton = false
+        }
+      }, 1000);
     },
+    async reserveTicket() {
+      let self = this
+
+      function jalali_to_gregorian(jy, jm, jd) {
+        var sal_a, gy, gm, gd, days;
+        jy += 1595;
+        days = -355668 + (365 * jy) + (~~(jy / 33) * 8) + ~~(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+        gy = 400 * ~~(days / 146097);
+        days %= 146097;
+        if (days > 36524) {
+          gy += 100 * ~~(--days / 36524);
+          days %= 36524;
+          if (days >= 365) days++;
+        }
+        gy += 4 * ~~(days / 1461);
+        days %= 1461;
+        if (days > 365) {
+          gy += ~~((days - 1) / 365);
+          days = (days - 1) % 365;
+        }
+        gd = days + 1;
+        sal_a = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        for (gm = 0; gm < 13 && gd > sal_a[gm]; gm++) gd -= sal_a[gm];
+        return [gy, gm, gd];
+      }
+      let options = { month: 'short' };
+      let numeriDate = jalali_to_gregorian(this.users[0].birthdayYear, this.users[0].birthdayMonth, this.users[0].birthdayDay)
+      numeriDate = numeriDate[0] + '/' + numeriDate[1] + '/' + numeriDate[2]
+      let monthDateNameShort = new Date(numeriDate).toLocaleDateString('en', options)
+
+      function getAge(dateString) {
+        var now = new Date();
+        var yearNow = now.getYear();
+        var monthNow = now.getMonth();
+        var dateNow = now.getDate();
+        var dob = new Date(dateString.substring(6, 10),
+          dateString.substring(0, 2) - 1,
+          dateString.substring(3, 5)
+        );
+        var yearDob = dob.getYear();
+        var monthDob = dob.getMonth();
+        var dateDob = dob.getDate();
+        let yearAge = yearNow - yearDob;
+        var monthAge = ''
+        if (monthNow >= monthDob) {
+          monthAge = monthNow - monthDob;
+        } else {
+          yearAge--;
+          monthAge = 12 + monthNow - monthDob;
+        }
+        if (dateNow < dateDob) {
+          monthAge--;
+          if (monthAge < 0) {
+            monthAge = 11;
+            yearAge--;
+          }
+        }
+        return yearAge;
+      }
+
+      let testText =
+        "AirLine=" + this.choosedTicket[0].Airline +
+        "&cbSource=" + this.choosedTicket[0].Origin +
+        "&cbTarget=" + this.choosedTicket[0].Destination +
+        "&FlightClass=" + this.choosedTicket[0].className +
+        "&FlightNo=" + this.choosedTicket[0].FlightNo +
+        "&Day=" + this.choosedTicket[0].DepartureDateTime.substring(8, 10) +
+        "&Month=" + this.choosedTicket[0].DepartureDateTime.substring(5, 7) +
+        "&DepartureDate=" + this.choosedTicket[0].DepartureDateTime +
+        "&No=" + this.users.length +
+        "&edtContact=" + this.contactInfo[0].phone +
+        "&OfficeUser=" + this.choosedTicket[0].OfficeUser +
+        "&OfficePass=" + this.choosedTicket[0].OfficePass
+
+      for (let i = 0; i < this.users.length; i++) {
+        let gregorianBirthdayDate = jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+        gregorianBirthdayDate = (gregorianBirthdayDate[1].toString().length == 1 ? '0' + gregorianBirthdayDate[1] : gregorianBirthdayDate[1]) + '/' + (gregorianBirthdayDate[2].toString().length == 1 ? '0' + gregorianBirthdayDate[2] : gregorianBirthdayDate[2]) + '/' + gregorianBirthdayDate[0]
+        let options = { month: 'short' };
+        let monthExDateNameShort = this.users[i].expirePassYear + '/' + this.users[i].expirePassMonth + '/' + this.users[i].expirePassDay
+        monthExDateNameShort = new Date(monthExDateNameShort).toLocaleDateString('en', options)
+        testText = testText +
+          "&edtName" + (i + 1) + "=" + self.users[i].name +
+          "&edtLast" + (i + 1) + "=" + self.users[i].family +
+          "&edtAge" + (i + 1) + "=" + getAge(gregorianBirthdayDate)
+        if (this.users[i].nationality == 'ایرانی') {
+          testText = testText + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
+        } else {
+          testText = testText + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" +
+            new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "_" +
+            this.users[i].expirePassDay + monthExDateNameShort + this.users[i].expirePassYear.toString().slice(-2)
+            + "__"
+        }
+      }
+
+      axios.post('http://localhost:8080/' + this.choosedTicket[0].proxy + '2' + '/ReservJS?' + testText).then(function (response) {
+        self.gelFlightNumber(self.choosedTicket[0].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+
+      })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+          console.log('عملیات ناموفق بود!');
+        })
+    },
+    gelFlightNumber(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy) {
+      let testText =
+        'AirLine=' + Airline +
+        '&PNR=' + PNR +
+        '&Email=' + this.contactInfo[0].email +
+        '&OfficeUser=' + OfficeUser +
+        '&OfficePass=' + OfficePAss
+      axios.get('http://localhost:8080/' + proxy + '2' + '/ETIssueJS?' + testText).then(function (response) {
+        console.log(response);
+      })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+          console.log('عملیات رزرو ناموفق بود!');
+        })
+    },
+    setDates() {
+      this.dateDays = []
+      this.dateYears = []
+      this.dateYearsPass = [new Date().getFullYear()]
+      var nowYear = new Date().toLocaleDateString('fa-IR-u-nu-latn').slice(0, 4)
+      for (let i = 0; i < 100; i++) {
+        this.dateYears.push(nowYear - i)
+        if (i > 0 && i < 32) {
+          this.dateDays.push(i)
+          if (i < 20) {
+            this.dateYearsPass.push(new Date().getFullYear() + i)
+          }
+        }
+      }
+    },
+    changeTicket() {
+      this.$emit('changeTicket')
+    },
+    getAllprice(event) {
+      console.log(event);
+      this.allPrice = event
+    },
+
   },
   mounted() {
-
+    let peapelesNumber = Number(this.$route.query.adl) + Number(this.$route.query.chd) + Number(this.$route.query.inf)
+    this.users = []
+    for (let i = 0; i < peapelesNumber; i++) {
+      this.users.push({
+      })
+    }
+    this.setDates()
   },
 }
 

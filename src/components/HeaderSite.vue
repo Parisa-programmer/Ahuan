@@ -73,10 +73,47 @@
               </span>
             </router-link>
           </v-skeleton-loader> -->
-          <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
-            <router-link to="/Visa" class="text-decoration-none">
-              <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0" @click="activeLinkMenuHeader = 'ویزا'">خدمات ویزا</span>
-            </router-link>
+          <v-skeleton-loader class="textLoader d-inline-block relative" type="chip" :loading="isLoading">
+            <v-skeleton-loader class="textLoader d-inline-block show-sub-menu-parent" type="chip" :loading="isLoading">
+              <router-link to="/Visa" class="text-decoration-none">
+                <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
+                  @click="activeLinkMenuHeader != 'ویزا' ? activeLinkMenuHeader = 'ویزا' : activeLinkMenuHeader = ''">خدمات
+                  ویزا
+                </span>
+              </router-link>
+              <div class="absolute show-sub-menu" style="right:-90%;">
+                <v-list nav dense style="">
+                  <div class="">
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/visa-england" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
+                          style="font-weight: bold;">وقت سفارت واخذ ویزای انگلیس</v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/visa-america" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
+                          style="font-weight: bold;">وقت سفارت واخذ ویزای آمریکا</v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/visa-canada" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
+                          style="font-weight: bold;">وقت سفارت واخذ ویزای کانادا</v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/visa-europe" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
+                          style="font-weight: bold;">وقت سفارت واخذ ویزای اروپا</v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                  </div>
+                </v-list>
+              </div>
+            </v-skeleton-loader>
+
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <router-link to="/office-protector-customer-interests/" class="text-decoration-none">
@@ -163,12 +200,55 @@
                     </v-list-item-title>
                   </v-list-item>
                 </router-link> -->
-                <router-link to="/Visa" class="text-decoration-none">
-                  <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
-                    <v-icon class="ml-2">mdi-checkbook</v-icon>
-                    <v-list-item-title>خدمات ویزا</v-list-item-title>
-                  </v-list-item>
-                </router-link>
+
+                <v-list-item
+                  @click=" activeLinkMenuHeader != 'ویزا' ? activeLinkMenuHeader = 'ویزا' : activeLinkMenuHeader = ''"
+                  :style="{ background: activeLinkMenuHeader == 'ویزا' ? '#f6d2cb' : '' }" class="rounded-lg">
+                  <v-icon class="ml-2">mdi-checkbook</v-icon>
+                  <v-list-item-title>خدمات ویزا</v-list-item-title>
+                </v-list-item>
+                <div v-if="activeLinkMenuHeader == 'ویزا'">
+                  <div class="my-2">
+                    <v-list-item class="cursorPointer titleHeader">
+                      <router-link class="relative widthAll d-flex" to="/visa-england"
+                        style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
+                        <v-list-item-title class="topMenu" style="font-weight: bold;">
+                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
+                          وقت سفارت واخذ ویزای انگلیس
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                    <v-list-item class="cursorPointer titleHeader">
+                      <router-link class="relative widthAll d-flex" to="/visa-america"
+                        style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
+                        <v-list-item-title class="topMenu" style="font-weight: bold;">
+                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
+                          وقت سفارت واخذ ویزای آمریکا
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+
+
+                    <v-list-item class="cursorPointer titleHeader">
+                      <router-link class="relative widthAll d-flex" to="/visa-canada"
+                        style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
+                        <v-list-item-title class="topMenu" style="font-weight: bold;">
+                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
+                          وقت سفارت واخذ ویزای کانادا
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                    <v-list-item class="cursorPointer titleHeader">
+                      <router-link class="relative widthAll d-flex" to="/visa-europe"
+                        style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
+                        <v-list-item-title class="topMenu" style="font-weight: bold;">
+                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
+                          وقت سفارت واخذ ویزای اروپا
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                  </div>
+                </div>
                 <router-link to="/office-protector-customer-interests/" class="text-decoration-none">
                   <v-list-item @click=" showMenuSmall = false; activeLinkMenuHeader = ''">
                     <v-icon class="ml-2">mdi-book-open-page-variant</v-icon>

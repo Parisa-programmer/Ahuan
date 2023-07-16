@@ -56,7 +56,8 @@
         <v-row class="px-2">
           <v-skeleton-loader class="textLoader d-inline-block widthAll mt-4" type="card-heading">
             <v-range-slider thumb-color="#fff" color="#1abc9c" track-color="#cccccc" :tick-labels="filter.timeItems"
-              v-model="filter.time" min="0" max="4" ticks="always" tick-size="4" class="mb-6 px-2">
+              v-model="filter.time" min="0" max="4" ticks="always" tick-size="4" class="mb-6 px-2"
+              @change="changeFilterTime()">
               <template v-slot:thumb-label="props">
                 <v-icon dark>
                   mdi--close
@@ -80,9 +81,8 @@
           <v-row v-for="(item, j) in filter.airlineItems" :key="'airlineItems' + j">
             <v-checkbox v-if="tickets.filter(e => e.Airline == item.value).length != 0" v-model="filter.airline"
               color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label"
-              :value="item.value" class="caption" hide-details></v-checkbox>
+              :value="item.value" class="caption" hide-details @click="changeFilterAirline()"></v-checkbox>
           </v-row>
-
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
         <v-skeleton-loader class="textLoader d-inline-block mr-2" type="chip">
@@ -96,7 +96,7 @@
           <h4 class="mx-2 mb-3">نمایش پرواز</h4>
           <v-checkbox v-for="(item, j) in filter.showTypeItems" :key="'showTypeItems' + j" v-model="filter.showType"
             color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label"
-            :value="item.value" class="caption" hide-details></v-checkbox>
+            :value="item.value" class="caption" hide-details @click="emitFilter()"></v-checkbox>
         </v-skeleton-loader>
       </v-card>
     </v-row>
@@ -240,10 +240,10 @@ export default {
             label: 'نمایش پروازهای موجود',
             value: 1
           },
-          {
-            label: 'عدم نمایش پرواز تکراری',
-            value: 2
-          },
+          // {
+          //   label: 'عدم نمایش پرواز تکراری',
+          //   value: 2
+          // },
         ],
         showType: [],
       },
@@ -284,7 +284,7 @@ export default {
       // }
       // self.fromPrice = value2
       self.fromPrice = value2
-      self.filter.price = [Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))]
+      self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
     },
     toPrice() {
       let self = this
@@ -298,24 +298,33 @@ export default {
       let value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       // }
       self.toPrice = value2
-      self.filter.price = [Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))]
+      self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
     },
+    async tickets() {
+      this.filter.airline = []
+      for (let i = 0; i < this.tickets.length; i++) {
+        await this.filter.airline.push(this.tickets[i].Airline)
+      }
+      this.emitFilter()
+    }
   },
   computed: {},
   methods: {
     removeFilters() {
-      //   this.filter.time = [0, 4]
-      //   this.filter.class = []
-      //   this.filter.airline = []
-      //   this.filter.type = []
-      //   this.filter.showType = []
-      //   this.toPrice = 5000000,
-      //     this.fromPrice = 0
+      let self = this
+      for (let i = 0; i < self.tickets.length; i++) {
+        self.filter.airline.push(self.tickets[i].Airline)
+      }
+      self.filter.time = [0, 4]
+      // self.filter.class = []
+      //   self.filter.type = []
+      self.filter.showType = []
+      self.toPrice = self.filter.maxPrice
+      self.fromPrice = self.filter.minPrice
     },
     changeRangePrice() {
       this.fromPrice = this.filter.price[0]
       this.toPrice = this.filter.price[1]
-      console.log();
       // this.fromPrice = Number(this.filter.price[1])
       // .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       // this.toPrice = this.filter.price[1]
@@ -324,6 +333,69 @@ export default {
     filterTime(val) {
       return this.icons[val]
     },
+    changeFilterPrice(event) {
+      this.filter.price = event
+      this.emitFilter()
+    },
+    changeFilterTime() {
+      this.emitFilter()
+    },
+    changeFilterAirline() {
+      this.emitFilter()
+    },
+    async emitFilter() {
+      let startHour = 0
+      let endHour = 0
+      switch (this.filter.time[0]) {
+        case 0:
+          startHour = 7
+          break;
+        case 1:
+          startHour = 12
+          break;
+        case 2:
+          startHour = 18
+          break;
+        case 3:
+          startHour = 24
+          break;
+        case 4:
+          startHour = 7
+          break;
+        default:
+          break;
+      }
+      switch (this.filter.time[1]) {
+        case 0:
+          endHour = 7
+          break;
+        case 1:
+          endHour = 12
+          break;
+        case 2:
+          endHour = 18
+          break;
+        case 3:
+          endHour = 24
+          break;
+        case 4:
+          endHour = 6
+          break;
+        default:
+          break;
+      }
+      let filterByTime = {
+        start: startHour,
+        end: endHour
+      }
+      let object = {
+        price: this.filter.price,
+        time: filterByTime,
+        airline: this.filter.airline,
+        hideFeild: this.filter.showType.includes(1)
+      }
+      this.$emit('startFilter', object)
+    }
   },
   mounted() {
   },

@@ -65,38 +65,36 @@
                   </div>
                   <div v-if="item.type != 'C' && item.type != 'X'" class="ticketButtons">
                     <v-btn v-if="isMainPage" class="pl-6 pr-6 pl-lg-12 pr-lg-12" color="red" outlined
-                      @click="choosedTicket = item; showNextPage()">
+                      @click="choosedTicket = item; reserve(item)">
                       رزرو بلیط
                     </v-btn>
-                    <v-btn v-else-if="isNextPage" class="pl-6 pr-6" color="red" outlined @click="reserveTicket(item)">
+                    <v-btn v-else-if="isNextPage" class="pl-6 pr-6" color="red" outlined @click="changeTicket()">
                       تغییر پرواز انتخابی
                     </v-btn>
                     <br>
                     <v-btn class="px-1 px-lg-7 mt-2" color="blue darken-2" outlined
-                      @click="activeTab = 0; ticketDetailsModal = true; choosedTicket = item; returnCRCNRules(choosedTicket.fare.CRCNRules)">مشاهده
+                      @click="setAllPrice(item); activeTab = 0; ticketDetailsModal = true; choosedTicket = item; returnCRCNRules(choosedTicket.fare.CRCNRules)">مشاهده
                       جزییات</v-btn>
                   </div>
                 </div>
               </v-row>
             </div>
-
           </v-row>
         </div>
       </v-skeleton-loader>
     </div>
-    <!-- <v-dialog width="1400" v-model="ticketDetailsModal" style="z-index: 999999;">
+    <v-dialog width="1400" v-model="ticketDetailsModal" style="z-index: 999999;">
       <v-sheet class="relative pa-2" style="min-height:500px">
         <v-row align="start">
           <v-icon class="ma-1" @click="ticketDetailsModal = false">mdi-close</v-icon>
           <v-spacer></v-spacer>
-          <v-btn v-if="isMainPage" dark class="px-sm-6 py-sm-6 ma-3 absolute"
-            style="position: absolute;left: 0;z-index: 2;top: 0;" outlined color="red arken-2"
-            @click="scrollTop(); ticketDetailsModal = false; showNextPage()">
-            انتخاب بلیط
+          <v-btn v-if="isMainPage" class="px-sm-6 py-sm-6 ma-3 absolute" color="red" outlined
+            @click="reserve(choosedTicket)" style="left: 0;z-index: 2;top: 0;">
+            رزرو بلیط
           </v-btn>
-          <v-btn v-else-if="isNextPage" dark class="px-sm-6 py-sm-6 ma-3 absolute"
-            style="position: absolute;left: 0;z-index: 2;top: 0;" outlined color="red arken-2"
-            @click="scrollTop(); ticketDetailsModal = false; reserveTicket(choosedTicket)">
+          <v-btn v-else dark class="px-sm-12 py-sm-6 ma-3 absolute"
+            style="position: absolute;left: 10px;z-index: 2;top: 10px;" outlined color="red arken-2"
+            @click="changeTicket()">
             تغییر پرواز انتخابی
           </v-btn>
         </v-row>
@@ -124,9 +122,18 @@
                             <v-divider vertical class="mx-4"></v-divider>
                             <div class="text-right">
                               <span class="grey--text caption widthAll mb-2 d-block"
-                                style="font-family: Byekan !important;">مدت زمان پرواز</span>
+                                style="font-family: Byekan !important;">
+                                مدت زمان پرواز
+
+                              </span>
                               <span class="font-weight-bold mt-4">
                                 {{ getFlightHours(choosedTicket.DepartureTime, choosedTicket.ArrivalTime) }}
+                              </span>
+                              <span class="grey--text caption mb-2" style="font-family: Byekan !important;">
+                                ({{ choosedTicket.Transit ? 'توقف در مسیر دارد' : 'بدون توقف' }})
+                              </span>
+                              <span class="font-weight-bold mt-4">
+
                               </span>
                             </div>
                           </v-row>
@@ -161,7 +168,7 @@
                                 <v-icon x-small class="mx-1 grey--text text--lighten-1">mdi-circle</v-icon>
                                 <span class="body-2 grey--text text--darken-1" style="font-family: Byekan !important;">{{
                                   choosedTicket.originCity }}
-                                  ،(Shahid Hashemi)</span>
+                                  ،({{ choosedTicket.airport1 }})</span>
                               </v-row>
                               <v-row
                                 class="mt-2 mt-sm-4 mr-sm-1 caption grey--text text--darken-1 font-weight-bold justify-center justify-sm-start"
@@ -175,14 +182,13 @@
                                 <v-icon x-small class="mx-1 grey--text text--lighten-1">mdi-circle</v-icon>
                                 <span class="body-2 grey--text text--darken-1" style="font-family: Byekan !important;">{{
                                   choosedTicket.destinationInternal }}
-                                  ،(Kish Island)</span>
+                                  ،({{ choosedTicket.airport2 }})</span>
                               </v-row>
                             </v-col>
                             <v-divider vertical class="my-2 d-none d-lg-block"></v-divider>
                             <div class="d-block d-lg-none widthAll mx-12 px-12">
                               <v-divider class="my-2"></v-divider>
                             </div>
-
                             <v-col cols="12" lg="5">
                               <v-row align="center" class="justify-center justify-sm-start">
                                 <div class="d-inline-block">
@@ -235,14 +241,14 @@
                     </v-expansion-panels>
                   </v-card>
                 </v-col>
-                <v-col cols="12" md="3" class="">
+                <v-col v-if="Passenger && Passenger[0]" cols="12" md="3" class="">
                   <v-card flat class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12">
                     <div class="blue--text text--darken-1 text-center">
                       جزییات قیمت (تومان)
                     </div>
                     <div class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row align="center">
-                        <v-col cols="5">{{ Passenger.peaple }} بزرگسال</v-col>
+                        <v-col cols="5">{{ Passenger[0].peaple }} بزرگسال</v-col>
                         <v-col cols="2" class="">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -253,9 +259,9 @@
                         </v-col>
                       </v-row>
                     </div>
-                    <div v-if="Passenger.child > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                    <div v-if="Passenger[0].child > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row>
-                        <v-col cols="5">{{ Passenger.child }} کودک</v-col>
+                        <v-col cols="5">{{ Passenger[0].child }} کودک</v-col>
                         <v-col cols="2">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -268,9 +274,9 @@
                         </v-col>
                       </v-row>
                     </div>
-                    <div v-if="Passenger.inf > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                    <div v-if="Passenger[0].baby > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row>
-                        <v-col cols="5">{{ Passenger.inf }} نوزاد</v-col>
+                        <v-col cols="5">{{ Passenger[0].baby }} نوزاد</v-col>
                         <v-col cols="2">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -288,7 +294,8 @@
                       style="font-family: Byekan !important;">ظرفیت {{ choosedTicket.capacity == 'A' ? '+9' :
                         choosedTicket.capacity
                       }}
-                      نفر</span>
+                      نفر
+                    </span>
                   </v-card>
                 </v-col>
               </v-row>
@@ -331,16 +338,15 @@
                       </v-row>
                     </v-col>
                   </v-row>
-
                 </v-col>
-                <v-col cols="12" md="3" class="">
+                <v-col v-if="Passenger && Passenger[0]" cols="12" md="3" class="">
                   <v-card flat class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12">
                     <div class="blue--text text--darken-1 text-center">
                       جزییات قیمت (تومان)
                     </div>
                     <div class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row align="center">
-                        <v-col cols="5">{{ Passenger.peaple }} بزرگسال</v-col>
+                        <v-col cols="5">{{ Passenger[0].peaple }} بزرگسال</v-col>
                         <v-col cols="2" class="">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -351,9 +357,9 @@
                         </v-col>
                       </v-row>
                     </div>
-                    <div v-if="Passenger.child > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                    <div v-if="Passenger[0].child > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row>
-                        <v-col cols="5">{{ Passenger.child }} کودک</v-col>
+                        <v-col cols="5">{{ Passenger[0].child }} کودک</v-col>
                         <v-col cols="2">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -366,9 +372,9 @@
                         </v-col>
                       </v-row>
                     </div>
-                    <div v-if="Passenger.inf > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                    <div v-if="Passenger[0].baby > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
                       <v-row>
-                        <v-col cols="5">{{ Passenger.inf }} نوزاد</v-col>
+                        <v-col cols="5">{{ Passenger[0].baby }} نوزاد</v-col>
                         <v-col cols="2">
                           <v-row justify="center">
                             <v-icon small>mdi-close</v-icon>
@@ -383,24 +389,95 @@
                       مجموع {{ setAllPrice(choosedTicket.fare) }} تومان
                     </h3>
                     <span class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
-                      style="font-family: Byekan !important;">ظرفیت {{ choosedTicket.capacity == 'A' ? '+9' : ''
+                      style="font-family: Byekan !important;">ظرفیت {{ choosedTicket.capacity == 'A' ? '+9' :
+                        choosedTicket.capacity
                       }}
-                      نفر</span>
+                      نفر
+                    </span>
                   </v-card>
                 </v-col>
               </v-row>
             </v-card>
           </v-tab-item>
           <v-tab-item>
-            
+            <v-card class="mt-sm-8 py-4" flat>
+              <v-row>
+                <v-col cols="12" md="9" class="">
+                  <v-row align="center" justify="center" class="">
+                    <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3>
+                  </v-row>
+                </v-col>
+                <v-col v-if="Passenger && Passenger[0]" cols="12" md="3" class="">
+                  <v-card flat class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12">
+                    <div class="blue--text text--darken-1 text-center">
+                      جزییات قیمت (تومان)
+                    </div>
+                    <div class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                      <v-row align="center">
+                        <v-col cols="5">{{ Passenger[0].peaple }} بزرگسال</v-col>
+                        <v-col cols="2" class="">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          {{ separatePrice(choosedTicket.fare.AdultTotalPrice / 10) }}
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="Passenger[0].child > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                      <v-row>
+                        <v-col cols="5">{{ Passenger[0].child }} کودک</v-col>
+                        <v-col cols="2">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          <span>
+                            {{ separatePrice(choosedTicket.fare.ChildTotalPrice / 10) }}
+                          </span>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="Passenger[0].baby > 0" class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs">
+                      <v-row>
+                        <v-col cols="5">{{ Passenger[0].baby }} نوزاد</v-col>
+                        <v-col cols="2">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          {{ separatePrice(choosedTicket.fare.InfantTotalPrice / 10) }}
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <h3 v-if="choosedTicket.fare" class="text-center mt-6 red--text ">
+                      مجموع {{ setAllPrice(choosedTicket.fare) }} تومان
+                    </h3>
+                    <span class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
+                      style="font-family: Byekan !important;">ظرفیت {{ choosedTicket.capacity == 'A' ? '+9' :
+                        choosedTicket.capacity
+                      }}
+                      نفر
+                    </span>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-card>
           </v-tab-item>
         </v-tabs-items>
       </v-sheet>
-    </v-dialog> -->
+    </v-dialog>
   </div>
 </template>
 
-
+<style>
+.ticketDetailsTabs .v-expansion-panel-header__icon i {
+  bottom: unset !important;
+}
+</style>
 
 <script>
 
@@ -416,6 +493,7 @@ export default {
     async choosedTicket() {
       this.choosedTicket.allprice = this.setAllPrice(this.choosedTicket.fare)
       this.$emit('changeChoosedTicket', this.choosedTicket)
+      this.$emit('getAllprice', this.choosedTicket.allprice)
     },
   },
   props: {
@@ -426,15 +504,15 @@ export default {
       type: Array,
       require: true
     },
-    Passenger: {
-      type: Object,
-      require: true
-    },
+
     isNextPage: {
       type: Boolean
     },
     isMainPage: {
       type: Boolean
+    },
+    Passenger: {
+      defult: {}
     }
   },
   computed: {
@@ -451,7 +529,7 @@ export default {
     choosedTicket: {},
     allPrice: 0,
     CRCNRules: [],
-    editFlightMood: false
+    editFlightMood: false,
   }),
   methods: {
     reserveTicket(ticket) {
@@ -517,7 +595,14 @@ export default {
           }
         }
       }
-      let text = hours + ' ساعت و ' + minutes + ' دقیقه'
+      let text = ''
+      if (hours == 0) {
+        text = minutes + ' دقیقه'
+      } else if (minutes == 0) {
+        text = hours + ' ساعت'
+      } else {
+        text = hours + ' ساعت و ' + minutes + ' دقیقه'
+      }
 
       return text
 
@@ -527,9 +612,9 @@ export default {
       window.scrollTo(0, 0)
     },
     setAllPrice(object) {
-      let adl = this.Passenger.peaple
-      let chd = this.Passenger.child
-      let inf = this.Passenger.inf
+      let adl = this.Passenger[0].peaple
+      let chd = this.Passenger[0].child
+      let inf = this.Passenger[0].baby
       let allPrice = adl * object.AdultTotalPrice
       if (chd > 0) {
         allPrice = allPrice + (chd * object.ChildTotalPrice)
@@ -538,6 +623,7 @@ export default {
         allPrice = allPrice + (inf * object.InfantTotalPrice)
       }
       allPrice = this.separatePrice(allPrice / 10)
+      this.$emit('getAllprice', this.choosedTicket.allprice)
       return allPrice
     },
     returnCRCNRules(stringText) {
@@ -554,6 +640,15 @@ export default {
     },
     showNextPage() {
       this.$emit('showNextPage')
+    },
+    async reserve(item) {
+      console.log(item);
+      await this.setAllPrice(item);
+      this.$emit('showDetailes', item)
+      this.ticketDetailsModal = false
+    },
+    changeTicket() {
+      this.$emit('changeTicket')
     }
   },
   created() {

@@ -2,20 +2,21 @@
   <div class="">
     <v-row justify="center" class="">
       <div class="indexDiv">
-        <ticket-card :isMainPage="true" :tickets="ticket" />
-        <ticket-card :isMainPage="true" :tickets="faildTickets" :isFaild="true" />
+        <ticket-card :Passenger="Passenger" @showDetailes="showDetailes($event)" :isMainPage="true"
+          :tickets="sortedTickets" />
+        <ticket-card v-show="!hideFeild" :isMainPage="true" :tickets="faildTickets" :isFaild="true" />
       </div>
     </v-row>
-    <!-- <ticket-dialog-component :tickets="ticket" v-if="nextPage" /> -->
+    <ticket-dialog-component :Passenger="Passenger" :choosedTicket="ticketChoosed" :tickets="ticketChoosed"
+      v-if="nextPage" @changeTicket="nextPage = false" />
   </div>
 </template>
-
 
 <script>
 import '@/assets/css/main.css'
 import axios from 'axios'
 import TicketCard from '@/components/TicketCard.vue'
-// import TicketDialogComponent from './TicketDialogComponent.vue'
+import TicketDialogComponent from './TicketDialogComponent.vue'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 export default {
@@ -23,40 +24,29 @@ export default {
     return {
       ticket: [],
       step: 0,
-      nextPage: true,
-      faildTickets: []
+      nextPage: false,
+      faildTickets: [],
+      sortedTickets: [],
+      ticketChoosed: [],
     }
   },
   name: 'ticket-component',
   components: {
     TicketCard,
-    // TicketDialogComponent
+    TicketDialogComponent
   },
-  props: {
-    originCity: {
-      type: Object,
-      require: true
-    },
-    destinationInternal: {
-      type: Object,
-      require: true
-    },
-    dayName: {
-      type: String,
-      require: true
-    },
-    date1: {
-      type: String,
-      require: true
-    },
-    sortTab: {
-      type: Number,
-      require: true
-    },
-  },
+  props: ['originCity', 'destinationInternal', 'dayName', 'date1', 'sortTab', 'tickets', 'hideFeild', 'Passenger'],
   watch: {
     async sortTab() {
       await this.sortTickets(this.sortTab)
+    },
+    tickets() {
+      this.sortedTickets = this.tickets
+    },
+    '$route'(to, from) {
+      this.ticket = []
+      this.faildTickets = []
+      this.checkAsync()
     }
   },
   computed: {},
@@ -95,6 +85,7 @@ export default {
               let DepartureTime = DepartureDateTime[1].split(':')
               data[i].DepartureDateTime = DepartureDateTime[0]
               data[i].DepartureTime = DepartureTime[0] + ':' + DepartureTime[1]
+              data[i].proxy = proxy
               // 
               let ArrivalDateTime = data[i].ArrivalDateTime.split(' ')
               let ArrivalTime = ArrivalDateTime[1].split(':')
@@ -102,7 +93,9 @@ export default {
               data[i].ArrivalTime = ArrivalTime[0] + ':' + ArrivalTime[1]
               // 
               data[i].originCity = self.originCity.text
+              data[i].airport1 = self.originCity.airport
               data[i].destinationInternal = self.destinationInternal.text
+              data[i].airport2 = self.destinationInternal.airport
               data[i].dayName = self.dayName
               let options = { day: 'numeric', month: 'long' };
               data[i].fromDate = new Date(self.date1).toLocaleDateString('fa-IR', options);
@@ -139,11 +132,11 @@ export default {
           if (type == 'X' && isClassX == false) {
             data.type = type
             isClassX = true
-            self.pushToTicket(data);
+            self.pushToTicket(data, type);
           }
           if (type == 'C' && isClassC == false) {
             isClassC = true
-            self.pushToTicket(data);
+            self.pushToTicket(data, type);
             data.type = type
           }
         }
@@ -164,6 +157,9 @@ export default {
             .then(function (response) {
               if ((response.data) && response.data.AdultTotalPrice != 0) {
                 data.type = type;
+                data.className = newType;
+                data.OfficeUser = OfficeUser;
+                data.OfficePass = OfficePass;
                 data.price = Number(response.data.AdultTotalPrice);
                 data.fare = response.data;
                 data.capacity = Number(classes[m].slice(-1)) ? classes[m].slice(-1) : type;
@@ -171,7 +167,7 @@ export default {
                 data.longDate2 = new Date(data.ArrivalDate).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
                 data.enLongDate1 = new Date(data.DepartureDateTime).toLocaleDateString('en', { day: 'numeric', month: 'long' });
                 data.enLongDate2 = new Date(data.ArrivalDate).toLocaleDateString('en', { day: 'numeric', month: 'long' });
-                self.pushToTicket(data);
+                self.pushToTicket(data, type);
               }
             })
             .catch(function (error) {
@@ -181,10 +177,10 @@ export default {
         }
       }
     },
-    pushToTicket(object) {
-      if (object.type == 'C' || object.type == 'X') {
+    pushToTicket(object, type) {
+      if (type == 'C' || type == 'X') {
         this.faildTickets.push(object)
-      } else if (object.type != 'C' && object.type != 'X') {
+      } else if (type != 'C' && type != 'X') {
         let indexNumber = this.faildTickets.findIndex((x) => x.FlightNo == object.FlightNo)
         if (indexNumber != (-1)) {
           this.faildTickets.splice(indexNumber, 1)
@@ -194,15 +190,18 @@ export default {
     },
     async sortTickets(tab) {
       if (this.ticket.length > 0) {
-        let sortFromPrice = this.ticket.sort((a, b) => {
-          return a.price - b.price;
-        })
+        if (tab == 0) {
+          this.ticket = this.ticket.sort((a, b) => {
+            return a.price - b.price;
+          })
 
-        let info = {
-          minPrice: this.ticket[0].price,
-          maxPrice: this.ticket[this.ticket.length - 1].price
+          let info = {
+            minPrice: Math.floor(this.ticket[0].price / 1000000) * 1000000,
+            maxPrice: Math.ceil((this.ticket[this.ticket.length - 1].price) / 1000000) * 1000000
+          }
+          this.$emit('minMaxPrice', info)
         }
-        this.$emit('minMaxPrice', info)
+
 
         // let sortFromTime = this.ticket.sort((a, b) => {
         //   if (a.DepartureTime < b.DepartureTime)
@@ -218,16 +217,15 @@ export default {
         //     return 1;
         //   return 0;
         // })
-
+        let self = this
         switch (tab) {
           case 0:
-            this.ticket =
-              await this.ticket.sort((a, b) => {
-                return a.price - b.price;
-              })
+            self.sortedTickets = await self.ticket.sort((a, b) => {
+              return a.price - b.price;
+            })
             break;
           case 1:
-            this.ticket = await this.ticket.sort((a, b) => {
+            self.sortedTickets = await self.ticket.sort((a, b) => {
               if (a.DepartureTime < b.DepartureTime)
                 return -1;
               if (a.DepartureTime > b.DepartureTime)
@@ -236,7 +234,7 @@ export default {
             })
             break;
           case 2:
-            this.ticket = await this.ticket.sort((a, b) => {
+            self.sortedTickets = await self.ticket.sort((a, b) => {
               if (a.AirlinePersianId < b.AirlinePersianId)
                 return -1;
               if (a.AirlinePersianId > b.AirlinePersianId)
@@ -247,11 +245,12 @@ export default {
           default:
             break;
         }
+        // this.$emit('sendSortedTickets', sortedTickets)
       }
     },
     async checkAsync() {
       let self = this
-      
+      let stepFunction = 0
       async function asyncCall(airline, airlineCode, user, pass) {
         let result = await self.getFlights(airline, airlineCode, user, pass)
         if (result && result.data) {
@@ -259,23 +258,31 @@ export default {
             await self.getPrice(result.data[i], result.proxy, result.OfficeUser, result.OfficePass)
           }
         }
+        stepFunction = stepFunction + 1
+        if (stepFunction == 9) {
+          self.sortTickets(self.sortTab)
+          self.$emit('allTickets', self.ticket)
+        }
       }
-      await asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
-      await asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
-      await asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
-      await asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
-      await asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
-      await asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
-      await asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
-      await asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
-      await asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
-      await asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
+      asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
+      asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
+      asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
+      asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
+      asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
+      asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
+      asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
+      asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
+      asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
       // await asyncCall('caspian', 'IV', 'THR100.WS', 'Ahuan1348');
       // await asyncCall('saha', 'IRZ', 'THR162.WS', 'Ahuan1348');
       // setTimeout(() => {
-      self.sortTickets(self.sortTab)
-      self.$emit('allTickets', self.ticket)
+
       // }, 2000);
+    },
+    showDetailes(event) {
+      this.ticketChoosed = []
+      this.ticketChoosed.push(event)
+      this.nextPage = true
     },
   },
   mounted() {

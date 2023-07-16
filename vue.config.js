@@ -71,6 +71,11 @@ module.exports = defineConfig({
         pathRewrite: { '^/varesh': '' },
         secure: false
       },
+      '/varesh2/': {
+        target: 'http://VR.nirasoft.ir:880/cgi-bin/NRSWebWS.cgi',
+        pathRewrite: { '^/varesh2': '' },
+        secure: false
+      },
     }
   },
 })
