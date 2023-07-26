@@ -58,7 +58,7 @@
               خوشحال میشیم که توی این مسیر همراه شما عزیزان باشیم.
             </p>
             <a href="/pdf/مدارک سفارت کانادا.pdf" class="text-decoration-none" download>
-              <v-btn outlined color="red" class="mt-6">دانلود مدارک موردنیاز کانادا</v-btn>
+              <v-btn outlined color="red" class="mt-6">دانلود مدارک موردنیاز سفارت کانادا</v-btn>
             </a>
             <a href="/pdf/فرم درخواست ویزای سفارت کانادا.pdf" class="text-decoration-none mr-3" download>
               <v-btn color="red" class="mt-6" dark>دانلود فرم درخواست ویزای کانادا</v-btn>

@@ -74,7 +74,7 @@
               </div>
             </v-row>
             <a href="/pdf/مدارک سفارت انگلستان.pdf" class="text-decoration-none" download>
-              <v-btn outlined color="red" class="mt-6">دانلود مدارک موردنیاز انگلستان</v-btn>
+              <v-btn outlined color="red" class="mt-6">دانلود مدارک موردنیاز سفارت انگلستان</v-btn>
             </a>
             <!-- <a href="/pdf/فرم درخواست ویزای سفارت انگلیس" class="text-decoration-none mr-3" download> -->
             <v-btn color="red" disabled class="mt-6 mr-3" dark>دانلود فرم درخواست ویزای انگلستان</v-btn>

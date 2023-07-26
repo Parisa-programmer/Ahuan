@@ -52,7 +52,7 @@
             </h5>
             <div style="width: 875px;">
               <ticket-card :Passenger="Passenger" :isNextPage="true" :tickets="choosedTicket"
-                @changeTicket="changeTicket()" @getAllprice="getAllprice($event)" />
+                @changeTicket="changeTicket($event)" @getAllprice="getAllprice($event)" />
             </div>
           </v-row>
           <v-row justify="center" v-if="bookStep == 1">
@@ -417,6 +417,8 @@ const $ = require('jquery');
 export default {
   data() {
     return {
+      PNR1: '',
+      PNR2: '',
       showAlert: false,
       alertType: '',
       alertText: '',
@@ -515,8 +517,8 @@ export default {
       dateError: false,
       dateMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       contactInfo: [{
-        phone: '09054791374',
-        email: 'programmer.gha3mi@gmail.com',
+        phone: '',
+        email: '',
       }],
       contactInfoHeaders: [
         { text: 'تلفن', value: 'phone', sortable: false, width: '40%' },
@@ -558,7 +560,7 @@ export default {
       offCodeLoading: false,
       offCodeIsTrue: undefined,
       offCode: '',
-      acceptRulls: true,
+      acceptRulls: false,
       offCodeDisabledButton: false,
       allPrice: 0
     }
@@ -577,16 +579,18 @@ export default {
     },
     Passenger: {
       defult: {}
-    }
+    },
   },
   watch: {
     showAlert() {
       if (this.showAlert == true) {
         setTimeout(() => {
           this.showAlert = false
-        }, 1000);
+        }, 3000);
       }
-
+    },
+    choosedTicket() {
+      // 
     }
   },
   computed: {},
@@ -667,7 +671,6 @@ export default {
     },
     async reserveTicket() {
       let self = this
-
       function jalali_to_gregorian(jy, jm, jd) {
         var sal_a, gy, gm, gd, days;
         jy += 1595;
@@ -758,15 +761,68 @@ export default {
             + "__"
         }
       }
+      axios.post('http://localhost:8080/' + this.choosedTicket[0].proxy + '2' + '/ReservJS?' + testText).then(function (res) {
+        self.PNR1 = res.data.AirReserve[0].PNR
+        if (self.choosedTicket.length == 2) {
+          let testText2 =
+            "AirLine=" + self.choosedTicket[1].Airline +
+            "&cbSource=" + self.choosedTicket[1].Origin +
+            "&cbTarget=" + self.choosedTicket[1].Destination +
+            "&FlightClass=" + self.choosedTicket[1].className +
+            "&FlightNo=" + self.choosedTicket[1].FlightNo +
+            "&Day=" + self.choosedTicket[1].DepartureDateTime.substring(8, 10) +
+            "&Month=" + self.choosedTicket[1].DepartureDateTime.substring(5, 7) +
+            "&DepartureDate=" + self.choosedTicket[1].DepartureDateTime +
+            "&No=" + self.users.length +
+            "&edtContact=" + self.contactInfo[0].phone +
+            "&OfficeUser=" + self.choosedTicket[1].OfficeUser +
+            "&OfficePass=" + self.choosedTicket[1].OfficePass
 
-      axios.post('http://localhost:8080/' + this.choosedTicket[0].proxy + '2' + '/ReservJS?' + testText).then(function (response) {
-        self.gelFlightNumber(self.choosedTicket[0].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
-
+          for (let i = 0; i < self.users.length; i++) {
+            let gregorianBirthdayDate = jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+            gregorianBirthdayDate = (gregorianBirthdayDate[1].toString().length == 1 ? '0' + gregorianBirthdayDate[1] : gregorianBirthdayDate[1]) + '/' + (gregorianBirthdayDate[2].toString().length == 1 ? '0' + gregorianBirthdayDate[2] : gregorianBirthdayDate[2]) + '/' + gregorianBirthdayDate[0]
+            let options = { month: 'short' };
+            let monthExDateNameShort = self.users[i].expirePassYear + '/' + self.users[i].expirePassMonth + '/' + self.users[i].expirePassDay
+            monthExDateNameShort = new Date(monthExDateNameShort).toLocaleDateString('en', options)
+            testText2 = testText2 +
+              "&edtName" + (i + 1) + "=" + self.users[i].name +
+              "&edtLast" + (i + 1) + "=" + self.users[i].family +
+              "&edtAge" + (i + 1) + "=" + getAge(gregorianBirthdayDate)
+            if (self.users[i].nationality == 'ایرانی') {
+              testText2 = testText2 + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
+            } else {
+              testText2 = testText2 + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" +
+                new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "_" +
+                self.users[i].expirePassDay + monthExDateNameShort + self.users[i].expirePassYear.toString().slice(-2)
+                + "__"
+            }
+          }
+          axios.post('http://localhost:8080/' + self.choosedTicket[1].proxy + '2' + '/ReservJS?' + testText2).then(function (response) {
+            self.PNR2 = response.data.AirReserve[0].PNR
+            // go to paymant _______________________
+            // self.gelFlightNumber(self.choosedTicket[1].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[1].OfficeUser, self.choosedTicket[1].OfficePass, 'Y', self.choosedTicket[1].proxy)
+            // self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+          })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+              console.log('عملیات ناموفق بود!');
+              self.alertText = error.message
+              self.alertType = 'error'
+              self.showAlert = true
+            })
+        } else {
+          // go to paymant _______________________
+          // self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+        }
       })
         .catch(function (error) {
           // handle error
           console.log(error);
           console.log('عملیات ناموفق بود!');
+          self.alertText = error.message
+          self.alertType = 'error'
+          self.showAlert = true
         })
     },
     gelFlightNumber(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy) {
@@ -800,11 +856,10 @@ export default {
         }
       }
     },
-    changeTicket() {
-      this.$emit('changeTicket')
+    changeTicket(event) {
+      this.$emit('changeTicket', event)
     },
     getAllprice(event) {
-      console.log(event);
       this.allPrice = event
     },
 

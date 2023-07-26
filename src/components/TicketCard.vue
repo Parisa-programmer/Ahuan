@@ -23,7 +23,11 @@
                     :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;">{{
                       item.originCity }}</span>
                   <span class="absolute body-2 grey--text text--darken-1 dateTicket"
-                    style="font-family: Byekan !important;bottom: 25px;">{{ item.dayName }} {{ item.fromDate }}</span>
+                    style="font-family: Byekan !important;bottom: 25px;">
+                    {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.dayName.day1 :
+                      item.dayName.day2 }} {{
+    ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.fromDate :
+    item.endDate }}</span>
                   <span class="absolute caption typeFlightTicket" style="font-family: Byekan !important;">سیستمی</span>
                   <span class="mx-2 mx-sm-6 body-2 absolute pr-4 pl-2 mt-2 mt-sm-0"
                     :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;left:0">{{
@@ -33,12 +37,7 @@
                 </div>
               </v-row>
               <v-row class=" my-4 mr-4 mr-sm-7">
-                <span class="body-2" style="font-family: Byekan !important;">{{ item.Airline == 'I3' ? 'آتا' :
-                  item.Airline == 'Y9' ? 'کیش‌ایر' : item.Airline == 'QB' ? 'قشم‌ایر' : item.Airline == 'IV' ? 'کاسپین' :
-                    item.Airline == 'EP' ? 'آسمان' : item.Airline == 'VR' ? 'وارش' :
-                      item.Airline == 'HH' ? 'تابان' : item.Airline == 'ZV' ? 'زاگرس' : item.Airline == 'NV' ? 'نفت' :
-                        item.Airline == 'JI' ? 'معراج' : item.Airline == 'IRZ' ? 'ساها' :
-                          'نامعلوم' }}</span>
+                <span class="body-2" style="font-family: Byekan !important;">{{ item.AirlinePersianId }}</span>
                 <span class="mr-8 mr-sm-7 pr-1 body-2" style="font-family: Byekan !important;">{{
                   item.DepartureTime }}</span>
                 <v-spacer></v-spacer>
@@ -68,13 +67,18 @@
                       @click="choosedTicket = item; reserve(item)">
                       رزرو بلیط
                     </v-btn>
-                    <v-btn v-else-if="isNextPage" class="pl-6 pr-6" color="red" outlined @click="changeTicket()">
+                    <v-btn v-else-if="isNextPage" class="pl-6 pr-6" color="red" outlined @click="changeTicket(i)">
                       تغییر پرواز انتخابی
                     </v-btn>
                     <br>
-                    <v-btn class="px-1 px-lg-7 mt-2" color="blue darken-2" outlined
-                      @click="setAllPrice(item); activeTab = 0; ticketDetailsModal = true; choosedTicket = item; returnCRCNRules(choosedTicket.fare.CRCNRules)">مشاهده
+                    <v-btn class="px-1 px-lg-7 mt-2" color="blue darken-2" outlined :class="!!Number(item.type) && 'mb-2'"
+                      @click="choosedTicketNumber = i; setAllPrice(item); activeTab = 0; ticketDetailsModal = true; choosedTicket = item; returnCRCNRules(choosedTicket.fare.CRCNRules)">مشاهده
                       جزییات</v-btn>
+                    <br v-if="!!Number(item.type)">
+                    <span class="red--text caption" v-if="!!Number(item.type)"
+                      style="font-family:Byekan !important;text-shadow: 0 0 1px red;">
+                      ظرفیت {{ item.type }} نفر
+                    </span>
                   </div>
                 </div>
               </v-row>
@@ -94,7 +98,7 @@
           </v-btn>
           <v-btn v-else dark class="px-sm-12 py-sm-6 ma-3 absolute"
             style="position: absolute;left: 10px;z-index: 2;top: 10px;" outlined color="red arken-2"
-            @click="changeTicket()">
+            @click="changeTicket(choosedTicketNumber)">
             تغییر پرواز انتخابی
           </v-btn>
         </v-row>
@@ -222,16 +226,18 @@
                                   <v-row class="caption grey--text " justify="center"
                                     style="font-family: Byekan !important;">کلاس</v-row>
                                   <v-row class="caption font-weight-bold" justify="center"
-                                    style="font-family: Byekan !important;">Economy</v-row>
+                                    style="font-family: Byekan !important;">{{ choosedTicket.className }}</v-row>
                                 </div>
                                 <v-divider vertical class="my-2 mx-3"></v-divider>
                                 <div class="d-inline-block">
                                   <v-row class="caption grey--text " justify="center"
                                     style="font-family: Byekan !important;">مدل هواپیما</v-row>
                                   <v-row class="caption font-weight-bold" justify="center"
-                                    style="font-family: Byekan !important;">{{
+                                    style="font-family: Byekan !important;">
+                                    {{
                                       choosedTicket.AircraftTypeName ? choosedTicket.AircraftTypeName : '-'
-                                    }}</v-row>
+                                    }}
+                                  </v-row>
                                 </div>
                               </v-row>
                             </v-col>
@@ -403,8 +409,22 @@
             <v-card class="mt-sm-8 py-4" flat>
               <v-row>
                 <v-col cols="12" md="9" class="">
-                  <v-row align="center" justify="center" class="">
-                    <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3>
+                  <v-row align="center" class="">
+                    <v-col cols="12" sm="6" md="4" lg="3" class="mb-sm-2">
+                      <div class="grey lighten-3 rounded-lg ma-sm-4 pa-4">
+                        <v-row class="">
+                          <span class="caption font-weight-bold blue--text d-block"
+                            style="font-family: Byekan !important;">{{ choosedTicket.originCity }} به {{
+                              choosedTicket.destinationInternal }}</span>
+                        </v-row>
+                        <v-row class="">
+                          <span class="caption font-weight-bold blue--text d-block"
+                            style="font-family: Byekan !important;">شماره پرواز {{ choosedTicket.FlightNo }}</span>
+                        </v-row>
+                        <h3 class="mt-2">بزرگسال : 20 KG</h3>
+                      </div>
+                    </v-col>
+                    <!-- <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3> -->
                   </v-row>
                 </v-col>
                 <v-col v-if="Passenger && Passenger[0]" cols="12" md="3" class="">
@@ -470,6 +490,8 @@
         </v-tabs-items>
       </v-sheet>
     </v-dialog>
+    <v-alert v-if="showAlert" dark class="white--text fixed" :type="alertType"
+      style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">{{ alertText }}</v-alert>
   </div>
 </template>
 
@@ -480,6 +502,8 @@
 </style>
 
 <script>
+import { SupervisedUserCircleSharp } from '@material-ui/icons'
+
 
 
 export default {
@@ -495,6 +519,17 @@ export default {
       this.$emit('changeChoosedTicket', this.choosedTicket)
       this.$emit('getAllprice', this.choosedTicket.allprice)
     },
+    showAlert() {
+      setTimeout(() => {
+        if (this.showAlert == true) {
+          this.showAlert = false
+        }
+      }, 4000);
+
+    },
+    rezervStepParent() {
+      this.allChoosedTicket = [];
+    }
   },
   props: {
     isFaild: {
@@ -504,7 +539,6 @@ export default {
       type: Array,
       require: true
     },
-
     isNextPage: {
       type: Boolean
     },
@@ -513,12 +547,21 @@ export default {
     },
     Passenger: {
       defult: {}
-    }
+    },
+    chooseStep: {
+      defult: 0
+    },
+    rezervStepParent: {
+      type: Boolean
+    },
   },
   computed: {
 
   },
   data: () => ({
+    showAlert: false,
+    alertType: 'success',
+    alertText: '',
     ticketDetailsModal: false,
     activeTab: 0,
     ticketDetailsTabs: [
@@ -530,11 +573,10 @@ export default {
     allPrice: 0,
     CRCNRules: [],
     editFlightMood: false,
+    allChoosedTicket: [],
+    choosedTicketNumber: 0
   }),
   methods: {
-    reserveTicket(ticket) {
-      this.$emit('reserveTicket', ticket)
-    },
     separatePrice(number) {
       let value1 = number.toString().replace(/,/g, "")
       let value2 = value1
@@ -642,13 +684,29 @@ export default {
       this.$emit('showNextPage')
     },
     async reserve(item) {
-      console.log(item);
-      await this.setAllPrice(item);
-      this.$emit('showDetailes', item)
-      this.ticketDetailsModal = false
+      if (item.fromDate == item.endDate && this.$route.query.path == 'ow') {
+        await this.setAllPrice(item);
+        this.$emit('showDetailes', item)
+        this.ticketDetailsModal = false
+      } else {
+        if (this.chooseStep == 1) {
+
+          this.ticketDetailsModal = false
+          this.allChoosedTicket[0] = item
+          if (this.allChoosedTicket[1] == undefined) {
+            this.showAlert = true
+            this.alertText = 'لطفا بلیط برگشت را نیز اتنخاب کنید.'
+          }
+          this.$emit('firstChoosed', item)
+        } else if (this.chooseStep == 2) {
+          this.ticketDetailsModal = false
+          this.allChoosedTicket[1] = item
+          this.$emit('nextChoosed', item)
+        }
+      }
     },
-    changeTicket() {
-      this.$emit('changeTicket')
+    changeTicket(number) {
+      this.$emit('changeTicket', number)
     }
   },
   created() {

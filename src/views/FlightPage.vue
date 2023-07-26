@@ -1,16 +1,16 @@
 <template>
   <div class="mt-12 pt-12">
     <div class="mt-6">
-      <input-main @changeOriginCity="changeOriginCity($event)"
+      <input-main :loading="loadingTickets" @changeOriginCity="changeOriginCity($event)"
         @changeDestinationInternal="changeDestinationInternal($event)" @changeDayName1="changeDayName1($event)"
-        @changeDate1="changeDate1($event)" :datePickerValue=datePickerValue page="flight"
-        @dateChanged="dateChanged($event)" @getPasanger="getPasanger($event)" />
+        @changeDate1="changeDate1($event)" :datePickerValue="datePickerValue" page="flight"
+        @getPasanger="getPasanger($event)" @searchInHeaderBox="searchInHeaderBox()" />
     </div>
     <v-row class="" justify="center" style="margin-top:-25px !important">
       <div class="indexDiv">
         <v-row :class="(windowWidth < 960 && !editFlightMood) && 'mt-4 '">
           <v-col cols="3" class="pl-md-3 d-none d-md-inline-block">
-            <ticket-filter-component :from="fromPrice" :to="toPrice" :tickets="tickets"
+            <ticket-filter-component :loadeingTickets="loadingTickets" :from="fromPrice" :to="toPrice" :tickets="tickets"
               @startFilter=startFilter($event) />
           </v-col>
           <v-col cols="12" md="9" class="pa-0 pr-md-3 " :class="(windowWidth < 960 && !editFlightMood) && 'mt-12 pt-12'">
@@ -25,8 +25,12 @@
                                         >-->
                   <v-card elevation="2"
                     :disabled="(new Date().getTime() - 86400000 > date.timestamp) || loadingTickets ? true : false"
-                    outlined class="py-2 px-3 px-sm-6 grey lighten-5 mr-4"
-                    @click="slideGroup = i; datePickerValue = date.datePickerValue;">
+                    outlined class="py-2 px-3 px-sm-6 grey lighten-5 mr-4" @click="slideGroup = i;
+                    datePickerValue =
+                      date1.length == 2 ?
+                        (rezervStep == 1 ? [date.datePickerValue, date1[1]] : [date1[0], date.datePickerValue])
+                        : date.datePickerValue
+                      ;">
                     <span class="text-center body d-block"
                       :class="new Date().getTime() - 86400000 > date.timestamp ? 'grey--text text--lighten-1' : date.weekDay == 6 ? 'red--text' : ''"
                       style="font-family: Byekan !important;">{{ date.day }} {{ date.month }}</span>
@@ -152,9 +156,12 @@
               </div>
             </div>
             <div v-else>
-              <ticket-component :Passenger="Passenger" :hideFeild="hideFeild" :tickets="showTickets"
-                :originCity="originCity" :destinationInternal="destinationInternal" :dayName="dayName" :date1="date1"
-                :sortTab="sortTab" @minMaxPrice="getminMaxPrice($event)"
+              <ticket-component :setFirstDate="setFirstDate" :rezervStepParent="rezervStepParent"
+                @changeTicket="changeTicket($event)" @firstChoosed="firstChoosed($event)"
+                @nextChoosed="nextChoosed($event)" :loadeingTickets="loadingTickets" :Passenger="Passenger"
+                :hideFeild="hideFeild" :tickets="showTickets" :originCity="originCity"
+                :destinationInternal="destinationInternal" :dayName="dayName" :date1="date1" :sortTab="sortTab"
+                @minMaxPrice="getminMaxPrice($event)"
                 @allTickets="allTickets = $event; tickets = $event; showTickets = $event; loadingTickets = false" />
               <!-- <ticket-card :tickets="tickets" :Passenger="Passenger" :isMainPage="true" @showNextPage="showNextPage()"
                  /> -->
@@ -192,6 +199,8 @@ export default {
   name: 'flight-page',
   data() {
     return {
+      rezervStepParent: false,
+      rezervStep: 1,
       hideFeild: false,
       loadingTickets: true,
       allTickets: [],
@@ -501,7 +510,8 @@ export default {
         baby: 0
       },
       panelDetails: 0,
-
+      allChoosedTickets: [],
+      setFirstDate: false
     }
   },
   components: {
@@ -511,6 +521,13 @@ export default {
     TicketFilterComponent,
   },
   watch: {
+    datePickerValue() {
+      // if (this.datePickerValue.length == 2) {
+      this.changeQuery()
+      // } else {
+      //   this.$route.query.start = this.datePickerValue
+      // }
+    },
     slideGroup() {
       // var dateInput = this.selectedDate.split(' ')
       // var newDate = this.dates[this.slideGroup].day + ' ' + this.dates[this.slideGroup].month
@@ -525,12 +542,28 @@ export default {
       this.allTickets = []
       this.showTickets = []
       this.loadingTickets = true
+    },
+    rezervStep() {
+
     }
   },
   computed: {
 
   },
   methods: {
+    searchInHeaderBox() {
+      this.allChoosedTickets = [];
+      this.rezervStep = 1;
+      this.dateChanged(this.date1.length == 2 ? this.date1[0] : this.date1);
+      this.rezervStepParent = !this.rezervStepParent
+    },
+    changeTicket(event) {
+      if (event && this.rezervStep != event) {
+        this.rezervStep = event
+        this.loadingTickets = true
+        this.dateChanged(this.date1[event - 1])
+      }
+    },
     changeOriginCity(event) {
       this.originCity = event
     },
@@ -539,6 +572,7 @@ export default {
     },
     changeDayName1(event) {
       this.dayName = event
+      this.setFirstDate = true
     },
     changeDate1(event) {
       this.date1 = event
@@ -551,10 +585,12 @@ export default {
       for (let i = 0; i < 20; i++) {
         date = new Date(timestamp).toLocaleDateString('fa-IR-u-nu-latn')
         date = date.split('/')
+
         let theMonth = ((new Date(timestamp).getMonth()) + 1).toString()
+        let theDate = new Date(timestamp).getDate()
         this.dates.push(
           {
-            datePickerValue: (new Date(timestamp).getUTCFullYear()) + '-' + (theMonth.length == 1 ? ('0' + theMonth) : theMonth) + '-' + (new Date(timestamp).getDate()),
+            datePickerValue: (new Date(timestamp).getUTCFullYear()) + '-' + (theMonth.length == 1 ? ('0' + theMonth) : theMonth) + '-' + (String(theDate).length == 1 ? ('0' + theDate) : theDate),
             day: date[2],
             month: months[date[1] - 1],
             timestamp: timestamp,
@@ -610,22 +646,38 @@ export default {
     },
     getPasanger(event) {
       this.Passenger = event
+    },
+    firstChoosed(event) {
+      console.log(event);
+      this.allChoosedTickets[0] = event
+      this.loadingTickets = true
+      this.dateChanged(this.$route.query.end)
+      this.rezervStep = 2
+    },
+    nextChoosed(event) {
+      this.allChoosedTickets[1] = event
+    },
+    changeQuery() {
+      let query = this.$route.query
+      if (this.datePickerValue.length == 2) {
+        if (this.rezervStep == 1) {
+          query.start = this.datePickerValue[0]
+          this.$router.push({ path: this.$route.path, query: { ...query, foo: this.datePickerValue[0] } })
+          let numberdate = Math.floor(new Date(this.$route.query.start).getTime() / 1000) * 1000
+          this.dayNumber(numberdate)
+        } else {
+          query.end = this.datePickerValue[1]
+          this.$router.push({ path: this.$route.path, query: { ...query, foo: this.datePickerValue[1] } })
+          let numberdate = Math.floor(new Date(this.$route.query.end).getTime() / 1000) * 1000
+          this.dayNumber(numberdate)
+        }
+      } else {
+        query.start = this.datePickerValue
+        this.$router.push({ path: this.$route.path, query: { ...query, foo: this.datePickerValue } })
+        let numberdate = Math.floor(new Date(this.$route.query.start).getTime() / 1000) * 1000
+        this.dayNumber(numberdate)
+      }
     }
-    // setDates() {
-    //   //   this.dateDays = []
-    //   //   this.dateYears = []
-    //   //   this.dateYearsPass = [new Date().getFullYear()]
-    //   //   var nowYear = new Date().toLocaleDateString('fa-IR-u-nu-latn').slice(0, 4)
-    //   //   for (let i = 0; i < 100; i++) {
-    //   //     this.dateYears.push(nowYear - i)
-    //   //     if (i > 0 && i < 32) {
-    //   //       this.dateDays.push(i)
-    //   //       if (i < 20) {
-    //   //         this.dateYearsPass.push(new Date().getFullYear() + i)
-    //   //       }
-    //   //     }
-    //   //   }
-    // },
   },
   created() {
     this.windowWidth = window.innerWidth

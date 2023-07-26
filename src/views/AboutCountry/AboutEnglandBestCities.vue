@@ -105,7 +105,7 @@
     </div>
     <v-row justify="center">
       <div class="indexDiv mt-6 mt-lg-12 mb-12">
-        <router-link to="/visline">
+        <router-link to="/visline/need">
           <img class="widthAll rounded-xl d-none d-md-block" src="@/assets/image/ویزلاین2.jpg" alt="">
           <img class="widthAll rounded-xl d-block d-md-none" src="@/assets/image/ویزلاین2 موبایل.jpg" alt="">
         </router-link>

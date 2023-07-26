@@ -1,6 +1,6 @@
 <template>
   <div class="heightAll">
-    <v-row justify="center" align="center" class="red mt-6 mt-sm-12 pt-12" style="min-height:90vh">
+    <v-row justify="center" align="center" class="mt-6 mt-sm-12 pt-12" style="min-height:90vh">
       <div class="heightAll widthAll absolute" style="bottom:0;">
         <v-img class="" width="100%" height="100%" src="@/assets/image/visa video backgroud.jpg" alt="" />
       </div>

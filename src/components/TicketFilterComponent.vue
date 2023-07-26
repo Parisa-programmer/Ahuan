@@ -10,7 +10,8 @@
           </v-skeleton-loader>
           <v-spacer></v-spacer>
           <v-skeleton-loader class="textLoader d-inline-block ma-2" type="chip">
-            <v-btn text @click="removeFilters" class="body-2 red--text px-sm-1 px-md-3 d-block d-md-inline-block"
+            <v-btn text :disabled="loadeingTickets" @click="removeFilters"
+              class="body-2 red--text px-sm-1 px-md-3 d-block d-md-inline-block"
               style="font-family: Byekan !important;">حذف فیلتر ها</v-btn>
           </v-skeleton-loader>
         </v-row>
@@ -24,8 +25,8 @@
           <v-skeleton-loader class="textLoader d-inline-block widthAll" type="card-heading">
             <v-row align="center" class="px-3 mx-sm-1 mx-md-2 rounded-xl" style="border: 1px solid #bfbfbf;">
               <span>از</span>
-              <v-text-field v-model="fromPrice" class="pt-0 d-inline-block priceInput" hide-details
-                single-line></v-text-field>
+              <v-text-field :disabled="loadeingTickets" v-model="fromPrice" class="pt-0 d-inline-block priceInput"
+                hide-details single-line></v-text-field>
               <span class="d-none d-md-inline-block">تومان</span>
             </v-row>
           </v-skeleton-loader>
@@ -34,18 +35,18 @@
           <v-skeleton-loader class="textLoader d-inline-block widthAll mt-4" type="card-heading">
             <v-row align="center" class="mt-2 px-3 mx-sm-1 mx-md-2 rounded-xl" style="border: 1px solid #bfbfbf;">
               <span>تا</span>
-              <v-text-field v-model="toPrice" class="pt-0 d-inline-block priceInput" hide-details
-                single-line></v-text-field>
+              <v-text-field :disabled="loadeingTickets" v-model="toPrice" class="pt-0 d-inline-block priceInput"
+                hide-details single-line></v-text-field>
               <span class="d-none d-md-inline-block">تومان</span>
             </v-row>
           </v-skeleton-loader>
         </v-row>
-        <v-row class="px-2">
+        <v-row class="px-2 filterPriceRangRow">
           <v-skeleton-loader class="textLoader d-inline-block widthAll mt-4" type="card-heading"
             :loading="filter.minPrice == null ? true : false">
-            <v-range-slider color="#1abc9c" thumb-color="#fff" :min="filter.minPrice" :max="filter.maxPrice"
-              track-color="#cccccc" v-model="filter.price" hide-details @change="changeRangePrice()"
-              class="align-center ltr my-4 my-md-6 px-2">
+            <v-range-slider :disabled="loadeingTickets" color="#1abc9c" thumb-color="#fff" :min="filter.minPrice"
+              :max="filter.maxPrice" track-color="#cccccc" v-model="filter.price" hide-details
+              @change="changeRangePrice()" class="align-center ltr my-4 my-md-6 px-2">
             </v-range-slider>
           </v-skeleton-loader>
         </v-row>
@@ -55,9 +56,9 @@
         </v-skeleton-loader>
         <v-row class="px-2">
           <v-skeleton-loader class="textLoader d-inline-block widthAll mt-4" type="card-heading">
-            <v-range-slider thumb-color="#fff" color="#1abc9c" track-color="#cccccc" :tick-labels="filter.timeItems"
-              v-model="filter.time" min="0" max="4" ticks="always" tick-size="4" class="mb-6 px-2"
-              @change="changeFilterTime()">
+            <v-range-slider :disabled="loadeingTickets" thumb-color="#fff" color="#1abc9c" track-color="#cccccc"
+              :tick-labels="filter.timeItems" v-model="filter.time" min="0" max="4" ticks="always" tick-size="4"
+              class="mb-6 px-2" @change="changeFilterTime()">
               <template v-slot:thumb-label="props">
                 <v-icon dark>
                   mdi--close
@@ -70,39 +71,45 @@
         <v-divider class="my-3"></v-divider>
         <v-skeleton-loader class="textLoader d-inline-block mr-2" type="chip">
           <h4 class="mx-2 mb-3">کلاس پرواز</h4>
-          <v-checkbox v-for="(item, j) in filter.classItems" :key="'classItems' + j" v-model="filter.class" color="red"
-            off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label" :value="item.value"
-            class="caption" hide-details></v-checkbox>
+          <v-checkbox :disabled="loadeingTickets" v-for="(item, j) in filter.classItems" :key="'classItems' + j"
+            v-model="filter.class" color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline"
+            :label="item.label" :value="item.value" class="caption" hide-details></v-checkbox>
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
         <v-skeleton-loader class="textLoader d-inline-block mr-2" type="chip">
           <h4 class="mr-2 d-inline-block">ایرلاین</h4>
           <span class="caption" style="font-family: Byekan !important;">(مجموع {{ tickets.length }} پرواز)</span>
           <v-row v-for="(item, j) in filter.airlineItems" :key="'airlineItems' + j">
-            <v-checkbox v-if="tickets.filter(e => e.Airline == item.value).length != 0" v-model="filter.airline"
-              color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label"
-              :value="item.value" class="caption" hide-details @click="changeFilterAirline()"></v-checkbox>
+            <v-checkbox :disabled="loadeingTickets" v-if="tickets.filter(e => e.Airline == item.value).length != 0"
+              v-model="filter.airline" color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline"
+              :label="item.label" :value="item.value" class="caption" hide-details
+              @click="changeFilterAirline()"></v-checkbox>
           </v-row>
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
         <v-skeleton-loader class="textLoader d-inline-block mr-2" type="chip">
           <h4 class="mx-2 mb-3">نوع پرواز</h4>
-          <v-checkbox v-for="(item, j) in filter.typeItems" :key="'typeItems' + j" v-model="filter.type" color="red"
-            off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label" :value="item.value"
-            class="caption" hide-details></v-checkbox>
+          <v-checkbox :disabled="loadeingTickets" v-for="(item, j) in filter.typeItems" :key="'typeItems' + j"
+            v-model="filter.type" color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline"
+            :label="item.label" :value="item.value" class="caption" hide-details></v-checkbox>
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
         <v-skeleton-loader class="textLoader d-inline-block mr-2" type="chip">
           <h4 class="mx-2 mb-3">نمایش پرواز</h4>
-          <v-checkbox v-for="(item, j) in filter.showTypeItems" :key="'showTypeItems' + j" v-model="filter.showType"
-            color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline" :label="item.label"
-            :value="item.value" class="caption" hide-details @click="emitFilter()"></v-checkbox>
+          <v-checkbox :disabled="loadeingTickets" v-for="(item, j) in filter.showTypeItems" :key="'showTypeItems' + j"
+            v-model="filter.showType" color="red" off-icon="mdi-circle-outline" on-icon="mdi-check-circle-outline"
+            :label="item.label" :value="item.value" class="caption" hide-details @click="emitFilter()"></v-checkbox>
         </v-skeleton-loader>
       </v-card>
     </v-row>
   </div>
 </template>
 
+<style>
+.filterPriceRangRow .v-skeleton-loader__heading {
+  width: 85%
+}
+</style>
 
 <script>
 import '@/assets/css/main.css'
@@ -261,7 +268,7 @@ export default {
   name: 'ticket-filter-component',
   components: {
   },
-  props: ['from', 'to', 'tickets'],
+  props: ['from', 'to', 'tickets', 'loadeingTickets'],
   watch: {
     from() {
       this.filter.minPrice = Number(this.from / 10)
@@ -272,33 +279,37 @@ export default {
       this.toPrice = Number(this.to / 10)
     },
     fromPrice() {
-      let self = this
-      let value1 = self.fromPrice.toString().replace(/,/g, "")
-      let value2 = value1
-      // if (value1.length == 0 || value1 < 0) {
-      //   value2 = 0
-      // } else if (value1.length > 1 && value1[0] == 0) {
-      //   value2 = value1.replace(0, '')
-      // } else {
-      value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      // }
-      // self.fromPrice = value2
-      self.fromPrice = value2
-      self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
+      if (this.fromPrice != null) {
+        let self = this
+        let value1 = self.fromPrice.toString().replace(/,/g, "")
+        let value2 = value1
+        // if (value1.length == 0 || value1 < 0) {
+        //   value2 = 0
+        // } else if (value1.length > 1 && value1[0] == 0) {
+        //   value2 = value1.replace(0, '')
+        // } else {
+        value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        // }
+        // self.fromPrice = value2
+        self.fromPrice = value2
+        self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
+      }
     },
     toPrice() {
-      let self = this
-      let value1 = self.toPrice.toString().replace(/,/g, "")
-      // value2 = value1
-      // if (value1.length == 0 || value1 < 0) {
-      //   value2 = 0
-      // } else if (value1.length > 1 && value1[0] == 0) {
-      //   value2 = value1.replace(0, '')
-      // } else {
-      let value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      // }
-      self.toPrice = value2
-      self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
+      if (this.toPrice != null) {
+        let self = this
+        let value1 = self.toPrice.toString().replace(/,/g, "")
+        // value2 = value1
+        // if (value1.length == 0 || value1 < 0) {
+        //   value2 = 0
+        // } else if (value1.length > 1 && value1[0] == 0) {
+        //   value2 = value1.replace(0, '')
+        // } else {
+        let value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        // }
+        self.toPrice = value2
+        self.changeFilterPrice([Number(self.fromPrice.toString().replace(/,/g, "")), Number(self.toPrice.toString().replace(/,/g, ""))])
+      }
     },
     async tickets() {
       this.filter.airline = []
@@ -306,6 +317,12 @@ export default {
         await this.filter.airline.push(this.tickets[i].Airline)
       }
       this.emitFilter()
+    },
+    loadeingTickets() {
+      if (this.loadeingTickets == true) {
+        // this.fromPrice = null
+        // this.toPrice = null
+      }
     }
   },
   computed: {},

@@ -42,7 +42,7 @@ module.exports = defineConfig({
         secure: false
       },
       '/saha/': {
-        target: 'http://IRZ.nirasoft.ir:880',
+        target: 'https://api.sahaair.com/ws1',
         pathRewrite: { '^/saha': '' },
         secure: false
       },

@@ -81,32 +81,44 @@
                   ویزا
                 </span>
               </router-link>
-              <div class="absolute show-sub-menu" style="right:-90%;">
+              <div class="absolute show-sub-menu" style="right:-22%;">
                 <v-list nav dense style="">
                   <div class="">
                     <v-list-item class="cursorPointer titleHeader py-0">
                       <router-link to="/visa-england" style="text-decoration:none;" class="topMenu">
-                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
-                          style="font-weight: bold;">وقت سفارت واخذ ویزای انگلیس</v-list-item-title>
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت انگلیس (4).jpg" alt="سفارت انگلیس" class="ml-1"> -->
+                          ویزای انگلیس
+                        </v-list-item-title>
                       </router-link>
                     </v-list-item>
                     <v-list-item class="cursorPointer titleHeader py-0">
                       <router-link to="/visa-america" style="text-decoration:none;" class="topMenu">
-                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
-                          style="font-weight: bold;">وقت سفارت واخذ ویزای آمریکا</v-list-item-title>
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت آمریکا (4).jpg" alt="سفارت آمریکا" class="ml-1"> -->
+                          ویزای آمریکا
+                        </v-list-item-title>
                       </router-link>
                     </v-list-item>
 
                     <v-list-item class="cursorPointer titleHeader py-0">
                       <router-link to="/visa-canada" style="text-decoration:none;" class="topMenu">
-                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
-                          style="font-weight: bold;">وقت سفارت واخذ ویزای کانادا</v-list-item-title>
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت  کانادا(4).jpg" alt="سفارت کانادا" class="ml-1"> -->
+                          ویزای کانادا
+                        </v-list-item-title>
                       </router-link>
                     </v-list-item>
                     <v-list-item class="cursorPointer titleHeader py-0">
                       <router-link to="/visa-europe" style="text-decoration:none;" class="topMenu">
-                        <v-list-item-title @click="group.active = !group.active" class="topMenu pr-2"
-                          style="font-weight: bold;">وقت سفارت واخذ ویزای اروپا</v-list-item-title>
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت  اروپا(4).jpg" alt="سفارت اروپا" class="ml-1"> -->
+                          ویزای اروپا
+                        </v-list-item-title>
                       </router-link>
                     </v-list-item>
                   </div>
@@ -212,29 +224,27 @@
                     <v-list-item class="cursorPointer titleHeader">
                       <router-link class="relative widthAll d-flex" to="/visa-england"
                         style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
-                        <v-list-item-title class="topMenu" style="font-weight: bold;">
-                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                          وقت سفارت واخذ ویزای انگلیس
+                        <v-list-item-title class="topMenu d-flex" style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت انگلیس (4).jpg" alt="سفارت انگلیس" class="ml-1"> -->
+                          ویزای انگلیس
                         </v-list-item-title>
                       </router-link>
                     </v-list-item>
                     <v-list-item class="cursorPointer titleHeader">
                       <router-link class="relative widthAll d-flex" to="/visa-america"
                         style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
-                        <v-list-item-title class="topMenu" style="font-weight: bold;">
-                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                          وقت سفارت واخذ ویزای آمریکا
+                        <v-list-item-title class="topMenu d-flex" style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت آمریکا (4).jpg" alt="سفارت آمریکا" class="ml-1"> -->
+                          ویزای آمریکا
                         </v-list-item-title>
                       </router-link>
                     </v-list-item>
-
-
                     <v-list-item class="cursorPointer titleHeader">
                       <router-link class="relative widthAll d-flex" to="/visa-canada"
                         style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
                         <v-list-item-title class="topMenu" style="font-weight: bold;">
-                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                          وقت سفارت واخذ ویزای کانادا
+                          <!-- <img width="30" src="@/assets/image/سفارت  کانادا(4).jpg" alt="سفارت کانادا" class="ml-1"> -->
+                          ویزای کانادا
                         </v-list-item-title>
                       </router-link>
                     </v-list-item>
@@ -242,8 +252,8 @@
                       <router-link class="relative widthAll d-flex" to="/visa-europe"
                         style="text-decoration:none;color:rgb(39, 39, 39);height: 38px;">
                         <v-list-item-title class="topMenu" style="font-weight: bold;">
-                          <v-icon size="9" color="red" class="ml-2">mdi-circle</v-icon>
-                          وقت سفارت واخذ ویزای اروپا
+                          <!-- <img width="30" src="@/assets/image/سفارت  اروپا(4).jpg" alt="سفارت اروپا" class="ml-1"> -->
+                          ویزای اروپا
                         </v-list-item-title>
                       </router-link>
                     </v-list-item>
