@@ -14,34 +14,36 @@
             style="left: 30%;top:-25px;margin-left: -25px;"></div>
           <v-row class="heightAll">
             <div class="pt-2 rightSectionTicket">
-              <v-row class="mt-1 mt-sm-8 mr-2 mr-sm-6" align="center">
+              <v-row class="mt-1 mt-sm-8 mr-2 mr-sm-6 relative" align="center" justify="center">
                 <img
                   :src="item.Airline == 'I3' ? require('@/assets/image/لوگوی_آتا.png') : item.Airline == 'Y9' ? require('@/assets/image/لوگوی_کیش ایر.png') : item.Airline == 'JI' ? require('@/assets/image/لوگوی_معراج.png') : item.Airline == 'QB' ? require('@/assets/image/لوگوی_قشم ایر.png') : item.Airline == 'IV' ? require('@/assets/image/لوگوی_کاسپین.png') : item.Airline == 'HH' ? require('@/assets/image/لوگوی_تابان.png') : item.Airline == 'EP' ? require('@/assets/image/لوگوآسمان2.jpg') : item.Airline == 'ZV' ? require('@/assets/image/zagros.png') : item.Airline == 'VR' ? require('@/assets/image/لوگوی_وارش.png') : item.Airline == 'NV' ? require('@/assets/image/لوگوی_نفت.png') : item.Airline == 'IRZ' ? require('@/assets/image/لوگوی_ساها.png') : ''"
-                  alt="" class="rounded-circle pa-1" width="50" height="50" style="box-shadow: 1px 1px 4px #b3b3b3">
-                <div class="d-block relative">
-                  <span class="mx-2 mx-sm-2 body-2 absolute px-4 mt-2 mt-sm-0"
-                    :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;">{{
-                      item.originCity }}</span>
-                  <span class="absolute body-2 grey--text text--darken-1 dateTicket"
-                    style="font-family: Byekan !important;bottom: 25px;">
-                    {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.dayName.day1 :
-                      item.dayName.day2 }} {{
+                  alt="" class="rounded-circle pa-1" width="50" height="50"
+                  style="box-shadow: 1px 1px 4px #b3b3b3;z-index: 2;">
+                <span class="px-2 px-sm-2 body-2 px-4 mt-2 mt-sm-0" :class="isFaild ? 'grey lighten-2' : 'white'"
+                  style="font-family: Byekan !important;z-index: 2;">
+                  {{ item.originCity }}</span>
+                <img src="@/assets/image/flight-go-flesh.png" class="absolute widthAll mt-4 mt-sm-0" alt="" height="12">
+                <v-spacer></v-spacer>
+                <span class="absolute body-2 grey--text text--darken-1 dateTicket"
+                  style="font-family: Byekan !important;bottom: 35px;">
+                  {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.dayName.day1 :
+                    item.dayName.day2 }} {{
     ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.fromDate :
-    item.endDate }}</span>
-                  <span class="absolute caption typeFlightTicket" style="font-family: Byekan !important;">سیستمی</span>
-                  <span class="mx-2 mx-sm-6 body-2 absolute pr-4 pl-2 mt-2 mt-sm-0"
-                    :class="isFaild ? 'grey lighten-2' : 'white'" style="font-family: Byekan !important;left:0">{{
-                      item.destinationInternal }}</span>
-                  <img src="@/assets/image/flight-go-flesh.png" class="flight-go-flesh mt-4 mt-sm-0 mx-6" alt=""
-                    height="12">
-                </div>
+    item.endDate }}
+                </span>
+                <span class="absolute grey--text text--darken-1 caption typeFlightTicket"
+                  style="font-family: Byekan !important;">سیستمی</span>
+                <span class="px-2 px-sm-6 body-2 pr-4 pl-2 mt-2 mt-sm-0" :class="isFaild ? 'grey lighten-2' : 'white'"
+                  style="font-family: Byekan !important;left:0;z-index: 2;">{{
+                    item.destinationInternal }}
+                </span>
               </v-row>
               <v-row class=" my-4 mr-4 mr-sm-7">
                 <span class="body-2" style="font-family: Byekan !important;">{{ item.AirlinePersianId }}</span>
-                <span class="mr-8 mr-sm-7 pr-1 body-2" style="font-family: Byekan !important;">{{
+                <span class="mr-8 mr-sm-3 pr-1 body-2" style="font-family: Byekan !important;">{{
                   item.DepartureTime }}</span>
                 <v-spacer></v-spacer>
-                <span class="ml-5 ml-sm-7 ml-md-10 pl-2 body-2" style="font-family: Byekan !important;">{{
+                <span class="ml-5 ml-sm-7 ml-md-4 pl-2 body-2" style="font-family: Byekan !important;">{{
                   item.ArrivalTime }}</span>
               </v-row>
             </div>
@@ -201,16 +203,7 @@
                                       :src="choosedTicket.Airline == 'I3' ? require('@/assets/image/لوگوی_آتا.png') : choosedTicket.Airline == 'Y9' ? require('@/assets/image/لوگوی_کیش ایر.png') : choosedTicket.Airline == 'JI' ? require('@/assets/image/لوگوی_معراج.png') : choosedTicket.Airline == 'QB' ? require('@/assets/image/لوگوی_قشم ایر.png') : choosedTicket.Airline == 'IV' ? require('@/assets/image/لوگوی_کاسپین.png') : choosedTicket.Airline == 'HH' ? require('@/assets/image/لوگوی_تابان.png') : choosedTicket.Airline == 'EP' ? require('@/assets/image/لوگوآسمان2.jpg') : choosedTicket.Airline == 'ZV' ? require('@/assets/image/zagros.png') : choosedTicket.Airline == 'VR' ? require('@/assets/image/لوگوی_وارش.png') : choosedTicket.Airline == 'NV' ? require('@/assets/image/لوگوی_نفت.png') : choosedTicket.Airline == 'IRZ' ? require('@/assets/image/لوگوی_ساها.png') : ''"
                                       class="mr-sm-2" width="40" alt="">
                                     <span class="mr-2 body-2" style="font-family: Byekan !important;">
-                                      {{ choosedTicket.Airline == 'I3' ? 'آتا' :
-                                        choosedTicket.Airline == 'Y9' ? 'کیش‌ایر' : choosedTicket.Airline == 'QB' ?
-                                          'قشم‌ایر' : choosedTicket.Airline == 'IV' ? 'کاسپین' :
-                                            choosedTicket.Airline == 'EP' ? 'آسمان' : choosedTicket.Airline == 'VR' ?
-                                              'وارش' :
-                                              choosedTicket.Airline == 'HH' ? 'تابان' : choosedTicket.Airline == 'ZV' ?
-                                                'زاگرس' : choosedTicket.Airline == 'NV' ? 'نفت' :
-                                                  choosedTicket.Airline == 'JI' ? 'معراج' : choosedTicket.Airline == 'IRZ' ?
-                                                    'ساها' :
-                                                    'نامعلوم' }}
+                                      {{ choosedTicket.AirlinePersianId ? choosedTicket.AirlinePersianId : 'نامعلوم' }}
                                     </span>
                                   </v-row>
                                 </div>
@@ -421,7 +414,8 @@
                           <span class="caption font-weight-bold blue--text d-block"
                             style="font-family: Byekan !important;">شماره پرواز {{ choosedTicket.FlightNo }}</span>
                         </v-row>
-                        <h3 class="mt-2">بزرگسال : 20 KG</h3>
+                        <h3 class="mt-2">بزرگسال : {{ choosedTicket.fare ?
+                          choosedTicket.fare.BaggageAllowanceWeight : '20 Kg' }}</h3>
                       </div>
                     </v-col>
                     <!-- <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3> -->
@@ -529,6 +523,9 @@ export default {
     },
     rezervStepParent() {
       this.allChoosedTicket = [];
+    },
+    Passenger() {
+      console.log(this.choosedTicket);
     }
   },
   props: {

@@ -147,10 +147,10 @@
                 <v-row class="mb-7" justify="center" align="center">
                   <h2 class="tabel-tour-title"> هواپیمایی</h2>
                   <img class="mx-1" v-for="(airline, k) in tour.airlines" :key="k" height="40"
-                    :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Qeshm Air' ? require('@/assets/image/airlines/qeshm.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : ''"
+                    :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Qeshm Air' ? require('@/assets/image/airlines/qeshm.png') : airline == 'Fly Dubai' ? require('@/assets/image/airlines/flydubai.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : ''"
                     :alt="airline">
                   <h2 class="tabel-tour-title" v-for="(airline, m) in tour.airlines" :key="'airline' + m">{{
-                    tour.airlines.length == 1 ? airline : '' }}
+                    (tour.airlines.length == 1 && airline != 'Fly Dubai') ? airline : '' }}
                   </h2>
                 </v-row>
                 <v-row justify="center">
@@ -1110,6 +1110,19 @@ export default {
 
   },
   methods: {
+    separatePrice(number) {
+      let value1 = number.toString().replace(/,/g, "")
+      let value2 = value1
+      if (value1.length == 0 || value1 < 0) {
+        value2 = 0
+      } else if (value1.length > 1 && value1[0] == 0) {
+        value2 = value1.replace(0, '')
+      } else {
+        value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      }
+      return value2
+      // self.filter.price = [Number(self.fromPrice.toString().replace(/,/g, "")), Number(value1)]
+    },
     getTour(id) {
       let self = this
       axios.get('https://panel.ahuantours.com/api/package/' + id)
@@ -1141,10 +1154,10 @@ export default {
               name: x.hotel,
               star: x.star,
               place: x.location,
-              duble: x.dbl,
-              single: x.sgl,
-              baby: x.extBed,
-              baby2: x.noBed,
+              duble: self.separatePrice(x.dbl),
+              single: self.separatePrice(x.sgl),
+              baby: self.separatePrice(x.extBed),
+              baby2: self.separatePrice(x.noBed),
             };
           });
           for (let i = 0; i < self.pricesItemsIstanbul.length; i++) {

@@ -814,8 +814,7 @@ input::-webkit-inner-spin-button {
 }
 
 .typeFlightTicket {
-  right: 46%;
-  top: 53px;
+  top: 35px;
 }
 
 .theme--light.v-tabs .v-tab--active:before,
@@ -1630,8 +1629,7 @@ input::-webkit-inner-spin-button {
   }
 
   .typeFlightTicket {
-    right: 45%;
-    top: 56px;
+    top: 32px;
   }
 
   .filter-buttons-small-mood {

@@ -349,6 +349,11 @@ const routes = [
     component: () => import('../views/AboutCountry/AboutEnglandShops.vue')
   },
   {
+    path: '/cancell-flight',
+    name: 'cancell-flight',
+    component: () => import('../views/CancellFlight.vue')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: () => import('../views/NotFound.vue')

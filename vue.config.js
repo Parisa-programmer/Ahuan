@@ -71,9 +71,74 @@ module.exports = defineConfig({
         pathRewrite: { '^/varesh': '' },
         secure: false
       },
+      '/flyPersia/': {
+        target: 'http://api.flypersia.aero/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/flyPersia': '' },
+        secure: false
+      },
       '/varesh2/': {
         target: 'http://VR.nirasoft.ir:880/cgi-bin/NRSWebWS.cgi',
         pathRewrite: { '^/varesh2': '' },
+        secure: false
+      },
+      '/aseman2/': {
+        target: 'http://restapi.iaa.ir/ws2/cgi-bin/NRSWEB.cgi ',
+        pathRewrite: { '^/aseman2': '' },
+        secure: false
+      },
+      '/taban2/': {
+        target: 'http://hh.nirasoft.ir:880/cgi-bin/NRSWebWS.cgi',
+        pathRewrite: { '^/taban2': '' },
+        secure: false
+      },
+      '/caspian2/': {
+        target: 'http://iv.nirasoft.ir:880/cgi-bin/NRSWeb.cgi',
+        pathRewrite: { '^/caspian2': '' },
+        secure: false
+      },
+      '/ata2/': {
+        target: 'http://api.ataair.ir/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/ata2': '' },
+        secure: false
+      },
+      '/saha2/': {
+        target: 'http://api.sahaair.com/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/saha2': '' },
+        secure: false
+      },
+      '/meraj2/': {
+        target: 'http://restapi.meraj.aero/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/meraj2': '' },
+        secure: false
+      },
+      '/naft2/': {
+        target: 'http://api.karunair.ir/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/naft2': '' },
+        secure: false
+      },
+      '/qeshmair2/': {
+        target: 'http://api.qeshm-air.com/ws2/cgi-bin/NRSWEB.cgi',
+        pathRewrite: { '^/qeshmair2': '' },
+        secure: false
+      },
+      '/kishair2/': {
+        target: 'http://api.kishair.aero/ws1',
+        pathRewrite: { '^/kishair2': '' },
+        secure: false
+      },
+      '/zagros2/': {
+        target: 'http://book.zagrosairlines.com/cgi-bin/NRSWeb.cgi',
+        pathRewrite: { '^/zagros2': '' },
+        secure: false
+      },
+      '/flyPersia2/': {
+        target: ' http://fp.nirasoft.ir',
+        pathRewrite: { '^/flyPersia': '' },
+        secure: false
+      },
+      '/zagros3/': {
+        target: 'http://ra.zagrosairlines.com/',
+        pathRewrite: { '^/zagros3': '' },
         secure: false
       },
     }

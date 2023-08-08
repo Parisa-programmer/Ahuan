@@ -51,7 +51,7 @@
               {{ tickets.length > 1 ? 'پروازهای انتخابی شما' : 'پرواز انتخابی شما' }}
             </h5>
             <div style="width: 875px;">
-              <ticket-card :Passenger="Passenger" :isNextPage="true" :tickets="choosedTicket"
+              <ticket-card :Passenger="Passenger2 ? Passenger2 : Passenger" :isNextPage="true" :tickets="choosedTicket"
                 @changeTicket="changeTicket($event)" @getAllprice="getAllprice($event)" />
             </div>
           </v-row>
@@ -99,16 +99,17 @@
                   <label for="" class="mr-4">تاریخ تولد</label>
                   <v-row class="relative">
                     <v-col class="px-1 ">
-                      <v-select color="white" placeholder="روز" class="font-small-xs user-date" :items="dateDays"
-                        v-model="user.birthdayDay" :rules="emptyRules" hide-details></v-select>
+                      <v-select color="white" placeholder="روز" @change="checkAges()" class="font-small-xs user-date"
+                        :items="dateDays" v-model="user.birthdayDay" :rules="emptyRules" hide-details></v-select>
                     </v-col>
                     <v-col class="px-1">
-                      <v-select color="white" placeholder="ماه" class="font-small-xs" :items="dateMonthsPersian"
-                        v-model="user.birthdayMonth" :rules="emptyRules" hide-details></v-select>
+                      <v-select color="white" placeholder="ماه" class="font-small-xs" @change="checkAges()"
+                        :items="dateMonthsPersian" v-model="user.birthdayMonth" :rules="emptyRules"
+                        hide-details></v-select>
                     </v-col>
                     <v-col class="px-1">
-                      <v-select color="white" placeholder="سال" class="font-small-xs" :items="dateYears"
-                        v-model="user.birthdayYear" :rules="emptyRules" hide-details></v-select>
+                      <v-select color="white" placeholder="سال" @change="checkAges()" class="font-small-xs"
+                        :items="dateYears" v-model="user.birthdayYear" :rules="emptyRules" hide-details></v-select>
                     </v-col>
                     <span v-if="dateError && (!user.birthdayYear || !user.birthdayMonth || !user.birthdayDay)"
                       class="caption red--text widthAll" style="font-family:Byekan !important">تاریخ تولد را مشخص
@@ -229,10 +230,13 @@
               <v-row justify="center" class="mt-12 mb-4">
                 <h1 style="color:#00a182" class="font-small-xs ">عملیات رزرو با موفقیت انجام شد!</h1>
               </v-row>
+
               <v-row justify="center" class="mb-12">
-                <v-btn outlined color="red">جهت دانلود بلیط ها کلیک کنید</v-btn>
+                <v-btn outlined color="red" @click="clickedDownload = !clickedDownload">جهت دانلود بلیط ها کلیک
+                  کنید</v-btn>
               </v-row>
             </div>
+            <ticket-print-component :clickedDownload="clickedDownload" :params="params" />
           </v-row>
           <v-dialog v-model="editTicketInfoDialog" width="700px" style="z-index:999998">
             <v-card class="pa-4" v-if="ModalUserType">
@@ -410,13 +414,16 @@
 <script>
 import '@/assets/css/main.css'
 import axios from 'axios'
-import TicketCard from './TicketCard.vue'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
+import TicketCard from './TicketCard.vue'
+import TicketPrintComponent from './TicketPrintComponent.vue'
+
 const $ = require('jquery');
 
 export default {
   data() {
     return {
+      clickedDownload: false,
       PNR1: '',
       PNR2: '',
       showAlert: false,
@@ -562,12 +569,16 @@ export default {
       offCode: '',
       acceptRulls: false,
       offCodeDisabledButton: false,
-      allPrice: 0
+      allPrice: 0,
+      endUser: [],
+      Passenger2: undefined,
+      params: [],
     }
   },
   name: 'ticket-dialog-component',
   components: {
-    TicketCard
+    TicketCard,
+    TicketPrintComponent
   },
   props: {
     tickets: {
@@ -582,13 +593,6 @@ export default {
     },
   },
   watch: {
-    showAlert() {
-      if (this.showAlert == true) {
-        setTimeout(() => {
-          this.showAlert = false
-        }, 3000);
-      }
-    },
     choosedTicket() {
       // 
     }
@@ -602,8 +606,76 @@ export default {
         return false
       }
     },
-    changeBookStep(step) {
+    checkAges() {
+      return new Promise(resolve => {
+        this.endUser = []
+        let findUndefined = false
+        let users = this.users
+        for (let i = 0; i < users.length; i++) {
+          if (!users[i].birthdayYear || !users[i].birthdayMonth || !users[i].birthdayDay) {
+            findUndefined = true
+          }
+          if (findUndefined == false) {
+            let gregorianBirthdayDate = this.jalali_to_gregorian(users[i].birthdayYear, users[i].birthdayMonth, users[i].birthdayDay)
+            gregorianBirthdayDate = (gregorianBirthdayDate[1].toString().length == 1 ? '0' + gregorianBirthdayDate[1] : gregorianBirthdayDate[1]) + '/' + (gregorianBirthdayDate[2].toString().length == 1 ? '0' + gregorianBirthdayDate[2] : gregorianBirthdayDate[2]) + '/' + gregorianBirthdayDate[0]
+            let age = this.getAge(gregorianBirthdayDate)
+            let ageType = (age <= 2) ? 'baby' : (age > 2 && age <= 12) ? 'child' : (age > 12) ? 'old' : undefined
+            this.endUser.push({
+              ageType: ageType
+            })
+            console.log(age, ageType);
+          }
+        }
+        if (findUndefined == false) {
+          this.Passenger2 = [{
+            peaple: this.endUser.filter(x => x.ageType == 'old').length,
+            child: this.endUser.filter(x => x.ageType == 'child').length,
+            baby: this.endUser.filter(x => x.ageType == 'baby').length
+          }]
+          let findOpacity = false
+          if (this.Passenger[0].peaple > 0) {
+            if (this.Passenger2[0].peaple != this.Passenger[0].peaple) {
+              findOpacity = true
+            }
+          }
+
+          if (this.Passenger[0].child > 0) {
+            if (this.Passenger2[0].child != this.Passenger[0].child) {
+              findOpacity = true
+            }
+          }
+
+          if (this.Passenger[0].baby > 0) {
+            if (this.Passenger2[0].baby != this.Passenger[0].baby) {
+              findOpacity = true
+            }
+          }
+          if (findOpacity == true) {
+            this.alertType = 'warning'
+            this.alertText = 'سن افراد انتخاب شده با اطلاعات وارد شده مغایرت دارد که موجب تغییر مبلغ کل میشود.'
+            this.showAlert = true
+            setTimeout(() => {
+              this.showAlert = false
+            }, 10000);
+          }
+          if (this.Passenger2[0].peaple > 0) {
+            resolve()
+          } else {
+            this.alertType = 'error'
+            this.alertText = 'وجود حداقل یک بزرگسال در پرواز الزامیست.'
+            this.showAlert = true
+            setTimeout(() => {
+              this.showAlert = false
+            }, 3000);
+          }
+        }
+
+      });
+    },
+    async changeBookStep(step) {
+      let self = this
       if (step == 2 && this.validateBookStep()) {
+        await this.checkAges()
         var users = this.users;
         this.persianUsers = []
         this.otherUsers = []
@@ -613,20 +685,22 @@ export default {
         this.dateError = false
         window.scrollTo(0, 0);
       } else if (step == 3 && this.$refs.acceptRulls.validate()) {
-        this.reserveTicket()
-        // this.bookStep = step;
-        // this.dateError = false
-        window.scrollTo(0, 0);
+        await this.checkAges()
+        this.reserveTicket(step)
+        this.dateError = false
       } else {
         this.dateError = true
         this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
         this.alertType = 'error'
         this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
       }
-
+      this.scrollTopNextPage()
     },
     scrollTopNextPage() {
-      //   this.$refs.nextPage.scrollTop = 0
+      this.$refs.nextPage.scrollTop = 0
     },
     editUserInfo(item, type) {
       if (type == 'user') {
@@ -653,6 +727,9 @@ export default {
         this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
         this.alertType = 'error'
         this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
       }
     },
     checkCode() {
@@ -669,65 +746,12 @@ export default {
         }
       }, 1000);
     },
-    async reserveTicket() {
+    reserveTicket(step) {
       let self = this
-      function jalali_to_gregorian(jy, jm, jd) {
-        var sal_a, gy, gm, gd, days;
-        jy += 1595;
-        days = -355668 + (365 * jy) + (~~(jy / 33) * 8) + ~~(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
-        gy = 400 * ~~(days / 146097);
-        days %= 146097;
-        if (days > 36524) {
-          gy += 100 * ~~(--days / 36524);
-          days %= 36524;
-          if (days >= 365) days++;
-        }
-        gy += 4 * ~~(days / 1461);
-        days %= 1461;
-        if (days > 365) {
-          gy += ~~((days - 1) / 365);
-          days = (days - 1) % 365;
-        }
-        gd = days + 1;
-        sal_a = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        for (gm = 0; gm < 13 && gd > sal_a[gm]; gm++) gd -= sal_a[gm];
-        return [gy, gm, gd];
-      }
       let options = { month: 'short' };
-      let numeriDate = jalali_to_gregorian(this.users[0].birthdayYear, this.users[0].birthdayMonth, this.users[0].birthdayDay)
+      let numeriDate = self.jalali_to_gregorian(this.users[0].birthdayYear, this.users[0].birthdayMonth, this.users[0].birthdayDay)
       numeriDate = numeriDate[0] + '/' + numeriDate[1] + '/' + numeriDate[2]
       let monthDateNameShort = new Date(numeriDate).toLocaleDateString('en', options)
-
-      function getAge(dateString) {
-        var now = new Date();
-        var yearNow = now.getYear();
-        var monthNow = now.getMonth();
-        var dateNow = now.getDate();
-        var dob = new Date(dateString.substring(6, 10),
-          dateString.substring(0, 2) - 1,
-          dateString.substring(3, 5)
-        );
-        var yearDob = dob.getYear();
-        var monthDob = dob.getMonth();
-        var dateDob = dob.getDate();
-        let yearAge = yearNow - yearDob;
-        var monthAge = ''
-        if (monthNow >= monthDob) {
-          monthAge = monthNow - monthDob;
-        } else {
-          yearAge--;
-          monthAge = 12 + monthNow - monthDob;
-        }
-        if (dateNow < dateDob) {
-          monthAge--;
-          if (monthAge < 0) {
-            monthAge = 11;
-            yearAge--;
-          }
-        }
-        return yearAge;
-      }
-
       let testText =
         "AirLine=" + this.choosedTicket[0].Airline +
         "&cbSource=" + this.choosedTicket[0].Origin +
@@ -738,12 +762,12 @@ export default {
         "&Month=" + this.choosedTicket[0].DepartureDateTime.substring(5, 7) +
         "&DepartureDate=" + this.choosedTicket[0].DepartureDateTime +
         "&No=" + this.users.length +
-        "&edtContact=" + this.contactInfo[0].phone +
+        "&edtContact=" + this.contactInfo[0].phone + '|' + self.contactInfo[0].email +
         "&OfficeUser=" + this.choosedTicket[0].OfficeUser +
         "&OfficePass=" + this.choosedTicket[0].OfficePass
 
       for (let i = 0; i < this.users.length; i++) {
-        let gregorianBirthdayDate = jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+        let gregorianBirthdayDate = self.jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
         gregorianBirthdayDate = (gregorianBirthdayDate[1].toString().length == 1 ? '0' + gregorianBirthdayDate[1] : gregorianBirthdayDate[1]) + '/' + (gregorianBirthdayDate[2].toString().length == 1 ? '0' + gregorianBirthdayDate[2] : gregorianBirthdayDate[2]) + '/' + gregorianBirthdayDate[0]
         let options = { month: 'short' };
         let monthExDateNameShort = this.users[i].expirePassYear + '/' + this.users[i].expirePassMonth + '/' + this.users[i].expirePassDay
@@ -751,7 +775,7 @@ export default {
         testText = testText +
           "&edtName" + (i + 1) + "=" + self.users[i].name +
           "&edtLast" + (i + 1) + "=" + self.users[i].family +
-          "&edtAge" + (i + 1) + "=" + getAge(gregorianBirthdayDate)
+          "&edtAge" + (i + 1) + "=" + self.getAge(gregorianBirthdayDate)
         if (this.users[i].nationality == 'ایرانی') {
           testText = testText + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
         } else {
@@ -761,6 +785,7 @@ export default {
             + "__"
         }
       }
+
       axios.post('http://localhost:8080/' + this.choosedTicket[0].proxy + '2' + '/ReservJS?' + testText).then(function (res) {
         self.PNR1 = res.data.AirReserve[0].PNR
         if (self.choosedTicket.length == 2) {
@@ -774,12 +799,12 @@ export default {
             "&Month=" + self.choosedTicket[1].DepartureDateTime.substring(5, 7) +
             "&DepartureDate=" + self.choosedTicket[1].DepartureDateTime +
             "&No=" + self.users.length +
-            "&edtContact=" + self.contactInfo[0].phone +
+            "&edtContact=" + self.contactInfo[0].phone + '|' + self.contactInfo[0].email +
             "&OfficeUser=" + self.choosedTicket[1].OfficeUser +
             "&OfficePass=" + self.choosedTicket[1].OfficePass
 
           for (let i = 0; i < self.users.length; i++) {
-            let gregorianBirthdayDate = jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+            let gregorianBirthdayDate = self.jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
             gregorianBirthdayDate = (gregorianBirthdayDate[1].toString().length == 1 ? '0' + gregorianBirthdayDate[1] : gregorianBirthdayDate[1]) + '/' + (gregorianBirthdayDate[2].toString().length == 1 ? '0' + gregorianBirthdayDate[2] : gregorianBirthdayDate[2]) + '/' + gregorianBirthdayDate[0]
             let options = { month: 'short' };
             let monthExDateNameShort = self.users[i].expirePassYear + '/' + self.users[i].expirePassMonth + '/' + self.users[i].expirePassDay
@@ -787,7 +812,7 @@ export default {
             testText2 = testText2 +
               "&edtName" + (i + 1) + "=" + self.users[i].name +
               "&edtLast" + (i + 1) + "=" + self.users[i].family +
-              "&edtAge" + (i + 1) + "=" + getAge(gregorianBirthdayDate)
+              "&edtAge" + (i + 1) + "=" + self.getAge(gregorianBirthdayDate)
             if (self.users[i].nationality == 'ایرانی') {
               testText2 = testText2 + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
             } else {
@@ -800,8 +825,36 @@ export default {
           axios.post('http://localhost:8080/' + self.choosedTicket[1].proxy + '2' + '/ReservJS?' + testText2).then(function (response) {
             self.PNR2 = response.data.AirReserve[0].PNR
             // go to paymant _______________________
-            // self.gelFlightNumber(self.choosedTicket[1].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[1].OfficeUser, self.choosedTicket[1].OfficePass, 'Y', self.choosedTicket[1].proxy)
-            // self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+            self.params = []
+            for (let i = 0; i < self.users.length; i++) {
+              for (let j = 0; j < self.choosedTicket.length; j++) {
+                self.params.push(
+                  {
+                    ticketType: self.choosedTicket[j].ticketType,
+                    DepartureTime: self.choosedTicket[j].DepartureTime,
+                    DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
+                    Airline: self.choosedTicket[j].Airline,
+                    longDateTime1: self.choosedTicket[j].longDateTime1,
+                    className: self.choosedTicket[j].className,
+                    FlightNo: self.choosedTicket[j].FlightNo,
+                    AirlinePersianId: self.choosedTicket[j].AirlinePersianId,
+                    Origin: self.choosedTicket[j].Origin,
+                    Destination: self.choosedTicket[j].Destination,
+                    originCity: j == 0 ? (self.choosedTicket[j].originCity + ' - ' + self.choosedTicket[j].airport1) : (self.choosedTicket[j].destinationInternal + ' - ' + self.choosedTicket[j].airport2),
+                    destinationInternal: j == 0 ? (self.choosedTicket[j].destinationInternal + ' - ' + self.choosedTicket[j].airport2) : (self.choosedTicket[j].originCity + ' - ' + self.choosedTicket[j].airport1),
+                    price: self.endUser[i].ageType == 'old' ? self.choosedTicket[j].fare.AdultTotalPrice : self.endUser[i].ageType == 'child' ? self.choosedTicket[j].fare.ChildTotalPrice : self.choosedTicket[j].fare.InfantTotalPrice,
+                    ageType: self.endUser[i].ageType,
+                    name: self.users[i].name + ' ' + self.users[i].family,
+                    PNR: j == 0 ? self.PNR1 : response.data.AirReserve[0].PNR,
+                    bookTime: new Date().getHours() + ':' + new Date().getMinutes(),
+                    bookDate: new Date().toLocaleDateString('fa')
+                  }
+                )
+              }
+            }
+            self.gelFlightNumber(self.choosedTicket[1].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[1].OfficeUser, self.choosedTicket[1].OfficePass, 'Y', self.choosedTicket[1].proxy, '2')
+            self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy, '1')
+            window.scrollTo(0, 0);
           })
             .catch(function (error) {
               // handle error
@@ -810,10 +863,40 @@ export default {
               self.alertText = error.message
               self.alertType = 'error'
               self.showAlert = true
+              setTimeout(() => {
+                self.showAlert = false
+              }, 3000);
             })
         } else {
           // go to paymant _______________________
-          // self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+          self.params = []
+          for (let i = 0; i < self.users.length; i++) {
+            for (let j = 0; j < self.choosedTicket.length; j++) {
+              self.params.push(
+                {
+                  ticketType: self.choosedTicket[j].ticketType,
+                  DepartureTime: self.choosedTicket[j].DepartureTime,
+                  DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
+                  Airline: self.choosedTicket[j].Airline,
+                  longDateTime1: self.choosedTicket[j].longDateTime1,
+                  className: self.choosedTicket[j].className,
+                  FlightNo: self.choosedTicket[j].FlightNo,
+                  AirlinePersianId: self.choosedTicket[j].AirlinePersianId,
+                  Origin: self.choosedTicket[j].Origin,
+                  Destination: self.choosedTicket[j].Destination,
+                  originCity: j == 0 ? (self.choosedTicket[j].originCity + ' - ' + self.choosedTicket[j].airport1) : (self.choosedTicket[j].destinationInternal + ' - ' + self.choosedTicket[j].airport2),
+                  destinationInternal: j == 0 ? (self.choosedTicket[j].destinationInternal + ' - ' + self.choosedTicket[j].airport2) : (self.choosedTicket[j].originCity + ' - ' + self.choosedTicket[j].airport1),
+                  price: self.endUser[i].ageType == 'old' ? self.choosedTicket[j].fare.AdultTotalPrice : self.endUser[i].ageType == 'child' ? self.choosedTicket[j].fare.ChildTotalPrice : self.choosedTicket[j].fare.InfantTotalPrice,
+                  ageType: self.endUser[i].ageType,
+                  name: self.users[i].name + ' ' + self.users[i].family,
+                  PNR: j == 0 ? self.PNR1 : j == 1 ? self.PNR2 : '',
+                  bookTime: new Date().getHours() + ':' + new Date().getMinutes(),
+                  bookDate: new Date().toLocaleDateString('fa')
+                }
+              )
+            }
+          }
+          self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
         }
       })
         .catch(function (error) {
@@ -823,9 +906,67 @@ export default {
           self.alertText = error.message
           self.alertType = 'error'
           self.showAlert = true
+          setTimeout(() => {
+            this.showAlert = false
+          }, 3000);
         })
     },
-    gelFlightNumber(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy) {
+    jalali_to_gregorian(jy, jm, jd) {
+      var sal_a, gy, gm, gd, days;
+      jy += 1595;
+      days = -355668 + (365 * jy) + (~~(jy / 33) * 8) + ~~(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+      gy = 400 * ~~(days / 146097);
+      days %= 146097;
+      if (days > 36524) {
+        gy += 100 * ~~(--days / 36524);
+        days %= 36524;
+        if (days >= 365) days++;
+      }
+      gy += 4 * ~~(days / 1461);
+      days %= 1461;
+      if (days > 365) {
+        gy += ~~((days - 1) / 365);
+        days = (days - 1) % 365;
+      }
+      gd = days + 1;
+      sal_a = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      for (gm = 0; gm < 13 && gd > sal_a[gm]; gm++) gd -= sal_a[gm];
+      return [gy, gm, gd];
+    },
+    getAge(dateString) {
+      var now = new Date();
+      var yearNow = now.getYear();
+      var monthNow = now.getMonth();
+      var dateNow = now.getDate();
+      var dob = new Date(dateString.substring(6, 10),
+        dateString.substring(0, 2) - 1,
+        dateString.substring(3, 5)
+      );
+      var yearDob = dob.getYear();
+      var monthDob = dob.getMonth();
+      var dateDob = dob.getDate();
+      let yearAge = yearNow - yearDob;
+      var monthAge = ''
+      if (monthNow >= monthDob) {
+        monthAge = monthNow - monthDob;
+      } else {
+        yearAge--;
+        monthAge = 12 + monthNow - monthDob;
+      }
+      if (dateNow < dateDob) {
+        monthAge--;
+        if (monthAge < 0) {
+          monthAge = 11;
+          yearAge--;
+        }
+      }
+      return yearAge;
+    },
+    gelFlightNumber(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, index) {
+      let self = this
+      if (index) {
+        // console.log(index);
+      }
       let testText =
         'AirLine=' + Airline +
         '&PNR=' + PNR +
@@ -833,7 +974,23 @@ export default {
         '&OfficeUser=' + OfficeUser +
         '&OfficePass=' + OfficePAss
       axios.get('http://localhost:8080/' + proxy + '2' + '/ETIssueJS?' + testText).then(function (response) {
-        console.log(response);
+        let data = response.data.replace(/[\r\n]/gm, '-')
+        data = JSON.parse(data)
+        let newVariabel = data.AirNRSTICKETS[0].Tickets
+        newVariabel = newVariabel.split('--')
+        for (let i = 0; i < newVariabel.length; i++) {
+          let ticket = newVariabel[i].split('=')
+          let name = ticket[0].split('/')
+          if (name[1]) {
+            let findParamsIndex = self.params.findIndex(x => x.name.toLowerCase() == (name[1].toLowerCase() + ' ' + name[0].toLowerCase()))
+            self.params[findParamsIndex].ticketNumber = ticket[1]
+          }
+        }
+        // for (let i = 0; i < self.params.length; i++) {
+        // console.log(self.params[i]);
+        // }
+        self.bookStep = 3;
+        window.scrollTo(0, 0);
       })
         .catch(function (error) {
           // handle error
@@ -862,17 +1019,109 @@ export default {
     getAllprice(event) {
       this.allPrice = event
     },
-
   },
   mounted() {
     let peapelesNumber = Number(this.$route.query.adl) + Number(this.$route.query.chd) + Number(this.$route.query.inf)
     this.users = []
-    for (let i = 0; i < peapelesNumber; i++) {
+
+    for (let i = 0; i < this.Passenger[0].peaple; i++) {
       this.users.push({
+        ageType: 'old'
+      })
+    }
+    for (let i = 0; i < this.Passenger[0].child; i++) {
+      this.users.push({
+        ageType: 'child'
+      })
+    }
+    for (let i = 0; i < this.Passenger[0].baby; i++) {
+      this.users.push({
+        ageType: 'baby'
       })
     }
     this.setDates()
   },
 }
+
+
+
+
+// get_pnr:
+// {"AirNRSTICKETS":[{"Tickets":"GHASEMI/PARISA=0002443857875
+// "}],"Message": "??? ????  ???? ?????????: ????? ???"}
+
+
+// {AirNRSTICKETS:[
+//   {Tickets:"FGHFGH/FGHFG=0002448342926 YYY/YYY=0002448342927
+// "}],"Message": "??? ????  ???? ?????????: ????? ???"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// AirLine: ZV
+// cbSource: THR
+// cbTarget: MHD
+// FlightClass: VO
+// FlightNo: 4057
+// Day: 15
+// Month: 08
+// DepartureDate: 2023-08-15
+// No: 1
+// edtContact: 09054791374
+// OfficeUser: THR197.WS
+// OfficePass: Ahuan1348
+// edtName1: Parisa
+// edtLast1: Ghasemi
+// edtAge1: 27
+// edtID1: P__0440518245__21Sep95_F___
+
+
+// AirLine: NV
+// cbSource: MHD
+// cbTarget: THR
+// FlightClass: E
+// FlightNo: 2639
+// Day: 18
+// Month: 08
+// DepartureDate: 2023-08-18
+// No: 1
+// edtContact: 09054791374
+// OfficeUser: THR100.WS
+// OfficePass: Ahuan1348
+// edtName1: Parisa
+// edtLast1: Ghasemi
+// edtAge1: 27
+// edtID1: P__0440518245__21Sep95_F___
 
 </script>

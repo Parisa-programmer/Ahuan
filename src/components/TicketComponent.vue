@@ -78,7 +78,7 @@ export default {
   },
   computed: {},
   methods: {
-    async getFlights(proxy, AirLine, OfficeUser, OfficePass) {
+    async getFlights(proxy, AirLine, OfficeUser, OfficePass, stepFunction) {
       return new Promise(resolve => {
         let self = this
         let params = {
@@ -92,12 +92,14 @@ export default {
           OfficeUser: OfficeUser,
           OfficePass: OfficePass
         }
+
         axios.get('http://localhost:8080/' + proxy + '/AvailabilityJS.jsp', { params }).then(function (response) {
           let data = response.data.AvailableFlights
           if (data) {
+
             for (let i = 0; i < data.length; i++) {
               data[i].AirlinePersianId =
-                data[i].Airline == 'PA' ? 'آتا' :
+                data[i].Airline == 'I3' ? 'آتا' :
                   data[i].Airline == 'Y9' ? 'کیش‌ایر' :
                     data[i].Airline == 'QB' ? 'قشم‌ایر' :
                       data[i].Airline == 'HH' ? 'تابان' :
@@ -119,10 +121,11 @@ export default {
               data[i].ArrivalDate = ArrivalDateTime[0]
               data[i].ArrivalTime = ArrivalTime[0] + ':' + ArrivalTime[1]
               //
-              data[i].originCity = self.originCity.text
-              data[i].airport1 = self.originCity.airport
-              data[i].destinationInternal = self.destinationInternal.text
-              data[i].airport2 = self.destinationInternal.airport
+              data[i].originCity = 'UGT'
+              //self.originCity.text
+              data[i].airport1 = 'UGT' //self.originCity.airport
+              data[i].destinationInternal = 'TTQ' //self.destinationInternal.text
+              data[i].airport2 = 'TTQ' //self.destinationInternal.airport
               data[i].dayName = self.dayName
               let options = { day: 'numeric', month: 'long' };
               data[i].fromDate = new Date(self.date1.length == 2 ? self.date1[0] : self.date1).toLocaleDateString('fa-IR', options);
@@ -137,9 +140,7 @@ export default {
             resolve(resultObjec)
           }
           else {
-            console.log('وب سرویس "' + proxy + '" دیتا نداد');
-            self.checkAsync(proxy, AirLine, OfficeUser, OfficePass)
-            resolve()
+            self.checkAsync(proxy, AirLine, OfficeUser, OfficePass, stepFunction)
           }
         })
           .catch(function (error) {
@@ -148,7 +149,6 @@ export default {
             console.log('وب سرویس "' + proxy + '" کار نمیکند');
             resolve()
           })
-
       });
     },
     async getPrice(data, proxy, OfficeUser, OfficePass, sort) {
@@ -173,20 +173,31 @@ export default {
         else {
           isClassC = true
           isClassX = true
-          let newType = (classes[m].slice(0, 1) == '/') ? classes[m].slice(1, classes[m].length - 1) : classes[m].slice(1, classes[m].length - 1)
+          let newType = (classes[m].slice(0, 1) == '/') ? classes[m].slice(1, classes[m].length - 1) : classes[m].slice(0, classes[m].length - 1)
           let params = {
             AirLine: data.Airline,
-            Route: self.rezervStep == 2 ? self.destinationInternal.id + '-' + self.originCity.id : self.originCity.id + '-' + self.destinationInternal.id,
+            Route: self.rezervStep == 2 ?
+              'TTQ'  //self.destinationInternal.id 
+              + '-' +
+              'UGT'
+              //self.originCity.id 
+              :
+              'UGT'  //self.originCity.id 
+              + '-' +
+              'TTQ'  //self.destinationInternal.id
+            ,
             RBD: newType,
             DepartureDate: self.rezervStep == 2 ? self.$route.query.end : self.$route.query.start,
             OfficeUser: OfficeUser,
             OfficePass: OfficePass,
             FlightNo: data.FlightNo,
           }
+
           await axios.get('http://localhost:8080/' + proxy + '/FareJS.jsp', { params })
             .then(function (response) {
               if ((response.data) && response.data.AdultTotalPrice != 0) {
                 data.type = type;
+                data.ticketType = 's';
                 data.className = newType;
                 data.OfficeUser = OfficeUser;
                 data.OfficePass = OfficePass;
@@ -194,6 +205,7 @@ export default {
                 data.fare = response.data;
                 data.capacity = Number(classes[m].slice(-1)) ? classes[m].slice(-1) : type;
                 data.longDate1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
+                data.longDateTime1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR');
                 data.longDate2 = new Date(data.ArrivalDate).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
                 data.enLongDate1 = new Date(data.DepartureDateTime).toLocaleDateString('en', { day: 'numeric', month: 'long' });
                 data.enLongDate2 = new Date(data.ArrivalDate).toLocaleDateString('en', { day: 'numeric', month: 'long' });
@@ -218,9 +230,9 @@ export default {
           this.faildTickets.splice(indexNumber, 1)
         }
         this.ticket.push(object)
-        if (sort) {
-          this.sortTickets(this.sortTab)
-        }
+        // if (sort) {
+        //   this.sortTickets(this.sortTab)
+        // }
       }
     },
     async sortTickets(tab) {
@@ -229,7 +241,6 @@ export default {
           this.ticket = this.ticket.sort((a, b) => {
             return a.price - b.price;
           })
-
           let info = {
             minPrice: Math.floor(this.ticket[0].price / 1000000) * 1000000,
             maxPrice: Math.ceil((this.ticket[this.ticket.length - 1].price) / 1000000) * 1000000
@@ -281,22 +292,21 @@ export default {
         // this.$emit('sendSortedTickets', sortedTickets)
       }
     },
-    async checkAsync(proxy, AirLine, OfficeUser, OfficePass) {
+    async checkAsync(proxy, AirLine, OfficeUser, OfficePass, step) {
       this.$emit('changeTicket')
       let self = this
-      let stepFunction = 0
+      let stepFunction = step ? step : 0
       async function asyncCall(airline, airlineCode, user, pass) {
-        let result = await self.getFlights(airline, airlineCode, user, pass)
+        let result = await self.getFlights(airline, airlineCode, user, pass, stepFunction)
         if (result && result.data) {
           for (let i = 0; i < result.data.length; i++) {
             if (result.data[i].ClassesStatus.length) {
               await self.getPrice(result.data[i], result.proxy, result.OfficeUser, result.OfficePass)
             }
-
           }
         }
         stepFunction = stepFunction + 1
-        if (stepFunction >= 10) {
+        if (stepFunction == 1 || proxy) {
           self.sortTickets(self.sortTab)
           self.$emit('allTickets', self.ticket)
         }
@@ -304,17 +314,20 @@ export default {
       if (proxy) {
         asyncCall(proxy, AirLine, OfficeUser, OfficePass);
       } else {
-        asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
-        asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
-        asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
-        asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
-        asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
+        // asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
+        // asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
+        // asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
+        // asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
+        // asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
         asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
-        asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
-        asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
-        asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
-        asyncCall('saha', 'IRZ', 'THR140.WS', '123456789');
+        // asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
+        // asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
+        // asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
+        // asyncCall('saha', 'IRZ', 'THR140.WS', '123456789');
+        // asyncCall('flyPersia', 'FP', '', '123456789');
+
       }
+
       // await asyncCall('caspian', 'IV', 'THR100.WS', 'Ahuan1348');
     },
     showDetailes(event) {
