@@ -51,16 +51,16 @@
           </v-col>
         </v-row>
         <v-row class="mt-6" justify="center">
-          <v-btn color="red" dark @click="checkPenalty()">checkPenalty</v-btn>
+          <v-btn color="green" dark @click="checkPenalty()">checkPenalty</v-btn>
         </v-row>
         <v-row class="mt-6" justify="center">
-          <v-btn color="red" dark @click="checkPenaltyNow()">checkPenaltyNow</v-btn>
+          <v-btn color="green" dark @click="checkPenaltyNow()">checkPenaltyNow</v-btn>
         </v-row>
         <v-row class="mt-6" justify="center">
-          <v-btn color="red" dark @click="cancelSeat()">cancelSeat</v-btn>
+          <v-btn color="green" dark @click="cancelSeat()">cancelSeat</v-btn>
         </v-row>
         <v-row class="mt-6" justify="center">
-          <v-btn color="red" dark @click="ETR()">ETR</v-btn>
+          <v-btn color="green" dark @click="ETR()">ETR</v-btn>
         </v-row>
         <v-row class="mt-6" justify="center">
           <v-btn color="red" dark @click="ETRefund()">ETRefund</v-btn>
@@ -78,6 +78,10 @@
         </v-row>
       </div>
     </v-row>
+    <v-alert v-if="showAlert" dark class="white--text fixed" :type="alertType"
+      style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">
+      {{ alertText }}
+    </v-alert>
   </div>
 </template>
 
@@ -95,6 +99,9 @@ export default {
   name: 'cancell-flight',
   data() {
     return {
+      showAlert: false,
+      alertType: 'error',
+      alertText: '',
       show: false,
       localeConfig: {
         fa: {
@@ -103,20 +110,13 @@ export default {
         },
       },
       minDate: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-      name: 'GHJGHJ',
-      family: 'FHJFHJGHJ',
+      name: '',
+      family: '',
       date: '',
-      PNR: 'U5PPF',
-      flightNo: '1000',
-      ticketNo: '0002448352492',
-      airline: {
-        text: 'زاگرس',
-        value: 'ZV',
-        url: 'zagros',
-        oc: 'THR197',
-        user: 'THR197.WS',
-        pass: 'Ahuan1348'
-      },
+      PNR: '',
+      flightNo: '',
+      ticketNo: '',
+      airline: {},
       selectedDate: '',
       airlines: [
         {
@@ -254,15 +254,45 @@ export default {
   },
   methods: {
     checkPenalty() {
-      let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        Airline: airline.value,
-        ticketNo: this.ticketNo,
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
+      // let a = {
+      //   RefundedTaxes: [
+      //     {
+      //       TaxType: "I6",
+      //       TaxAmount: 0,
+      //       Currency: "IRR"
+      //     },
+      //     {
+      //       TaxType: "V0",
+      //       TaxAmount: 189000,
+      //       Currency: "IRR"
+      //     },
+      //     {
+      //       TaxType: "HL",
+      //       TaxAmount: 21000,
+      //       Currency: "IRR"
+      //     },
+      //     {
+      //       TaxType: "LP",
+      //       TaxAmount: 70000,
+      //       Currency: "IRR"
+      //     }
+      //   ],
+      //   Legs: [
+      //     {
+      //       RefundedFare: 840000,
+      //       Amount: "1260000",
+      //       Mode: "P",
+      //       Currency: "IRR",
+      //       Cancellation: "LEG:UGTTTQ SEGMENT NOT CANCELLED RULE: 1096 AM:60- FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOT SET FOR CPN:1\r\n FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOTSET FOR CPN:1\r\n",
+      //       Leg: "UGTTTQ"
+      //     }
+      //   ],
+      //   PENALTY: "1260000",
+      //   RefundedAmount: 1120000
+      // }
 
-      axios.get('http://localhost:8080/' + airline.url + '/NRSPenalty.jsp?AirLine=' + airline.value + '&TicketNo==' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (response) {
+      let airline = this.airlines.find(x => x.value == this.airline)
+      axios.get('http://localhost:8080/' + airline.url + '/NRSPenalty.jsp?AirLine=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (response) {
         console.log(response);
       })
         .catch(function (error) {
@@ -275,13 +305,16 @@ export default {
       let airline = this.airlines.find(x => x.value == this.airline)
       let params = {
         Airline: airline.value,
-        ticketNo: this.ticketNo,
+        TicketNo: this.ticketNo,
         OfficeUser: airline.user,
         OfficePass: airline.pass,
       }
 
       axios.get('http://localhost:8080/' + airline.url + '/NRSPenaltyNow.jsp?', { params }).then(function (response) {
         console.log(response);
+        self.newInformations.Penalty = response.data.NRSPenalty.PENALTY
+        let findLp = response.data.NRSPenalty.RefundedTaxes.findIndex(x => x.TaxType == 'LP')
+        self.newInformations.LP = findLp == (-1) ? '' : response.data.NRSPenalty.RefundedTaxes[findLp].TaxAmount
         //  get self.newInformations.Penalty == ???
       })
         .catch(function (error) {
@@ -314,33 +347,13 @@ export default {
     },
     printTicket() {
       let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        PNR: this.PNR,
-        TicketNo: this.ticketNo,
-        OC: airline.oc,
-      }
-
-      axios.get('http://localhost:8080/' + airline.url + '3' + '/TicketPrint.aspx?', { params }).then(function (res) {
-        console.log(res);
-        // get self.newInformations.KU == ???   TaxAmount
-        // get self.newInformations.LP == ???   TaxCode
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
+      window.open('http://localhost:8080/' + airline.url + '3' + '/TicketPrint.aspx?PNR=' + this.PNR + '&TicketNo=' + this.ticketNo + '&OC=' + airline.oc, '_blank');
     },
     ETR() {
       let self = this
       let airline = this.airlines.find(x => x.value == this.airline)
-      let firstParams = {
-        Airline: airline.value,
-        ticketNo: this.ticketNo,
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
-
-      axios.get('http://localhost:8080/' + airline.url + '/NRSETR.jsp?', { firstParams }).then(function (res) {
+      axios.get('http://localhost:8080/' + airline.url + '/NRSETR.jsp?Airline=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (res) {
+        self.newInformations.Fare = res.data.Fare
         console.log(res);
         // get self.newInformations.KU == ???   TaxAmount
         // get self.newInformations.LP == ???   TaxCode
@@ -349,32 +362,21 @@ export default {
           // handle error
           console.log(error);
         })
-
-
-      // let testText2 = 'Airline=' + airline.value + '&PNR=' + this.PNR + '&PassengerName=' + this.name + '&PassengerLastName=' + this.family + '&DepartureDate=' + this.date + '&FlightNo=' + this.flightNo + '&OfficeUser=' +airline.user+'&OfficePass='+airline.pass
-
-      // axios.get('http://localhost:8080/' + airline.url + '/CancelSeatJS?' + testText2).then(function (response) {
-      // console.log(response);
-      // })
-      //  .catch(function (error) {
-      //    // handle error
-      // console.log(error);
-      //  })
-
     },
     ETRefund() {
       console.log('ETRefund not availabel now');
-      // let self = this
-      // let params = {
-      //   Airline: airline.value,
-      //   ticketNo: this.ticketNo,
-      //   Fare: '',
-      //   KU: '',
-      //   LP: '',
-      //   Penalty: '',
-      //   OfficeUser: airline.user,
-      //   OfficePass: airline.pass,
-      // }
+      let self = this
+      let airline = this.airlines.find(x => x.value == this.airline)
+      let params = {
+        Airline: airline.value,
+        ticketNo: this.ticketNo,
+        Fare: self.newInformations.Fare,
+        KU: '',
+        LP: '',
+        Penalty: self.newInformations.Penalty,
+        OfficeUser: airline.user,
+        OfficePass: airline.pass,
+      }
 
       // axios.get('http://localhost:8080/' + airline.url + '/CancelSeatJS', { params }).then(function (response) {
       //   console.log(response);
@@ -456,3 +458,4 @@ export default {
   }
 }
 </script>
+

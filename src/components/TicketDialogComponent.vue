@@ -683,7 +683,7 @@ export default {
         this.otherUsers = users.filter((x) => x.nationality != 'ایرانی');
         this.bookStep = step;
         this.dateError = false
-        window.scrollTo(0, 0);
+        this.scrollTopNextPage()
       } else if (step == 3 && this.$refs.acceptRulls.validate()) {
         await this.checkAges()
         this.reserveTicket(step)
@@ -693,11 +693,12 @@ export default {
         this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمایید.'
         this.alertType = 'error'
         this.showAlert = true
+        this.scrollTopNextPage()
         setTimeout(() => {
           this.showAlert = false
         }, 3000);
       }
-      this.scrollTopNextPage()
+
     },
     scrollTopNextPage() {
       this.$refs.nextPage.scrollTop = 0
@@ -748,10 +749,6 @@ export default {
     },
     reserveTicket(step) {
       let self = this
-      let options = { month: 'short' };
-      let numeriDate = self.jalali_to_gregorian(this.users[0].birthdayYear, this.users[0].birthdayMonth, this.users[0].birthdayDay)
-      numeriDate = numeriDate[0] + '/' + numeriDate[1] + '/' + numeriDate[2]
-      let monthDateNameShort = new Date(numeriDate).toLocaleDateString('en', options)
       let testText =
         "AirLine=" + this.choosedTicket[0].Airline +
         "&cbSource=" + this.choosedTicket[0].Origin +
@@ -776,6 +773,9 @@ export default {
           "&edtName" + (i + 1) + "=" + self.users[i].name +
           "&edtLast" + (i + 1) + "=" + self.users[i].family +
           "&edtAge" + (i + 1) + "=" + self.getAge(gregorianBirthdayDate)
+        let numeriDate = self.jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+        numeriDate = numeriDate[0] + '/' + numeriDate[1] + '/' + numeriDate[2]
+        let monthDateNameShort = new Date(numeriDate).toLocaleDateString('en', options)
         if (this.users[i].nationality == 'ایرانی') {
           testText = testText + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
         } else {
@@ -813,6 +813,10 @@ export default {
               "&edtName" + (i + 1) + "=" + self.users[i].name +
               "&edtLast" + (i + 1) + "=" + self.users[i].family +
               "&edtAge" + (i + 1) + "=" + self.getAge(gregorianBirthdayDate)
+
+            let numeriDate = self.jalali_to_gregorian(self.users[i].birthdayYear, self.users[i].birthdayMonth, self.users[i].birthdayDay)
+            numeriDate = numeriDate[0] + '/' + numeriDate[1] + '/' + numeriDate[2]
+            let monthDateNameShort = new Date(numeriDate).toLocaleDateString('en', options)
             if (self.users[i].nationality == 'ایرانی') {
               testText2 = testText2 + "&edtID" + (i + 1) + "=" + "P__" + self.users[i].nationalityCode + "__" + new Date(numeriDate).getDate() + monthDateNameShort + new Date(numeriDate).getFullYear().toString().slice(-2) + "_" + (self.users[i].gender == 'خانم' ? 'F' : 'M') + "___"
             } else {
@@ -852,9 +856,28 @@ export default {
                 )
               }
             }
-            self.gelFlightNumber(self.choosedTicket[1].Airline, response.data.AirReserve[0].PNR, self.choosedTicket[1].OfficeUser, self.choosedTicket[1].OfficePass, 'Y', self.choosedTicket[1].proxy, '2')
-            self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy, '1')
-            window.scrollTo(0, 0);
+            let sendAerray = [
+              {
+                Airline: self.choosedTicket[1].Airline,
+                PNR: response.data.AirReserve[0].PNR,
+                OfficeUser: self.choosedTicket[1].OfficeUser,
+                OfficePAss: self.choosedTicket[1].OfficePass,
+                Complete: 'Y',
+                proxy: self.choosedTicket[1].proxy,
+                FlightNo: self.choosedTicket[1].FlightNo
+              },
+              {
+                Airline: self.choosedTicket[0].Airline,
+                PNR: self.PNR1,
+                OfficeUser: self.choosedTicket[0].OfficeUser,
+                OfficePAss: self.choosedTicket[0].OfficePass,
+                Complete: 'Y',
+                proxy: self.choosedTicket[0].proxy,
+                FlightNo: self.choosedTicket[0].FlightNo
+              }
+            ]
+
+            self.gelFlightNumber(sendAerray)
           })
             .catch(function (error) {
               // handle error
@@ -896,7 +919,23 @@ export default {
               )
             }
           }
-          self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy)
+
+          let sendAerray = [
+            {
+              Airline: self.choosedTicket[0].Airline,
+              PNR: self.PNR1,
+              OfficeUser: self.choosedTicket[0].OfficeUser,
+              OfficePAss: self.choosedTicket[0].OfficePass,
+              Complete: 'Y',
+              proxy: self.choosedTicket[0].proxy,
+              FlightNo: self.choosedTicket[0].FlightNo
+            }
+          ]
+
+          self.gelFlightNumber(sendAerray)
+
+
+          self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy, self.choosedTicket[0].FlightNo)
         }
       })
         .catch(function (error) {
@@ -962,41 +1001,46 @@ export default {
       }
       return yearAge;
     },
-    gelFlightNumber(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, index) {
-      let self = this
-      if (index) {
-        // console.log(index);
+    async gelFlightNumber(object) {
+      for (let i = 0; i < object.length; i++) {
+        await this.gelFlightNumber2(object[i].Airline, object[i].PNR, object[i].OfficeUser, object[i].OfficePAss, object[i].Complete, object[i].proxy, object[i].FlightNo)
       }
-      let testText =
-        'AirLine=' + Airline +
-        '&PNR=' + PNR +
-        '&Email=' + this.contactInfo[0].email +
-        '&OfficeUser=' + OfficeUser +
-        '&OfficePass=' + OfficePAss
-      axios.get('http://localhost:8080/' + proxy + '2' + '/ETIssueJS?' + testText).then(function (response) {
-        let data = response.data.replace(/[\r\n]/gm, '-')
-        data = JSON.parse(data)
-        let newVariabel = data.AirNRSTICKETS[0].Tickets
-        newVariabel = newVariabel.split('--')
-        for (let i = 0; i < newVariabel.length; i++) {
-          let ticket = newVariabel[i].split('=')
-          let name = ticket[0].split('/')
-          if (name[1]) {
-            let findParamsIndex = self.params.findIndex(x => x.name.toLowerCase() == (name[1].toLowerCase() + ' ' + name[0].toLowerCase()))
-            self.params[findParamsIndex].ticketNumber = ticket[1]
+      this.bookStep = 3;
+      this.scrollTopNextPage()
+    },
+    gelFlightNumber2(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, FlightNo) {
+      return new Promise(resolve => {
+        let self = this
+        let testText =
+          'AirLine=' + Airline +
+          '&PNR=' + PNR +
+          '&Email=' + this.contactInfo[0].email +
+          '&OfficeUser=' + OfficeUser +
+          '&OfficePass=' + OfficePAss
+        axios.get('http://localhost:8080/' + proxy + '2' + '/ETIssueJS?' + testText).then(function (response) {
+          let data = response.data.replace(/[\r\n]/gm, '-')
+          data = JSON.parse(data)
+          let newVariabel = data.AirNRSTICKETS[0].Tickets
+          newVariabel = newVariabel.split('--')
+          for (let i = 0; i < newVariabel.length; i++) {
+            let ticket = newVariabel[i].split('=')
+            let name = ticket[0].split('/')
+            if (name[1]) {
+              // console.log(self.params, FlightNo);
+              let findParamsIndex = self.params.findIndex(x => (x.name.toLowerCase() == name[1].toLowerCase() + ' ' + name[0].toLowerCase()) && (x.FlightNo == FlightNo));
+              // self.params.findIndex(x =>
+              //   (x.name.toLowerCase() == (name[1].toLowerCase() + ' ' + name[0].toLowerCase())) && x.FlightNo == FlightNo)
+              self.params[findParamsIndex].ticketNumber = ticket[1]
+            }
           }
-        }
-        // for (let i = 0; i < self.params.length; i++) {
-        // console.log(self.params[i]);
-        // }
-        self.bookStep = 3;
-        window.scrollTo(0, 0);
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          console.log('عملیات رزرو ناموفق بود!');
+          resolve()
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            console.log('عملیات رزرو ناموفق بود!');
+          })
+      });
     },
     setDates() {
       this.dateDays = []

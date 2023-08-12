@@ -197,7 +197,8 @@
           </tr>
           <tr>
             <td height="30" class="b2">
-              تلفن تماس: 02141889 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; تلفن پشتیبانی: 09018880317
+              تلفن تماس: 02141889
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; تلفن پشتیبانی: 09018880317 -->
             </td>
           </tr>
         </table>

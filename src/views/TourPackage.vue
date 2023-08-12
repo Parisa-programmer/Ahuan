@@ -134,7 +134,7 @@
             <v-row justify="center">
               <v-col cols="12" :lg="tour.packagePrograms3 && tour.packagePrograms3.length > 0 ? '12' : '6'">
                 <p v-for="(program, l) in tour.packagePrograms2" :key="l"
-                  class="widthAll mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour"
+                  class="widthAll mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
                   style="float:right;font-family:Byekan !important">
                   {{ program.program }}
 
@@ -147,10 +147,11 @@
                 <v-row class="mb-7" justify="center" align="center">
                   <h2 class="tabel-tour-title"> هواپیمایی</h2>
                   <img class="mx-1" v-for="(airline, k) in tour.airlines" :key="k" height="40"
-                    :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Qeshm Air' ? require('@/assets/image/airlines/qeshm.png') : airline == 'Fly Dubai' ? require('@/assets/image/airlines/flydubai.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : ''"
+                    :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Qeshm Air' ? require('@/assets/image/airlines/qeshm.png') : airline == 'Fly Dubai' ? require('@/assets/image/airlines/flydubai.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : airline == 'Qatar Airways' ? require('@/assets/image/airlines/qatar-airways.png') : ''"
                     :alt="airline">
                   <h2 class="tabel-tour-title" v-for="(airline, m) in tour.airlines" :key="'airline' + m">{{
-                    (tour.airlines.length == 1 && airline != 'Fly Dubai') ? airline : '' }}
+                    (airline == 'Airtour') ? 'Iran ' + airline : (tour.airlines.length == 1 && airline != 'Fly Dubai') ?
+                    airline : '' }}
                   </h2>
                 </v-row>
                 <v-row justify="center">
