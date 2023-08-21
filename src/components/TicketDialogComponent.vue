@@ -877,7 +877,7 @@ export default {
               }
             ]
 
-            self.gelFlightNumber(sendAerray)
+            self.getFlightNumber(sendAerray)
           })
             .catch(function (error) {
               // handle error
@@ -919,7 +919,6 @@ export default {
               )
             }
           }
-
           let sendAerray = [
             {
               Airline: self.choosedTicket[0].Airline,
@@ -931,11 +930,8 @@ export default {
               FlightNo: self.choosedTicket[0].FlightNo
             }
           ]
-
-          self.gelFlightNumber(sendAerray)
-
-
-          self.gelFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy, self.choosedTicket[0].FlightNo)
+          self.getFlightNumber(sendAerray)
+          // self.getFlightNumber(self.choosedTicket[0].Airline, self.PNR1, self.choosedTicket[0].OfficeUser, self.choosedTicket[0].OfficePass, 'Y', self.choosedTicket[0].proxy, self.choosedTicket[0].FlightNo)
         }
       })
         .catch(function (error) {
@@ -1001,14 +997,14 @@ export default {
       }
       return yearAge;
     },
-    async gelFlightNumber(object) {
+    async getFlightNumber(object) {
       for (let i = 0; i < object.length; i++) {
-        await this.gelFlightNumber2(object[i].Airline, object[i].PNR, object[i].OfficeUser, object[i].OfficePAss, object[i].Complete, object[i].proxy, object[i].FlightNo)
+        await this.getFlightNumber2(object[i].Airline, object[i].PNR, object[i].OfficeUser, object[i].OfficePAss, object[i].Complete, object[i].proxy, object[i].FlightNo, i + 1)
       }
       this.bookStep = 3;
       this.scrollTopNextPage()
     },
-    gelFlightNumber2(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, FlightNo) {
+    getFlightNumber2(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, FlightNo, step) {
       return new Promise(resolve => {
         let self = this
         let testText =
@@ -1036,8 +1032,12 @@ export default {
           resolve()
         })
           .catch(function (error) {
-            // handle error
-            console.log(error);
+            self.alertText = step == 1 ? 'عمیات رزرو ناموفق بود.' : step == 2 ? 'رزرو پرواز رفت با موفقیت آمیز بود اما پرواز برگشت با خطا مواجه شد.لطفا با پشتیبانی داخلی 161 تماس حاصل فرمائید.' : 'error'
+            self.alertType = 'error'
+            self.showAlert = true
+            if (step == 1)
+              // handle error
+              console.log(error);
             console.log('عملیات رزرو ناموفق بود!');
           })
       });

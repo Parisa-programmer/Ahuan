@@ -4,7 +4,7 @@
       <div class="absolute" id="about-england" style="top: -100px;"></div>
       <v-row justify="center" align="center" class="">
         <div class="indexDiv">
-          <v-row class="my-12 ">
+          <v-row class=" my-6 my-sm-12 ">
             <v-col cols="12" md="6" class="order-2 order-md-1">
               <v-row class="heightAll" align="center">
                 <div class="px-6 relative">
@@ -42,36 +42,36 @@
             </v-col>
           </v-row>
           <v-row>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>کاخ سلطنتی و مجموعه قلعه و برج لندن </b>
               مهم‌ترین مجموعه ساختمانی در بریتانیا به حساب میاد و پربازدیدترین جاذبه توریستی شهر لندنه!
               این مجموعه قدمتی بیش از هزار سال داره و بارها توسط دشمنان محاصره شده ولی هرگز اشغال نشده.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mx-3 answerText">
               برج اصلی این مجموعه
               <b>(برج سفید) </b>
               توسط ریچارد فاتح برای محافظت از لندن و شهروندانش و کنترل تردد قایق‌ها روی دریاچه تامس ساخته شده. افراد مهمی
               توی این قلعه اعدام شدن یا به قتل رسیدن از جمله اونها میشه از هنری ششم پادشاه انگلستان نام برد که در برج لندن
               به قتل رسید.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>کاخ باکینگهام</b>
               از زمان به قدرت رسیدن ملکه ویکتوریا در سال 1837 اقامتگاه خانواده سلطنتی انگلستان بود. این کاخ ابتدا جهت
               اقامت
               دوک باکینگهام ساخته شده و توسط جرج سوم در سال 1762 خریداری شده و به نام خانه باک در بین ساکنان لندن معروفه.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>منطقه وایت هال رود (Whitehall Road) </b>
               یکی دیگه از جاهای دیدنی لندنه و پیشنهاد ما اینه که حتماً ببینیدش چون بیگ بن، ساختمان‌های پارلمان و کلیسای
               وست‌مینستر رو تو خودش جا داده و صحنه‌های عروسی‌های سلطنتی رو که در گذشته ببینید تقریباً همشون همینجا برگزار
               می‌شدن.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>استون هنج (Stonehenge) </b>
               یکی از قدیمی‌ترین و باستانی‌ترین سایت‌های میراث جهانی که بیش از 4500 سال به عنوان زیارتگاه شناخته میشده و
               امروزه به عنوان یکی از پربازدیدترین نواحی توریستی جهان شناخته میشه.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>شهرهای دانشگاهی کمبریج (Cambridge) و آکسفورد (Oxford) </b>
               دو شهر بسیار مشهور انگلستان که مسیر کوتاه (128 کیلومتر) و راحتی تا شمال لندن دارن. این دو شهر به خاطر کسب
               مقام
@@ -79,12 +79,12 @@
               این
               دو دانشگاه برگزار میشه.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>کنتربری (Canterbury) </b>
               در شهر کنت هست و پربازدیدترین جاذبه گردشگری آن کلیسای کنتربری است که قدمت آن به قرن دوازده میلادی می‌رسد و
               مجسمه شش شاه انگلستان و کنده‌کاری‌های بسیار زیبا و چشم‌نوازی را در خود جای داده‌است.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>منطقه دریاچه یا Lake District </b>
               جدیدترین سایت محافظت شده در بریتانیاست و واقعا زیباست. این منطقه پر از دریاچه‌های کوچیک و بزرگه و تقریبا تو
               قسمت شمالغربی بریتانیا قرار داره، کوه‌های قشنگ و دهکده‌های کوچیک برای جستجو و ماجراجویی اینجا رو
@@ -130,6 +130,13 @@
 @media (max-width:959px) {
   .firstImageParent {
     height: 300px
+  }
+}
+
+@media (max-width:599px) {
+  p {
+    font-size: 16px !important;
+    line-height: 36px;
   }
 }
 </style>

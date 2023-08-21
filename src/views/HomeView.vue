@@ -428,6 +428,14 @@
 }
 </style>
 
+<style scoped>
+@media(max-width:600px) {
+  .main-page-sectionImage {
+    width: 90%;
+  }
+}
+</style>
+
 <script>
 import InputMain from '@/components/InputMain.vue'
 // import QuestionAnswer from '@/components/QuestionAnswer.vue'
@@ -443,10 +451,10 @@ axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 export default {
   name: 'HomeView',
   metaInfo: {
-    title: 'خدمات گردشگری آهوان',
-    meta: [
-      { name: 'description', content: '' },
-    ]
+    // title: 'خدمات گردشگری آهوان',
+    // meta: [
+    //   { name: 'description', content: '' },
+    // ]
   },
   components: {
     InputMain,

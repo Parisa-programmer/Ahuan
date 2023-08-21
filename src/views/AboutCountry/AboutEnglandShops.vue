@@ -4,7 +4,7 @@
       <div class="absolute" id="about-england" style="top: -100px;"></div>
       <v-row justify="center" align="center" class="">
         <div class="indexDiv">
-          <v-row class="my-12 ">
+          <v-row class="my-6 my-sm-12 ">
             <v-col cols="12" md="6" class="order-2 order-md-1">
               <v-row class="heightAll" align="center">
                 <div class="px-sm-6 relative">
@@ -42,33 +42,33 @@
             <p class="text-justify mt-6 mx-3 answerText">
               <b></b>
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>وستفیلد استرافورد سیتی، لندن - Westfield Stratford City, London (184,100 مترمربع)</b>
               دومین مرکز خرید وستفیلد در شرق لندن با سه طبقه هلالی شکل جذاب تجربه خرید فوق‌العاده‌ای براتون به ارمغان
               میاره، اگر چه نسبت به همتای غربیش با پله برقی‌ و آسانسورهای مختلف در انتهای راهروهاش جمع و جورتر محسوب میشه
               و با وجود 70 غذاخوری دسترسی راحتی به غذا براتون فراهم میکنه.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>وست فیلد لندن (235,900 مترمربع) - Westfield London</b>
               مرکز وست فیلد لندن در شپرد باش (Shephard’s Bush) قرار دارد و در ارائه خدمات خرید و سرگرمی با بیش از 250 خرده
               فروشی لوکس، ممتاز و خیابانی از 15 کشور جهان پیشگام است. این مرکز خرید بزرگترین مرکز خرید بریتانیاست و علاوه
               بر خرید و فروش اجناس میزبان رویدادهای هنری و آموزشی بزرگی در زیر سقف شیشه‌ای معروفش هست و رفت و آمد بهش با
               توجه به سیستم حمل و نقل فوق‌العادش خیلی ساده هست و هر پنج دقیقه یه قطار تو ایستگاه متروش منتظر شماست.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>متروسنتر، گیتزهد (192,900 مترمربع) - Metrocentre, Gateshead</b>
               از سال 1986 متروسنتر به عنوان مگامال اصلی انگلستان شناخته میشه و میزبان 250 مغازه و 60 غذاخوری و برندهای
               شناخته شده شده مثل Apple, B&M, Guess and River Island هست. همچنین می‌تونید در این مرکز خرید از وای‌فای
               رایگان و پرسرعت رایگان می‌تونید استفاده کنید.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>ترافورد سنتر، منچستر -Trafford Centre, Manchester (188,000 مترمربع)</b>
               این مرکز خرید در قلب شهر منچستر و به پیشینه طولانی خرده فروشیش معروفه و مجموعه‌ای از برندهای ضروری رو درون
               خودش جمع کرده و همیشه میتونید توش جایی برای غذا خوردن پیدا کنید. یه چیز جالبی که در مورد این مرکز خرید بزرگ
               باید بدونید اینه که در نزدیکی موزه امپراطوری جنگ جهانی دوم و SEA LIFE منچستر قرار داره که میتونید بعد از
               خرید سری هم به این موزه‌ها بزنید.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>بلوواتر، کنت - Bluewater, Kent (169,200 مترمربع)</b>
               این مرکز خرید در دو طبقه با 3 دپارتمان فروش (مارکز و اسپنسر، جان لوئیس و هَوز فراستر) ساخته شده و پنجمین
               مرکز خرید بزرگ بریتانیاست و علاوه بر فروشنده‌های بیشمار و مراکز مختلف تفریحی و غذاخوری‌های داخلش توسط 50
@@ -76,7 +76,7 @@
               بزرگی میرسه. جستجوگران شادی و هیجان اینجا اصلاً حوصلشون سر نمیره چون میتونن در همون نزدیکی سوار بلندترین
               زیپلاین انگلیس بشن.
             </p>
-            <p class="text-justify mt-6 mx-3 answerText">
+            <p class="text-justify mt-2 mt-sm-6 mx-3 answerText">
               <b>بولرینگ و گرند سنترال، بیرمنگام - Bullring & Grand Central, Birmingham (163,000 مترمربع)</b>
               اگر دنبال فروشگاه‌های بیشمار لوازم خانگی، الکترونیکی و فروشگاه‌های مد هستید این انتخاب صد در صد درسته،
               سلفریج برای کسایی که دنبال چیزهای با کلاس هستن. چه شما دنبال یه جفت کفش جدید باشید یا دنبال یه لباس
@@ -120,6 +120,13 @@
 @media (max-width:959px) {
   .firstImageParent {
     height: unset
+  }
+}
+
+@media (max-width:599px) {
+  p {
+    font-size: 16px !important;
+    line-height: 36px;
   }
 }
 </style>

@@ -83,6 +83,13 @@
     height: 300px
   }
 }
+
+@media (max-width:599px) {
+  p {
+    font-size: 16px !important;
+    line-height: 36px;
+  }
+}
 </style>
 
 <script>

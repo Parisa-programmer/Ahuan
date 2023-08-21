@@ -38,7 +38,7 @@
               </p>
             </v-row>
             <v-row class="mt-4 mt-sm-6" justify="space-between">
-              <h3 class="white--text">همین حالا ویزاتو بگیر!</h3>
+              <h3 class="white--text mb-2 mb-sm-0">همین حالا ویزاتو بگیر!</h3>
               <router-link to="/visline" class="text-decoration-none">
                 <v-btn class="px-12 rounded-lg bold" color="red" dark>شروع ویزلاین</v-btn>
               </router-link>

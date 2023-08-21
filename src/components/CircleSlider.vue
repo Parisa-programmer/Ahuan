@@ -355,6 +355,10 @@
     top: 0;
     transform: translate3d(0, 0, -90px);
   }
+
+  .testimonials {
+    min-height: 580px;
+  }
 }
 
 @media (max-width: 599px) {
@@ -386,7 +390,7 @@
   }
 
   .testimonials {
-    min-height: 500px;
+    min-height: 530px;
   }
 
   /* #t-2:checked~.testimonials #fort-1,
@@ -409,17 +413,6 @@
   } */
 
 
-
-  @media (min-width: 400px) and (max-width: 499px) {
-    .testimonials .item {
-      width: 350px;
-    }
-
-    .cityName {
-      font-size: 18px;
-    }
-  }
-
   @media (min-width: 400px) and (max-width: 499px) {
     .testimonials .item {
       width: 350px;
@@ -430,7 +423,7 @@
     }
 
     .testimonials {
-      min-height: 450px;
+      min-height: 500px;
     }
   }
 
@@ -445,7 +438,7 @@
     }
 
     .testimonials {
-      min-height: 450px;
+      min-height: 490px;
     }
 
     @media (max-width: 350px) {
@@ -484,11 +477,18 @@ export default {
   methods: {
     changeChecknumber(type) {
       this.stoploop()
-      this.checknumber = (type == 'plus') ? (this.checknumber + 1) : (this.checknumber - 1)
       setTimeout(() => {
-        this.startloop()
-        this.disableArrow = false
-      }, 2000);
+        if (type == 'plus') {
+          this.checknumber = this.checknumber < 5 ? this.checknumber + 1 : 1
+        } else {
+          this.checknumber = this.checknumber > 1 ? this.checknumber - 1 : 5
+        }
+        setTimeout(() => {
+          this.startloop()
+          this.disableArrow = false
+        }, 2000);
+      }, 500);
+
     },
     startloop() {
       this.loopInterval = setInterval(() => {

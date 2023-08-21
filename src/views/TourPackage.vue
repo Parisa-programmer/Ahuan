@@ -66,9 +66,9 @@
         </v-row>
       </div>
       <div class="indexDiv mb-6">
-        <v-row class="white py-md-9 px-6">
+        <v-row class="white py-md-9 px-md-6">
           <div class="widthAll" v-if="tour.packageHotelPrices && tour.packageHotelPrices.length > 0 && tab == 2">
-            <h4 class="mb-4 mt-4 mt-md-0">
+            <h4 class="mb-4 mt-6 mt-md-0 mr-2 mr-md-0">
               <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
               قیمت های اعلام شده بر حسب تومان می باشد.
             </h4>
@@ -104,7 +104,6 @@
                 <v-row class="mt-3" justify="center">
                   <v-data-table hide-default-footer hide-default-header style="box-shadow: 0 0 21px #dbdbdb !important;"
                     :headers="priceHeaders" :items="prices" class="even-odd-tabel rounded-lg hideOver tabelTour">
-
                   </v-data-table>
                 </v-row>
               </v-col>
@@ -120,9 +119,9 @@
             <v-row>
               <v-col cols="12">
                 <v-skeleton-loader :loading="loading" type="list-item-three-line">
-                  <ul class=" mr-md-6">
+                  <ul class="pl-0 mr-6 py-4 py-md-0">
                     <li v-for="(item, i) in tour.packageServices" :key="i"
-                      class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">
+                      class="my-1 my-md-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">
                       {{ item.service }}
                     </li>
                   </ul>
@@ -134,7 +133,7 @@
             <v-row justify="center">
               <v-col cols="12" :lg="tour.packagePrograms3 && tour.packagePrograms3.length > 0 ? '12' : '6'">
                 <p v-for="(program, l) in tour.packagePrograms2" :key="l"
-                  class="widthAll mt-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
+                  class="widthAll mt-2 mt-sm-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
                   style="float:right;font-family:Byekan !important">
                   {{ program.program }}
 
@@ -158,7 +157,7 @@
                   <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;" hide-default-footer
                     :headers="flightHeaders" :items="flights"
                     :class="tour.packagePrograms3 && tour.packagePrograms3.length > 0 && 'tabelHeader'"
-                    class="even-odd-tabel rounded-lg hideOver tabelTour tourPlan">
+                    class="even-odd-tabel rounded-lg hideOver">
                   </v-data-table>
                 </v-row>
               </v-col>
@@ -180,8 +179,8 @@
               <v-col cols="12" md="12">
                 <v-skeleton-loader :loading="loading" type="list-item-three-line">
                   <div class="widthAll" v-for="(pack, i) in packageDocs" :key="i">
-                    <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">{{ pack.title }}</h3>
-                    <ul class="my-6 mr-9">
+                    <h3 class="tabel-tour-title red--text mt-3 mt-md-0">{{ pack.title }}</h3>
+                    <ul class=" my-3 my-md-6 mr-2 mr-md-9 pl-0">
                       <li v-for="(des, i) in pack.descriptions" :key="i"
                         class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ des }}
                         <v-btn v-if="tour.packageGroup && tour.packageGroup.name == 'روسیه' && i == 0"
@@ -206,7 +205,7 @@
                     && tour.packageGroup.name
                   }}
                   </h3>
-                  <ul class="my-6 mr-9">
+                  <ul class="my-6 mr-2 mr-md-9 pl-0">
                     <li v-for="(Tip, l) in tour.packageEssentialTips" :key="l"
                       class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ Tip.essentialTip }}</li>
                   </ul>
@@ -222,10 +221,8 @@
                   :alt="item.description">
               </div>
             </v-row>
-
             <v-dialog v-model="imageDialog" width="1000">
               <div class="relative white">
-
                 <v-carousel v-model="imageNumber" height="fit-content">
                   <v-carousel-item v-for="(item, i) in tour.packagePhotoes" :key="i">
                     <v-img height="100%" :src="'https://panel.ahuantours.com/uploads/' + item.photo"
@@ -433,6 +430,10 @@
   background: #faf2e8;
 }
 
+.v-carousel__controls .v-item-group {
+  direction: ltr !important;
+}
+
 @media (min-width:960px) and (max-width:1263px) {
   .main-div {
     margin-top: -265px;
@@ -514,6 +515,17 @@
 }
 
 @media (max-width:599px) {
+
+  .v-btn--icon.v-size--small .v-icon,
+  .v-btn--fab.v-size--small .v-icon {
+    font-size: 10px !important
+  }
+
+  .v-btn--icon.v-size--small {
+    height: 18px;
+    width: 18px;
+  }
+
   .indexDiv {
     width: 95% !important;
   }
@@ -553,8 +565,12 @@
 
 
 
-  .v-data-table__mobile-row__header {
+  .tourPlan .v-data-table__mobile-row__header {
     display: none !important;
+  }
+
+  .v-application--is-ltr .v-data-table__mobile-row__header {
+    padding-right: 0;
   }
 
   .v-application--is-ltr .v-data-table__mobile-row__cell {
@@ -619,6 +635,7 @@
 
   .text-tour {
     font-size: 14px;
+    line-height: 30px;
   }
 
   .tabel-tour-title {
@@ -995,7 +1012,7 @@
   }
 
   .text-tour {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .tabel-tour-title {

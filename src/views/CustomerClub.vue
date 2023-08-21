@@ -65,7 +65,8 @@
         <h3 class="font-small-title-xs text-center">
           به محض ثبت نام شما در سایت آهوان به مرحله نقره‌ای دست پیدا خواهید کرد
         </h3>
-        <p class="mt-3 widthAll text-center body-2" style="font-family:Byekan !important">و هرچه پروفایل خود را تکمیل‌تر
+        <p class="mt-3 widthAll text-center paragraph" style="font-family:Byekan !important">و هرچه پروفایل خود را
+          تکمیل‌تر
           نمائید به درجات بیشتری دسترسی پیدا خواهید کرد و دست یافتن به سایر درجات برنز و طلائی راحت‌تر می‌شود.</p>
         <v-row class="my-12">
           <v-col cols="12" md="4" class="px-2">
@@ -78,13 +79,17 @@
                 </div>
                 <h4 class="d-inline-block font-small-title-xs mt-9 " style="color:#bf0000">امکانات کارت طلائی</h4>
                 <ol class="mr-8 my-3">
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">استفاده از خدمات
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">استفاده
+                    از خدمات
                     ترانسفر رایگان یک طرفه از منزل به هتل</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">جایگاه رایگان CIP در
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">جایگاه
+                    رایگان CIP در
                     پرواز های چارتر آهوان (خارجی)</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">ارسال آخرین تعرفه
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">ارسال
+                    آخرین تعرفه
                     تخفیفات ویژه در کلیه مسیرها</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">خدمات رسانی درب منزل
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">خدمات
+                    رسانی درب منزل
                   </li>
                 </ol>
               </v-row>
@@ -100,11 +105,14 @@
                 </div>
                 <h4 class="d-inline-block font-small-title-xs mt-9" style="color:#bf0000">امکانات کارت نقره‌ای</h4>
                 <ol class="mr-8 my-3">
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">در کلیه مراحل
-                    پاسخ‌گوئی/ثبت نام/اخذ کارت پرواز/چک‌این هتل ها شما در اولویت هستید.</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">تخفیفات ویژه در اکثر
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">در کلیه
+                    مراحل
+                    پاسخ‌گوئی/ثبت نام/اخذ کارت پرواز/check in هتل ها شما در اولویت هستید.</li>
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">تخفیفات
+                    ویژه در اکثر
                     محصولات شرکت آهوان مثل هتل اختصاصی 4 ستاره مشهد و تهران.</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">انتقال امتیاز ویژه برای
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">انتقال
+                    امتیاز ویژه برای
                     شما میهمان وفادار در ایام خاص شخصی شما و شرکت.</li>
                 </ol>
               </v-row>
@@ -120,11 +128,14 @@
                 </div>
                 <h4 class="d-inline-block font-small-title-xs mt-9" style="color:#bf0000">امکانات کارت برنز</h4>
                 <ol class="mr-8 my-3">
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">بیش از 2% تخفیف در کلیه
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">بیش از
+                    2% تخفیف در کلیه
                     پکیج‌های سفر</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">خدمات رسانی رایگان درب
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">خدمات
+                    رسانی رایگان درب
                     منازل</li>
-                  <li class="body-2 mt-3" style="font-family:Byekan !important;line-height: 25px;">تخفیف بالای 30% در
+                  <li class="paragraph text-justify mt-3" style="font-family:Byekan !important;line-height: 25px;">تخفیف
+                    بالای 30% در
                     هتل‌های اختصاصی آهوان در مشهد و شمال(رامسر)</li>
                 </ol>
               </v-row>
@@ -252,6 +263,30 @@
 
   </div>
 </template>
+<style>
+@media (max-width:599px) {
+  .v-timeline-item__divider {
+    min-width: 55px;
+  }
+
+  .v-application--is-ltr .v-timeline--dense:not(.v-timeline--reverse)::before {
+    right: calc(25px - 1px) !important;
+  }
+
+  .v-timeline--dense .v-timeline-item__body {
+    max-width: calc(100% - 55px) !important;
+  }
+
+  .v-timeline-item__dot {
+    height: 20px !important;
+    width: 20px !important;
+  }
+
+  .mdi-check-circle {
+    font-size: 15px !important;
+  }
+}
+</style>
 <style scoped>
 .v-application--is-ltr .v-timeline--dense .v-timeline-item .v-timeline-item__body>.v-card:not(.v-card--link)::before,
 .v-application--is-ltr .v-timeline--dense .v-timeline-item .v-timeline-item__body>.v-card::after {
@@ -308,6 +343,8 @@
 }
 
 @media (max-width:599px) {
+
+
   .contact-card {
     width: 500px;
   }

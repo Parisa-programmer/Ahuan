@@ -28,8 +28,13 @@
               <v-col cols="7" md="6" class="pa-0 pa-sm-3">
                 <h4>پیشنهادات آهوان</h4>
                 <ul class="mr-4 mr-md-2 my-2">
-                  <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">تورهای ویژه آهوان</li>
-                  <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">هتل‌های ویژه آهوان</li>
+                  <router-link to="visa" class="text-decoration-none">
+                    <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">خدمات ویزا آهوان</li>
+                  </router-link>
+                  <router-link to="tour-page" class="text-decoration-none">
+                    <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">تورهای ویژه آهوان</li>
+                  </router-link>
+                  <!-- <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">هتل‌های ویژه آهوان</li> -->
                   <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">پروازهای ویژه آهوان</li>
                   <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">پرفروشترین تورهای داخلی</li>
                   <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">پرفروشترین تورهای خارجی</li>

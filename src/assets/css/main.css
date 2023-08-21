@@ -1061,14 +1061,23 @@ input::-webkit-inner-spin-button {
   }
 }
 
-@media (max-width: 1600px) {
+@media (min-width: 1501px) and (max-width: 1600px) {
   .topDivVisa {
     top: 60px;
+  }
+}
+@media (min-width: 1401px) and (max-width: 1500px) {
+  .topDivVisa {
+    top: 35px;
   }
 }
 
 /* responsive */
 @media (min-width: 1264px) and (max-width: 1400px) {
+  .topDivVisa {
+    top: 40px;
+  }
+
   .v-expansion-panel-header {
     padding: 0 !important;
   }
@@ -1141,6 +1150,10 @@ input::-webkit-inner-spin-button {
 }
 
 @media (min-width: 960px) and (max-width: 1263px) {
+  .topDivVisa {
+    top: 20px;
+  }
+
   .v-expansion-panel-header {
     padding: 0 15px !important;
   }
@@ -1229,9 +1242,19 @@ input::-webkit-inner-spin-button {
     bottom: 40px;
     margin-bottom: -20px;
   }
+
+  @media (min-width: 960px) and (max-width: 1099px) {
+    .topDivVisa {
+      top: 20px;
+    }
+  }
 }
 
 @media (min-width: 600px) and (max-width: 959px) {
+  .topDivVisa {
+    top: 20px;
+  }
+
   .paragraph {
     line-height: 29px;
   }
@@ -1449,6 +1472,10 @@ input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 599px) {
+  .topDivVisa {
+    top: 50px;
+  }
+
   .hideArrowSm .slick-arrow {
     display: none !important;
   }
@@ -1462,7 +1489,7 @@ input::-webkit-inner-spin-button {
   }
 
   .paragraph {
-    line-height: 20px;
+    line-height: 31px;
   }
 
   .ticketButtons button {
@@ -1495,7 +1522,7 @@ input::-webkit-inner-spin-button {
   .font-small-xs,
   .font-small-xs label,
   .v-application .body-2 {
-    font-size: 12px !important;
+    font-size: 15px !important;
   }
 
   .font-small-xs i {
@@ -1560,7 +1587,7 @@ input::-webkit-inner-spin-button {
   }
 
   .answerText {
-    line-height: unset;
+    /* line-height: unset; */
   }
 
   .mobileImageMainPage {

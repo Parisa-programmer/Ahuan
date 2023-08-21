@@ -83,7 +83,7 @@
         <p class="text-justify answerText font-small-xs mt-2 mt-sm-4 mt-lg-6">
           از جمله خدماتی که سفارتخانه‌ها یا کنسولگری‌ها ارائه میدن می‌تونیم به موارد زیر اشاره کنیم:
         </p>
-        <ol class="mr-4">
+        <ol class="mr-4 pl-0">
           <li class="text-justify answerText font-small-xs mt-2 mt-sm-4 mt-lg-6"><b>خدمات ویزا: </b>سفارتخانه‌ها می‌تونن
             برای متقاضیان و اتباع خارجی که میخوان به کشوری که نمایندگیش میکنن سفر کنن با تعیین وقت قبلی و طی مراحلی از پیش
             تعیین‌شده ویزا صادر کنن (این مراحل برای هر کشوری مختص همون کشوره و شرایط یکسانی نداره).</li>
@@ -207,7 +207,7 @@ label {
 @media (max-width:599px) {
   .banner-top {
     width: unset;
-    height: 300px;
+    height: 330px;
   }
 
   .answerText {
@@ -216,9 +216,15 @@ label {
     line-height: 28px;
   }
 
-  @media (max-width:400px) {
+  @media (max-width:500px) {
     .banner-top {
       height: 350px;
+    }
+  }
+
+  @media (max-width:400px) {
+    .banner-top {
+      height: 370px;
     }
   }
 
