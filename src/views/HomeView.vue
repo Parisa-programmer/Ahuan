@@ -41,7 +41,7 @@
             <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
           </router-link>
           <router-link to="/tour/1020">
-            <v-carousel-item :src="require('@/assets/image/tour/site -russia.jpg')"></v-carousel-item>
+            <v-carousel-item :src="require('@/assets/image/tour/site -russia2.jpg')"></v-carousel-item>
           </router-link>
         </v-carousel>
       </div>

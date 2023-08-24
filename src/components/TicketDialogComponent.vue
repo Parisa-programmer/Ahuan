@@ -397,7 +397,8 @@
                       <h3>220.000</h3>
                       <span class="caption mr-2 font-weight-bold" style="font-family: Byekan !important;">ریال</span>
                     </v-row>
-                    <v-btn class="green darken-2 px-9" dark @click="changeBookStep(3)"> تائید و پرداخت</v-btn>
+                    <v-btn :loading="loadingReserve" class="green darken-2 px-9" dark @click="changeBookStep(3)"> تائید و
+                      پرداخت</v-btn>
                   </div>
                 </v-row>
               </div>
@@ -423,6 +424,7 @@ const $ = require('jquery');
 export default {
   data() {
     return {
+      loadingReserve: false,
       clickedDownload: false,
       PNR1: '',
       PNR2: '',
@@ -685,6 +687,7 @@ export default {
         this.dateError = false
         this.scrollTopNextPage()
       } else if (step == 3 && this.$refs.acceptRulls.validate()) {
+        self.loadingReserve = true
         await this.checkAges()
         this.reserveTicket(step)
         this.dateError = false
@@ -838,6 +841,7 @@ export default {
                     DepartureTime: self.choosedTicket[j].DepartureTime,
                     DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
                     Airline: self.choosedTicket[j].Airline,
+
                     longDateTime1: self.choosedTicket[j].longDateTime1,
                     className: self.choosedTicket[j].className,
                     FlightNo: self.choosedTicket[j].FlightNo,
@@ -902,6 +906,8 @@ export default {
                   DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
                   Airline: self.choosedTicket[j].Airline,
                   longDateTime1: self.choosedTicket[j].longDateTime1,
+                  OfficeUser: self.choosedTicket[j].OfficeUser,
+                  proxy: self.choosedTicket[j].proxy,
                   className: self.choosedTicket[j].className,
                   FlightNo: self.choosedTicket[j].FlightNo,
                   AirlinePersianId: self.choosedTicket[j].AirlinePersianId,
@@ -1002,6 +1008,7 @@ export default {
         await this.getFlightNumber2(object[i].Airline, object[i].PNR, object[i].OfficeUser, object[i].OfficePAss, object[i].Complete, object[i].proxy, object[i].FlightNo, i + 1)
       }
       this.bookStep = 3;
+      this.loadingReserve = false
       this.scrollTopNextPage()
     },
     getFlightNumber2(Airline, PNR, OfficeUser, OfficePAss, Complete, proxy, FlightNo, step) {

@@ -2,8 +2,70 @@
   <div class="mt-6 mt-sm-12 pt-12">
     <v-row class="black" justify="center">
       <div class="indexDiv mt-6">
-        <b class="travelTitle widthAll d-block white--text ">همه چیز درباره‌ی سفر به انگلیس</b>
-        <v-row class="mt-6 mt-sm-12 mb-12 mb-md-0 imagesParent relative" align="center">
+        <v-row class="mt-md-12 mb-md-12 d-flex d-sm-none">
+          <v-col cols="12" md="6" class="order-2 order-md-1">
+            <v-row class="heightAll" align="center">
+              <div class="px-6 relative">
+                <div class="absolute" style="top:-200px;right:-50px;z-index: 1;">
+                  <img src="@/assets/image/inverted-commas.png" alt="">
+                </div>
+                <div style="z-index:222">
+                  <h2 class="font-small-title-xs mb-3 white--text">همه چیز درباره‌ی سفر به انگلیس</h2>
+                </div>
+              </div>
+            </v-row>
+          </v-col>
+          <v-col cols="12" md="6" class="order-1 order-md-2">
+            <v-row justify="center" class="mt-12">
+              <div class="widthAll relative">
+                <div class="absolute" style="width:90%;height:80%;left:-50px;top:-50px;z-index:1;background:#bf0000">
+                </div>
+                <div class="widthAll " style="box-shadow: 0 0px 12px #c2c2c2;">
+                  <v-img class="firstImageParent" src="@/assets/image/test/souvenir-ukl.jpg" alt=""
+                    style="z-index: 2;"></v-img>
+                </div>
+              </div>
+            </v-row>
+          </v-col>
+        </v-row>
+        <div class="mr-9 d-block d-sm-none pb-12">
+          <ul class="mr-4 mr-sm-6 white--text">
+            <li class=" my-2 cursorPointer" @click="tab = 0">
+              <router-link class="white--text text-decoration-none" to="/england/souvenir">سوغات انگلیس</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer">
+              <router-link class="white--text text-decoration-none" to="/england/sights">اماکن دیدنی
+                انگلیس</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer">
+              <router-link class="white--text text-decoration-none" to="/england/famous-cities">شهر های معروف
+                انگلیس</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer" @click="tab = 2">
+              <router-link class="white--text text-decoration-none" to="/england/best-cities">بهترین شهرهای
+                انگلستان</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer" @click="tab = 3">
+              <router-link class="white--text text-decoration-none" to="/england/student-cities">شهرهای دانشجویی
+                انگلستان</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer" @click="tab = 4">
+              <router-link class="white--text text-decoration-none" to="/england/restaurants">رستوران‌های معروف
+                انگلستان</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer" @click="tab = 6">
+              <router-link class="white--text text-decoration-none" to="/england/shops">بزرگترین مراکز خرید در
+                انگلستان</router-link>
+            </li>
+            <li class="white--text my-2 cursorPointer" @click="tab = 4">
+              <router-link class="white--text text-decoration-none" to="/england/checklist">چک لیست‌های سفر به
+                انگلستان</router-link>
+            </li>
+          </ul>
+          <img class="ml-2 ml-md-6 mt-3 d-none d-sm-block" src="@/assets/image/test/country-5.jpg" width="250" alt="">
+        </div>
+        <b class="travelTitle widthAll white--text d-none d-sm-block">همه چیز درباره‌ی سفر به انگلیس</b>
+        <v-row class="mt-6 mt-sm-12 mb-12 mb-md-0 imagesParent relative d-none d-sm-flex" align="center">
           <div>
             <img class="ml-2 ml-md-6" src="@/assets/image/test/country-6.jpg" alt="انگلیس">
           </div>
@@ -49,7 +111,7 @@
                   انگلستان</router-link>
               </li>
             </ul>
-            <img class="ml-2 ml-md-6 mt-3" src="@/assets/image/test/country-5.jpg" width="250" alt="">
+            <img class="ml-2 ml-md-6 mt-3 d-none d-sm-block" src="@/assets/image/test/country-5.jpg" width="250" alt="">
           </div>
         </v-row>
       </div>
@@ -150,7 +212,7 @@
   }
 
   li>a {
-    background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89) 100%);
+    /* background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89) 100%); */
   }
 
   .travelTitle {

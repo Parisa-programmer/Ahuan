@@ -140,6 +140,12 @@
 <script>
 export default {
   name: 'office-protector',
+  metaInfo: {
+    title: 'دفتر حافظ منافع مشتری',
+    meta: [
+      { name: 'description', content: '' },
+    ]
+  },
   data() {
     return {
       nameRules: [
@@ -188,7 +194,7 @@ export default {
       emptyRules: [
         v => !!v || 'پر کردن این فیلد اجباریست.'
       ],
-      sendTextDialog:false,
+      sendTextDialog: false,
     }
   },
   components: {

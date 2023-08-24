@@ -59,7 +59,7 @@
                       </tr>
                       <tr>
                         <td height="25" class="bl1 " style="direction:ltr !important">{{ item.fare ?
-                          'item.fare.BaggageAllowanceWeight' : '20 Kg' }}</td>
+                                                  'item.fare.BaggageAllowanceWeight' : '20 Kg' }}</td>
                         <td height="25" class="bl1">{{ item.DepartureTime }}</td>
                         <td height="25">{{ item.DepartureDateTime.replace(/-/g, "/") }}</td>
                       </tr>
@@ -77,13 +77,13 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="3" class="p0" height="75">
+                        <td colspan="3" class="p0" height="110">
                           <table width="100%" height="100%" class="bc">
                             <tr>
                               <td height="25" class="bt2 bb1">PNR</td>
                             </tr>
                             <tr>
-                              <td height="52" class="">{{ item.PNR }}</td>
+                              <td height="75" class="">{{ item.PNR }}</td>
                             </tr>
                           </table>
                         </td>
@@ -153,29 +153,28 @@
                         </td>
                       </tr>
                       <tr>
-                        <!---aaaaaaaa--->
-                        <td colspan="3" class="bl2 p0" height="76">
+                        <td colspan="3" class="bl2 p0" height="110">
                           <table width="100%" height="100%" class="bc">
                             <tr>
                               <td height="25" class="bt2 bb1">صادر کننده</td>
                               <td height="25" class="bt2 bb1">Agent</td>
                             </tr>
                             <tr>
-                              <td height="52" colspan="2">
-                                <img src="@/assets/image/ticket-logo.png" style="height:42px; padding:0" />
+                              <td height="45" colspan="2">
+                                <img src="@/assets/image/ticket-logo.png"
+                                  style="height:45px; padding:0;margin-top:15px" />
                               </td>
                             </tr>
-                            <!--<tr>
-                                              <td height="25"  style="padding-left:1px; border-left:solid 2px black">ccc</td>
-                                              <td height="25" >cccccc</td>
-                                          </tr>-->
                           </table>
                         </td>
-                        <td colspan="2" class="p0" height="75">
+                        <td colspan="2" class="p0" height="110">
                           <table width="100%" height="100%" class="bc">
                             <tr>
-                              <td height="75" colspan="2" class="bt2">
-                                <img src="@/assets/image/ticket-barcode.png" style="height:73px; padding:0" />
+                              <td height="110" colspan="2" class="bt2"
+                                style="display:flex;justify-content:center;align-items:center;">
+                                <VueQRCodeComponent :size="100"
+                                  :text="item.proxy + '3' + '/TicketPrint.aspx?PNR=' + item.PNR + '&TicketNo=' + item.ticketNumber + '&OC=' + item.OfficeUser">
+                                </VueQRCodeComponent>
                               </td>
                             </tr>
                           </table>
@@ -188,7 +187,10 @@
             </td>
           </tr>
           <tr>
-            <td height="80" class="b2">توضیحات</td>
+            <td height="80" class="b2">
+              <!-- توضیحات -->
+              لطفا در صورت هرگونه مغایرت در اطلاعات درج شده در بلیط با پشتیبانی (داخلی 161) تماس حاصل فرمائید.
+            </td>
           </tr>
           <tr>
             <td height="30" class="b2">آدرس: تهران ، ضلع شمال غربی میدان آرژانتین ، ساختمان بانک تجارت ، پلاک 18 - طبقه
@@ -273,6 +275,7 @@
 <script>
 import html2pdf from "html2pdf.js";
 import axios from 'axios'
+import VueQRCodeComponent from 'vue-qrcode-component'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
 
 // import style from '../css/main.css'
@@ -284,8 +287,12 @@ export default {
   props: ['params', 'clickedDownload'],
   watch: {
     clickedDownload() {
+      console.log(this.params);
       this.exportToPDF()
     }
+  },
+  components: {
+    VueQRCodeComponent
   },
   methods: {
     exportToPDF() {

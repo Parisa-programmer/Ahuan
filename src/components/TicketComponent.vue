@@ -62,7 +62,9 @@ export default {
       this.ticket = []
       this.faildTickets = []
       this.sortedTickets = []
-      this.checkAsync()
+      if (this.$route.query.path) {
+        this.checkAsync()
+      }
     },
     rezervStep() {
       this.ticket = []
@@ -107,12 +109,14 @@ export default {
                           data[i].Airline == 'ZV' ? 'زاگرس' :
                             data[i].Airline == 'NV' ? 'نفت' :
                               data[i].Airline == 'JI' ? 'معراج' :
-                                data[i].Airline == 'VR' ? 'وارش' :
-                                  data[i].Airline == 'IV' ? 'کاسپین' :
-                                    data[i].Airline == 'IRZ' ? 'ساها' : ''
+                                data[i].Airline == 'FP' ? 'فلای‌پرشیا' :
+                                  data[i].Airline == 'VR' ? 'وارش' :
+                                    data[i].Airline == 'IV' ? 'کاسپین' :
+                                      data[i].Airline == 'IRZ' ? 'ساها' : ''
               let DepartureDateTime = data[i].DepartureDateTime.split(' ')
               let DepartureTime = DepartureDateTime[1].split(':')
               data[i].DepartureDateTime = DepartureDateTime[0]
+              data[i].OfficeUser = OfficeUser
               data[i].DepartureTime = DepartureTime[0] + ':' + DepartureTime[1]
               data[i].proxy = proxy
               //
@@ -158,6 +162,7 @@ export default {
       let isClassX = false
       for (let m = 0; m < classes.length; m++) {
         let type = classes[m].slice(-1)
+        // data.type = type;
         if (type == 'X' || type == 'C') {
           if (type == 'X' && isClassX == false) {
             data.type = type
@@ -165,9 +170,9 @@ export default {
             self.pushToTicket(data, type);
           }
           if (type == 'C' && isClassC == false) {
+            data.type = type
             isClassC = true
             self.pushToTicket(data, type);
-            data.type = type
           }
         }
         else {
@@ -192,26 +197,27 @@ export default {
             OfficePass: OfficePass,
             FlightNo: data.FlightNo,
           }
-
+          let data2 = data
           await axios.get('http://localhost:8080/' + proxy + '/FareJS.jsp', { params })
             .then(function (response) {
               if ((response.data) && response.data.AdultTotalPrice != 0) {
-                data.type = type;
-                data.ticketType = 's';
-                data.className = newType;
-                data.OfficeUser = OfficeUser;
-                data.OfficePass = OfficePass;
-                data.price = Number(response.data.AdultTotalPrice);
-                data.fare = response.data;
-                data.capacity = Number(classes[m].slice(-1)) ? classes[m].slice(-1) : type;
-                data.longDate1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
-                data.longDateTime1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR');
-                data.longDate2 = new Date(data.ArrivalDate).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
-                data.enLongDate1 = new Date(data.DepartureDateTime).toLocaleDateString('en', { day: 'numeric', month: 'long' });
-                data.enLongDate2 = new Date(data.ArrivalDate).toLocaleDateString('en', { day: 'numeric', month: 'long' });
-                self.pushToTicket(data, type, sort);
+
+                data2.ticketType = 's';
+                data2.className = newType;
+                data2.OfficeUser = OfficeUser;
+                data2.OfficePass = OfficePass;
+                data2.price = Number(response.data.AdultTotalPrice);
+                data2.fare = response.data;
+                data2.capacity = Number(classes[m].slice(-1)) ? classes[m].slice(-1) : type;
+                data2.longDate1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
+                data2.longDateTime1 = new Date(data.DepartureDateTime).toLocaleDateString('fa-IR');
+                data2.longDate2 = new Date(data.ArrivalDate).toLocaleDateString('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' });
+                data2.enLongDate1 = new Date(data.DepartureDateTime).toLocaleDateString('en', { day: 'numeric', month: 'long' });
+                data2.enLongDate2 = new Date(data.ArrivalDate).toLocaleDateString('en', { day: 'numeric', month: 'long' });
+                self.pushToTicket(data2, type, sort);
+                // console.log('data:', data, type);
               } else if (!sort) {
-                self.getPrice(data, proxy, OfficeUser, OfficePass, 'sort')
+                self.getPrice(data2, proxy, OfficeUser, OfficePass, 'sort')
               }
             })
             .catch(function (error) {
@@ -221,19 +227,25 @@ export default {
         }
       }
     },
+    fareAxios() {
+
+    },
     pushToTicket(object, type, sort) {
-      if (type == 'C' || type == 'X') {
-        this.faildTickets.push(object)
-      } else if (type != 'C' && type != 'X') {
-        let indexNumber = this.faildTickets.findIndex((x) => x.FlightNo == object.FlightNo)
-        if (indexNumber != (-1)) {
-          this.faildTickets.splice(indexNumber, 1)
+      return new Promise(resolve => {
+        if (type == 'C' || type == 'X') {
+          this.faildTickets.push(object)
+          resolve()
+        } else if (type != 'C' && type != 'X') {
+          let indexNumber = this.faildTickets.findIndex((x) => x.FlightNo == object.FlightNo)
+          if (indexNumber != (-1)) {
+            this.faildTickets.splice(indexNumber, 1)
+          }
+          let object2 = { type: type }
+          console.log(Object.assign(object, object2));
+          this.ticket.push(Object.assign(object, object2))
+          resolve()
         }
-        this.ticket.push(object)
-        // if (sort) {
-        //   this.sortTickets(this.sortTab)
-        // }
-      }
+      });
     },
     async sortTickets(tab) {
       if (this.ticket.length > 0) {
@@ -307,19 +319,19 @@ export default {
         }
         stepFunction = stepFunction + 1
         if (stepFunction == 1 || proxy) {
-          self.sortTickets(self.sortTab)
+          await self.sortTickets(self.sortTab)
           self.$emit('allTickets', self.ticket)
         }
       }
       if (proxy) {
         asyncCall(proxy, AirLine, OfficeUser, OfficePass);
       } else {
-        // asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
+        asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
         // asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
         // asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
         // asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
         // asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
-        asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
+        // asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
         // asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
         // asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
         // asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
@@ -364,8 +376,11 @@ export default {
   },
   mounted() {
     this.rt = this.$route.query.rt && this.$route.query.rt
+    let self = this
     setTimeout(() => {
-      this.checkAsync()
+      if (self.$route.query.path) {
+        self.checkAsync()
+      }
     }, 1000);
 
     // this.getAllFlights()

@@ -538,10 +538,13 @@ export default {
       // this.selectedDate = newDate
     },
     '$route'(to, from) {
+      let self = this
       this.tickets = []
       this.allTickets = []
       this.showTickets = []
-      this.loadingTickets = true
+      if (self.$route.query.path) {
+        self.loadingTickets = true
+      }
     },
     rezervStep() {
 
@@ -685,6 +688,7 @@ export default {
       let numberdate = Math.floor(new Date(this.$route.query.start).getTime() / 1000) * 1000
       this.dayNumber(numberdate)
     } else {
+      this.loadingTickets = false
       let numberdate = Math.floor(new Date().getTime() / 1000) * 1000
       this.dayNumber(numberdate)
     }

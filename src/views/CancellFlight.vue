@@ -1,72 +1,75 @@
 <template>
   <div class="mt-12 pt-12 heightAll relative">
     <v-img class="backImage " height="800" src="@/assets/image/cancell-flight.jpg" alt="" />
-    <v-row align="center" class="absolute heightAll widthAll pr-12 mr-12" style="top:-50px">
-      <div class="mr-12 pt-6 px-6 rounded-lg white" style="background-color: rgba(255, 255, 255, 0.548);">
-        <v-row class="mt-6">
-          <v-col>
-            <v-text-field label="نام مسافر" v-model="name" outlined :rules="nameRules" class="rounded-xl"></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field label="نام خانوادگی مسافر" v-model="family" :rules="nameRules" outlined
-              class="mr-4 rounded-xl"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row class="mt-6">
-          <v-col class="pb-2 pt-0 pl-2">
-            <div class="input-group relative font-small-xs form-control headerBoxFields"
-              style="border-radius: 5px;height:100%;background: #fff;">
-              <date-picker :show="show" ref="date" color="red" format="YYYY-MM-DD" clearable: true v-model="date"
-                locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit :min="minDate" :range="false"
-                @close="show = false; changeDate1()" outlined class="heightAll red">
-                <!-- <template #header-date="{ selectedDate }">
+    <v-form ref="flightForm" lazy-validation>
+      <v-row align="center" class="absolute heightAll widthAll pr-12 mr-12" style="top:-50px">
+        <div class="mr-12 pt-6 px-6 rounded-lg white" style="background-color: rgba(255, 255, 255, 0.548);">
+          <v-row class="mt-6">
+            <v-col>
+              <v-text-field label="نام مسافر" v-model="name" outlined :rules="nameRules"
+                class="rounded-xl"></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field label="نام خانوادگی مسافر" v-model="family" :rules="nameRules" outlined
+                class="mr-4 rounded-xl"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row class="mt-6">
+            <v-col class="pb-2 pt-0 pl-2">
+              <div class="input-group relative font-small-xs form-control headerBoxFields"
+                style="border-radius: 5px;height:100%;background: #fff;">
+                <date-picker :show="show" ref="date" color="red" format="YYYY-MM-DD" clearable: true v-model="date"
+                  locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit :min="minDate" :range="false"
+                  @close="show = false; changeDate1()" outlined class="heightAll red">
+                  <!-- <template #header-date="{ selectedDate }">
                   {{ date.length ? selectedDate : 'انتخاب تاریخ' }}
                 </template> -->
-              </date-picker>
-              <div @click="show = !show"
-                class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute rounded-xl"
-                style="z-index:22;padding: 10px 4px;color:#424242;top:0;background: #fff;border: 1px solid #a6a6a4;">
-                {{ (date && date.length) ? selectedDate : 'انتخاب تاریخ' }}
+                </date-picker>
+                <div @click="show = !show"
+                  class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute rounded-xl"
+                  style="z-index:22;padding: 10px 4px;color:#424242;top:0;background: #fff;border: 1px solid #a6a6a4;">
+                  {{ (date && date.length) ? selectedDate : 'انتخاب تاریخ' }}
+                </div>
               </div>
-            </div>
-            <!-- <v-text-field label="تاریخ حرکت" v-model="date" outlined :rules="emptyRules"
+              <!-- <v-text-field label="تاریخ حرکت" v-model="date" outlined :rules="emptyRules"
               class="rounded-xl"></v-text-field> -->
-          </v-col>
-          <v-col class="pr-3">
-            <v-text-field label="PNR" v-model="PNR" outlined :rules="emptyRules"
-              class="widthAll rounded-xl"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row class="mt-6">
-          <v-col>
-            <v-text-field label="شماره پرواز" v-model="flightNo" outlined :rules="emptyRules"
-              class="rounded-xl"></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field label="شماره بلیط" v-model="ticketNo" outlined :rules="emptyRules"
-              class="rounded-xl mx-2"></v-text-field>
-          </v-col>
-          <v-col>
-            <v-select v-model="airline" :items="airlines" outlined :rules="emptyRules" class=" rounded-xl"
-              append-icon="mdi-semantic-web" label="شرکت هواپیمایی"></v-select>
-          </v-col>
-        </v-row>
-        <v-row class="mt-6" justify="center">
-          <v-btn color="green" outlined @click="printTicket(event)">چاپ مجدد بلیط</v-btn>
-          <span class="mx-1"></span>
-          <v-btn color="purple lighten-1" outlined @click="RT()">بررسی وضعیت بلیط</v-btn>
-          <span class="mx-1"></span>
+            </v-col>
+            <v-col class="pr-3">
+              <v-text-field label="PNR" v-model="PNR" outlined :rules="emptyRules"
+                class="widthAll rounded-xl"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row class="mt-6">
+            <v-col>
+              <v-text-field label="شماره پرواز" v-model="flightNo" outlined :rules="emptyRules"
+                class="rounded-xl"></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field label="شماره بلیط" v-model="ticketNo" outlined :rules="emptyRules"
+                class="rounded-xl mx-2"></v-text-field>
+            </v-col>
+            <v-col>
+              <v-select v-model="airline" :items="airlines" outlined :rules="emptyRules" class=" rounded-xl"
+                append-icon="mdi-semantic-web" label="شرکت هواپیمایی"></v-select>
+            </v-col>
+          </v-row>
+          <v-row class="mt-6" justify="center">
+            <v-btn color="green" outlined @click="printTicket()">چاپ مجدد بلیط</v-btn>
+            <span class="mx-1"></span>
+            <v-btn color="purple lighten-1" outlined :loading="disabelRT" @click="RT()">بررسی وضعیت بلیط</v-btn>
+            <span class="mx-1"></span>
 
-          <v-btn color="red" outlined :loading="loadingPenulty" @click="checkPenalty()">کنسل کردن پرواز</v-btn>
-          <v-btn color="green d-none" dark @click="cancellPnr()">cancell PNR</v-btn>
-        </v-row>
-        <v-row justify="center">
-          <span class="caption mt-4 mb-2 red--text" style="font-family: Byekan !important;">توجه داشته باشید برای کنسل
-            کردن هر
-            بلیط باید جداگانه فرم را اجرا کنید.</span>
-        </v-row>
-      </div>
-    </v-row>
+            <v-btn color="red" outlined :loading="loadingPenulty" @click="checkPenalty()">کنسل کردن پرواز</v-btn>
+            <v-btn color="green d-none" dark @click="cancellPnr()">cancell PNR</v-btn>
+          </v-row>
+          <v-row justify="center">
+            <span class="caption mt-4 mb-2 red--text" style="font-family: Byekan !important;">توجه داشته باشید برای کنسل
+              کردن هر
+              بلیط باید جداگانه فرم را اجرا کنید.</span>
+          </v-row>
+        </div>
+      </v-row>
+    </v-form>
     <v-dialog v-if="penultyDialog" width="500" v-model="penultyDialog">
       <v-card class="pa-4">
         <!-- <v-row>
@@ -92,7 +95,6 @@
       style="bottom: 0;right: 10px;min-width: 200px;z-index: 4444444444444;">
       {{ alertText }}
     </v-alert>
-    <qrcode-vue value="https://example.com"></qrcode-vue>
   </div>
 </template>
 
@@ -105,12 +107,12 @@
 <script>
 import axios from 'axios'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
-import QrcodeVue from 'qrcode.vue'
 
 export default {
   name: 'cancell-flight',
   data() {
     return {
+      disabelRT: false,
       qrcodeValue: 'https://example.com',
       penultyDialog: false,
       showAlert: false,
@@ -265,226 +267,276 @@ export default {
     }
   },
   components: {
-    QrcodeVue,
   },
   computed: {
 
   },
   methods: {
     checkPenalty() {
-      // let a = {
-      //   RefundedTaxes: [
-      //     {
-      //       TaxType: "I6",
-      //       TaxAmount: 0,
-      //       Currency: "IRR"
-      //     },
-      //     {
-      //       TaxType: "V0",
-      //       TaxAmount: 189000,
-      //       Currency: "IRR"
-      //     },
-      //     {
-      //       TaxType: "HL",
-      //       TaxAmount: 21000,
-      //       Currency: "IRR"
-      //     },
-      //     {
-      //       TaxType: "LP",
-      //       TaxAmount: 70000,
-      //       Currency: "IRR"
-      //     }
-      //   ],
-      //   Legs: [
-      //     {
-      //       RefundedFare: 840000,
-      //       Amount: "1260000",
-      //       Mode: "P",
-      //       Currency: "IRR",
-      //       Cancellation: "LEG:UGTTTQ SEGMENT NOT CANCELLED RULE: 1096 AM:60- FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOT SET FOR CPN:1\r\n FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOTSET FOR CPN:1\r\n",
-      //       Leg: "UGTTTQ"
-      //     }
-      //   ],
-      //   PENALTY: "1260000",
-      //   RefundedAmount: 1120000
-      // }
-      let self = this
-      self.loadingPenulty = true
-      let airline = this.airlines.find(x => x.value == this.airline)
-      axios.get('http://localhost:8080/' + airline.url + '/NRSPenalty.jsp?AirLine=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (response) {
-        if (response.data.NRSPenalty) {
-          self.newInformations.Penalty = response.data.NRSPenalty.PENALTY.split('.')
-          self.newInformations.RefundedAmount = response.data.NRSPenalty.RefundedAmount.split('.')
-          self.penultyDialog = true
-        } else {
-          self.alertText = response.data == 'NO COUPON EXISTS FOR REFUND!!!' ? 'این بلیط قبلا کنسل شده!' : response.data
-          self.alertType = 'warning'
-          self.showAlert = true
-          setTimeout(() => {
-            self.showAlert = false
-          }, 5000);
-        }
-        self.loadingPenulty = false
-      })
-        .catch(function (error) {
-          // handle error
+      if (this.$refs.flightForm.validate()) {
+        // let a = {
+        //   RefundedTaxes: [
+        //     {
+        //       TaxType: "I6",
+        //       TaxAmount: 0,
+        //       Currency: "IRR"
+        //     },
+        //     {
+        //       TaxType: "V0",
+        //       TaxAmount: 189000,
+        //       Currency: "IRR"
+        //     },
+        //     {
+        //       TaxType: "HL",
+        //       TaxAmount: 21000,
+        //       Currency: "IRR"
+        //     },
+        //     {
+        //       TaxType: "LP",
+        //       TaxAmount: 70000,
+        //       Currency: "IRR"
+        //     }
+        //   ],
+        //   Legs: [
+        //     {
+        //       RefundedFare: 840000,
+        //       Amount: "1260000",
+        //       Mode: "P",
+        //       Currency: "IRR",
+        //       Cancellation: "LEG:UGTTTQ SEGMENT NOT CANCELLED RULE: 1096 AM:60- FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOT SET FOR CPN:1\r\n FLIGHT NOT CNACELLED LEG:1 NO PENALTY NOTSET FOR CPN:1\r\n",
+        //       Leg: "UGTTTQ"
+        //     }
+        //   ],
+        //   PENALTY: "1260000",
+        //   RefundedAmount: 1120000
+        // }
+        let self = this
+        self.loadingPenulty = true
+        let airline = this.airlines.find(x => x.value == this.airline)
+        axios.get('http://localhost:8080/' + airline.url + '/NRSPenalty.jsp?AirLine=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (response) {
+          console.log(response);
+          if (response.data.NRSPenalty) {
+            self.newInformations.Penalty = response.data.NRSPenalty.PENALTY.split('.')
+            self.newInformations.RefundedAmount = response.data.NRSPenalty.RefundedAmount.split('.')
+            self.penultyDialog = true
+          } else {
+            self.alertText = response.data == 'NO COUPON EXISTS FOR REFUND!!!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n' ? 'این بلیط قبلا کنسل شده!' : response.data
+            self.alertType = 'warning'
+            self.showAlert = true
+            setTimeout(() => {
+              self.showAlert = false
+            }, 5000);
+          }
           self.loadingPenulty = false
-          console.log(error);
         })
+          .catch(function (error) {
+            // handle error
+            self.loadingPenulty = false
+            console.log(error);
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     checkPenaltyNow() {
-      let self = this
-      self.loadingConfirmPenulty = true
-      let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        Airline: airline.value,
-        TicketNo: this.ticketNo,
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
-
-      axios.get('http://localhost:8080/' + airline.url + '/NRSPenaltyNow.jsp?', { params }).then(function (response) {
-        self.newInformations.Penalty = response.data.NRSPenalty.PENALTY
-        let findLp = response.data.NRSPenalty.RefundedTaxes.findIndex(x => x.TaxType == 'LP')
-        self.newInformations.LP = findLp == (-1) ? '' : response.data.NRSPenalty.RefundedTaxes[findLp].TaxAmount
-        self.newInformations.Penalty = response.data.NRSPenalty.PENALTY.split('.')
-        self.newInformations.RefundedAmount = response.data.NRSPenalty.RefundedAmount.split('.')
-        self.cancelSeat()
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          self.loadingConfirmPenulty = false
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        self.loadingConfirmPenulty = true
+        let airline = this.airlines.find(x => x.value == this.airline)
+        let params = {
+          Airline: airline.value,
+          TicketNo: this.ticketNo,
+          OfficeUser: airline.user,
+          OfficePass: airline.pass,
+        }
+        axios.get('http://localhost:8080/' + airline.url + '/NRSPenaltyNow.jsp?', { params }).then(function (response) {
+          self.newInformations.Penalty = response.data.NRSPenalty.PENALTY
+          let findLp = response.data.NRSPenalty.RefundedTaxes.findIndex(x => x.TaxType == 'LP')
+          self.newInformations.LP = findLp == (-1) ? '' : response.data.NRSPenalty.RefundedTaxes[findLp].TaxAmount
+          self.newInformations.Penalty = response.data.NRSPenalty.PENALTY.split('.')
+          self.newInformations.RefundedAmount = response.data.NRSPenalty.RefundedAmount.split('.')
+          self.cancelSeat()
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            self.loadingConfirmPenulty = false
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     cancelSeat() {
-      let self = this
-      let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        Airline: airline.value,
-        PNR: this.PNR,
-        PassengerName: this.name,
-        PassengerLastName: this.family,
-        DepartureDate: this.date,
-        FlightNo: this.flightNo,
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
-      axios.get('http://localhost:8080/' + airline.url + '2' + '/CancelSeatJS', { params }).then(function (response) {
-        if (response.data.AirCancelSeat[0].Done == 'true') {
-          self.ETR()
-        } else {
-          self.alertType = 'error'
-          self.alertText = 'عملیات با خطا مواجه شد.'
-          self.showAlert = true
-          setTimeout(() => {
-            self.showAlert = false
-          }, 3000);
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        let airline = this.airlines.find(x => x.value == this.airline)
+        let params = {
+          Airline: airline.value,
+          PNR: this.PNR,
+          PassengerName: this.name,
+          PassengerLastName: this.family,
+          DepartureDate: this.date,
+          FlightNo: this.flightNo,
+          OfficeUser: airline.user,
+          OfficePass: airline.pass,
         }
-        self.penultyDialog = false
-        self.loadingConfirmPenulty = false
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          self.loadingConfirmPenulty = false
-          self.alertType = 'error'
-          self.alertText = 'عملیات با خطا مواجه شد.'
-          self.showAlert = true
-          setTimeout(() => {
-            self.showAlert = false
-          }, 3000);
+        axios.get('http://localhost:8080/' + airline.url + '2' + '/CancelSeatJS', { params }).then(function (response) {
+          if (response.data.AirCancelSeat[0].Done == 'true') {
+            self.ETR()
+          } else {
+            self.alertType = 'error'
+            self.alertText = 'عملیات با خطا مواجه شد.پس از اطمینان از درست بودن فیلدها، باپشتیبانی (داخلی 161) تماس حاصل فرمائید.'
+            self.showAlert = true
+            setTimeout(() => {
+              self.showAlert = false
+            }, 3000);
+          }
+
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            self.loadingConfirmPenulty = false
+            self.alertType = 'error'
+            self.alertText = 'عملیات با خطا مواجه شد.'
+            self.showAlert = true
+            setTimeout(() => {
+              self.showAlert = false
+            }, 3000);
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     printTicket(event) {
-      console.log(event);
-      // let airline = this.airlines.find(x => x.value == this.airline)
-      // window.open('http://localhost:8080/' + airline.url + '3' + '/TicketPrint.aspx?PNR=' + this.PNR + '&TicketNo=' + this.ticketNo + '&OC=' + airline.oc, '_blank');
-
+      if (this.$refs.flightForm.validate()) {
+        let airline = this.airlines.find(x => x.value == this.airline)
+        window.open('http://localhost:8080/' + airline.url + '3' + '/TicketPrint.aspx?PNR=' + this.PNR + '&TicketNo=' + this.ticketNo + '&OC=' + airline.oc, '_blank');
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     ETR() {
-      let self = this
-      let airline = this.airlines.find(x => x.value == this.airline)
-      axios.get('http://localhost:8080/' + airline.url + '/NRSETR.jsp?Airline=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (res) {
-        self.newInformations.Fare = res.data.Fare
-        let KU = res.data.TAXES.find(x => x.TaxCode == 'KU')
-        self.newInformations.KU == KU ? KU.TaxAmount : 0
-        let LP = res.data.TAXES.find(x => x.TaxCode == 'LP')
-        self.newInformations.LP == LP ? LP.TaxAmount : 0
-        self.ETRefund()
-        // get self.newInformations.KU == ???   TaxAmount
-        // get self.newInformations.LP == ???   TaxCode
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        let airline = this.airlines.find(x => x.value == this.airline)
+        axios.get('http://localhost:8080/' + airline.url + '/NRSETR.jsp?Airline=' + airline.value + '&TicketNo=' + this.ticketNo + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass).then(function (res) {
+          self.newInformations.Fare = res.data.Fare
+          let KU = res.data.TAXES.find(x => x.TaxCode == 'KU')
+          self.newInformations.KU == KU ? KU.TaxAmount : 0
+          let LP = res.data.TAXES.find(x => x.TaxCode == 'LP')
+          self.newInformations.LP == LP ? LP.TaxAmount : 0
+          self.ETRefund()
+          // get self.newInformations.KU == ???   TaxAmount
+          // get self.newInformations.LP == ???   TaxCode
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     RT() {
-      let self = this
-      let airline = this.airlines.find(x => x.value == this.airline)
-      axios.get('http://localhost:8080/' + airline.url + '/NRSRT.jsp?Airline=' + airline.value + '&PNR=' + this.PNR + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass + '&Complete=y').then(function (res) {
-        let findObject = res.data.Tickets.find(x => x.PassengerET.toLowerCase() == (self.family.toLowerCase() + '/' + self.name.toLowerCase() + ':' + self.ticketNo))
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        self.disabelRT = true
+        let airline = this.airlines.find(x => x.value == this.airline)
+        axios.get('http://localhost:8080/' + airline.url + '/NRSRT.jsp?Airline=' + airline.value + '&PNR=' + this.PNR + '&OfficeUser=' + airline.user + '&OfficePass=' + airline.pass + '&Complete=y').then(function (res) {
+          let findObject = res.data.Tickets.find(x => x.PassengerET.toLowerCase() == (self.family.toLowerCase() + '/' + self.name.toLowerCase() + ':' + self.ticketNo))
 
-        if (findObject) {
-          self.alertType = findObject.ETStatus == 'O' ? 'success' : findObject.ETStatus == 'R' ? 'error' : 'warning'
-          self.alertText = findObject.ETStatus == 'O' ? 'بلیط اکتیو می‌باشد' : findObject.ETStatus == 'R' ? 'بلیط کنسل شده.' : 'ETStatus = ' + findObject.ETStatus
-        } else {
-          self.alertType = 'warning'
-          self.alertText = 'اطلاعات وارد شده صحیح نمی‌باشد.'
-        }
+          if (findObject) {
+            self.alertType = findObject.ETStatus == 'O' ? 'success' : findObject.ETStatus == 'R' ? 'error' : 'warning'
+            self.alertText = findObject.ETStatus == 'O' ? 'بلیط اکتیو می‌باشد' : findObject.ETStatus == 'R' ? 'بلیط کنسل شده.' : 'ETStatus = ' + findObject.ETStatus
+          } else {
+            self.alertType = 'warning'
+            self.alertText = 'اطلاعات وارد شده صحیح نمی‌باشد.'
+          }
 
-        self.showAlert = true
-        setTimeout(() => {
-          self.showAlert = false
-        }, 3000);
-        // get self.newInformations.KU == ???   TaxAmount
-        // get self.newInformations.LP == ???   TaxCode
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
+          self.showAlert = true
+          self.disabelRT = false
+          setTimeout(() => {
+            self.showAlert = false
+          }, 3000);
+          // get self.newInformations.KU == ???   TaxAmount
+          // get self.newInformations.LP == ???   TaxCode
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     ETRefund() {
-      let self = this
-      let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        Airline: airline.value,
-        TicketNo: this.ticketNo,
-        Fare: self.newInformations.Fare,
-        KU: self.newInformations.KU,//عوارض
-        LP: self.newInformations.LP,//عوارض فرودگاهی
-        Penalty: self.newInformations.Penalty[0],
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
-
-      axios.get('http://localhost:8080/' + airline.url + '2' + '/ETRefundJS', { params }).then(function (response) {
-        self.alertType = 'success'
-        self.alertText = 'پرواز انتخابی با موفقیت کنسل شد.'
-        self.showAlert = true
-        setTimeout(() => {
-          self.showAlert = false
-        }, 3000);
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        let airline = this.airlines.find(x => x.value == this.airline)
+        let params = {
+          Airline: airline.value,
+          TicketNo: this.ticketNo,
+          Fare: self.newInformations.Fare,
+          KU: self.newInformations.KU,//عوارض
+          LP: self.newInformations.LP,//عوارض فرودگاهی
+          Penalty: self.newInformations.Penalty[0],
+          OfficeUser: airline.user,
+          OfficePass: airline.pass,
+        }
+        axios.get('http://localhost:8080/' + airline.url + '2' + '/ETRefundJS', { params }).then(function (response) {
+          self.alertType = 'success'
+          self.alertText = 'پرواز انتخابی با موفقیت کنسل شد.'
+          self.showAlert = true
+          self.penultyDialog = false
+          self.loadingConfirmPenulty = false
+          setTimeout(() => {
+            self.showAlert = false
+          }, 3000);
         })
-
-
-
-      // let testText2 = 'Airline=' + airline.value + '&PNR=' + this.PNR + '&PassengerName=' + this.name + '&PassengerLastName=' + this.family + '&DepartureDate=' + this.date + '&FlightNo=' + this.flightNo + '&OfficeUser=' +airline.user+'&OfficePass='+airline.pass
-
-      // axios.get('http://localhost:8080/' + airline.url + '/CancelSeatJS?' + testText2).then(function (response) {
-      // console.log(response);
-      // })
-      //  .catch(function (error) {
-      //    // handle error
-      // console.log(error);
-      //  })
-
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     changeDate1(value) {
       let date = value ? value : this.$refs.date.value
@@ -502,42 +554,51 @@ export default {
       // }
     },
     cancellPnr() {
-      let self = this
-      let airline = this.airlines.find(x => x.value == this.airline)
-      let params = {
-        Airline: airline.value,
-        PNR: this.PNR,
-        OfficeUser: airline.user,
-        OfficePass: airline.pass,
-      }
-
-      axios.get('http://localhost:8080/' + airline.url + '2' + '/CancelPNRJS', { params }).then(function (response) {
-        if (response.data.AirCancelPNR) {
-          if (response.data.AirCancelPNR[0].Error == "Already Cancelled") {
-            console.log('قبلا کنسل شده این PNR');
-          } else {
-            //  if (response.data.AirCancelPNR[0].Error == 'No Error COMMAND PNR CANCELLED')
-            // console.log(response.data.AirCancelPNR[0].Error);
-          }
-        } else {
-          if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--CANCELLATION DENIED AFTER FLIGHT STOP BOOK.--') {
-            console.log('امکان کنسل کردن بعد از پرواز وجود ندارد.');
-          } else if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--NO PNR--') {
-            console.log('PNR وارد شده صحیح نیست.');
-          } else if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--PNR CANCELLED--') {
-            console.log('PNR با موفقیت کنسل شد.');
-          }
+      if (this.$refs.flightForm.validate()) {
+        let self = this
+        let airline = this.airlines.find(x => x.value == this.airline)
+        let params = {
+          Airline: airline.value,
+          PNR: this.PNR,
+          OfficeUser: airline.user,
+          OfficePass: airline.pass,
         }
-        let resData = response.data
-        // console.log(resData);
-        // console.log(JSON.parse((response.data).replace(/[\r\n]/gm, '-')));
-        // 
 
-      })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
+        axios.get('http://localhost:8080/' + airline.url + '2' + '/CancelPNRJS', { params }).then(function (response) {
+          if (response.data.AirCancelPNR) {
+            if (response.data.AirCancelPNR[0].Error == "Already Cancelled") {
+              console.log('قبلا کنسل شده این PNR');
+            } else {
+              //  if (response.data.AirCancelPNR[0].Error == 'No Error COMMAND PNR CANCELLED')
+              // console.log(response.data.AirCancelPNR[0].Error);
+            }
+          } else {
+            if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--CANCELLATION DENIED AFTER FLIGHT STOP BOOK.--') {
+              console.log('امکان کنسل کردن بعد از پرواز وجود ندارد.');
+            } else if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--NO PNR--') {
+              console.log('PNR وارد شده صحیح نیست.');
+            } else if (JSON.parse((response.data).replace(/[\r\n]/gm, '-')).AirCancelPNR[0].Error == 'No Error COMMAND--PNR CANCELLED--') {
+              console.log('PNR با موفقیت کنسل شد.');
+            }
+          }
+          let resData = response.data
+          // console.log(resData);
+          // console.log(JSON.parse((response.data).replace(/[\r\n]/gm, '-')));
+          // 
+
         })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+      } else {
+        this.alertText = 'لطفا فیلدهای درخواستی را بدرستی تکمیل فرمائید.'
+        this.alertType = 'error'
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+        }, 3000);
+      }
     },
     separatePrice(number) {
       let value1 = number.toString().replace(/,/g, "")

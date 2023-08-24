@@ -238,7 +238,7 @@
         <router-link to="/tour/1020" class="">
           <img class="widthAll rounded-xl d-none d-md-block mt-6" :src="require('@/assets/image/tour/site -russia.jpg')"
             alt="">
-          <img class="widthAll rounded-xl d-block d-md-none mt-6" :src="require('@/assets/image/tour/site -russia.jpg')"
+          <img class="widthAll rounded-xl d-block d-md-none mt-6" :src="require('@/assets/image/tour/site -russia2.jpg')"
             alt="">
         </router-link>
       </div>
