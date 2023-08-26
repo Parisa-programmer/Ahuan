@@ -77,10 +77,13 @@
                 <v-row class="mb-2" justify="center">
                   <v-data-table :loading="loading" loading-text="در حال پردازش اطلاعات..." :headers="pricesHeaderIstanbul"
                     hide-default-footer :items="pricesItemsIstanbul" :items-per-page="50"
-                    class=" rounded-lg even-odd-tabel  tabelTourId"
+                    class=" rounded-lg even-odd-tabel  tabelTourId englishDataTabel"
                     style="box-shadow: 0 0px 21px #dbdbdb !important;border: 2px solid #9d9d9b !important;">
                     <template v-slot:[`item.name`]="{ item }">
                       <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
+                    </template>
+                    <template v-slot:[`item.place`]="{ item }">
+                      <div class="" style="font-family: Byekan !important;">{{ item.place }}</div>
                     </template>
                   </v-data-table>
                 </v-row>
@@ -132,12 +135,14 @@
           <div class="widthAll" v-else-if="tab == 0">
             <v-row justify="center">
               <v-col cols="12" :lg="tour.packagePrograms3 && tour.packagePrograms3.length > 0 ? '12' : '6'">
-                <p v-for="(program, l) in tour.packagePrograms2" :key="l"
-                  class="widthAll mt-2 mt-sm-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
-                  style="float:right;font-family:Byekan !important">
-                  {{ program.program }}
+                <v-row class="heightAll" align="end">
+                  <p v-for="(program, l) in tour.packagePrograms2" :key="l"
+                    class="widthAll mt-2 mt-sm-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
+                    style="float:right;font-family:Byekan !important">
+                    {{ program.program }}
 
-                </p>
+                  </p>
+                </v-row>
               </v-col>
               <div class="d-lg-none widthAll my-sm-4 px-12">
                 <hr class=" mx-12 my-4">
@@ -157,7 +162,16 @@
                   <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;" hide-default-footer
                     :headers="flightHeaders" :items="flights"
                     :class="tour.packagePrograms3 && tour.packagePrograms3.length > 0 && 'tabelHeader'"
-                    class="even-odd-tabel rounded-lg hideOver">
+                    class="even-odd-tabel rounded-lg hideOver c">
+                    <template v-slot:[`item.date`]="{ item }">
+                      <div class="bold"
+                        style="white-space: nowrap;font-family: ' Roboto', sans-serif !important;direction:ltr !important">
+                        {{
+                          item.date }}</div>
+                    </template>
+                    <template v-slot:[`item.text2`]="{ item }">
+                      <div class="bold" style="font-family: Byekan !important;white-space: nowrap;">{{ item.text2 }}</div>
+                    </template>
                   </v-data-table>
                 </v-row>
               </v-col>
@@ -668,7 +682,7 @@
   }
 
   .galeryImageParent {
-    width: 95%;
+    width: 45%;
   }
 
   @media (max-width:400px) {
@@ -1054,7 +1068,7 @@
   }
 
   .galeryImageParent {
-    width: 95%;
+    width: 45%;
   }
 
   .halfLi {
@@ -1274,6 +1288,7 @@ export default {
     this.imageNumber = 0
     this.imageDialog = false
     this.packageDocs = []
+    this.flights = []
 
     this.flights = [
       {

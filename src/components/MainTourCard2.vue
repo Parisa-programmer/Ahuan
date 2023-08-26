@@ -19,15 +19,16 @@
             </v-row>
             <v-row :class="!item.date ? 'mt-4' : ''" justify="center" align="center">
               <img class="mx-1" v-for="(airline, k) in item.airline" :key="k" height="40"
-                :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : ''"
+                :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : airline == 'Qatar Airways' ? require('@/assets/image/airlines/qatar-airways.png') : airline == 'Fly Dubai' ? require('@/assets/image/airlines/flydubai.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : ''"
                 alt="">
             </v-row>
             <v-row v-if="item.date" justify="center">
               <span :class="!item.title2 ? ' mt-2 mt-sm-3' : ''" class="body-2 widthAll text-center"
-                style="font-family:Byekan !important">{{ item.date
+                style="font-family:Byekan !important;white-space: nowrap;">{{ item.date
                 }}</span>
               <br v-if="item.date2">
-              <span v-if="item.date2" class="body-2 " style="font-family:Byekan !important">{{ item.date2
+              <span v-if="item.date2" class="body-2 " style="font-family:Byekan !important;white-space: nowrap;">{{
+                item.date2
               }}</span>
             </v-row>
 
