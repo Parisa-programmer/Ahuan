@@ -3,8 +3,10 @@
     <v-row justify="center">
       <div class="widthAll relative">
         <v-skeleton-loader class="" :loading="loading" type="image">
-          <img class="widthAll backgroundImageTour" :src="'https://panel.ahuantours.com/uploads/' + tour.backImage"
-            alt="" />
+          <img class="widthAll backgroundImageTour d-none d-md-block"
+            :src="'https://panel.ahuantours.com/uploads/' + tour.backImage" alt="" />
+          <img class="widthAll backgroundImageTour d-block d-md-none"
+            :src="'https://panel.ahuantours.com/uploads/' + tour.backImageM" alt="" />
           <div class="tourImageBackgroundPackage"></div>
         </v-skeleton-loader>
         <v-skeleton-loader class="absolute mr-12 mt-6" :class="loading == true ? 'mt-md-12 pt-lg-12' : ''"
@@ -549,7 +551,7 @@
   }
 
   .backgroundImageTour {
-    width: 200%;
+    /* width: 200%; */
   }
 
   .countryNmae {
@@ -963,7 +965,7 @@
   }
 
   .backgroundImageTour {
-    width: 300%;
+    /* width: 300%; */
   }
 
   .countryNmae {

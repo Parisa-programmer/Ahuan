@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-12 pt-12">
+  <div class="mt-sm-6 pt-12">
     <tour-component />
   </div>
 </template>

@@ -31,7 +31,7 @@
                   <router-link to="visa" class="text-decoration-none">
                     <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">خدمات ویزا آهوان</li>
                   </router-link>
-                  <router-link to="tour-page" class="text-decoration-none">
+                  <router-link to="/tour-page" class="text-decoration-none">
                     <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">تورهای ویژه آهوان</li>
                   </router-link>
                   <!-- <li class=" my-2 my-sm-4 caption" style="font-family: Byekan !important;">هتل‌های ویژه آهوان</li> -->

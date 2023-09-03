@@ -1,6 +1,6 @@
 <template>
   <div v-cloak class="widthAll">
-    <v-row justify="center">
+    <v-row justify="center" v-if="page == 'main'">
       <div class="indexDiv">
         <v-card elevation="1" class=" white relative pt-2 pt-sm-2 pt-md-4 pt-lg-6 pb-1 rounded-lg sections-card">
           <v-row class="justify-center justify-md-space-between">
@@ -32,27 +32,27 @@
           <v-card v-show="selectedSection.title != 'بیمه'" elevation="1" class=" rounded-lg px-sm-4 py-2 py-sm-4 py-md-6">
             <v-row>
               <v-col cols="12" sm="5" md="4" lg="3"
-                v-if="selectedSection.title != 'آهوان' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار'">
+                v-if="selectedSection.title != 'آهوان' && selectedSection.title != 'تور' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار'">
                 <v-skeleton-loader class="inputLoader mx-0 mx-sm-4"
                   :class="selectedSection.title == 'هتل' || selectedSection.title == 'تور' ? 'mb-sm-2' : 'mb-sm-4'"
                   type="card-heading">
                   <v-row class="red lighten-4 rounded-lg pa-1">
                     <v-col class="mx-1 pa-1 text-center caption cursorPointer rounded-lg changeExternal"
-                      style="font-family:Byekan !important" @click="external = false"
+                      style="font-family:Byekan !important" @click="external = false; tourDate = {}; tourDates = []"
                       :class="!external && 'white'">داخلی</v-col>
                     <v-col class="mx-1 pa-1 text-center caption cursorPointer rounded-lg changeExternal"
-                      style="font-family:Byekan !important" @click="external = true"
+                      style="font-family:Byekan !important" @click="external = true; tourDate = {}; tourDates = []"
                       :class="external && 'white'">خارجی</v-col>
                   </v-row>
                 </v-skeleton-loader>
               </v-col>
               <v-col class="d-none d-md-inline-block" cols="1" sm="0" md="1"
-                v-if="selectedSection.title != 'آهوان' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار'"></v-col>
+                v-if="selectedSection.title != 'آهوان' && selectedSection.title != 'تور' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار'"></v-col>
               <v-col cols="12" sm="7" md="7" lg="8" class="py-0 py-sm-3"
                 v-if="selectedSection.title != 'هتل' && selectedSection.title != 'آهوان' && selectedSection.title != 'تور' && selectedSection.title != 'قطار' && selectedSection.title != 'اتوبوس'">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
-                  <v-radio-group v-if="windowWidth >= 600 || external" class="mt-0 mx-sm-2 byReturnRadio"
-                    v-model="byReturn" :row="windowWidth < 600 ? true : true">
+                  <v-radio-group :disabled="loading" v-if="windowWidth >= 600 || external"
+                    class="mt-0 mx-sm-2 byReturnRadio" v-model="byReturn" :row="windowWidth < 600 ? true : true">
                     <v-radio label="یک طرفه" color="red" :value="1" class="byReturn ml-sm-4 ml-sm-0"></v-radio>
                     <v-radio label="رفت و برگشت" color="red" :value="2" class="byReturn ml-sm-4 ml-sm-0"></v-radio>
                     <v-radio v-if="external == true" label="چند مسیره" color="red" :value="3"
@@ -83,12 +83,15 @@
             <v-row align="center" class="justify-center justify-lg-start"
               :class="byReturn == 3 && 'borderFlight rounded-lg'">
               <v-col cols="12" sm="6" md="4"
-                :lg="selectedSection.title == 'هتل' ? 3 : selectedSection.title == 'آهوان' ? 3 : 4" class="px-2 py-1">
+                :lg="selectedSection.title == 'هتل' ? 3 : selectedSection.title == 'تور' ? 3 : selectedSection.title == 'آهوان' ? 3 : 4"
+                class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <v-row class="grey lighten-4 rounded-lg relative" style="height: 45px;" justify="center" align="center">
-                    <v-col cols="5" v-if="selectedSection.title != 'هتل' && selectedSection.title != 'آهوان'"
+                    <v-col cols="5"
+                      v-if="selectedSection.title != 'هتل' && selectedSection.title != 'تور' && selectedSection.title != 'آهوان'"
                       class="originCityParent relative">
-                      <v-autocomplete :menu-props="{ closeOnClick: true, bottom: false, offsetY: true }" location="end"
+                      <v-autocomplete :disabled="loading"
+                        :menu-props="{ closeOnClick: true, bottom: false, offsetY: true }" location="end"
                         v-model="originCity" id="originCity" ref="originCity" :rules="emptyRules2"
                         :items="external ? otherCityesOrigin : persianCityes" :search-input.sync="originSearchInput"
                         :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'" class="font-small-xs hideArrow headerCityes"
@@ -100,18 +103,20 @@
                         </template>
                       </v-autocomplete>
                     </v-col>
-                    <v-col cols="2" v-if="selectedSection.title != 'هتل' && selectedSection.title != 'آهوان'">
+                    <v-col cols="2"
+                      v-if="selectedSection.title != 'هتل' && selectedSection.title != 'تور' && selectedSection.title != 'آهوان'">
                       <v-icon class="rounded-circle grey lighten-2 pa-1" @click="exchangeCity"> mdi-swap-horizontal
                       </v-icon>
                     </v-col>
-                    <v-col :cols="selectedSection.title == 'هتل' ? 12 : selectedSection.title == 'آهوان' ? 12 : 5"
+                    <v-col
+                      :cols="(selectedSection.title == 'هتل' || selectedSection.title == 'تور' || selectedSection.title == 'آهوان') ? 12 : 5"
                       class="destinationInternalParent relative">
-                      <v-autocomplete v-model="destinationInternal" ref="destinationInternal" id="destinationInternal"
-                        :menu-props="{ closeOnClick: true, }" :rules="emptyRules2" class="font-small-xs hideArrow"
-                        :search-input.sync="destinationSearchInput"
+                      <v-autocomplete :disabled="loading" v-model="destinationInternal" ref="destinationInternal"
+                        id="destinationInternal" :menu-props="{ closeOnClick: true, }" :rules="emptyRules2"
+                        class="font-small-xs hideArrow" :search-input.sync="destinationSearchInput"
                         :class="destinationInternal && destinationInternal.length ? 'pt-2' : 'pt-0'"
-                        :items="selectedSection.title == 'هتل' ? persianCityes2 : selectedSection.title == 'آهوان' ? hotels : (external ? otherCityesOrigin2 : persianCityes2)"
-                        :label="selectedSection.title == 'هتل' ? 'نام شهر' : selectedSection.title == 'آهوان' ? 'نام هتل' : byReturn == 3 ? 'مقصد اول' : 'مقصد'"
+                        :items="selectedSection.title == 'هتل' ? persianCityes2 : selectedSection.title == 'تور' ? toursList : selectedSection.title == 'آهوان' ? hotels : (external ? otherCityesOrigin2 : persianCityes2)"
+                        :label="selectedSection.title == 'هتل' ? 'نام شهر' : selectedSection.title == 'آهوان' ? 'نام هتل' : selectedSection.title == 'تور' ? 'نام تور' : byReturn == 3 ? 'مقصد اول' : 'مقصد'"
                         prepend-inner-icon="mdi-map-marker" append-inner-icon="mdi-map-marker"
                         @click="viiblePeaple = false" @change="changeHeaderInput('destinationInternal')">
                         <template v-slot:no-data>
@@ -127,22 +132,22 @@
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4"
-                :lg="selectedSection.title == 'هتل' ? 3 : selectedSection.title == 'آهوان' ? 3 : selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 3 : 2"
+                :lg="(selectedSection.title == 'هتل' || selectedSection.title == 'آهوان') ? 3 : selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 3 : 2"
                 class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
-                  <div
+                  <div v-if="selectedSection.title != 'تور'"
                     class="mt-1 input-group relative font-small-xs form-control headerBoxFields grey lighten-4 rounded-lg"
                     style="background-color: #f5f5f5;border-radius: 5px;">
                     <date-picker :show="show" ref="date1" color="#bf0000" format="YYYY-MM-DD" clearable: true
                       v-model="date1" locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit
                       :min="minDate"
                       :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
-                      style="" @close="show = false; changeDate1()" @open=" viiblePeaple = false">
+                      style="" @close="show = false; viiblePeaple = true; changeDate1()" @open=" viiblePeaple = false">
                       <template #header-date="{ formattedDate }">
                         {{ date1.length ? formattedDate : 'انتخاب تاریخ' }}
                       </template>
                     </date-picker>
-                    <div @click=" show = show == true ? false : true"
+                    <div @click="!loading && (show = show == true ? false : true)"
                       class="cursorPointer heightAll d-inline-block font-small-xs widthAll showPopup absolute"
                       style="z-index:22;padding: 10px 4px;color:#424242;top:0">
                       <v-icon class="showPopup" style="color:#424242;">
@@ -151,13 +156,41 @@
                       {{ (date1 && date1.length) ? selectedDate : 'انتخاب تاریخ' }}
                     </div>
                   </div>
+                  <div v-else class="" style="">
+                    <v-autocomplete ref="tourDate" :loading="loadingTourDates" readOnly
+                      :disabled="!destinationInternal || loadingTourDates" v-model="tourDate"
+                      :menu-props="{ closeOnClick: true, }" :rules="emptyRules2"
+                      class="grey lighten-4 rounded-lg pt-2 mb-0 font-small-xs hideArrow px-2" :items="tourDates"
+                      label="تاریخ" prepend-inner-icon="mdi-calendar-month" @click="viiblePeaple = false"
+                      @change="tourDate ? viiblePeaple = true : ''">
+                      <template v-slot:no-data>
+                        <span class="body-2 d-block px-4" style="font-family:Byekan !important">
+                          تاریخی یافت نشد!
+                        </span>
+                      </template>
+                      <template v-slot:item="{ item }">
+                        <span class="pt-2 pb-5 widthAll relative">
+                          {{ item.text }}
+                          <span class="absolute"
+                            style="bottom:0px;left:-10px;font-size:12px;color:#ff8686;font-family: 'Roboto', sans-serif !important;">
+                            ({{ item.subtitle }})
+                          </span>
+                        </span>
+
+                        <!-- <v-list-item style="font-size:13px">
+                          {{ item.text }} -->
+                        <!--  -->
+                        <!-- </v-list-item> -->
+                      </template>
+                    </v-autocomplete>
+                  </div>
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="px-2 py-1">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
                   <div class="relative">
-                    <v-text-field readOnly v-model="allPeaples" prepend-inner-icon="mdi-account"
-                      @click=" viiblePeaple = !viiblePeaple"
+                    <v-text-field :readOnly="true" :disabled="loading" v-model="allPeaples"
+                      prepend-inner-icon="mdi-account" @click=" viiblePeaple = !viiblePeaple"
                       class="font-small-xs form-control headerBoxFields hideEventPeaple darkInput"></v-text-field>
                     <div v-if="viiblePeaple" class="allPeaplesAfter rounded-lg hideOver widthAll absolute white"
                       style="z-index: 3;top: 40px;">
@@ -180,8 +213,9 @@
                         <v-row class="my-4 my-sm-6 body-2 px-2" style="font-family: Byekan !important;">
                           <v-col>
                             <span>بزرگسال</span>
-                            <span class="caption grey--text " style="font-family: Byekan !important;">(12 سال به
-                              بالا)</span>
+                            <span class="caption grey--text " style="font-family: Byekan !important;">
+                              (12 سال به بالا)
+                            </span>
                           </v-col>
                           <v-col>
                             <v-icon @click=" room.peaple > 1 ? room.peaple-- : ''; changeRoomValue()"
@@ -251,13 +285,13 @@
                 </v-skeleton-loader>
               </v-col>
               <v-col cols="12" sm="6" md="4"
-                :lg="selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
-                :xl="selectedSection.title == 'پرواز' || selectedSection.title == 'تور' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
+                :lg="selectedSection.title == 'پرواز' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
+                :xl="selectedSection.title == 'پرواز' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' ? 2 : 3"
                 class="px-2 py-1" :class="byReturn == 3 && 'd-none d-lg-block'">
                 <v-skeleton-loader class="inputLoader" type="card-heading">
-                  <v-btn dark color="red" class="widthAll mt-md-4 mt-lg-0 pt-6 pb-5 ronded-xl searchInHeaderBox"
-                    @click="searchInHeaderBox" style="border-radius: 7px;"
-                    :class="byReturn == 3 && 'd-none d-lg-flex'">جستجو</v-btn>
+                  <v-btn dark :disabled="loading" color="red"
+                    class="widthAll mt-md-4 mt-lg-0 pt-6 pb-5 ronded-xl searchInHeaderBox" @click="searchInHeaderBox"
+                    style="border-radius: 7px;" :class="byReturn == 3 && 'd-none d-lg-flex'">جستجو</v-btn>
                 </v-skeleton-loader>
               </v-col>
             </v-row>
@@ -548,14 +582,24 @@ import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
 
 import axios from 'axios'
 axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
+
 const $ = require('jquery');
 
 export default {
   name: 'InputMain',
+  props: ['page', 'datePickerValue', 'loading'],
   components: {
     datePicker: VuePersianDatetimePicker
   },
   watch: {
+    async datePickerValue() {
+      this.date1 = this.datePickerValue
+      // this.$route.query.start = this.datePickerValue.length == 2 ? this.datePickerValue[0] : this.datePickerValue
+      // this.$route.query.end = this.datePickerValue.length == 2 ? this.datePickerValue[1] : this.datePickerValue
+      await this.changeDate1(this.datePickerValue)
+      // this.searchInHeaderBox()
+      // console.log(this.datePickerValue);
+    },
     showAlert() {
       if (this.showAlert) {
         setTimeout(() => {
@@ -568,16 +612,11 @@ export default {
       this.destinationInternal = '';
       // this.byReturn = 1
       this.date1 = ''
-      if (this.external) {
-        // 
-      }
 
     },
     selectedDate() {
-      if (this.date1.length) {
+      if (this.date1 && this.date1.length) {
         $('.showPopup').css("color", "#424242");
-        this.viiblePeaple = true
-
       } else {
         $('.showPopup').css("color", "red");
       }
@@ -614,11 +653,10 @@ export default {
         },
       ]
       this.date1 = ''
-      this.$refs.date1.setDate(null)
-
       // .value = ''
     },
     originCity() {
+      this.$emit('changeOriginCity', this.originCity)
       // this.otherCityes = this.AllotherCityes
     },
     originSearchInput() {
@@ -631,7 +669,7 @@ export default {
               var otherCityes = response.data.map((x) => {
                 return {
                   text: x.city,
-                  IATA: x.IATA,
+                  IATA: x.city_code,
                   Id: x.Id,
                   country_code: x.country_code,
                   city_code: x.city_code,
@@ -661,16 +699,16 @@ export default {
         }
         $('.v-select-list').removeClass("sugestCity")
       } else {
-        if (self.selectedSection.title != 'هتل' || self.selectedSection.title != 'آهوان') {
+        if (self.selectedSection.title != 'هتل' && self.selectedSection.title != 'آهوان' && self.selectedSection.title != 'تور') {
           $('.v-select-list').addClass("sugestCity")
           self.persianCityes = [
-            { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-            { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-            { label: "this.otherCityesShiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-            { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-            { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-            { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-            { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
+            { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' },
+            { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد", id: "MHD", airport: 'Mashad Arpt' },
+            { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز", id: "SYZ", airport: 'Shiraz Arpt' },
+            { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز", id: "AWZ", airport: 'Ahwaz Airport' },
+            { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان", id: "IFN", airport: 'Isfahan Arpt' },
+            { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش", id: "KIH", airport: 'Kish Island Arpt' },
+            { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس", id: "BND", airport: 'Bandar Abbas Arpt' },
           ]
           self.otherCityesOrigin = self.AllotherCityes
         }
@@ -688,7 +726,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -713,7 +751,7 @@ export default {
             // handle error
           })
         $('.v-select-list').removeClass("sugestCity")
-      } else if (self.selectedSection.title != 'هتل' || self.selectedSection.title != 'آهوان') {
+      } else if (self.selectedSection.title != 'هتل' && self.selectedSection.title != 'آهوان' && self.selectedSection.title != 'تور') {
         $('.v-select-list').addClass("sugestCity")
         self.otherCityesOrigin3 = self.AllotherCityes
       }
@@ -727,7 +765,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -767,7 +805,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -798,6 +836,10 @@ export default {
         self.otherCityesOrigin7 = self.AllotherCityes
       }
     },
+    destinationInternal() {
+      this.$emit('changeDestinationInternal', this.destinationInternal)
+
+    },
     destinationSearchInput() {
       var self = this
       if (self.destinationSearchInput && (self.selectedSection.title != 'آهوان')) {
@@ -809,7 +851,7 @@ export default {
               var otherCityes = response.data.map((x) => {
                 return {
                   text: x.city,
-                  IATA: x.IATA,
+                  IATA: x.city_code,
                   Id: x.Id,
                   country_code: x.country_code,
                   city_code: x.city_code,
@@ -836,16 +878,16 @@ export default {
         } else {
           this.persianCityes2 = this.AllpersianCityes
         }
-      } else if (self.selectedSection.title != 'آهوان') {
+      } else if (self.selectedSection.title != 'آهوان' && self.selectedSection.title != 'تور') {
         $('.v-select-list').addClass("sugestCity")
         self.persianCityes2 = [
-          { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-          { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-          { label: "this.otherCityesShiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-          { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-          { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-          { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-          { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
+          { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' },
+          { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد", id: "MHD", airport: 'Mashad Arpt' },
+          { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز", id: "SYZ", airport: 'Shiraz Arpt' },
+          { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز", id: "AWZ", airport: 'Ahwaz Airport' },
+          { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان", id: "IFN", airport: 'Isfahan Arpt' },
+          { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش", id: "KIH", airport: 'Kish Island Arpt' },
+          { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس", id: "BND", airport: 'Bandar Abbas Arpt' },
         ]
         self.otherCityesOrigin2 = self.AllotherCityes
 
@@ -861,7 +903,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -900,7 +942,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -939,7 +981,7 @@ export default {
             var otherCityes = response.data.map((x) => {
               return {
                 text: x.city,
-                IATA: x.IATA,
+                IATA: x.city_code,
                 Id: x.Id,
                 country_code: x.country_code,
                 city_code: x.city_code,
@@ -969,11 +1011,21 @@ export default {
         self.otherCityesOrigin8 = self.AllotherCityes
       }
     },
-    date1() {
+    async date1() {
+      let dateVariabel = await this.getDayName(this.date1)
+      this.$emit('changeDayName1', dateVariabel)
+      this.$emit('changeDate1', this.date1)
       // 
     },
   },
   data: () => ({
+    loadingTourDates: false,
+    emptyRules: [
+      v => !!v || 'پر کردن این فیلد اجباریست.'
+    ],
+    tourDate: '',
+    tourDates: [],
+    NiraTicketStep: 0,
     viiblePeaple: false,
     selectedRooms: 1,
     showAlert: false,
@@ -1042,85 +1094,87 @@ export default {
     originSearchInput4: '',
     destinationSearchInput: '',
     destinationSearchInput2: '',
+    toursList: [],
     persianCityes: [
-      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
+      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' },
+      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد", id: "MHD", airport: 'Mashad Arpt' },
+      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز", id: "SYZ", airport: 'Shiraz Arpt' },
+      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز", id: "AWZ", airport: 'Ahwaz Airport' },
+      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان", id: "IFN", airport: 'Isfahan Arpt' },
+      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش", id: "KIH", airport: 'Kish Island Arpt' },
+      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس", id: "BND", airport: 'Bandar Abbas Arpt' },
     ],
     persianCityes2: [
-      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
+      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' },
+      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد", id: "MHD", airport: 'Mashad Arpt' },
+      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز", id: "SYZ", airport: 'Shiraz Arpt' },
+      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز", id: "AWZ", airport: 'Ahwaz Airport' },
+      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان", id: "IFN", airport: 'Isfahan Arpt' },
+      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش", id: "KIH", airport: 'Kish Island Arpt' },
+      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس", id: "BND", airport: 'Bandar Abbas Arpt' },
     ],
     AllpersianCityes: [
-      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران" },
-      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد" },
-      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز" },
-      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز" },
-      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان" },
-      { label: "Tabriz, TBZ - تبریز", code: "Tabriz, TBZ", text: "تبریز" },
-      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش" },
-      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس" },
-      { label: "Qeshm, GSM - قشم", code: "Qeshm, GSM", text: "قشم" },
-      { label: "Gorgan, GBT - گرگان", code: "Gorgan, GBT", text: "گرگان" },
-      { label: "Ramsar, RZR - رامسر", code: "Ramsar, RZR", text: "رامسر" },
-      { label: "Bushehr, BUZ - بوشهر", code: "Bushehr, BUZ", text: "بوشهر" },
-      { label: "Lar, LRR - لار", code: "Lar, LRR", text: "لار" },
-      { label: "Zanjan, JWN - زنجان", code: "Zanjan, JWN", text: "زنجان" },
-      { label: "Bahregan, IAQ - بهرگان", code: "Bahregan, IAQ", text: "بهرگان" },
-      { label: "Lamard, LFM - لامرد", code: "Lamard, LFM", text: "لامرد" },
-      { label: "Sari, SRY - ساری", code: "Sari, SRY", text: "ساری" },
-      { label: "Birjand, XBJ - بیرجند", code: "Birjand, XBJ", text: "بیرجند" },
-      { label: "Lavan, LVP - لاوان", code: "Lavan, LVP", text: "لاوان" },
-      { label: "Sabzevar, AFZ - سبزوار", code: "Sabzevar, AFZ", text: "سبزوار" },
-      { label: "Abu Musa, AEU - جزیره ابوموسی", code: "Abu Musa, AEU", text: "جزیره ابوموسی" },
-      { label: "Mahshahr, MRX - ماهشهر", code: "Mahshahr, MRX", text: "ماهشهر" },
-      { label: "Sanandaj, SDG - سنندج", code: "Sanandaj, SDG", text: "سنندج" },
-      { label: "Siri, SXI - جزیره سیری", code: "Siri, SXI", text: "جزیره سیری" },
-      { label: "Nowshahr, NSH - نوشهر", code: "Nowshahr, NSH", text: "نوشهر" },
-      { label: "Sirjan, SYJ - سیرجان", code: "Sirjan, SYJ", text: "سیرجان" },
-      { label: "Jiroft, JYR - جیرفت", code: "Jiroft, JYR", text: "جیرفت" },
-      { label: "Hamedan, HDM - همدان", code: "Hamedan, HDM", text: "همدان" },
-      { label: "Shahrod, RUD - شاهرود", code: "Shahrod, RUD", text: "شاهرود" },
-      { label: "Chabahar, ZBR - چابهار", code: "Chabahar, ZBR", text: "چابهار" },
-      { label: "Yazd, AZD - یزد", code: "Yazd, AZD", text: "یزد" },
-      { label: "Sharekord, CQD - شهر کرد", code: "Sharekord, CQD", text: "شهر کرد" },
-      { label: "Khark, KHK - خارک", code: "Khark, KHK", text: "خارک" },
-      { label: "Arak, AJK - اراک", code: "Arak, AJK", text: "اراک" },
-      { label: "Abadan, ABD - آبادان", code: "Abadan, ABD", text: "آبادان" },
-      { label: "Tabas, TCX - طبس", code: "Tabas, TCX", text: "طبس" },
-      { label: "Khoramabad, KHD - خرم آباد", code: "Khoramabad, KHD", text: "خرم آباد" },
-      { label: "Maragheh, ACP - مراغه", code: "Maragheh, ACP", text: "مراغه" },
-      { label: "Ardabil, ADU - اردبیل", code: "Ardabil, ADU", text: "اردبیل" },
-      { label: "Asaluyeh, PGU - عسلویه", code: "Asaluyeh, PGU", text: "عسلویه" },
-      { label: "Khoy, KHY - خوی", code: "Khoy, KHY", text: "خوی" },
-      { label: "Yasuj, YES - یاسوج", code: "Yasuj, YES", text: "یاسوج" },
-      { label: "Urmia, OMH - ارومیه", code: "Urmia, OMH", text: "ارومیه" },
-      { label: "Dezful, DEF - دزفول", code: "Dezful, DEF", text: "دزفول" },
-      { label: "Jahrom, JAR - جهرم", code: "Jahrom, JAR", text: "جهرم" },
-      { label: "Kashan, KSN - کاشان", code: "Kashan, KSN", text: "کاشان" },
-      { label: "Kangan, KNR - کانگان", code: "Kangan, KNR", text: "کانگان" },
-      { label: "Parsabad, PFQ - پارس آباد", code: "Parsabad, PFQ", text: "پارس آباد" },
-      { label: "Iranshahr, IHR - ایران شهر", code: "Iranshahr, IHR", text: "ایران شهر" },
-      { label: "Kerman, KER - کرمان", code: "Kerman, KER", text: "کرمان" },
-      { label: "Rasht, RAS - رشت", code: "Rasht, RAS", text: "رشت" },
-      { label: "Ilam, IIL - ایلام", code: "Ilam, IIL", text: "ایلام" },
-      { label: "Kermanshah, KSH - کرمانشاه", code: "Kermanshah, KSH", text: "کرمانشاه" },
-      { label: "Rafsanjan, RJN - رفسنجان", code: "Rafsanjan, RJN", text: "رفسنجان" },
-      { label: "Bojnord, BJB - بجنورد", code: "Bojnord, BJB", text: "بجنورد" },
-      { label: "Gachsaran, GCH - گچساران", code: "Gachsaran, GCH", text: "گچساران" },
-      { label: "zabol, ACZ - زابل", code: "zabol, ACZ", text: "زابل" },
-      { label: "Bam, BXR - بم", code: "Bam, BXR", text: "بم" },
-      { label: "Bandar lengeh, BDH - بندر لنگه", code: "Bandar lengeh, BDH", text: "بندر لنگه" },
-      { label: "Zahedan, ZAH - زاهدان", code: "Zahedan, ZAH", text: "زاهدان" }
+      { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' },
+      { label: "Mashhad, MHD - مشهد", code: "Mashhad, MHD", text: "مشهد", id: "MHD", airport: 'Mashad Arpt' },
+      { label: "Shiraz, SYZ - شیراز", code: "Shiraz, SYZ", text: "شیراز", id: "SYZ", airport: 'Shiraz Arpt' },
+      { label: "Ahwaz, AWZ - اهواز", code: "Ahwaz, AWZ", text: "اهواز", id: "AWZ", airport: '' },
+      { label: "Isfahan, IFN - اصفهان", code: "Isfahan, IFN", text: "اصفهان", id: "IFN", airport: 'Isfahan Arpt' },
+      { label: "Tabriz, TBZ - تبریز", code: "Tabriz, TBZ", text: "تبریز", id: "TBZ", airport: 'Tabriz International Arpt' },
+      { label: "Kish, KIH - کیش", code: "Kish, KIH", text: "کیش", id: "KIH", airport: 'Kish Island Arpt' },
+      { label: "Bandar abbas, BND - بندر عباس", code: "Bandar abbas, BND", text: "بندر عباس", id: "BND", airport: 'Bandar Abbas Arpt' },
+      { label: "Qeshm, GSM - قشم", code: "Qeshm, GSM", text: "قشم", id: "GSM", airport: 'Dayrestan Airport' },
+      { label: "Gorgan, GBT - گرگان", code: "Gorgan, GBT", text: "گرگان", id: "GBT", airport: 'Gorgon Airport' },
+      { label: "Ramsar, RZR - رامسر", code: "Ramsar, RZR", text: "رامسر", id: "RZR", airport: 'Ramsar Airport' },
+      { label: "Bushehr, BUZ - بوشهر", code: "Bushehr, BUZ", text: "بوشهر", id: "BUZ", airport: 'Bushehr Arpt' },
+      { label: "Lar, LRR - لار", code: "Lar, LRR", text: "لار", id: "لار", airport: 'Lar Airport' },
+      { label: "Zanjan, JWN - زنجان", code: "Zanjan, JWN", text: "زنجان", id: "JWN", airport: 'Zanjan Arpt' },
+      { label: "Bahregan, IAQ - بهرگان", code: "Bahregan, IAQ", text: "بهرگان", id: "IAQ", airport: '' },
+      { label: "Lamard, LFM - لامرد", code: "Lamard, LFM", text: "لامرد", id: "LFM", airport: 'Lamerd Airport' },
+      { label: "Sari, SRY - ساری", code: "Sari, SRY", text: "ساری", id: "SRY", airport: 'Dasht-e Naz Airport' },
+      { label: "Birjand, XBJ - بیرجند", code: "Birjand, XBJ", text: "بیرجند", id: "XBJ", airport: 'Birjand Airport' },
+      { label: "Lavan, LVP - لاوان", code: "Lavan, LVP", text: "لاوان", id: "LVP", airport: 'Lavan Island Airport' },
+      { label: "Sabzevar, AFZ - سبزوار", code: "Sabzevar, AFZ", text: "سبزوار", id: "AFZ", airport: 'Sabzevar Airport' },
+      { label: "Abu Musa, AEU - جزیره ابوموسی", code: "Abu Musa, AEU", text: "جزیره ابوموسی", id: "AEU", airport: 'Abu Musa Airport' },
+      { label: "Mahshahr, MRX - ماهشهر", code: "Mahshahr, MRX", text: "ماهشهر", id: "MRX", airport: 'Mahshahr Airport' },
+      { label: "Sanandaj, SDG - سنندج", code: "Sanandaj, SDG", text: "سنندج", id: "SDG", airport: 'Sanandaj Airport' },
+      { label: "Siri, SXI - جزیره سیری", code: "Siri, SXI", text: "جزیره سیری", id: "SXI", airport: 'Sirri Island Airport' },
+      { label: "Nowshahr, NSH - نوشهر", code: "Nowshahr, NSH", text: "نوشهر", id: "NSH", airport: 'Now Shahr Airport' },
+      { label: "Sirjan, SYJ - سیرجان", code: "Sirjan, SYJ", text: "سیرجان", id: "SYJ", airport: 'Sirjan' },
+      { label: "Jiroft, JYR - جیرفت", code: "Jiroft, JYR", text: "جیرفت", id: "JYR", airport: 'Jiroft Airport' },
+      { label: "Hamedan, HDM - همدان", code: "Hamedan, HDM", text: "همدان", id: "HDM", airport: 'Hamadan Airport' },
+      { label: "Shahrod, RUD - شاهرود", code: "Shahrod, RUD", text: "شاهرود", id: "RUD", airport: 'Shahroud Airport' },
+      { label: "Chabahar, ZBR - چابهار", code: "Chabahar, ZBR", text: "چابهار", id: "ZBR", airport: 'Chah-Bahar Airport' },
+      { label: "Yazd, AZD - یزد", code: "Yazd, AZD", text: "یزد", id: "AZD", airport: 'Yazd Arpt' },
+      { label: "Sharekord, CQD - شهر کرد", code: "Sharekord, CQD", text: "شهر کرد", id: "CQD", airport: 'Shahre Kord Arpt' },
+      { label: "Khark, KHK - خارک", code: "Khark, KHK", text: "خارک", id: "KHK", airport: 'Khark Airport' },
+      { label: "Arak, AJK - اراک", code: "Arak, AJK", text: "اراک", id: "AJK", airport: 'Araak Airport' },
+      { label: "Abadan, ABD - آبادان", code: "Abadan, ABD", text: "آبادان", id: "ABD", airport: 'Abadan Arpt' },
+      { label: "Tabas, TCX - طبس", code: "Tabas, TCX", text: "طبس", id: "TCX", airport: 'Tabas Airport' },
+      { label: "Khoramabad, KHD - خرم آباد", code: "Khoramabad, KHD", text: "خرم آباد", id: "KHD", airport: 'Khorramabad Arpt' },
+      { label: "Maragheh, ACP - مراغه", code: "Maragheh, ACP", text: "مراغه", id: "ACP", airport: 'Sahand Airport' },
+      { label: "Ardabil, ADU - اردبیل", code: "Ardabil, ADU", text: "اردبیل", id: "ADU", airport: 'Ardabil Arpt' },
+      { label: "Asaluyeh, PGU - عسلویه", code: "Asaluyeh, PGU", text: "عسلویه", id: "PGU", airport: "Ala'Marvdasht Arpt" },
+      { label: "Khoy, KHY - خوی", code: "Khoy, KHY", text: "خوی", id: "KHY", airport: 'Khoy Airport' },
+      { label: "Yasuj, YES - یاسوج", code: "Yasuj, YES", text: "یاسوج", id: "YES", airport: 'Yasouj Airport' },
+      { label: "Urmia, OMH - ارومیه", code: "Urmia, OMH", text: "ارومیه", id: "OMH", airport: 'URUMIYEH' },
+      { label: "Dezful, DEF - دزفول", code: "Dezful, DEF", text: "دزفول", id: "DEF", airport: 'Dezful Airport' },
+      { label: "Jahrom, JAR - جهرم", code: "Jahrom, JAR", text: "جهرم", id: "JAR", airport: 'Jahrom Airport' },
+      { label: "Kashan, KSN - کاشان", code: "Kashan, KSN", text: "کاشان", id: "KSN", airport: 'Kashan Airport' },
+      { label: "Kangan, KNR - کانگان", code: "Kangan, KNR", text: "کانگان", id: "KNR", airport: 'Jam Airport' },
+      { label: "Parsabad, PFQ - پارس آباد", code: "Parsabad, PFQ", text: "پارس آباد", id: "PFQ", airport: '' },
+      { label: "Iranshahr, IHR - ایران شهر", code: "Iranshahr, IHR", text: "ایران شهر", id: "IHR", airport: 'Iran Shahr Airport' },
+      { label: "Kerman, KER - کرمان", code: "Kerman, KER", text: "کرمان", id: "KER", airport: 'Kerman Arpt' },
+      { label: "Rasht, RAS - رشت", code: "Rasht, RAS", text: "رشت", id: "RAS", airport: 'Rasht Airport' },
+      { label: "Ilam, IIL - ایلام", code: "Ilam, IIL", text: "ایلام", id: "IIL", airport: 'Ilaam Airport' },
+      { label: "Kermanshah, KSH - کرمانشاه", code: "Kermanshah, KSH", text: "کرمانشاه", id: "KSH", airport: 'Kermanshah Arpt' },
+      { label: "Rafsanjan, RJN - رفسنجان", code: "Rafsanjan, RJN", text: "رفسنجان", id: "RJN", airport: 'Rafsanjan Airport' },
+      { label: "Bojnord, BJB - بجنورد", code: "Bojnord, BJB", text: "بجنورد", id: "BJB", airport: 'Bojnord Airport' },
+      { label: "Gachsaran, GCH - گچساران", code: "Gachsaran, GCH", text: "گچساران", id: "GCH", airport: 'Gachsaran Airport' },
+      { label: "zabol, ACZ - زابل", code: "zabol, ACZ", text: "زابل", id: "ACZ", airport: 'Zabol A/P Airport' },
+      { label: "Bam, BXR - بم", code: "Bam, BXR", text: "بم", id: "BXR", airport: 'Bam Airport' },
+      { label: "Bandar lengeh, BDH - بندر لنگه", code: "Bandar lengeh, BDH", text: "بندر لنگه", id: "BDH", airport: 'Bandar Lengeh Airport' },
+      { label: "Zahedan, ZAH - زاهدان", code: "Zahedan, ZAH", text: "زاهدان", id: "ZAH", airport: 'Zahedan Airport' },
+      { label: "Sarakhs, CKT - سرخس", code: "Sarakhs, CKT", text: "سرخس", id: "CKT", airport: 'Sarakhs Airport' }
     ],
     selectedDate: '',
     selectedDate2: '',
@@ -1167,9 +1221,11 @@ export default {
         lang: { label: 'شمسی' }
       },
     },
-    minDate: ''
+    minDate: '',
+    airlines: []
   }),
   methods: {
+
     changeActiveSection(index) {
       this.viiblePeaple = false
       this.$refs.headerInputForm.resetValidation()
@@ -1194,22 +1250,26 @@ export default {
       this.$emit('changeActiveSection', this.selectedSection)
       this.byReturn = 1
       this.date1 = ''
-      this.$refs.date1.setDate(null)
       this.external = false
+      this.tourDate = {}
+      this.tourDates = []
       this.changeRoomValue()
 
     },
-    changeDate1() {
-      let date = this.$refs.date1.value
+    changeDate1(value) {
+      let date = value ? value : this.$refs.date1.value
+
       let variabel = ''
       let options = { day: 'numeric', month: 'long' };
       if (date.length == 2) {
         variabel = (new Date(date[0]).toLocaleDateString('fa-IR', options) + ' الی ' + new Date(date[1]).toLocaleDateString('fa-IR', options));
       } else {
         variabel = new Date(date).toLocaleDateString('fa-IR', options);
-
       }
       this.selectedDate = variabel
+      if (value) {
+        this.viiblePeaple = false
+      }
     },
     changeDate2() {
       let date = this.$refs.date2.value
@@ -1256,14 +1316,15 @@ export default {
 
       this.selectedDate4 = variabel
     },
-    changeRoomValue() {
+    changeRoomValue(title) {
       var rooms = this.headerRooms
       var all = 0
       for (let i = 0; i < rooms.length; i++) {
         all = all + rooms[i].baby + rooms[i].child + rooms[i].peaple
+
       }
       this.allPeaples = all + ' مسافر '
-      if (this.selectedSection.title == 'هتل' || this.selectedSection.title == 'تور' || this.selectedSection.title == 'آهوان') {
+      if (title != 'flight' && (this.selectedSection.title == 'هتل' || this.selectedSection.title == 'تور' || this.selectedSection.title == 'آهوان')) {
         this.allPeaples = this.allPeaples + '+ ' + this.headerRooms.length + ' اتاق'
       }
     },
@@ -1309,7 +1370,6 @@ export default {
         // ]
       }
       this.date1 = ''
-      // this.$refs.date1.setDate(null)
     },
     exchangeCity(index) {
       this.viiblePeaple = false
@@ -1410,6 +1470,63 @@ export default {
           self.otherCityesOrigin6 = otherCityes
           self.otherCityesOrigin7 = otherCityes
           self.otherCityesOrigin8 = otherCityes
+          if (self.page == 'flight' || self.page == 'main') {
+            setTimeout(() => {
+              self.selectedSection = {
+                icon: 'mdi-airplane',
+                title: 'پرواز',
+                active: true,
+              }
+              self.setCreated()
+            }, 500);
+          }
+
+        })
+        .catch(function (error) {
+          // handle error
+        })
+    },
+    getToursList() {
+      let self = this
+      axios.get('https://panel.ahuantours.com/api/tour/all')
+        .then(function (response) {
+          self.toursList = response.data.map((x) => {
+            return {
+              label: x.name,
+              id: x.id,
+              text: x.name,
+              airport: 'Mehrabad Arpt'
+            }
+          })
+          // { label: "Tehran, THR - تهران", code: "Tehran, THR", text: "تهران", id: "THR", airport: 'Mehrabad Arpt' }
+          console.log();
+          // // handle success
+          // let otherCityes = response.data.map((x) => {
+          //   return {
+          //     text: x.city,
+          //     IATA: x.IATA
+          //   };
+          // });
+          // self.mostUseCityes = otherCityes
+          // self.AllotherCityes = otherCityes
+          // self.otherCityesOrigin = otherCityes
+          // self.otherCityesOrigin2 = otherCityes
+          // self.otherCityesOrigin3 = otherCityes
+          // self.otherCityesOrigin4 = otherCityes
+          // self.otherCityesOrigin5 = otherCityes
+          // self.otherCityesOrigin6 = otherCityes
+          // self.otherCityesOrigin7 = otherCityes
+          // self.otherCityesOrigin8 = otherCityes
+          // if (self.page == 'flight' || self.page == 'main') {
+          //   setTimeout(() => {
+          //     self.selectedSection = {
+          //       icon: 'mdi-airplane',
+          //       title: 'پرواز',
+          //       active: true,
+          //     }
+          //     self.setCreated()
+          //   }, 500);
+          // }
         })
         .catch(function (error) {
           // handle error
@@ -1419,7 +1536,8 @@ export default {
       var self = this
       this.viiblePeaple = false
       if (!this.$refs.headerInputForm.validate()
-        || !this.selectedDate.length
+        || (this.selectedSection.title == 'تور' && !this.tourDate.length)
+        || (this.selectedSection.title != 'تور' && !this.selectedDate.length)
         || (self.byReturn == 3 && (!self.allFlights[0].date || self.flightCityes.length > 1 && !self.allFlights[1].date || self.flightCityes.length > 2 && !self.allFlights[2].date))
       ) {
         // validate is false_____________________________________________________________________
@@ -1495,18 +1613,24 @@ export default {
         // get origin and destination ____________________________________________________________
         let originIATA = ''
         let destinationIATA = ''
+        let originID = ''
+        let destinationID = ''
         if (self.external) {
           // if is not multi flight_______________________________________________________________
           if (self.byReturn != 3) {
-            originIATA = self.otherCityesOrigin.find(x => x.text == self.originCity)
-            originIATA = originIATA.IATA
-            destinationIATA = self.otherCityesOrigin2.find(x => x.text == self.destinationInternal)
-            destinationIATA = destinationIATA.IATA
+            originIATA = (self.page == 'flight' && self.originCity.text) ? self.AllpersianCityes.find(x => x.text == self.originCity.text) : self.otherCityesOrigin.find(x => x.text == self.originCity)
+            originID = originIATA.IATA
+            // originIATA = originIATA.IATA
+            destinationIATA = (self.page == 'flight' && self.destinationInternal.text) ? self.AllpersianCityes.find(x => x.text == self.destinationInternal.text) : self.otherCityesOrigin2.find(x => x.text == self.destinationInternal)
+            destinationID = destinationIATA.IATA
+            // destinationIATA = destinationIATA.IATA
           }
         } else if (this.selectedSection.title != 'آهوان' && this.selectedSection.title != 'تور' && this.selectedSection.title != 'هتل') {
-          originIATA = self.AllpersianCityes.find(x => x.text == self.originCity)
+          originIATA = (self.page == 'flight' && self.originCity.text) ? self.AllpersianCityes.find(x => x.text == self.originCity.text) : self.AllpersianCityes.find(x => x.text == self.originCity)
+          originID = originIATA.id
           originIATA = originIATA.label
-          destinationIATA = self.AllpersianCityes.find(x => x.text == self.destinationInternal)
+          destinationIATA = (self.page == 'flight' && self.destinationInternal.text) ? self.AllpersianCityes.find(x => x.text == self.destinationInternal.text) : self.AllpersianCityes.find(x => x.text == self.destinationInternal)
+          destinationID = destinationIATA.id
           destinationIATA = destinationIATA.label
         }
         switch (this.selectedSection.title) {
@@ -1522,37 +1646,50 @@ export default {
             window.location.href = self.searchLink
             break;
           case 'پرواز':
-            self.searchLink = self.byReturn == 2 ?
-              '/flight?' +
-              'path=' + (self.byReturn == 1 ? 'ow' : self.byReturn == 2 ? 'rt' : 'mp') +
-              '&from=' + originIATA +
-              '&to=' + destinationIATA +
-              '&start=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
-              '&end=' + variabel2[0] + '+' + variabel2[1] + '+' + variabel2[2] +
-              '&adl=' + adl +
-              '&chd=' + childs +
-              '&inf=' + inf
-              :
-              '/flight?' +
-              'path=' + (self.byReturn == 1 ? 'ow' : self.byReturn == 2 ? 'rt' : 'mp') +
-              '&from=' + originIATA +
-              '&to=' + destinationIATA +
-              '&start=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
-              '&end=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
-              '&adl=' + adl +
-              '&chd=' + childs +
-              '&inf=' + inf
-            if (self.byReturn != 3) {
-              window.location.href = self.searchLink;
-            } else {
-              self.alertText = 'این قسمت از سایت در حال توسعه میباشد!';
-              self.alertType = 'success';
-              self.showAlert = true;
-            }
+            {
+              self.searchLink = self.byReturn == 2 ?
+                '/flight?' +
+                'path=' + (self.byReturn == 1 ? 'ow' : self.byReturn == 2 ? 'rt' : 'mp') +
+                '&from=' + originIATA +
+                '&to=' + destinationIATA +
+                '&start=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
+                '&end=' + variabel2[0] + '+' + variabel2[1] + '+' + variabel2[2] +
+                '&adl=' + adl +
+                '&chd=' + childs +
+                '&inf=' + inf
+                :
+                '/flight?' +
+                'path=' + (self.byReturn == 1 ? 'ow' : self.byReturn == 2 ? 'rt' : 'mp') +
+                '&from=' + originIATA +
+                '&to=' + destinationIATA +
+                '&start=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
+                '&end=' + variabel[0] + '+' + variabel[1] + '+' + variabel[2] +
+                '&adl=' + adl +
+                '&chd=' + childs +
+                '&inf=' + inf
+              if (self.byReturn != 3) {
+                window.location.href = self.searchLink;
+              } else {
+                self.alertText = 'این قسمت از سایت در حال توسعه میباشد!';
+                self.alertType = 'success';
+                self.showAlert = true;
+              }
 
+              break;
+            }
+          case 'تور': {
+            let findTourId = self.toursList.find(x => x.label == self.destinationInternal)
+            let findTourDateId = self.tourDates.find(x => x.text == self.tourDate)
+            let roomText = ''
+            for (let i = 0; i < self.headerRooms.length; i++) {
+              roomText = roomText + self.headerRooms[i].peaple + '-' + self.headerRooms[i].child + '-' + self.headerRooms[i].baby + (i == self.headerRooms.length - 1 ? '' : ',')
+            }
+            window.location.href = 'https://panel.ahuantours.com/reserve/tour/' + findTourId.id + '/' + findTourDateId.id + '/' + roomText
             break;
-          default:
+          }
+          default: {
             break;
+          }
         }
         self.isLoadingAxios = false
       }
@@ -1573,8 +1710,33 @@ export default {
 
           break;
         case 'destinationInternal':
+          self.tourDate = {};
+          self.tourDates = []
           if (self.destinationInternal) {
-            this.$refs.date1.focus()
+            if (self.selectedSection.title == 'تور') {
+              let findId = self.toursList.find(x => x.label == self.destinationInternal)
+              self.loadingTourDates = true
+              axios.get('https://panel.ahuantours.com/api/tour/' + findId.id + '/dates2')
+                .then(function (response) {
+                  // handle success
+                  self.tourDates = response.data.map((x) => {
+                    return {
+                      label: x.goDateShamsi + ' الی ' + x.retDateShamsi,
+                      id: x.id,
+                      text: x.goDateShamsi + ' الی ' + x.retDateShamsi,
+                      subtitle: x.goDateMiladi + ' to ' + x.retDateMiladi,
+                    }
+                  })
+                  self.loadingTourDates = false
+                  self.$refs.tourDate.$refs.menu.isActive = true;
+
+                })
+                .catch(function (error) {
+                  // handle error
+                })
+            } else {
+              self.$refs.date1.focus()
+            }
           }
           break;
         case 'originCity0':
@@ -1631,10 +1793,8 @@ export default {
         $('.showPopup , .showPopup2 , .showPopup3 , .showPopup4').css("color", '#424242')
       }
       else {
-        console.log(this.flightCityes[index], this.allFlights[index]);
         this.flightCityes.splice(index, 1)
         this.allFlights.splice(index, 1)
-        console.log(this.flightCityes, this.allFlights);
       }
     },
     disabelDate(formatted, dateMoment, checkingFor) {
@@ -1647,7 +1807,18 @@ export default {
     showPeaple() {
       this.viiblePeaple = !this.viiblePeaple
     },
+    getDayName(dateSelected) {
+      var date1 = new Date(dateSelected.length == 2 ? dateSelected[0] : dateSelected).getDay()
+      var date2 = new Date(dateSelected.length == 2 ? dateSelected[1] : dateSelected).getDay()
 
+      // // let months = new Array("فروردين", "ارديبهشت", "خرداد", "تير", "مرداد", "شهريور", "مهر", "آبان", "آذر", "دي", "بهمن", "اسفند");
+      let days = new Array("یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه", "شنبه");
+      let allDays = {
+        day1: days[date1],
+        day2: days[date2]
+      }
+      return allDays
+    },
     toggleDate() {
       // if (this.showDate1) {
       //   this.showDate1 = false
@@ -1656,28 +1827,101 @@ export default {
       this.$refs.date1.focus()
       // }
     },
+    setCreated() {
+      let self = this
+      if (self.page == 'flight' && self.$route.query.start) {
+        switch (self.$route.query.path) {
+          case 'ow':
+            self.byReturn = 1
+            break;
+          case 'rt':
+            self.byReturn = 2
+            break;
+          case 'mp':
+            self.byReturn = 3
+            break;
+          default:
+            break;
+        }
+        self.external = self.$route.query.ex == 'true' ? true : false
+        if (self.$route.query.path == 'ow') {
+          self.date1 = self.$route.query.start
+          self.headerRooms = [{
+            peaple: Number(self.$route.query.adl),
+            child: Number(self.$route.query.chd),
+            baby: Number(self.$route.query.inf),
+          }]
+          self.$emit('getPasanger', self.headerRooms)
+          self.changeRoomValue('flight')
+          setTimeout(() => {
+            self.date1 = self.$route.query.start
+            setTimeout(() => {
+              self.changeDate1()
+              self.viiblePeaple = false
+            }, 500);
+          }, 500);
+
+          if (self.external == true) {
+            setTimeout(() => {
+              self.originCity = self.otherCityesOrigin.find(x => x.IATA == self.$route.query.from)
+              self.destinationInternal = self.otherCityesOrigin.find(x => x.IATA == self.$route.query.to)
+            }, 1000);
+          }
+          else {
+
+            if (!self.persianCityes.find(x => x.id == self.$route.query.from)) {
+              self.persianCityes = self.AllpersianCityes
+            }
+            self.originCity = self.persianCityes.find(x => x.id == self.$route.query.from)
+            if (!self.persianCityes2.find(x => x.id == self.$route.query.to)) {
+              self.persianCityes2 = self.AllpersianCityes
+            }
+            self.destinationInternal = self.persianCityes2.find(x => x.id == self.$route.query.to)
+          }
+
+          self.$emit('reRoute')
+        }
+        else if (self.$route.query.path == 'rt') {
+          self.external = self.$route.query.ex == 'false' ? false : true
+          if (!self.persianCityes.find(x => x.id == self.$route.query.from)) {
+            self.persianCityes = self.AllpersianCityes
+          }
+          self.originCity = self.persianCityes.find(x => x.id == self.$route.query.from)
+          if (!self.persianCityes2.find(x => x.id == self.$route.query.to)) {
+            self.persianCityes2 = self.AllpersianCityes
+          }
+          self.destinationInternal = self.persianCityes2.find(x => x.id == self.$route.query.to)
+          self.date1 = []
+          self.date1.push(self.$route.query.start)
+          self.date1.push(self.$route.query.end)
+          self.changeDate1(self.date1)
+          self.headerRooms = [{
+            peaple: Number(self.$route.query.adl),
+            child: Number(self.$route.query.chd),
+            baby: Number(self.$route.query.inf),
+          }]
+          self.$emit('getPasanger', self.headerRooms)
+          self.changeRoomValue('flight')
+          // // console.log([self.$route.query.start, self.$route.query.end]);
+          // // self.date1 = [self.$route.query.start, self.$route.query.end]
+          // // self.changeDate1(self.date1)
+
+        }
+      }
+    },
   },
   created() {
+    let self = this
     window.scrollTo(0, 0);
-    this.getWidth();
-    this.getCityesExternal();
-
-    this.minDate = (
+    self.getWidth();
+    self.getCityesExternal();
+    self.getToursList();
+    self.minDate = (
       new Date().getFullYear() + '-' +
       (new Date().getMonth() + 1) + '-' +
       new Date().getDate()
     )
-
-    setTimeout(() => {
-      this.selectedSection = {
-        icon: 'mdi-airplane',
-        title: 'پرواز',
-        active: true,
-      }
-    }, 1000);
-
-
-
+    this.setCreated()
   },
 }
 </script>

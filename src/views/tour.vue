@@ -2,7 +2,10 @@
   <div class="mt-sm-12 pt-sm-12">
     <div class="widthAll relative">
       <v-skeleton-loader :loading="loadingBackground" type="image">
-        <v-img class="widthAll backgroundImageTour" height="250" :src="backgroundImage" alt="برج ایفل فرانسه"></v-img>
+        <v-img class="widthAll backgroundImageTour d-none d-md-block" height="250" :src="backgroundImage"
+          alt="برج ایفل فرانسه"></v-img>
+        <v-img class="widthAll backgroundImageTour d-block d-md-none" height="250" :src="backgroundImage"
+          alt="برج ایفل فرانسه"></v-img>
         <div class="tourImageBackgroundTour"></div>
       </v-skeleton-loader>
     </div>
