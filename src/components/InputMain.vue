@@ -1668,7 +1668,25 @@ export default {
                 '&chd=' + childs +
                 '&inf=' + inf
               if (self.byReturn != 3) {
-                window.location.href = self.searchLink;
+                this.$router.push(
+                  {
+                    path: '/flight',
+                    query: {
+                      path: (self.byReturn == 1 ? 'ow' : self.byReturn == 2 ? 'rt' : 'mp'),
+                      from: originID,
+                      to: destinationID,
+                      start: (self.byReturn == 1 ? this.date1 : self.byReturn == 2 ? this.date1[0] : ' '),
+                      end: (self.byReturn == 1 ? this.date1 : self.byReturn == 2 ? this.date1[1] : ' '),
+                      adl: adl,
+                      chd: childs,
+                      inf: inf,
+                      ex: self.external
+                    }
+                  }
+                )
+                this.$emit('searchInHeaderBox')
+                // this.setCreated()
+                // window.location.href = self.searchLink;
               } else {
                 self.alertText = 'این قسمت از سایت در حال توسعه میباشد!';
                 self.alertType = 'success';

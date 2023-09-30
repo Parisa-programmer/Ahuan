@@ -1,5 +1,6 @@
 <template class="">
   <div class="">
+    hiiii{{ dayName }}
     <v-row justify="center" class="">
       <div class="indexDiv">
         <v-row class="justify-center">
@@ -125,11 +126,18 @@ export default {
               data[i].ArrivalDate = ArrivalDateTime[0]
               data[i].ArrivalTime = ArrivalTime[0] + ':' + ArrivalTime[1]
               //
-              data[i].originCity = 'UGT'
-              //self.originCity.text
-              data[i].airport1 = 'UGT' //self.originCity.airport
-              data[i].destinationInternal = 'TTQ' //self.destinationInternal.text
-              data[i].airport2 = 'TTQ' //self.destinationInternal.airport
+              data[i].originCity =
+                'UGT'
+              // self.originCity.text
+              data[i].airport1 =
+                'UGT'
+              // self.originCity.airport
+              data[i].destinationInternal =
+                'TTQ'
+              // self.destinationInternal.text
+              data[i].airport2 =
+                'TTQ'
+              // self.destinationInternal.airport
               data[i].dayName = self.dayName
               let options = { day: 'numeric', month: 'long' };
               data[i].fromDate = new Date(self.date1.length == 2 ? self.date1[0] : self.date1).toLocaleDateString('fa-IR', options);
@@ -182,14 +190,17 @@ export default {
           let params = {
             AirLine: data.Airline,
             Route: self.rezervStep == 2 ?
-              'TTQ'  //self.destinationInternal.id 
+              'TTQ'
+              // self.destinationInternal.id
               + '-' +
               'UGT'
-              //self.originCity.id 
+              // self.originCity.id
               :
-              'UGT'  //self.originCity.id 
+              'UGT'
+              // self.originCity.id
               + '-' +
-              'TTQ'  //self.destinationInternal.id
+              'TTQ'
+            // self.destinationInternal.id
             ,
             RBD: newType,
             DepartureDate: self.rezervStep == 2 ? self.$route.query.end : self.$route.query.start,
@@ -317,8 +328,8 @@ export default {
             }
           }
         }
-        stepFunction = stepFunction + 1
-        if (stepFunction == 1 || proxy) {
+        stepFunction = !proxy && stepFunction + 1
+        if (stepFunction == 10 || proxy) {
           await self.sortTickets(self.sortTab)
           self.$emit('allTickets', self.ticket)
         }
@@ -327,15 +338,15 @@ export default {
         asyncCall(proxy, AirLine, OfficeUser, OfficePass);
       } else {
         asyncCall('ata', 'PA', 'THR155.WS', 'Ahuan1348');
-        // asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
-        // asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
-        // asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
-        // asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
-        // asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
-        // asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
-        // asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
-        // asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
-        // asyncCall('saha', 'IRZ', 'THR140.WS', '123456789');
+        asyncCall('kishair', 'Y9', 'THR100.WS', 'Ahuan1348');
+        asyncCall('qeshmair', 'QB', 'THR166.WS', 'Ahuan1348');
+        asyncCall('taban', 'HH', 'THR168.WS', 'Ahuan1348');
+        asyncCall('aseman', 'EP', 'THR100.WS', 'Ahuan1348');
+        asyncCall('zagros', 'ZV', 'THR197.WS', 'Ahuan1348');
+        asyncCall('naft', 'NV', 'THR100.WS', 'Ahuan1348');
+        asyncCall('meraj', 'JI', 'THR158.WS', 'THR158AH');
+        asyncCall('varesh', 'VR', 'THR215.WS', 'A2930');
+        asyncCall('saha', 'IRZ', 'THR140.WS', '123456789');
         // asyncCall('flyPersia', 'FP', '', '123456789');
 
       }
@@ -379,7 +390,7 @@ export default {
     let self = this
     setTimeout(() => {
       if (self.$route.query.path) {
-        self.checkAsync()
+        // self.checkAsync()
       }
     }, 1000);
 

@@ -8,6 +8,9 @@
           </router-link>
           <span class="headerSpan d-none d-sm-inline-block mt-2">رزرو آنلاین خدمات گردشگری</span>
           <v-spacer></v-spacer>
+          <!-- <router-link to="/cancell-flight" class="text-decoration-none ml-9">
+            <span class="headerSpan d-none d-sm-inline-block">کنسل کردن پرواز</span>
+          </router-link> -->
           <span class="ml-3 ml-sm-0 headerText grey--text text--darken-3">
             <a href="tel:02141889" class="grey--text text--darken-3 text-decoration-none">021-41889</a>
           </span>
@@ -20,11 +23,47 @@
     <v-row class="white top-bar " justify="center" align="center">
       <div class="indexDiv headerButtons">
         <v-row align="center" justify="space-between" class="d-none d-md-flex px-2">
-          <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
+          <!-- <router-link to="/cancell-flight" class="text-decoration-none ml-9">
+            <span class="headerSpan d-none d-sm-inline-block">کنسل کردن پرواز</span>
+          </router-link> -->
+          <!-- <v-skeleton-loader class="textLoader d-inline-block" type="chip" :loading="isLoading">
             <a href="/flight" class="text-decoration-none"
               @click="activeLinkMenuHeader != 'پرواز' ? activeLinkMenuHeader = 'پرواز' : activeLinkMenuHeader = ''">
               <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0 ">پرواز</span>
             </a>
+          </v-skeleton-loader> -->
+          <v-skeleton-loader class="textLoader d-inline-block relative" type="chip" :loading="isLoading">
+            <v-skeleton-loader class="textLoader d-inline-block show-sub-menu-parent" type="chip" :loading="isLoading">
+              <router-link to="/flight" class="text-decoration-none">
+                <span class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
+                  @click="activeLinkMenuHeader != 'پرواز' ? activeLinkMenuHeader = 'پرواز' : activeLinkMenuHeader = ''">پرواز
+                </span>
+              </router-link>
+              <div class="absolute show-sub-menu" style="right:-58%;">
+                <v-list nav dense style="">
+                  <div class="">
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/flight" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت انگلیس (4).jpg" alt="سفارت انگلیس" class="ml-1"> -->
+                          رزرو پرواز
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                    <v-list-item class="cursorPointer titleHeader py-0">
+                      <router-link to="/cancell-flight" style="text-decoration:none;" class="topMenu">
+                        <v-list-item-title @click="group.active = !group.active" class="topMenu pl-2 pl-2 d-flex"
+                          style="font-weight: bold;">
+                          <!-- <img width="30" src="@/assets/image/سفارت آمریکا (4).jpg" alt="سفارت آمریکا" class="ml-1"> -->
+                          چاپ مجدد/کنسل کردن بلیط
+                        </v-list-item-title>
+                      </router-link>
+                    </v-list-item>
+                  </div>
+                </v-list>
+              </div>
+            </v-skeleton-loader>
           </v-skeleton-loader>
           <v-skeleton-loader class="textLoader d-inline-block relative" type="chip" :loading="isLoading">
             <v-skeleton-loader class="textLoader d-inline-block show-sub-menu-parent" type="chip" :loading="isLoading">

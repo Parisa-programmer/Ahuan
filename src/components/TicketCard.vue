@@ -21,21 +21,27 @@
                   style="box-shadow: 1px 1px 4px #b3b3b3;z-index: 2;">
                 <span class="px-2 px-sm-2 body-2 px-4 mt-2 mt-sm-0" :class="isFaild ? 'grey lighten-2' : 'white'"
                   style="font-family: Byekan !important;z-index: 2;">
-                  {{ item.originCity }}</span>
+                  <!-- {{ item.originCity }} -->
+                  {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.originCity :
+                    item.destinationInternal }}
+                </span>
                 <img src="@/assets/image/flight-go-flesh.png" class="absolute widthAll mt-4 mt-sm-0" alt="" height="12">
                 <v-spacer></v-spacer>
                 <span class="absolute body-2 grey--text text--darken-1 dateTicket"
                   style="font-family: Byekan !important;bottom: 35px;">
-                  {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.dayName.day1 :
+                  {{ item.dayName }}
+                  <!-- {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.dayName.day1 :
                     item.dayName.day2 }} {{
     ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.fromDate :
-    item.endDate }}
+    item.endDate }} -->
                 </span>
                 <span class="absolute grey--text text--darken-1 caption typeFlightTicket"
                   style="font-family: Byekan !important;">سیستمی</span>
                 <span class="px-2 px-sm-6 body-2 pr-4 pl-2 mt-2 mt-sm-0" :class="isFaild ? 'grey lighten-2' : 'white'"
-                  style="font-family: Byekan !important;left:0;z-index: 2;">{{
-                    item.destinationInternal }}
+                  style="font-family: Byekan !important;left:0;z-index: 2;">
+                  <!-- {{ item.destinationInternal }} -->
+                  {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? item.destinationInternal :
+                    item.originCity }}
                 </span>
               </v-row>
               <v-row class=" my-4 mr-4 mr-sm-7">
@@ -123,8 +129,11 @@
                             <span class=" blue--text text--darken-3">0 0 0</span>
                             <v-icon large class="blue--text text--darken-1"
                               style="transform: rotate(225deg);">mdi-airplane</v-icon>
-                            <h4 class="blue--text text--darken-1 mr-3">پرواز رفت ({{ choosedTicket.originCity }} -
-                              {{ choosedTicket.destinationInternal }})</h4>
+                            <h4 class="blue--text text--darken-1 mr-3">
+                              {{ ((chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)) ? 'پرواز رفت' + ' (' +
+                                choosedTicket.originCity + ' - ' + choosedTicket.destinationInternal + ')' : 'پرواز برگشت ('
+                                + choosedTicket.destinationInternal + ' - ' + choosedTicket.originCity + ' )' }}
+                            </h4>
                             <v-divider vertical class="mx-4"></v-divider>
                             <div class="text-right">
                               <span class="grey--text caption widthAll mb-2 d-block"

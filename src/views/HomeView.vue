@@ -27,9 +27,9 @@
           <router-link to="/visline/need">
             <v-carousel-item :src="require('@/assets/image/ویزلاین.jpg')"></v-carousel-item>
           </router-link>
-          <router-link to="/tour/1020">
+          <!-- <router-link to="/tour/1020">
             <v-carousel-item height="300" :src="require('@/assets/image/tour/site -russia.jpg')"></v-carousel-item>
-          </router-link>
+          </router-link> -->
         </v-carousel>
       </div>
       <div class="indexDiv d-block d-md-none">
@@ -40,9 +40,9 @@
           <router-link to="/visline/need">
             <v-carousel-item :src="require('@/assets/image/ویزلاین موبایل.jpg')"></v-carousel-item>
           </router-link>
-          <router-link to="/tour/1020">
+          <!-- <router-link to="/tour/1020">
             <v-carousel-item :src="require('@/assets/image/tour/site -russia3.jpg')"></v-carousel-item>
-          </router-link>
+          </router-link> -->
         </v-carousel>
 
       </div>

@@ -251,12 +251,12 @@
             </v-dialog>
           </div>
         </v-row>
-        <router-link to="/tour/1020" class="">
+        <!-- <router-link to="/tour/1020" class="">
           <img class="widthAll rounded-xl d-none d-md-block mt-6" :src="require('@/assets/image/tour/site -russia.jpg')"
             alt="">
           <img class="widthAll rounded-xl d-block d-md-none mt-6" :src="require('@/assets/image/tour/site -russia2.jpg')"
             alt="">
-        </router-link>
+        </router-link> -->
       </div>
       <!-- <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <div :class="loading == true ? 'pt-4' : ''">
