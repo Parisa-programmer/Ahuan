@@ -2,38 +2,78 @@
   <div class="mt-9 mt-sm-12 pt-12">
     <v-row justify="center">
       <div class="widthAll relative">
-        <img class="widthAll backgroundImageTour" src="@/assets/image/tour/tour-background7.jpg" alt="">
+        <img
+          class="widthAll backgroundImageTour"
+          src="@/assets/image/tour/tour-background7.jpg"
+          alt=""
+        />
         <div class="tourImageBackground"></div>
       </div>
       <div class="mb-12 indexDiv main-div" style="z-index: 3">
         <div>
-          <span class="white--text countryNmae px-12">استانبول _ 4 شب و 5 روز</span>
+          <span class="white--text countryNmae px-12"
+            >استانبول _ 4 شب و 5 روز</span
+          >
         </div>
         <div>
-          <b class="white--text px-12 tour-date">تاریخ پرواز : همه روزه (اعتبار پکیج
-            تا <span class="white--text text-decoration-underline">9 اسفند</span>)</b>
+          <b class="white--text px-12 tour-date"
+            >تاریخ پرواز : همه روزه (اعتبار پکیج تا
+            <span class="white--text text-decoration-underline">9 اسفند</span
+            >)</b
+          >
         </div>
-        <v-row class='mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12' style="">
-          <v-slide-group ltr v-model="tab" class="ltr" hide-arrows center-activeTab>
+        <v-row class="mt-9 mt-sm-0 mt-lg-12 pt-6 pt-md-12" style="">
+          <v-slide-group
+            ltr
+            v-model="tab"
+            class="ltr"
+            hide-arrows
+            center-activeTab
+          >
             <v-slide-item>
-              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 0 && 'activeTab'" @click="tab = 0">لیست قیمت</h3>
+              <h3
+                class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 0 && 'activeTab'"
+                @click="tab = 0"
+              >
+                لیست قیمت
+              </h3>
             </v-slide-item>
             <v-slide-item>
-              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 1 && 'activeTab'" @click="tab = 1">خدمات تور</h3>
+              <h3
+                class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 1 && 'activeTab'"
+                @click="tab = 1"
+              >
+                خدمات تور
+              </h3>
             </v-slide-item>
             <v-slide-item>
-              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 2 && 'activeTab'" @click="tab = 2">مدارک مورد نیاز</h3>
+              <h3
+                class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 2 && 'activeTab'"
+                @click="tab = 2"
+              >
+                مدارک مورد نیاز
+              </h3>
             </v-slide-item>
             <v-slide-item>
-              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 3 && 'activeTab'" @click="tab = 3">نکات ضروری</h3>
+              <h3
+                class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 3 && 'activeTab'"
+                @click="tab = 3"
+              >
+                نکات ضروری
+              </h3>
             </v-slide-item>
             <v-slide-item>
-              <h3 class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
-                :class="tab == 4 && 'activeTab'" @click="tab = 4">گالری تصاویر</h3>
+              <h3
+                class="py-2 py-md-4 px-2 px-sm-4 px-lg-8 cursorPointer tabTitles relative"
+                :class="tab == 4 && 'activeTab'"
+                @click="tab = 4"
+              >
+                گالری تصاویر
+              </h3>
             </v-slide-item>
           </v-slide-group>
         </v-row>
@@ -47,11 +87,18 @@
             <v-row>
               <v-col cols="12" lg="12">
                 <v-row class="mb-2" justify="center">
-                  <v-data-table :headers="pricesHeaderIstanbul" hide-default-footer :items="pricesItemsIstanbul"
-                    disable-pagination class=" rounded-lg even-odd-tabel tabelTourId"
-                    style="border: 2px solid #9d9d9b !important;">
+                  <v-data-table
+                    :headers="pricesHeaderIstanbul"
+                    hide-default-footer
+                    :items="pricesItemsIstanbul"
+                    disable-pagination
+                    class="rounded-lg even-odd-tabel tabelTourId"
+                    style="border: 2px solid #9d9d9b !important"
+                  >
                     <template v-slot:[`item.name`]="{ item }">
-                      <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
+                      <div class="bold" style="letter-spacing: 1px !important">
+                        {{ item.name }}
+                      </div>
                     </template>
                   </v-data-table>
                 </v-row>
@@ -61,19 +108,37 @@
           <div class="widthAll" v-else-if="tab == 1">
             <v-row>
               <v-col cols="12" md="12">
-                <ul class=" mr-md-6">
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بلیت رفت و برگشت هواپیما
+                <ul class="mr-md-6">
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    بلیت رفت و برگشت هواپیما
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">اقامت به همراه صبحانه
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    اقامت به همراه صبحانه
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">ترانسفر فرودگاهی رفت و
-                    برگشت</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">به همراه تور لیدر فارسی
-                    زبان</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">بیمه مسافرتی تا سقف
-                    10.000 یورو با پوشش کرونا</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">هدیه ویژه آهوان گشت
-                    رایگان خرید به همراه ناهار</li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    ترانسفر فرودگاهی رفت و برگشت
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    به همراه تور لیدر فارسی زبان
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    بیمه مسافرتی تا سقف 10.000 یورو با پوشش کرونا
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                  >
+                    هدیه ویژه آهوان گشت رایگان خرید به همراه ناهار
+                  </li>
                 </ul>
               </v-col>
             </v-row>
@@ -82,11 +147,19 @@
           <div class="widthAll" v-else-if="tab == 2">
             <v-row>
               <v-col cols="12" md="12">
-                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">مدارک مورد نیاز تورهای استانبول</h3>
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">
+                  مدارک مورد نیاز تورهای استانبول
+                </h3>
                 <ul class="my-6 mr-9">
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اصل گذرنامه به همراه حداقل 7 ماه
-                    اعتبار</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">کارت واکسن و یا تست پی سی آر منفی
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    اصل گذرنامه به همراه حداقل 7 ماه اعتبار
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    کارت واکسن و یا تست پی سی آر منفی
                   </li>
                 </ul>
               </v-col>
@@ -95,34 +168,58 @@
           <div class="widthAll" v-else-if="tab == 3">
             <v-row>
               <v-col cols="12" md="12">
-                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای استانبول</h3>
+                <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">
+                  نکات ضروری تورهای استانبول
+                </h3>
                 <ul class="my-6 mr-9">
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">بار مجاز مسافر 30 کیلوگرم می
-                    باشد.</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">حداقل اعتبار پاسپورت 7 ماه می
-                    باشد.</li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    بار مجاز مسافر 30 کیلوگرم می باشد.
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    حداقل اعتبار پاسپورت 7 ماه می باشد.
+                  </li>
 
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
                     نرخ نوزاد زیر 2 سال 850.000 تومان می‌باشد.
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify"> به نفر سوم در اتاق سرویس اضافه
-                    تعلق میگیرد.</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    به نفر سوم در اتاق سرویس اضافه تعلق میگیرد.
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
                     پرداخت حداقل 50% مبلغ تور هنگام رزرو الزامی است.
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
                     مسئولیت کنترل ممنوعیت خروج بعهده مسافر می باشد.
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                    بیمه افراد بالای 60 سال الزامی و هزینه آن جداگانه محاسبه می‌گردد.
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    بیمه افراد بالای 60 سال الزامی و هزینه آن جداگانه محاسبه
+                    می‌گردد.
                   </li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">اطلاعات ترانسفر و سالن خروجی
-                    مربوطه در فرودگاه استانبول در معرفی نامه هتل درج شده است.</li>
-                  <li class="my-3 grey--text text--darken-3 bold text-tour text-justify">
-                    قیمتهای موجود در پکیج با نرخ دلار 45.000 تومان
-
-                    محاسبه شده است در صورت هرگونه افزایش
-                    نرخ مابه التفاوت محاسبه خواهد شد.
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    اطلاعات ترانسفر و سالن خروجی مربوطه در فرودگاه استانبول در
+                    معرفی نامه هتل درج شده است.
+                  </li>
+                  <li
+                    class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                  >
+                    قیمتهای موجود در پکیج با نرخ دلار 45.000 تومان محاسبه شده
+                    است در صورت هرگونه افزایش نرخ مابه التفاوت محاسبه خواهد شد.
                   </li>
                 </ul>
               </v-col>
@@ -130,20 +227,35 @@
           </div>
           <div class="widthAll" v-else-if="tab == 4">
             <v-row justify="center">
-              <div class="d-inline-block galeryImageParent" v-for="(item, i) in istanbulImages" :key="i">
-                <v-img class="galeryImage cursorPointer rounded-lg ma-1" @click="imageNumber = i; imageDialog = true"
-                  :src="item"></v-img>
+              <div
+                class="d-inline-block galeryImageParent"
+                v-for="(item, i) in istanbulImages"
+                :key="i"
+              >
+                <v-img
+                  class="galeryImage cursorPointer rounded-lg ma-1"
+                  @click="
+                    imageNumber = i;
+                    imageDialog = true;
+                  "
+                  :src="item"
+                ></v-img>
               </div>
             </v-row>
             <v-dialog v-model="imageDialog" width="1000">
               <div class="relative">
                 <v-carousel v-model="imageNumber">
                   <v-carousel-item v-for="(item, i) in istanbulImages" :key="i">
-                    <img :src="item" alt="">
+                    <img :src="item" alt="" />
                   </v-carousel-item>
                 </v-carousel>
-                <v-icon class="absolute cursorPointer" color="white" @click="imageDialog = false"
-                  style="top:5px;right:5px">mdi-close</v-icon>
+                <v-icon
+                  class="absolute cursorPointer"
+                  color="white"
+                  @click="imageDialog = false"
+                  style="top: 5px; right: 5px"
+                  >mdi-close</v-icon
+                >
               </div>
             </v-dialog>
           </div>
@@ -166,11 +278,13 @@
   top: 0;
   left: 0;
   opacity: 1;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.55) 0,
-      rgba(0, 0, 0, 0.55) 1%,
-      transparent 56%,
-      transparent 74%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0,
+    rgba(0, 0, 0, 0.55) 1%,
+    transparent 56%,
+    transparent 74%
+  );
 }
 
 .tourPageTitle h3,
@@ -199,8 +313,6 @@
 .tourPageTitle span {
   color: rgb(44, 44, 44);
 }
-
-
 
 .tabTitles {
   color: #fff;
@@ -272,12 +384,37 @@
 }
 
 .v-data-table,
-.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:last-child,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:last-child,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
   border: 1px solid #9d9d9d;
   font-weight: bold;
 }
@@ -291,7 +428,7 @@
 }
 
 .galeryImage::after {
-  content: '';
+  content: "";
   position: absolute;
   height: 100%;
   width: 100%;
@@ -310,7 +447,7 @@
 }
 
 .halfLi {
-  width: 49%
+  width: 49%;
 }
 
 .even-odd-tabel td:nth-child(2) .bold {
@@ -319,7 +456,7 @@
   text-shadow: 0 0 3px #ff7765; */
 }
 
-@media (min-width:960px) and (max-width:1263px) {
+@media (min-width: 960px) and (max-width: 1263px) {
   .main-div {
     margin-top: -245px;
   }
@@ -333,7 +470,7 @@
   }
 }
 
-@media (min-width:600px) and (max-width:959px) {
+@media (min-width: 600px) and (max-width: 959px) {
   .main-div {
     margin-top: -205px;
   }
@@ -355,7 +492,7 @@
   }
 
   .tabelTour {
-    width: 80% !important
+    width: 80% !important;
   }
 
   .text-tour {
@@ -375,10 +512,10 @@
   }
 
   .halfLi {
-    width: 100%
+    width: 100%;
   }
 
-  @media (max-width:774px) {
+  @media (max-width: 774px) {
     .main-div {
       margin-top: -155px;
     }
@@ -405,7 +542,7 @@
   }
 }
 
-@media (max-width:599px) {
+@media (max-width: 599px) {
   .indexDiv {
     width: 95% !important;
   }
@@ -437,15 +574,15 @@
   }
 
   .tabelTour {
-    width: 100% !important
+    width: 100% !important;
   }
 
-  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tabelTour > .v-data-table__wrapper .v-data-table__mobile-row {
     min-height: 35px !important;
     justify-content: center;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row {
     display: inline-block;
     width: 50%;
     position: relative;
@@ -455,15 +592,17 @@
     text-align: center;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
     display: flex;
     width: 100%;
     margin-bottom: 20px;
     font-weight: bold;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
-    content: '<-----------------------------------------------';
+  .tourPlan
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(2)::before {
+    content: "<-----------------------------------------------";
     position: absolute;
     width: 46%;
     right: 80%;
@@ -512,12 +651,37 @@
     width: 500px;
   }
 
-  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > td:last-child,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > td:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > th:last-child,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > th:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > thead
+    > tr:last-child
+    > th {
     border: unset;
   }
 
@@ -526,425 +690,443 @@
   }
 
   .halfLi {
-    width: 100%
+    width: 100%;
   }
 }
 </style>
 
 <script>
-import CallUs from '@/components/CallUs.vue';
+import CallUs from "@/components/CallUs.vue";
 export default {
-  name: 'Istanbul-4night',
+  name: "Istanbul-4night",
   components: {
-    CallUs
-
+    CallUs,
   },
   data: () => ({
     tab: 0,
     pricesHeaderIstanbul: [
       // { text: '', sortable: false, value: 'image', align: 'center', },
-      { text: 'ردیف', align: 'center', sortable: true, value: 'id', width: '90px' },
-      { text: 'هتل', filterable: true, align: 'center', sortable: true, value: 'name' },
-      { text: 'درجه', sortable: true, value: 'star', align: 'center', width: '100px', },
-      { text: 'موقعیت', sortable: true, value: 'place', align: 'center', },
-      { text: 'دو تخته', sortable: true, value: 'duble', align: 'center', },
-      { text: 'یک تخته', sortable: true, value: 'single', align: 'center', },
-      { text: 'کودک با تخت', sortable: true, value: 'baby', align: 'center', },
-      { text: 'کودک بدون تخت', sortable: false, value: 'baby2', align: 'center', },
-
+      {
+        text: "ردیف",
+        align: "center",
+        sortable: true,
+        value: "id",
+        width: "90px",
+      },
+      {
+        text: "هتل",
+        filterable: true,
+        align: "center",
+        sortable: true,
+        value: "name",
+      },
+      {
+        text: "درجه",
+        sortable: true,
+        value: "star",
+        align: "center",
+        width: "100px",
+      },
+      { text: "موقعیت", sortable: true, value: "place", align: "center" },
+      { text: "دو تخته", sortable: true, value: "duble", align: "center" },
+      { text: "یک تخته", sortable: true, value: "single", align: "center" },
+      { text: "کودک با تخت", sortable: true, value: "baby", align: "center" },
+      {
+        text: "کودک بدون تخت",
+        sortable: false,
+        value: "baby2",
+        align: "center",
+      },
     ],
     pricesItemsIstanbul: [],
     imageNumber: 0,
     istanbulImages: [
-      require('@/assets/image/tour/استانبول-1.jpg'),
-      require('@/assets/image/tour/استانبول-2.jpg'),
-      require('@/assets/image/tour/استانبول-3.jpg'),
-      require('@/assets/image/tour/استانبول-4.jpg'),
-      require('@/assets/image/tour/استانبول-5.jpg'),
-      require('@/assets/image/tour/استانبول-6.jpg'),
+      require("@/assets/image/tour/استانبول-1.jpg"),
+      require("@/assets/image/tour/استانبول-2.jpg"),
+      require("@/assets/image/tour/استانبول-3.jpg"),
+      require("@/assets/image/tour/استانبول-4.jpg"),
+      require("@/assets/image/tour/استانبول-5.jpg"),
+      require("@/assets/image/tour/استانبول-6.jpg"),
       // '/folders/image/tour/استانبول-7.jpg',
     ],
     imageDialog: false,
   }),
-  methods: {
-
-  },
+  methods: {},
   created() {
     window.scrollTo(0, 0);
-    // console.log(store);
-    document.title = 'تور 4 شب استانبول|تور لحظه آخری استانبول'
+    document.title = "تور 4 شب استانبول|تور لحظه آخری استانبول";
     let newObjectDate = [
       {
-        نام: 'Fideh hotel',
-        درجه: '3',
-        موقعیت: 'Taksim',
-        دوتخته: '6.100.000',
-        تکنفره: '8.300.000',
-        کودک: '5.950.000',
-        کودک2: '4.100.000',
+        نام: "Fideh hotel",
+        درجه: "3",
+        موقعیت: "Taksim",
+        دوتخته: "6.100.000",
+        تکنفره: "8.300.000",
+        کودک: "5.950.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Oriella taksim',
-        درجه: '3',
-        موقعیت: 'Taksim',
-        دوتخته: '6.700.000',
-        تکنفره: '8.950.000',
-        کودک: '6.100.000',
-        کودک2: '4.100.000',
+        نام: "Oriella taksim",
+        درجه: "3",
+        موقعیت: "Taksim",
+        دوتخته: "6.700.000",
+        تکنفره: "8.950.000",
+        کودک: "6.100.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'All in ',
-        درجه: '3',
-        موقعیت: 'Dolapedere',
-        دوتخته: '7.800.000',
-        تکنفره: '11.000.000',
-        کودک: '6.300.000',
-        کودک2: '4.100.000',
+        نام: "All in ",
+        درجه: "3",
+        موقعیت: "Dolapedere",
+        دوتخته: "7.800.000",
+        تکنفره: "11.000.000",
+        کودک: "6.300.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'White monarch',
-        درجه: '4',
-        موقعیت: 'Sisli',
-        دوتخته: '7.800.000',
-        تکنفره: '11.000.000',
-        کودک: '6.300.000',
-        کودک2: '4.100.000',
+        نام: "White monarch",
+        درجه: "4",
+        موقعیت: "Sisli",
+        دوتخته: "7.800.000",
+        تکنفره: "11.000.000",
+        کودک: "6.300.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Cuento hotel',
-        درجه: '3',
-        موقعیت: 'Taksim',
-        دوتخته: '8.200.000',
-        تکنفره: '11.900.000',
-        کودک: '6.400.000',
-        کودک2: '4.100.000',
+        نام: "Cuento hotel",
+        درجه: "3",
+        موقعیت: "Taksim",
+        دوتخته: "8.200.000",
+        تکنفره: "11.900.000",
+        کودک: "6.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Atro hotel',
-        درجه: '4',
-        موقعیت: 'Dolapdere',
-        دوتخته: '8.200.000',
-        تکنفره: '11.900.000',
-        کودک: '6.400.000',
-        کودک2: '4.100.000',
+        نام: "Atro hotel",
+        درجه: "4",
+        موقعیت: "Dolapdere",
+        دوتخته: "8.200.000",
+        تکنفره: "11.900.000",
+        کودک: "6.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Dora hotel',
-        درجه: '4',
-        موقعیت: 'Dolapdere',
-        دوتخته: '8.500.000',
-        تکنفره: '10.500.000',
-        کودک: '6.500.000',
-        کودک2: '4.100.000',
+        نام: "Dora hotel",
+        درجه: "4",
+        موقعیت: "Dolapdere",
+        دوتخته: "8.500.000",
+        تکنفره: "10.500.000",
+        کودک: "6.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Taksim town',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '9.100.000',
-        تکنفره: '13.500.000',
-        کودک: '8.000.000',
-        کودک2: '4.100.000',
+        نام: "Taksim town",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "9.100.000",
+        تکنفره: "13.500.000",
+        کودک: "8.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Inntel',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '9.100.000',
-        تکنفره: '13.500.000',
-        کودک: '8.000.000',
-        کودک2: '4.100.000',
+        نام: "Inntel",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "9.100.000",
+        تکنفره: "13.500.000",
+        کودک: "8.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Actual life',
-        درجه: '4',
-        موقعیت: 'Dolapdere',
-        دوتخته: '9.100.000',
-        تکنفره: '13.500.000',
-        کودک: '8.000.000',
-        کودک2: '4.100.000',
+        نام: "Actual life",
+        درجه: "4",
+        موقعیت: "Dolapdere",
+        دوتخته: "9.100.000",
+        تکنفره: "13.500.000",
+        کودک: "8.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Euro plaza',
-        درجه: '4',
-        موقعیت: 'Dolapdere',
-        دوتخته: '9.100.000',
-        تکنفره: '13.500.000',
-        کودک: '8.000.000',
-        کودک2: '4.100.000',
+        نام: "Euro plaza",
+        درجه: "4",
+        موقعیت: "Dolapdere",
+        دوتخته: "9.100.000",
+        تکنفره: "13.500.000",
+        کودک: "8.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Tango sisli',
-        درجه: '4',
-        موقعیت: 'Dolapdere',
-        دوتخته: '9.100.000',
-        تکنفره: '13.500.000',
-        کودک: '8.000.000',
-        کودک2: '4.100.000',
+        نام: "Tango sisli",
+        درجه: "4",
+        موقعیت: "Dolapdere",
+        دوتخته: "9.100.000",
+        تکنفره: "13.500.000",
+        کودک: "8.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Nova plaza park',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '9.900.000',
-        تکنفره: '12.500.000',
-        کودک: '7.200.000',
-        کودک2: '4.100.000',
+        نام: "Nova plaza park",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "9.900.000",
+        تکنفره: "12.500.000",
+        کودک: "7.200.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'City center',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '9.900.000',
-        تکنفره: '12.500.000',
-        کودک: '7.200.000',
-        کودک2: '4.100.000',
+        نام: "City center",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "9.900.000",
+        تکنفره: "12.500.000",
+        کودک: "7.200.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Buke hotel',
-        درجه: '4',
-        موقعیت: 'Sisli',
-        دوتخته: '10.950.000',
-        تکنفره: '16.900.000',
-        کودک: '9.500.000',
-        کودک2: '4.100.000',
+        نام: "Buke hotel",
+        درجه: "4",
+        موقعیت: "Sisli",
+        دوتخته: "10.950.000",
+        تکنفره: "16.900.000",
+        کودک: "9.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Cartoon',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '10.950.000',
-        تکنفره: '16.900.000',
-        کودک: '9.500.000',
-        کودک2: '4.100.000',
+        نام: "Cartoon",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "10.950.000",
+        تکنفره: "16.900.000",
+        کودک: "9.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Riva hotel',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '10.950.000',
-        تکنفره: '16.900.000',
-        کودک: '9.500.000',
-        کودک2: '4.100.000',
+        نام: "Riva hotel",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "10.950.000",
+        تکنفره: "16.900.000",
+        کودک: "9.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Tango taksim',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '10.950.000',
-        تکنفره: '16.900.000',
-        کودک: '9.500.000',
-        کودک2: '4.100.000',
+        نام: "Tango taksim",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "10.950.000",
+        تکنفره: "16.900.000",
+        کودک: "9.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Metropolitan',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '12.500.000',
-        تکنفره: '19.500.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Metropolitan",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "12.500.000",
+        تکنفره: "19.500.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Mercure bomonti',
-        درجه: '4',
-        موقعیت: 'Sisli',
-        دوتخته: '12.500.000',
-        تکنفره: '19.500.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Mercure bomonti",
+        درجه: "4",
+        موقعیت: "Sisli",
+        دوتخته: "12.500.000",
+        تکنفره: "19.500.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Avantgard taksim',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '12.900.000',
-        تکنفره: '21.500.000',
-        کودک: '9.400.000',
-        کودک2: '4.100.000',
+        نام: "Avantgard taksim",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "12.900.000",
+        تکنفره: "21.500.000",
+        کودک: "9.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Golden age',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '12.900.000',
-        تکنفره: '21.500.000',
-        کودک: '9.400.000',
-        کودک2: '4.100.000',
+        نام: "Golden age",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "12.900.000",
+        تکنفره: "21.500.000",
+        کودک: "9.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Taksim gonen',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '12.900.000',
-        تکنفره: '21.500.000',
-        کودک: '9.400.000',
-        کودک2: '4.100.000',
+        نام: "Taksim gonen",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "12.900.000",
+        تکنفره: "21.500.000",
+        کودک: "9.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'The peak hotel',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '11.900.000',
-        تکنفره: '18.900.000',
-        کودک: '8.400.000',
-        کودک2: '4.100.000',
+        نام: "The peak hotel",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "11.900.000",
+        تکنفره: "18.900.000",
+        کودک: "8.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Palazzo Donizetti',
-        درجه: '5',
-        موقعیت: 'Pera',
-        دوتخته: '11.900.000',
-        تکنفره: '18.900.000',
-        کودک: '8.400.000',
-        کودک2: '4.100.000',
+        نام: "Palazzo Donizetti",
+        درجه: "5",
+        موقعیت: "Pera",
+        دوتخته: "11.900.000",
+        تکنفره: "18.900.000",
+        کودک: "8.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Cher hotel',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '12.600.000',
-        تکنفره: '19.800.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Cher hotel",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "12.600.000",
+        تکنفره: "19.800.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Surmeli',
-        درجه: '5',
-        موقعیت: 'Sisli',
-        دوتخته: '12.600.000',
-        تکنفره: '19.800.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Surmeli",
+        درجه: "5",
+        موقعیت: "Sisli",
+        دوتخته: "12.600.000",
+        تکنفره: "19.800.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Grand cevahir',
-        درجه: '5',
-        موقعیت: 'Sisli',
-        دوتخته: '13.200.000',
-        تکنفره: '21.500.000',
-        کودک: '7.000.000',
-        کودک2: '4.100.000',
+        نام: "Grand cevahir",
+        درجه: "5",
+        موقعیت: "Sisli",
+        دوتخته: "13.200.000",
+        تکنفره: "21.500.000",
+        کودک: "7.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'The craton',
-        درجه: '5',
-        موقعیت: 'mecidiyekoy',
-        دوتخته: '13.200.000',
-        تکنفره: '21.500.000',
-        کودک: '7.000.000',
-        کودک2: '4.100.000',
+        نام: "The craton",
+        درجه: "5",
+        موقعیت: "mecidiyekoy",
+        دوتخته: "13.200.000",
+        تکنفره: "21.500.000",
+        کودک: "7.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Holiday inn',
-        درجه: '5',
-        موقعیت: 'Sisli',
-        دوتخته: '14.200.000',
-        تکنفره: '22.700.000',
-        کودک: '9.400.000',
-        کودک2: '4.100.000',
+        نام: "Holiday inn",
+        درجه: "5",
+        موقعیت: "Sisli",
+        دوتخته: "14.200.000",
+        تکنفره: "22.700.000",
+        کودک: "9.400.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Titanic city',
-        درجه: '4',
-        موقعیت: 'Taksim',
-        دوتخته: '15.500.000',
-        تکنفره: '25.000.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Titanic city",
+        درجه: "4",
+        موقعیت: "Taksim",
+        دوتخته: "15.500.000",
+        تکنفره: "25.000.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Crowne plaza  ',
-        درجه: '5',
-        موقعیت: 'Harbiye',
-        دوتخته: '15.500.000',
-        تکنفره: '25.000.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Crowne plaza  ",
+        درجه: "5",
+        موقعیت: "Harbiye",
+        دوتخته: "15.500.000",
+        تکنفره: "25.000.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Point taksim',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '15.900.000',
-        تکنفره: '25.600.000',
-        کودک: '8.500.000',
-        کودک2: '4.100.000',
+        نام: "Point taksim",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "15.900.000",
+        تکنفره: "25.600.000",
+        کودک: "8.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Wish more',
-        درجه: '5',
-        موقعیت: 'Sisli',
-        دوتخته: '18.100.000',
-        تکنفره: '27.000.000',
-        کودک: '7.500.000',
-        کودک2: '4.100.000',
+        نام: "Wish more",
+        درجه: "5",
+        موقعیت: "Sisli",
+        دوتخته: "18.100.000",
+        تکنفره: "27.000.000",
+        کودک: "7.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Radison blu',
-        درجه: '5',
-        موقعیت: 'Sisli',
-        دوتخته: '21.100.000',
-        تکنفره: '35.500.000',
-        کودک: '7.500.000',
-        کودک2: '4.100.000',
+        نام: "Radison blu",
+        درجه: "5",
+        موقعیت: "Sisli",
+        دوتخته: "21.100.000",
+        تکنفره: "35.500.000",
+        کودک: "7.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Hilton bosphoros',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '23.300.000',
-        تکنفره: '43.000.000',
-        کودک: '9.500.000',
-        کودک2: '4.100.000',
+        نام: "Hilton bosphoros",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "23.300.000",
+        تکنفره: "43.000.000",
+        کودک: "9.500.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'Divan',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '',
-        تکنفره: '',
-        کودک: '',
-        کودک2: '',
+        نام: "Divan",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "",
+        تکنفره: "",
+        کودک: "",
+        کودک2: "",
       },
       {
-        نام: 'Conrad',
-        درجه: '5',
-        موقعیت: 'Besiktas',
-        دوتخته: '',
-        تکنفره: '',
-        کودک: '',
-        کودک2: '',
+        نام: "Conrad",
+        درجه: "5",
+        موقعیت: "Besiktas",
+        دوتخته: "",
+        تکنفره: "",
+        کودک: "",
+        کودک2: "",
       },
       {
-        نام: 'Park hotel (CVK)',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '',
-        تکنفره: '',
-        کودک: '',
-        کودک2: '',
+        نام: "Park hotel (CVK)",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "",
+        تکنفره: "",
+        کودک: "",
+        کودک2: "",
       },
       {
-        نام: 'Rixos pera ',
-        درجه: '5',
-        موقعیت: 'Tarlabasi',
-        دوتخته: '26.000.000',
-        تکنفره: '45.500.000',
-        کودک: '12.000.000',
-        کودک2: '4.100.000',
+        نام: "Rixos pera ",
+        درجه: "5",
+        موقعیت: "Tarlabasi",
+        دوتخته: "26.000.000",
+        تکنفره: "45.500.000",
+        کودک: "12.000.000",
+        کودک2: "4.100.000",
       },
       {
-        نام: 'The marmara',
-        درجه: '5',
-        موقعیت: 'Taksim',
-        دوتخته: '35.500.000',
-        تکنفره: '61.500.000',
-        کودک: '9.900.000',
-        کودک2: '4.100.000',
+        نام: "The marmara",
+        درجه: "5",
+        موقعیت: "Taksim",
+        دوتخته: "35.500.000",
+        تکنفره: "61.500.000",
+        کودک: "9.900.000",
+        کودک2: "4.100.000",
       },
-    ]
-    var pricesItemsIstanbul = []
+    ];
+    var pricesItemsIstanbul = [];
     for (let i = 0; i < newObjectDate.length; i++) {
       pricesItemsIstanbul.push({
         id: i + 1,
@@ -955,10 +1137,9 @@ export default {
         single: newObjectDate[i].تکنفره,
         baby: newObjectDate[i].کودک,
         baby2: newObjectDate[i].کودک2,
-      })
+      });
     }
     this.pricesItemsIstanbul = pricesItemsIstanbul;
-
-  }
-}
+  },
+};
 </script>

@@ -1,18 +1,18 @@
 <template class="">
-  <div class="mt-12 pt-12">
-    <form action="">
-      <div class="container">
-        <div class="group">
-          <h3 style="color: blue;">Login</h3>
-          <h3> your account</h3>
-        </div>
-        <input type="text" value="username">
-        <input type="email" value="email">
-        <input type="email" value="password"><br>
-        <button>Login</button><br>
-        <a href="#" class="bass">forgot password?</a><br>
-        <a href="#">Create account</a>
-      </div>
+  <div>
+    <form
+      ref="formshaparak"
+      @submit.prevent="submit"
+      name="PostForm"
+      method="POST"
+      action="https://ikc.shaparak.ir/iuiv3/IPG/Index"
+    >
+      <input
+        name="tokenIdentity"
+        type="text"
+        style="opacity: 0"
+        :value="formshaparak.bankToken"
+      />
     </form>
   </div>
 </template>
@@ -25,7 +25,11 @@
 }
 
 body {
-  background-image: linear-gradient(to left, rgba(0, 160, 230, 1), rgba(0, 160, 230, 0.5));
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 160, 230, 1),
+    rgba(0, 160, 230, 0.5)
+  );
 }
 
 div.container {
@@ -46,12 +50,12 @@ div.group {
   justify-content: center;
 }
 
-input[type=text] {
+input[type="text"] {
   border: none;
   border-bottom: 1px solid rgba(0, 160, 230, 0.5);
 }
 
-input[type=email] {
+input[type="email"] {
   border: none;
   border-bottom: 1px solid rgba(0, 160, 230, 0.5);
 }
@@ -62,7 +66,11 @@ input:focus {
 }
 
 button {
-  background-image: linear-gradient(to left, rgba(0, 160, 230, 1), rgba(0, 160, 230, 0.5));
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 160, 230, 1),
+    rgba(0, 160, 230, 0.5)
+  );
   width: 172px;
   height: 24px;
   color: white;
@@ -85,84 +93,58 @@ a {
 
 <script>
 // import '@/assets/css/main.css'
-import axios from 'axios'
-axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
+import axios from "axios";
+axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
 // import CircleSlider from '@/components/CircleSlider.vue'
-
-// axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
-// axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
 
 export default {
   data() {
     return {
-      // magazineItems: [
-      //   {
-      //     image: require('@/assets/image/magazine-turkiye.jpg'),
-      //     title: 'جاذبه های استانبول',
-      //     text: 'تور استانبول، به دلیل خدمات تفریحی‌ای که برای افراد به همراه داره، می‌تونه به شما در روند تجربه یک سفر متفاوت کمک کنه. تور استانبول از تمام شهرهای ایران، در میان تورهای پرطرفداری قرار می‌گیره که هزینه نسبتا مناسبی برای افراد...',
-      //     link: '/tour/Istanbul'
-      //   },
-      //   {
-      //     image: require('@/assets/image/magazine-urope.jpg'),
-      //     title: 'اروپا و جذابیت‌های آن',
-      //     text: 'سفر با تور اروپا بدون شک یکی از زیباترین و بهترین تجربیات زندگی هر فرد می‌باشد. این قاره یکی از مقاصد زیبا برای سفر است که در سالهای اخیر به یکی از محبوب‌ترین مقاصد توریستی جهان تبدیل‌شده‌است. در بین تمامی مردم جهان...',
-      //     link: '/tour/Europe'
-      //   },
-      //   {
-      //     image: require('@/assets/image/magazine-dubai.jpg'),
-      //     title: 'جاذبه های دبی',
-      //     text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-      //     link: '/tour/Dubai'
-      //   },
-      //   {
-      //     image: require('@/assets/image/magazine-thailand.jpg'),
-      //     title: 'تور تایلند',
-      //     text: 'کشور تایلند نه تنها برای توریست های ایرانی بلکه برای توریست های سراسر جهان جذابیت دارد بلکه با خرید تور تایلند از پارک های طبیعی و زیبای این کشور از جمله: پارک ملی کائو یای، پارک پانک سیدا و پارک ملی تا پرایا و موارد دیگر...',
-      //     link: '/tour/Thailand'
-      //   },
-      //   {
-      //     image: require('@/assets/image/magazine-dubai.jpg'),
-      //     title: 'جاذبه های دبی',
-      //     text: 'دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...',
-      //     link: '/tour/Dubai'
-      //   },
-      // ],
-      tours: []
-    }
+      formshaparak: {
+        bankToken: "",
+      },
+    };
   },
   components: {
     // CircleSlider
   },
   computed: {},
   methods: {
-    getTours() {
-      let self = this
-      axios.get('https://panel.ahuantours.com/api/package/groups')
+    goToBank() {
+      let bankprice = 10000;
+      let self = this;
+      axios
+        .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+          amount: bankprice,
+          revertUrl: "http://localhost:8080/#/test-page?return=true",
+        })
         .then(function (response) {
-          let res = response.data.map((x) => {
-            return {
-              id: x.id,
-              col1Image: x.col1Image,
-              name: x.name,
-              // route: '/tour' + '/Istanbul' + '/' + name,
-              route: '/tour/' + x.name.replace(/\s/g, '-'),
-              price: x.price,
-              cols: x.cols
-            };
-          });
-          self.tours = res
+          self.formshaparak.bankToken = response.data;
+          setTimeout(() => {
+            self.$refs.formshaparak.submit();
+          }, 1000);
         })
         .catch(function (error) {
           // handle error
           console.log(error);
-        })
-    }
+        });
+    },
   },
   mounted() {
-    // this.getTours()
-  }
+    if (this.$route.query.return) {
+      console.log("has query");
+    } else {
+      console.log("has not query");
+      this.goToBank();
+    }
+    // axios.options["emulateJSON"] = true;
+    // this.getFlights();
+
+    // this.getFlights3();
+  },
   // 3975
   // 30475
-}
 
+  // "C:\Program Files (x86)\Google\Chrome\Application\Chrome.exe" --disable-web-security  --user-data-dir=~/chromeTempRepo
+};
 </script>

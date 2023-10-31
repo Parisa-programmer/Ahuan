@@ -354,6 +354,11 @@ const routes = [
     component: () => import('../views/CancellFlight.vue')
   },
   {
+    path: '/ticket-download',
+    name: 'ticket-download',
+    component: () => import('../views/TicketDownload.vue')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: () => import('../views/NotFound.vue')

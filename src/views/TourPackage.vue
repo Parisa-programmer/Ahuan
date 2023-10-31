@@ -3,28 +3,58 @@
     <v-row justify="center">
       <div class="widthAll relative">
         <v-skeleton-loader class="" :loading="loading" type="image">
-          <img class="widthAll backgroundImageTour d-none d-md-block"
-            :src="'https://panel.ahuantours.com/uploads/' + tour.backImage" alt="" />
-          <img class="widthAll backgroundImageTour d-block d-md-none"
-            :src="'https://panel.ahuantours.com/uploads/' + tour.backImageM" alt="" />
+          <img
+            class="widthAll backgroundImageTour d-none d-md-block"
+            :src="'https://panel.ahuantours.com/uploads/' + tour.backImage"
+            alt=""
+          />
+          <img
+            class="widthAll backgroundImageTour d-block d-md-none"
+            :src="'https://panel.ahuantours.com/uploads/' + tour.backImageM"
+            alt=""
+          />
           <div class="tourImageBackgroundPackage"></div>
         </v-skeleton-loader>
-        <v-skeleton-loader class="absolute mr-12 mt-6" :class="loading == true ? 'mt-md-12 pt-lg-12' : ''"
-          :loading="loading" type="chip" style="top:0">
-          <span class="white--text countryNmae px-2 px-sm-12 ">{{ tour.name1 }}</span>
-          <v-skeleton-loader :class="loading == true ? 'mt-2' : 'mt-2'" :loading="loading" type="heading">
-            <b class="white--text px-2 px-sm-12 tour-date">{{ tour.flightDays }}</b>
+        <v-skeleton-loader
+          class="absolute mr-12 mt-6"
+          :class="loading == true ? 'mt-md-12 pt-lg-12' : ''"
+          :loading="loading"
+          type="chip"
+          style="top: 0"
+        >
+          <span class="white--text countryNmae px-2 px-sm-12">{{
+            tour.name1
+          }}</span>
+          <v-skeleton-loader
+            :class="loading == true ? 'mt-2' : 'mt-2'"
+            :loading="loading"
+            type="heading"
+          >
+            <b class="white--text px-2 px-sm-12 tour-date">{{
+              tour.flightDays
+            }}</b>
           </v-skeleton-loader>
         </v-skeleton-loader>
       </div>
       <div class="indexDiv my-3 my-sm-6">
         <v-row justify="center">
-          <div class="white widthAll rounded-xl tour-package-items-parent"
-            style="white-space: nowrap;max-width: 900px;overflow-x: scroll;">
-            <v-slide-group ltr v-model="tab" class="py-1 ltr widthAll justify-center" hide-arrows center-active>
+          <div
+            class="white widthAll rounded-xl tour-package-items-parent"
+            style="white-space: nowrap; max-width: 900px; overflow-x: scroll"
+          >
+            <v-slide-group
+              ltr
+              v-model="tab"
+              class="py-1 ltr widthAll justify-center"
+              hide-arrows
+              center-active
+            >
               <v-slide-item v-for="(item, i) in slideItems" :key="i">
-                <div class="d-inline-block py-1 py-sm-2 px-3 px-sm-6 rounded-xl cursorPointer"
-                  :class="tab == i ? 'activeTab white--text' : 'white'" @click="tab = i">
+                <div
+                  class="d-inline-block py-1 py-sm-2 px-3 px-sm-6 rounded-xl cursorPointer"
+                  :class="tab == i ? 'activeTab white--text' : 'white'"
+                  @click="tab = i"
+                >
                   {{ item.text }}
                 </div>
                 <!-- <v-skeleton-loader class="textLoader d-inline-block mr-2"
@@ -69,7 +99,14 @@
       </div>
       <div class="indexDiv mb-6">
         <v-row class="white py-md-9 px-md-6">
-          <div class="widthAll" v-if="tour.packageHotelPrices && tour.packageHotelPrices.length > 0 && tab == 2">
+          <div
+            class="widthAll"
+            v-if="
+              tour.packageHotelPrices &&
+              tour.packageHotelPrices.length > 0 &&
+              tab == 2
+            "
+          >
             <h4 class="mb-4 mt-6 mt-md-0 mr-2 mr-md-0">
               <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
               قیمت های اعلام شده بر حسب تومان می باشد.
@@ -77,44 +114,97 @@
             <v-row>
               <v-col cols="12" lg="12">
                 <v-row class="mb-2" justify="center">
-                  <v-data-table :loading="loading" loading-text="در حال پردازش اطلاعات..." :headers="pricesHeaderIstanbul"
-                    hide-default-footer :items="pricesItemsIstanbul" :items-per-page="50"
-                    class=" rounded-lg even-odd-tabel  tabelTourId englishDataTabel"
-                    style="box-shadow: 0 0px 21px #dbdbdb !important;border: 2px solid #9d9d9b !important;">
+                  <v-data-table
+                    :loading="loading"
+                    loading-text="در حال پردازش اطلاعات..."
+                    :headers="pricesHeaderIstanbul"
+                    hide-default-footer
+                    :items="pricesItemsIstanbul"
+                    :items-per-page="50"
+                    class="rounded-lg even-odd-tabel tabelTourId englishDataTabel"
+                    style="
+                      box-shadow: 0 0px 21px #dbdbdb !important;
+                      border: 2px solid #9d9d9b !important;
+                    "
+                  >
                     <template v-slot:[`item.name`]="{ item }">
-                      <div class="bold" style="letter-spacing: 1px !important;">{{ item.name }}</div>
+                      <div class="bold" style="letter-spacing: 1px !important">
+                        {{ item.name }}
+                      </div>
                     </template>
                     <template v-slot:[`item.place`]="{ item }">
-                      <div class="" style="font-family: Byekan !important;">{{ item.place }}</div>
+                      <div class="" style="font-family: Byekan !important">
+                        {{ item.place }}
+                      </div>
                     </template>
                   </v-data-table>
                 </v-row>
               </v-col>
             </v-row>
-            <v-row class="mt-6" v-if="tour.packageEssentialTips2 && tour.packageEssentialTips2.length > 0">
-              <h4 v-for="(item, n) in tour.packageEssentialTips2" :key="n" class="widthAll mb-4 mt-4 mt-md-0">
+            <v-row
+              class="mt-6"
+              v-if="
+                tour.packageEssentialTips2 &&
+                tour.packageEssentialTips2.length > 0
+              "
+            >
+              <h4
+                v-for="(item, n) in tour.packageEssentialTips2"
+                :key="n"
+                class="widthAll mb-4 mt-4 mt-md-0"
+              >
                 <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
                 {{ item }}
               </h4>
             </v-row>
-
           </div>
-          <div class="widthAll" v-else-if="tour.packagePersonPrices && tour.packagePersonPrices.length > 0 && tab == 2">
+          <div
+            class="widthAll"
+            v-else-if="
+              tour.packagePersonPrices &&
+              tour.packagePersonPrices.length > 0 &&
+              tab == 2
+            "
+          >
             <v-row justify="center">
-              <v-col v-if="tour.packagePersonPrices.length > 0" cols="12" md="6" class="mb-6 mb-md-0">
+              <v-col
+                v-if="tour.packagePersonPrices.length > 0"
+                cols="12"
+                md="6"
+                class="mb-6 mb-md-0"
+              >
                 <v-row class="mb-2" justify="center">
-                  <h2 class="tabel-tour-title">اقامت در هتل های<span class="red--text"> {{ tour.hotel }}
-                      ستاره</span></h2>
+                  <h2 class="tabel-tour-title">
+                    اقامت در هتل های<span class="red--text">
+                      {{ tour.hotel }} ستاره</span
+                    >
+                  </h2>
                 </v-row>
                 <v-row class="mt-3" justify="center">
-                  <v-data-table hide-default-footer hide-default-header style="box-shadow: 0 0 21px #dbdbdb !important;"
-                    :headers="priceHeaders" :items="prices" class="even-odd-tabel rounded-lg hideOver tabelTour">
+                  <v-data-table
+                    hide-default-footer
+                    hide-default-header
+                    style="box-shadow: 0 0 21px #dbdbdb !important"
+                    :headers="priceHeaders"
+                    :items="prices"
+                    class="even-odd-tabel rounded-lg hideOver tabelTour"
+                  >
                   </v-data-table>
                 </v-row>
               </v-col>
             </v-row>
-            <v-row class="mt-6" v-if="tour.packageEssentialTips2 && tour.packageEssentialTips2.length > 0">
-              <h4 v-for="(item, n) in tour.packageEssentialTips2" :key="n" class="widthAll mb-4 mt-4 mt-md-0">
+            <v-row
+              class="mt-6"
+              v-if="
+                tour.packageEssentialTips2 &&
+                tour.packageEssentialTips2.length > 0
+              "
+            >
+              <h4
+                v-for="(item, n) in tour.packageEssentialTips2"
+                :key="n"
+                class="widthAll mb-4 mt-4 mt-md-0"
+              >
                 <v-icon size="5" color="red" class="ml-2">mdi-circle</v-icon>
                 {{ item }}
               </h4>
@@ -123,10 +213,16 @@
           <div class="widthAll" v-else-if="tab == 1">
             <v-row>
               <v-col cols="12">
-                <v-skeleton-loader :loading="loading" type="list-item-three-line">
+                <v-skeleton-loader
+                  :loading="loading"
+                  type="list-item-three-line"
+                >
                   <ul class="pl-0 mr-6 py-4 py-md-0">
-                    <li v-for="(item, i) in tour.packageServices" :key="i"
-                      class="my-1 my-md-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi">
+                    <li
+                      v-for="(item, i) in tour.packageServices"
+                      :key="i"
+                      class="my-1 my-md-3 grey--text text--darken-3 bold text-tour d-inline-block halfLi"
+                    >
                       {{ item.service }}
                     </li>
                   </ul>
@@ -136,43 +232,113 @@
           </div>
           <div class="widthAll" v-else-if="tab == 0">
             <v-row justify="center">
-              <v-col cols="12" :lg="tour.packagePrograms3 && tour.packagePrograms3.length > 0 ? '12' : '6'">
+              <v-col
+                cols="12"
+                :lg="
+                  tour.packagePrograms3 && tour.packagePrograms3.length > 0
+                    ? '12'
+                    : '6'
+                "
+              >
                 <v-row class="heightAll" align="end">
-                  <p v-for="(program, l) in tour.packagePrograms2" :key="l"
+                  <p
+                    v-for="(program, l) in tour.packagePrograms2"
+                    :key="l"
                     class="widthAll mt-2 mt-sm-4 mt-lg-0 mb-3 grey--text text--darken-3 bold text-tour text-justify"
-                    style="float:right;font-family:Byekan !important">
+                    style="float: right; font-family: Byekan !important"
+                  >
                     {{ program.program }}
-
                   </p>
                 </v-row>
               </v-col>
               <div class="d-lg-none widthAll my-sm-4 px-12">
-                <hr class=" mx-12 my-4">
+                <hr class="mx-12 my-4" />
               </div>
-              <v-col cols="12" :lg="tour.packagePrograms3 && tour.packagePrograms3.length > 0 ? '8' : '6'">
+              <v-col
+                cols="12"
+                :lg="
+                  tour.packagePrograms3 && tour.packagePrograms3.length > 0
+                    ? '8'
+                    : '6'
+                "
+              >
                 <v-row class="mb-7" justify="center" align="center">
-                  <h2 class="tabel-tour-title"> هواپیمایی</h2>
-                  <img class="mx-1" v-for="(airline, k) in tour.airlines" :key="k" height="40"
-                    :src="airline == 'IranAir' ? require('@/assets/image/airlines/iranair.png') : airline == 'Qeshm Air' ? require('@/assets/image/airlines/qeshm.png') : airline == 'Fly Dubai' ? require('@/assets/image/airlines/flydubai.png') : airline == 'Airtour' ? require('@/assets/image/airlines/airtour.png') : airline == 'Mahan Air' ? require('@/assets/image/airlines/mahan.png') : airline == 'Turkish Airlines' ? require('@/assets/image/airlines/turkish.png') : airline == 'Emirates Airlines' ? require('@/assets/image/airlines/emirates.png') : airline == 'Qatar Airways' ? require('@/assets/image/airlines/qatar-airways.png') : ''"
-                    :alt="airline">
-                  <h2 class="tabel-tour-title" v-for="(airline, m) in tour.airlines" :key="'airline' + m">{{
-                    (airline == 'Airtour') ? 'Iran ' + airline : (tour.airlines.length == 1 && airline != 'Fly Dubai') ?
-                    airline : '' }}
+                  <h2 class="tabel-tour-title">هواپیمایی</h2>
+                  <img
+                    class="mx-1"
+                    v-for="(airline, k) in tour.airlines"
+                    :key="k"
+                    height="40"
+                    :src="
+                      airline == 'IranAir'
+                        ? require('@/assets/image/airlines/iranair.png')
+                        : airline == 'Qeshm Air'
+                        ? require('@/assets/image/airlines/qeshm.png')
+                        : airline == 'Fly Dubai'
+                        ? require('@/assets/image/airlines/flydubai.png')
+                        : airline == 'Airtour'
+                        ? require('@/assets/image/airlines/airtour.png')
+                        : airline == 'Mahan Air'
+                        ? require('@/assets/image/airlines/mahan.png')
+                        : airline == 'Turkish Airlines'
+                        ? require('@/assets/image/airlines/turkish.png')
+                        : airline == 'Emirates Airlines'
+                        ? require('@/assets/image/airlines/emirates.png')
+                        : airline == 'Qatar Airways'
+                        ? require('@/assets/image/airlines/qatar-airways.png')
+                        : ''
+                    "
+                    :alt="airline"
+                  />
+                  <h2
+                    class="tabel-tour-title"
+                    v-for="(airline, m) in tour.airlines"
+                    :key="'airline' + m"
+                  >
+                    {{
+                      airline == "Airtour"
+                        ? "Iran " + airline
+                        : tour.airlines.length == 1 && airline != "Fly Dubai"
+                        ? airline
+                        : ""
+                    }}
                   </h2>
                 </v-row>
                 <v-row justify="center">
-                  <v-data-table style="box-shadow: 0 0px 21px #dbdbdb !important;" hide-default-footer
-                    :headers="flightHeaders" :items="flights"
-                    :class="tour.packagePrograms3 && tour.packagePrograms3.length > 0 && 'tabelHeader'"
-                    class="even-odd-tabel rounded-lg hideOver c">
+                  <v-data-table
+                    style="box-shadow: 0 0px 21px #dbdbdb !important"
+                    hide-default-footer
+                    :headers="flightHeaders"
+                    :items="flights"
+                    :class="
+                      tour.packagePrograms3 &&
+                      tour.packagePrograms3.length > 0 &&
+                      'tabelHeader'
+                    "
+                    class="even-odd-tabel rounded-lg hideOver c"
+                  >
                     <template v-slot:[`item.date`]="{ item }">
-                      <div class="bold"
-                        style="white-space: nowrap;font-family: ' Roboto', sans-serif !important;direction:ltr !important">
-                        {{
-                          item.date }}</div>
+                      <div
+                        class="bold"
+                        style="
+                          white-space: nowrap;
+                          font-family: ' Roboto', sans-serif !important;
+                          direction: ltr !important;
+                        "
+                      >
+                        {{ item.date }}
+                      </div>
                     </template>
                     <template v-slot:[`item.text2`]="{ item }">
-                      <div class="bold" style="font-family: Byekan !important;white-space: nowrap;">{{ item.text2 }}</div>
+                      <div
+                        class="bold"
+                        style="
+                          font-family: Byekan !important;
+                          white-space: nowrap;
+                        "
+                      >
+                        {{ item.text2 }}
+                      </div>
                     </template>
                   </v-data-table>
                 </v-row>
@@ -181,11 +347,16 @@
                 <hr class=" mx-12 my-4">
               </div> -->
               <v-col cols="12" lg="12">
-                <p v-for="(program, l) in tour.packagePrograms3" :key="l"
-                  class=" mt-4 mb-3 grey--text text--darken-3 bold text-tour" style="font-family:Byekan !important;"
-                  :class="l == 0 ? 'widthAll' : 'halfWidth d-inline-block px-sm-4'">
+                <p
+                  v-for="(program, l) in tour.packagePrograms3"
+                  :key="l"
+                  class="mt-4 mb-3 grey--text text--darken-3 bold text-tour"
+                  style="font-family: Byekan !important"
+                  :class="
+                    l == 0 ? 'widthAll' : 'halfWidth d-inline-block px-sm-4'
+                  "
+                >
                   {{ program.program }}
-
                 </p>
               </v-col>
             </v-row>
@@ -193,20 +364,38 @@
           <div class="widthAll" v-else-if="tab == 3">
             <v-row>
               <v-col cols="12" md="12">
-                <v-skeleton-loader :loading="loading" type="list-item-three-line">
-                  <div class="widthAll" v-for="(pack, i) in packageDocs" :key="i">
-                    <h3 class="tabel-tour-title red--text mt-3 mt-md-0">{{ pack.title }}</h3>
-                    <ul class=" my-3 my-md-6 mr-2 mr-md-9 pl-0">
-                      <li v-for="(des, i) in pack.descriptions" :key="i"
-                        class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ des }}
-                        <v-btn v-if="tour.packageGroup && tour.packageGroup.name == 'روسیه' && i == 0"
-                          to="/personal-photo-specifications" text color="red">(جهت مشاهده شرایط عکس
-                          3*4
-                          کلیک
-                          کنید)</v-btn>
+                <v-skeleton-loader
+                  :loading="loading"
+                  type="list-item-three-line"
+                >
+                  <div
+                    class="widthAll"
+                    v-for="(pack, i) in packageDocs"
+                    :key="i"
+                  >
+                    <h3 class="tabel-tour-title red--text mt-3 mt-md-0">
+                      {{ pack.title }}
+                    </h3>
+                    <ul class="my-3 my-md-6 mr-2 mr-md-9 pl-0">
+                      <li
+                        v-for="(des, i) in pack.descriptions"
+                        :key="i"
+                        class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                      >
+                        {{ des }}
+                        <v-btn
+                          v-if="
+                            tour.packageGroup &&
+                            tour.packageGroup.name == 'روسیه' &&
+                            i == 0
+                          "
+                          to="/personal-photo-specifications"
+                          text
+                          color="red"
+                          >(جهت مشاهده شرایط عکس 3*4 کلیک کنید)</v-btn
+                        >
                       </li>
                     </ul>
-
                   </div>
                 </v-skeleton-loader>
               </v-col>
@@ -215,15 +404,26 @@
           <div class="widthAll" v-else-if="tab == 4">
             <v-row>
               <v-col cols="12" md="12">
-                <v-skeleton-loader :loading="loading" type="list-item-three-line">
-                  <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">نکات ضروری تورهای {{ (tour.packageGroup &&
-                    tour.packageGroup.name)
-                    && tour.packageGroup.name
-                  }}
+                <v-skeleton-loader
+                  :loading="loading"
+                  type="list-item-three-line"
+                >
+                  <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">
+                    نکات ضروری تورهای
+                    {{
+                      tour.packageGroup &&
+                      tour.packageGroup.name &&
+                      tour.packageGroup.name
+                    }}
                   </h3>
                   <ul class="my-6 mr-2 mr-md-9 pl-0">
-                    <li v-for="(Tip, l) in tour.packageEssentialTips" :key="l"
-                      class="my-3 grey--text text--darken-3 bold text-tour text-justify">{{ Tip.essentialTip }}</li>
+                    <li
+                      v-for="(Tip, l) in tour.packageEssentialTips"
+                      :key="l"
+                      class="my-3 grey--text text--darken-3 bold text-tour text-justify"
+                    >
+                      {{ Tip.essentialTip }}
+                    </li>
                   </ul>
                 </v-skeleton-loader>
               </v-col>
@@ -231,22 +431,46 @@
           </div>
           <div class="widthAll" v-else-if="tab == 5">
             <v-row justify="center">
-              <div class="d-inline-block galeryImageParent white ma-1" v-for="(item, i) in tour.packagePhotoes" :key="i">
-                <img width="100%" class="galeryImage cursorPointer rounded-lg"
-                  @click="imageNumber = i; imageDialog = true" :src="'https://panel.ahuantours.com/uploads/' + item.photo"
-                  :alt="item.description">
+              <div
+                class="d-inline-block galeryImageParent white ma-1"
+                v-for="(item, i) in tour.packagePhotoes"
+                :key="i"
+              >
+                <img
+                  width="100%"
+                  class="galeryImage cursorPointer rounded-lg"
+                  @click="
+                    imageNumber = i;
+                    imageDialog = true;
+                  "
+                  :src="'https://panel.ahuantours.com/uploads/' + item.photo"
+                  :alt="item.description"
+                />
               </div>
             </v-row>
             <v-dialog v-model="imageDialog" width="1000">
               <div class="relative white">
                 <v-carousel v-model="imageNumber" height="fit-content">
-                  <v-carousel-item v-for="(item, i) in tour.packagePhotoes" :key="i">
-                    <v-img height="100%" :src="'https://panel.ahuantours.com/uploads/' + item.photo"
-                      :alt="item.description" />
+                  <v-carousel-item
+                    v-for="(item, i) in tour.packagePhotoes"
+                    :key="i"
+                  >
+                    <v-img
+                      height="100%"
+                      :src="
+                        'https://panel.ahuantours.com/uploads/' + item.photo
+                      "
+                      :alt="item.description"
+                    />
                   </v-carousel-item>
                 </v-carousel>
-                <v-icon class="absolute cursorPointer" color="white" @click="imageDialog = false"
-                  style="top:5px;right:5px">mdi-close</v-icon>
+                <v-icon
+                  class="absolute cursorPointer"
+                  color="white"
+                  @click="imageDialog = false"
+                  style="top: 5px; right: 5px"
+                  >mdi-close</v-icon
+                >
               </div>
             </v-dialog>
           </div>
@@ -325,11 +549,13 @@
   top: 0;
   left: 0;
   opacity: 1;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.55) 0,
-      rgba(0, 0, 0, 0.55) 1%,
-      transparent 56%,
-      transparent 74%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0,
+    rgba(0, 0, 0, 0.55) 1%,
+    transparent 56%,
+    transparent 74%
+  );
 }
 
 .tourPageTitle h3,
@@ -387,14 +613,26 @@
 
 .countryNmae {
   margin-right: -52px;
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    94deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(89 89 89 / 76%) 14%,
+    rgb(89 89 89 / 67%) 87%,
+    rgba(255, 255, 255, 0) 100%
+  );
   font-size: 62px;
   font-weight: bold;
 }
 
 .tour-date {
   margin-right: -52px;
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    94deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(89 89 89 / 76%) 14%,
+    rgb(89 89 89 / 67%) 87%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .main-div {
@@ -420,7 +658,7 @@
 }
 
 .galeryImage::after {
-  content: '';
+  content: "";
   position: absolute;
   height: 100%;
   width: 100%;
@@ -450,7 +688,7 @@
   direction: ltr !important;
 }
 
-@media (min-width:960px) and (max-width:1263px) {
+@media (min-width: 960px) and (max-width: 1263px) {
   .main-div {
     margin-top: -265px;
   }
@@ -464,7 +702,7 @@
   }
 }
 
-@media (min-width:600px) and (max-width:959px) {
+@media (min-width: 600px) and (max-width: 959px) {
   .main-div {
     margin-top: -210px;
   }
@@ -486,7 +724,7 @@
   }
 
   .tabelTour {
-    width: 80% !important
+    width: 80% !important;
   }
 
   .text-tour {
@@ -505,7 +743,7 @@
     width: 45%;
   }
 
-  @media (max-width:774px) {
+  @media (max-width: 774px) {
     .main-div {
       margin-top: -164px;
     }
@@ -530,11 +768,10 @@
   }
 }
 
-@media (max-width:599px) {
-
+@media (max-width: 599px) {
   .v-btn--icon.v-size--small .v-icon,
   .v-btn--fab.v-size--small .v-icon {
-    font-size: 10px !important
+    font-size: 10px !important;
   }
 
   .v-btn--icon.v-size--small {
@@ -571,15 +808,13 @@
   }
 
   .tabelTour {
-    width: 100% !important
+    width: 100% !important;
   }
 
-  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tabelTour > .v-data-table__wrapper .v-data-table__mobile-row {
     min-height: 35px !important;
     justify-content: center;
   }
-
-
 
   .tourPlan .v-data-table__mobile-row__header {
     display: none !important;
@@ -593,28 +828,32 @@
     text-align: center;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row {
     display: inline-block;
     width: 50%;
     position: relative;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
     display: flex;
     width: 100%;
     /* margin-bottom: 20px; */
     font-weight: bold;
   }
 
-  .tourPlan.tabelHeader>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2) {
+  .tourPlan.tabelHeader
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(2) {
     display: flex;
     width: 100%;
     /* margin-bottom: 20px; */
     font-weight: bold;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
-    content: '<-----------------------------------------------';
+  .tourPlan
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(2)::before {
+    content: "<-----------------------------------------------";
     position: absolute;
     width: 46%;
     right: 80%;
@@ -626,12 +865,16 @@
     justify-content: start;
   }
 
-  .tourPlan.tabelHeader>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
-    content: '';
+  .tourPlan.tabelHeader
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(2)::before {
+    content: "";
   }
 
-  .tourPlan.tabelHeader>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(3)::before {
-    content: '<-----------------------------------------------';
+  .tourPlan.tabelHeader
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(3)::before {
+    content: "<-----------------------------------------------";
     position: absolute;
     width: 46%;
     right: 80%;
@@ -687,7 +930,7 @@
     width: 45%;
   }
 
-  @media (max-width:400px) {
+  @media (max-width: 400px) {
     .main-div {
       margin-top: -185px;
     }
@@ -712,11 +955,13 @@
   top: 0;
   left: 0;
   opacity: 1;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.55) 0,
-      rgba(0, 0, 0, 0.55) 1%,
-      transparent 56%,
-      transparent 74%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0,
+    rgba(0, 0, 0, 0.55) 1%,
+    transparent 56%,
+    transparent 74%
+  );
 }
 
 .tourPageTitle h3,
@@ -746,8 +991,6 @@
   color: rgb(44, 44, 44);
 }
 
-
-
 .tabTitles {
   color: #fff;
 }
@@ -755,7 +998,12 @@
 .activeTab {
   /* color: rgb(44, 44, 44) !important; */
   background: rgb(94, 101, 104);
-  background: linear-gradient(138deg, rgba(94, 101, 104, 1) 0%, rgba(113, 122, 126, 1) 49%, rgba(94, 101, 104, 1) 100%);
+  background: linear-gradient(
+    138deg,
+    rgba(94, 101, 104, 1) 0%,
+    rgba(113, 122, 126, 1) 49%,
+    rgba(94, 101, 104, 1) 100%
+  );
   z-index: 1;
 }
 
@@ -771,14 +1019,26 @@
 }
 
 .countryNmae {
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    94deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(89 89 89 / 76%) 14%,
+    rgb(89 89 89 / 67%) 87%,
+    rgba(255, 255, 255, 0) 100%
+  );
   font-size: 62px;
   font-weight: bold;
 }
 
 .tour-date {
   margin-right: -52px;
-  background: linear-gradient(94deg, rgba(255, 255, 255, 0) 0%, rgb(89 89 89 / 76%) 14%, rgb(89 89 89 / 67%) 87%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    94deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(89 89 89 / 76%) 14%,
+    rgb(89 89 89 / 67%) 87%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .main-div {
@@ -818,12 +1078,37 @@
 }
 
 .v-data-table,
-.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:last-child,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:last-child,
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
   border: 1px solid #9d9d9d;
   font-weight: bold;
 }
@@ -837,7 +1122,7 @@
 }
 
 .galeryImage::after {
-  content: '';
+  content: "";
   position: absolute;
   height: 100%;
   width: 100%;
@@ -856,7 +1141,7 @@
 }
 
 .halfLi {
-  width: 49%
+  width: 49%;
 }
 
 .even-odd-tabel td:nth-child(2) .bold {
@@ -865,10 +1150,7 @@
   text-shadow: 0 0 3px #ff7765; */
 }
 
-
-
-
-@media (min-width:960px) and (max-width:1263px) {
+@media (min-width: 960px) and (max-width: 1263px) {
   .main-div {
     margin-top: -245px;
   }
@@ -882,7 +1164,7 @@
   }
 }
 
-@media (min-width:600px) and (max-width:959px) {
+@media (min-width: 600px) and (max-width: 959px) {
   .main-div {
     margin-top: -205px;
   }
@@ -904,7 +1186,7 @@
   }
 
   .tabelTour {
-    width: 80% !important
+    width: 80% !important;
   }
 
   .text-tour {
@@ -924,10 +1206,10 @@
   }
 
   .halfLi {
-    width: 100%
+    width: 100%;
   }
 
-  @media (max-width:774px) {
+  @media (max-width: 774px) {
     .main-div {
       margin-top: -155px;
     }
@@ -951,7 +1233,7 @@
   }
 }
 
-@media (max-width:599px) {
+@media (max-width: 599px) {
   .halfWidth {
     width: 100%;
   }
@@ -985,15 +1267,15 @@
   }
 
   .tabelTour {
-    width: 100% !important
+    width: 100% !important;
   }
 
-  .tabelTour>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tabelTour > .v-data-table__wrapper .v-data-table__mobile-row {
     min-height: 35px !important;
     justify-content: center;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row {
     display: inline-block;
     width: 50%;
     position: relative;
@@ -1003,15 +1285,17 @@
     text-align: center;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
+  .tourPlan > .v-data-table__wrapper .v-data-table__mobile-row:nth-child(1) {
     display: flex;
     width: 100%;
     margin-bottom: 20px;
     font-weight: bold;
   }
 
-  .tourPlan>.v-data-table__wrapper .v-data-table__mobile-row:nth-child(2)::before {
-    content: '<-----------------------------------------------';
+  .tourPlan
+    > .v-data-table__wrapper
+    .v-data-table__mobile-row:nth-child(2)::before {
+    content: "<-----------------------------------------------";
     position: absolute;
     width: 46%;
     right: 80%;
@@ -1060,12 +1344,37 @@
     width: 500px;
   }
 
-  .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child,
-  .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row),
-  .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > td:last-child,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > td:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > th:last-child,
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > tbody
+    > tr:not(:last-child)
+    > th:not(.v-data-table__mobile-row),
+  .theme--light.v-data-table
+    > .v-data-table__wrapper
+    > table
+    > thead
+    > tr:last-child
+    > th {
     border: unset;
   }
 
@@ -1074,53 +1383,74 @@
   }
 
   .halfLi {
-    width: 100%
+    width: 100%;
   }
 }
 </style>
 
 <script>
-import CallUs from '@/components/CallUs.vue';
-import axios from 'axios'
-axios.defaults.headers.common['Client-Token'] = 'Ahuan-Wapi?123'
+import CallUs from "@/components/CallUs.vue";
+import axios from "axios";
+axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
 export default {
-  name: 'Istanbul-3night',
+  name: "Istanbul-3night",
   components: {
-    CallUs
-
+    CallUs,
   },
   data: () => ({
     slideItems: [
-      { text: 'برنامه سفر' },
-      { text: 'خدمات تور' },
-      { text: 'لیست قیمت' },
-      { text: 'مدارک موردنیاز' },
-      { text: 'نکات ضروری' },
-      { text: 'گالری تصاویر' },
-
+      { text: "برنامه سفر" },
+      { text: "خدمات تور" },
+      { text: "لیست قیمت" },
+      { text: "مدارک موردنیاز" },
+      { text: "نکات ضروری" },
+      { text: "گالری تصاویر" },
     ],
     tour: {},
     tab: 0,
     pricesHeaderIstanbul: [
       // { text: '', sortable: false, value: 'image', align: 'center', },
-      { text: 'ردیف', align: 'center', sortable: true, value: 'id', width: '90px' },
-      { text: 'هتل', filterable: true, align: 'center', sortable: true, value: 'name' },
-      { text: 'درجه', sortable: true, value: 'star', align: 'center', width: '100px', },
-      { text: 'موقعیت', sortable: true, value: 'place', align: 'center', },
-      { text: 'دو تخته', sortable: true, value: 'duble', align: 'center', },
-      { text: 'یک تخته', sortable: true, value: 'single', align: 'center', },
-      { text: 'کودک با تخت', sortable: true, value: 'baby', align: 'center', },
-      { text: 'کودک بدون تخت', sortable: false, value: 'baby2', align: 'center', },
+      {
+        text: "ردیف",
+        align: "center",
+        sortable: true,
+        value: "id",
+        width: "90px",
+      },
+      {
+        text: "هتل",
+        filterable: true,
+        align: "center",
+        sortable: true,
+        value: "name",
+      },
+      {
+        text: "درجه",
+        sortable: true,
+        value: "star",
+        align: "center",
+        width: "100px",
+      },
+      { text: "موقعیت", sortable: true, value: "place", align: "center" },
+      { text: "دو تخته", sortable: true, value: "duble", align: "center" },
+      { text: "یک تخته", sortable: true, value: "single", align: "center" },
+      { text: "کودک با تخت", sortable: true, value: "baby", align: "center" },
+      {
+        text: "کودک بدون تخت",
+        sortable: false,
+        value: "baby2",
+        align: "center",
+      },
     ],
     pricesItemsIstanbul: [],
     imageNumber: 0,
     istanbulImages: [
-      require('@/assets/image/tour/استانبول-1.jpg'),
-      require('@/assets/image/tour/استانبول-2.jpg'),
-      require('@/assets/image/tour/استانبول-3.jpg'),
-      require('@/assets/image/tour/استانبول-4.jpg'),
-      require('@/assets/image/tour/استانبول-5.jpg'),
-      require('@/assets/image/tour/استانبول-6.jpg'),
+      require("@/assets/image/tour/استانبول-1.jpg"),
+      require("@/assets/image/tour/استانبول-2.jpg"),
+      require("@/assets/image/tour/استانبول-3.jpg"),
+      require("@/assets/image/tour/استانبول-4.jpg"),
+      require("@/assets/image/tour/استانبول-5.jpg"),
+      require("@/assets/image/tour/استانبول-6.jpg"),
       // '/folders/image/tour/استانبول-7.jpg',
     ],
     imageDialog: false,
@@ -1130,92 +1460,95 @@ export default {
     flights: [],
     priceHeaders: [
       {
-        text: 'درجه هتل ها',
-        align: 'center',
+        text: "درجه هتل ها",
+        align: "center",
         sortable: false,
-        value: 'name',
+        value: "name",
       },
-      { text: '5 ستاره', sortable: false, value: 'calories', align: 'center', },
-
+      { text: "5 ستاره", sortable: false, value: "calories", align: "center" },
     ],
     prices: [],
   }),
-  watch: {
-
-  },
+  watch: {},
   methods: {
     separatePrice(number) {
-      let value1 = number.toString().replace(/,/g, "")
-      let value2 = value1
+      let value1 = number.toString().replace(/,/g, "");
+      let value2 = value1;
       if (value1.length == 0 || value1 < 0) {
-        value2 = 0
+        value2 = 0;
       } else if (value1.length > 1 && value1[0] == 0) {
-        value2 = value1.replace(0, '')
+        value2 = value1.replace(0, "");
       } else {
-        value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        value2 = value1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-      return value2
+      return value2;
       // self.filter.price = [Number(self.fromPrice.toString().replace(/,/g, "")), Number(value1)]
     },
     getTour(id) {
-      let self = this
-      axios.get('https://panel.ahuantours.com/api/package/' + id)
+      let self = this;
+      axios
+        .get("https://panel.ahuantours.com/api/package/" + id)
         .then(function (response) {
-          self.tour = response.data
+          self.tour = response.data;
           self.tour.packageServices = self.tour.packageServices.sort((a, b) => {
             return a.service.length - b.service.length;
           });
-          let packageEssentialTips2 = []
-          let packageEssentialTips3 = []
+          let packageEssentialTips2 = [];
+          let packageEssentialTips3 = [];
           for (let i = 0; i < response.data.packageEssentialTips.length; i++) {
-            if (response.data.packageEssentialTips[i].essentialTip[0] == '~') {
-              // console.log();
-              packageEssentialTips3.push(response.data.packageEssentialTips[i].essentialTip.slice(1))
+            if (response.data.packageEssentialTips[i].essentialTip[0] == "~") {
+              packageEssentialTips3.push(
+                response.data.packageEssentialTips[i].essentialTip.slice(1)
+              );
             } else {
-              packageEssentialTips2.push(response.data.packageEssentialTips[i])
+              packageEssentialTips2.push(response.data.packageEssentialTips[i]);
             }
           }
-          self.tour.packageEssentialTips = packageEssentialTips2.sort((a, b) => {
-            return a.essentialTip.length - b.essentialTip.length;
-          });
-          self.tour.packageEssentialTips2 = packageEssentialTips3
-          let names = response.data.name ? response.data.name.split('~') : ''
-          self.tour.name1 = names[0].replace('/', '')
-          self.tour.name2 = names[1]
-          self.tour.airlines = response.data.airlines.split(', ')
-          self.pricesItemsIstanbul = response.data.packageHotelPrices.map((x) => {
-            return {
-              name: x.hotel,
-              star: x.star,
-              place: x.location,
-              duble: self.separatePrice(x.dbl),
-              single: self.separatePrice(x.sgl),
-              baby: self.separatePrice(x.extBed),
-              baby2: self.separatePrice(x.noBed),
-            };
-          });
+          self.tour.packageEssentialTips = packageEssentialTips2.sort(
+            (a, b) => {
+              return a.essentialTip.length - b.essentialTip.length;
+            }
+          );
+          self.tour.packageEssentialTips2 = packageEssentialTips3;
+          let names = response.data.name ? response.data.name.split("~") : "";
+          self.tour.name1 = names[0].replace("/", "");
+          self.tour.name2 = names[1];
+          self.tour.airlines = response.data.airlines.split(", ");
+          self.pricesItemsIstanbul = response.data.packageHotelPrices.map(
+            (x) => {
+              return {
+                name: x.hotel,
+                star: x.star,
+                place: x.location,
+                duble: self.separatePrice(x.dbl),
+                single: self.separatePrice(x.sgl),
+                baby: self.separatePrice(x.extBed),
+                baby2: self.separatePrice(x.noBed),
+              };
+            }
+          );
           for (let i = 0; i < self.pricesItemsIstanbul.length; i++) {
-            self.pricesItemsIstanbul[i].id = i + 1
+            self.pricesItemsIstanbul[i].id = i + 1;
           }
-          let test = response.data.packageDocs
+          let test = response.data.packageDocs;
           test = test.reduce((x, y) => {
             (x[y.title] = x[y.title] || []).push(y);
             return x;
           }, {});
-          let keys = Object.keys(test)
+          let keys = Object.keys(test);
           for (let i = 0; i < keys.length; i++) {
-            let desArray = test[keys[i]]
-            let des = []
+            let desArray = test[keys[i]];
+            let des = [];
             for (let i = 0; i < desArray.length; i++) {
-              des.push(desArray[i].description)
+              des.push(desArray[i].description);
             }
             des = des.sort((a, b) => {
               return a.length - b.length;
             });
             self.packageDocs.push({
               title: keys[i],
-              descriptions: des
-            })
+              descriptions: des,
+            });
           }
           self.prices = response.data.packagePersonPrices.map((x) => {
             return {
@@ -1223,12 +1556,13 @@ export default {
               calories: x.price,
             };
           });
-          self.loading = false
-          document.title = 'تور ' + names[0].replace('/', '') + ' | تور لحظه آخری '
-          let hasDepDate = false
+          self.loading = false;
+          document.title =
+            "تور " + names[0].replace("/", "") + " | تور لحظه آخری ";
+          let hasDepDate = false;
           self.flights = response.data.packageFlights.map((x) => {
             if (x.depDate.length != 0) {
-              hasDepDate = true
+              hasDepDate = true;
             }
             return {
               from: x.flightPath,
@@ -1236,101 +1570,155 @@ export default {
               time1: x.depTime,
               time2: x.arrTime,
               text1: x.flightNo,
-              text2: x.airportsPath
+              text2: x.airportsPath,
             };
           });
-          self.flightHeaders = hasDepDate == true ? [
-            // { text: '', sortable: false, value: 'image', align: 'center', },
-            { text: 'مسیر پرواز', align: 'center', sortable: false, value: 'from' },
-            { text: 'تاریخ پرواز', align: 'center', sortable: false, value: 'date' },
-            { text: 'ساعت پرواز', sortable: false, value: 'time1', align: 'center', },
-            { text: 'ساعت رسیدن', sortable: false, value: 'time2', align: 'center', },
-            { text: 'شماره پرواز', sortable: false, value: 'text1', align: 'center', },
-            { text: 'فرودگاه مبدا و مقصد', sortable: false, value: 'text2', align: 'center', },
-
-          ] : [
-            { text: 'مسیر پرواز', align: 'center', sortable: false, value: 'from' },
-            { text: 'ساعت پرواز', sortable: false, value: 'time1', align: 'center', },
-            { text: 'ساعت رسیدن', sortable: false, value: 'time2', align: 'center', },
-            { text: 'شماره پرواز', sortable: false, value: 'text1', align: 'center', },
-            { text: 'فرودگاه مبدا و مقصد', sortable: false, value: 'text2', align: 'center', },
-          ]
-          let findChar = false
-          self.tour.packagePrograms2 = []
-          self.tour.packagePrograms3 = []
+          self.flightHeaders =
+            hasDepDate == true
+              ? [
+                  // { text: '', sortable: false, value: 'image', align: 'center', },
+                  {
+                    text: "مسیر پرواز",
+                    align: "center",
+                    sortable: false,
+                    value: "from",
+                  },
+                  {
+                    text: "تاریخ پرواز",
+                    align: "center",
+                    sortable: false,
+                    value: "date",
+                  },
+                  {
+                    text: "ساعت پرواز",
+                    sortable: false,
+                    value: "time1",
+                    align: "center",
+                  },
+                  {
+                    text: "ساعت رسیدن",
+                    sortable: false,
+                    value: "time2",
+                    align: "center",
+                  },
+                  {
+                    text: "شماره پرواز",
+                    sortable: false,
+                    value: "text1",
+                    align: "center",
+                  },
+                  {
+                    text: "فرودگاه مبدا و مقصد",
+                    sortable: false,
+                    value: "text2",
+                    align: "center",
+                  },
+                ]
+              : [
+                  {
+                    text: "مسیر پرواز",
+                    align: "center",
+                    sortable: false,
+                    value: "from",
+                  },
+                  {
+                    text: "ساعت پرواز",
+                    sortable: false,
+                    value: "time1",
+                    align: "center",
+                  },
+                  {
+                    text: "ساعت رسیدن",
+                    sortable: false,
+                    value: "time2",
+                    align: "center",
+                  },
+                  {
+                    text: "شماره پرواز",
+                    sortable: false,
+                    value: "text1",
+                    align: "center",
+                  },
+                  {
+                    text: "فرودگاه مبدا و مقصد",
+                    sortable: false,
+                    value: "text2",
+                    align: "center",
+                  },
+                ];
+          let findChar = false;
+          self.tour.packagePrograms2 = [];
+          self.tour.packagePrograms3 = [];
 
           for (let i = 0; i < response.data.packagePrograms.length; i++) {
-            let program = response.data.packagePrograms[i]
-            if (program.program[0] == '~') {
-              findChar = true
-              program.program = program.program.slice(1)
-
+            let program = response.data.packagePrograms[i];
+            if (program.program[0] == "~") {
+              findChar = true;
+              program.program = program.program.slice(1);
             }
             if (findChar == false) {
-              self.tour.packagePrograms2.push(program)
+              self.tour.packagePrograms2.push(program);
             } else {
-              self.tour.packagePrograms3.push(program)
+              self.tour.packagePrograms3.push(program);
             }
-
           }
         })
         .catch(function (error) {
           // handle error
           console.log(error);
-          self.loading = false
-        })
-    }
+          self.loading = false;
+        });
+    },
   },
   beforeRouteUpdate(to, from, next) {
-    this.loading = true
+    this.loading = true;
     window.scrollTo(0, 0);
-    this.tour = {}
-    this.tab = 0
-    this.pricesItemsIstanbul = []
-    this.imageNumber = 0
-    this.imageDialog = false
-    this.packageDocs = []
-    this.flights = []
+    this.tour = {};
+    this.tab = 0;
+    this.pricesItemsIstanbul = [];
+    this.imageNumber = 0;
+    this.imageDialog = false;
+    this.packageDocs = [];
+    this.flights = [];
 
     this.flights = [
       {
-        from: 'پرواز از تهران به دبی',
-        time1: '04:30',
-        time2: '07:20',
-        text1: 'EK978',
-        text2: 'IKADXB'
+        from: "پرواز از تهران به دبی",
+        time1: "04:30",
+        time2: "07:20",
+        text1: "EK978",
+        text2: "IKADXB",
       },
       {
-        from: 'پرواز از دبی به پاریس',
-        time1: '08:20',
-        time2: '13:30',
-        text1: 'EK073',
-        text2: 'DXBCDG'
+        from: "پرواز از دبی به پاریس",
+        time1: "08:20",
+        time2: "13:30",
+        text1: "EK073",
+        text2: "DXBCDG",
       },
       {
-        from: 'پرواز از پاریس به دبی',
-        time1: '15:35',
-        time2: '00:20',
-        text1: 'EK074',
-        text2: 'CDGDXB'
+        from: "پرواز از پاریس به دبی",
+        time1: "15:35",
+        time2: "00:20",
+        text1: "EK074",
+        text2: "CDGDXB",
       },
       {
-        from: 'پرواز از دبی به تهران',
-        time1: '01:20',
-        time2: '04:00',
-        text1: 'EK977',
-        text2: 'DXBIKA'
+        from: "پرواز از دبی به تهران",
+        time1: "01:20",
+        time2: "04:00",
+        text1: "EK977",
+        text2: "DXBIKA",
       },
-    ]
-    this.prices = []
-    this.getTour(to.params.id)
-    next()
+    ];
+    this.prices = [];
+    this.getTour(to.params.id);
+    next();
   },
   created() {
-    this.getTour(this.$route.params.id)
+    this.getTour(this.$route.params.id);
     window.scrollTo(0, 0);
-    document.title = 'تور لحظه آخری'
-
-  }
-}
+    document.title = "تور لحظه آخری";
+  },
+};
 </script>

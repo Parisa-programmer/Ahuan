@@ -492,6 +492,7 @@ input::-webkit-inner-spin-button {
   border-top: 0 !important;
   margin-top: 37px !important;
   overflow-x: hidden;
+  /* z-index: 120 !important; */
 }
 
 .v-menu__content::-webkit-scrollbar {
@@ -809,10 +810,6 @@ input::-webkit-inner-spin-button {
   width: 30%;
 }
 
-.dateTicket {
-  right: 41%;
-}
-
 .typeFlightTicket {
   top: 35px;
 }
@@ -1115,10 +1112,6 @@ input::-webkit-inner-spin-button {
     width: 374px;
   }
 
-  .dateTicket {
-    right: 38%;
-  }
-
   .main-magazine .v-image {
     height: 100px;
     width: 100px;
@@ -1208,10 +1201,6 @@ input::-webkit-inner-spin-button {
 
   .next-page-ticket .flight-go-flesh {
     width: 380px;
-  }
-
-  .dateTicket {
-    right: 38%;
   }
 
   .main-magazine .v-image {
@@ -1370,10 +1359,6 @@ input::-webkit-inner-spin-button {
 
     .next-page-ticket {
       width: 585px;
-    }
-
-    .next-page-ticket .dateTicket {
-      right: 30%;
     }
 
     .v-input--selection-controls__input {
@@ -1667,7 +1652,7 @@ input::-webkit-inner-spin-button {
   }
 
   .typeFlightTicket {
-    top: 32px;
+    top: 43px;
   }
 
   .filter-buttons-small-mood {
@@ -1711,10 +1696,6 @@ input::-webkit-inner-spin-button {
 
     .next-page-ticket {
       width: 387px;
-    }
-
-    .next-page-ticket .dateTicket {
-      right: 38%;
     }
 
     .newesCardSlider {
@@ -1778,18 +1759,6 @@ input::-webkit-inner-spin-button {
       width: 227px;
     }
 
-    .next-page-ticket .dateTicket {
-      right: 33%;
-    }
-
-    .dateTicket {
-      right: 39%;
-    }
-
-    .typeFlightTicket {
-      right: 43%;
-    }
-
     .slick-tour .slick-track {
       margin-right: 52px !important;
     }
@@ -1830,16 +1799,8 @@ input::-webkit-inner-spin-button {
       width: 265px;
     }
 
-    .next-page-ticket .dateTicket {
-      right: 30%;
-    }
-
-    .dateTicket {
-      right: 37%;
-    }
-
     .typeFlightTicket {
-      right: 39%;
+      right: 46%;
     }
 
     .multi-flight .typeFlightTicket {
@@ -1894,20 +1855,8 @@ input::-webkit-inner-spin-button {
       width: 213px;
     }
 
-    .next-page-ticket .dateTicket {
-      right: 25%;
-    }
-
-    .dateTicket {
-      right: 34%;
-    }
-
-    .multi-flight .dateTicket {
-      right: 32%;
-    }
-
     .typeFlightTicket {
-      right: 35%;
+      right: 48%;
     }
 
     .multi-flight .typeFlightTicket {
