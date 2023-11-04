@@ -465,12 +465,11 @@ export default {
     printTicket(event) {
       if (this.$refs.flightForm.validate()) {
         let airline = this.airlines.find((x) => x.value == this.airline);
-        console.log(airline);
         let url =
           airline.value == "I3"
             ? "http://ra.ataair.ir"
             : airline.value == "Y9"
-            ? "http://crs.kishair.aero"
+            ? "https://crs.kishairlines.ir"
             : airline.value == "QB"
             ? "http://pra.qeshmairline.com"
             : airline.value == "HH"
@@ -524,7 +523,7 @@ export default {
               this.ticketNo
           )
           .then(function (res) {
-            if (self.newInformations.Fare) {
+            if (res.data.Fare) {
               self.newInformations.Fare = res.data.Fare;
               let KU = res.data.TAXES.find((x) => x.TaxCode == "KU");
               self.newInformations.KU == KU ? KU.TaxAmount : 0;
@@ -534,7 +533,7 @@ export default {
               // get self.newInformations.KU == ???   TaxAmount
               // get self.newInformations.LP == ???   TaxCode
             } else {
-              self.ETR();
+              // self.ETR();
             }
           })
           .catch(function (error) {

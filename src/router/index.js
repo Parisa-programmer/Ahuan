@@ -359,6 +359,11 @@ const routes = [
     component: () => import('../views/TicketDownload.vue')
   },
   {
+    path: '/profile',
+    name: 'profile-page',
+    component: () => import('../views/ProfilePage.vue')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: () => import('../views/NotFound.vue')

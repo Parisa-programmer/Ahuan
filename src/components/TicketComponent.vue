@@ -248,16 +248,21 @@ export default {
           .catch(function (error) {
             // handle error
             let errorText = "";
-            if (error.response.status == 403) {
-              errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
-            } else if (error.response.status == 400) {
-              errorText = "bad quest";
-            } else if (error.response.status == 401) {
+            if (error.response.status == 401) {
               self.getToken();
             } else {
-              //
+              resolve();
+              if (error.response.status == 403) {
+                errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
+              } else if (error.response.status == 400) {
+                errorText = "bad quest";
+              } else if (error.response.status == 401) {
+                self.getToken();
+              } else {
+                //
+              }
             }
-            resolve();
+
             self.alertText = errorText;
             self.alertType = "error";
             self.showAlert = true;
@@ -280,12 +285,10 @@ export default {
       await this.fareAxios(dataGetVariabel, classes, finishArray);
     },
     async fareAxios(dataGetVariabel, classes, finishArray, sort, arraytest) {
-      console.log(dataGetVariabel);
       let self = this;
       let isClassC = false;
       let isClassX = false;
       let testFinishArray = finishArray;
-      console.log(self.originCity);
       let getRote =
         self.rezervStep == 1
           ? dataGetVariabel.Origin + "-" + dataGetVariabel.Destination

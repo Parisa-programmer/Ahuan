@@ -35,7 +35,7 @@
           <img src="@/assets/image/check-mark.png" class="done-icon" alt="" />
         </v-row>
         <v-row justify="center" class="mt-12 mb-4">
-          <h1 style="color: قثی" class="font-small-xs">
+          <h1 style="color: red" class="font-small-xs">
             عملیات پرداخت با خطا مواجه شد!
           </h1>
         </v-row>
@@ -721,6 +721,7 @@ export default {
       }
     },
     verifyBank() {
+      this.successSell = true;
       let self = this;
       let returnedCode = this.$route.query.code;
       let returnedsystemTraceAuditNumber = this.$route.query.traceNo;
@@ -1203,6 +1204,7 @@ export default {
       });
     },
     async cancellPnr(pnr1, AirLine1, pnr2, AirLine2) {
+      this.successSell = false;
       let arrayPnr = [pnr1];
       if (pnr2) {
         arrayPnr.push(pnr2);
@@ -1243,7 +1245,6 @@ export default {
       if (this.$route.query.amount == localStorage.getItem("bankprice")) {
         this.verifyBank();
       } else {
-        this.successSell = false;
         if (this.$route.query.PNR2) {
           this.cancellPnr(
             this.$route.query.PNR1,
@@ -1260,7 +1261,7 @@ export default {
       this.isReturnUrl = false;
       let self = this;
       let urlSendBank = self.$route.query.bankpnr2
-        ? "http://localhost:8080/#/ticket-download?AirLine1=" +
+        ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
           self.$route.query.AirLine1 +
           "&PNR1=" +
           self.$route.query.bankpnr1 +
@@ -1270,7 +1271,7 @@ export default {
           self.$route.query.AirLine2 +
           "&Email=" +
           self.$route.query.Email
-        : "http://localhost:8080/#/ticket-download?AirLine1=" +
+        : "https://ahuan.ir/#/ticket-download?AirLine1=" +
           self.$route.query.AirLine1 +
           "&PNR1=" +
           self.$route.query.bankpnr1 +

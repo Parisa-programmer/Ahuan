@@ -1464,6 +1464,9 @@ input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 599px) {
+  .filter-card {
+    box-shadow: unset !important;
+  }
   .englishDataTabel td div:nth-child(2) {
     font-family: "Roboto", sans-serif !important;
     direction: ltr !important;

@@ -100,7 +100,7 @@
       </div>
     </v-row>
     <!-- tours -->
-    <tour-component />
+    <tour-component :mainPage="true" />
     <!-- about us -->
     <v-row justify="center" align="center" class="my-2 my-sm-6">
       <div class="indexDiv">
@@ -287,6 +287,18 @@
         <v-skeleton-loader class="mt-4" type="image">
           <div class="widthAll slick-logo slick-parent relative my-6">
             <slick :options="slickOptions2" class="colleagueSlick hideArrowSm">
+              <div>
+                <a style="width: fit-content" href="https://www.okcs.com">
+                  <v-row justify="center">
+                    <img
+                      height="90"
+                      class="header-logo-1"
+                      src="../assets/image/کوروش.png"
+                      alt=""
+                    />
+                  </v-row>
+                </a>
+              </div>
               <div>
                 <a
                   style="width: fit-content"
@@ -608,10 +620,8 @@ axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
 export default {
   name: "HomeView",
   metaInfo: {
-    // title: 'خدمات گردشگری آهوان',
-    // meta: [
-    //   { name: 'description', content: '' },
-    // ]
+    title: "خدمات گردشگری آهوان",
+    meta: [{ name: "description", content: "" }],
   },
   components: {
     InputMain,
@@ -639,19 +649,19 @@ export default {
     magazineItems: [
       {
         image: require("../assets/image/magazine-turkiye.jpg"),
-        title: "جاذبه های استانبول",
+        title: "جاذبه‌های استانبول",
         text: "تور استانبول، به دلیل خدمات تفریحی‌ای که برای افراد به همراه داره، می‌تونه به شما در روند تجربه یک سفر متفاوت کمک کنه. تور استانبول از تمام شهرهای ایران، در میان تورهای پرطرفداری قرار می‌گیره که هزینه نسبتا مناسبی برای افراد...",
         link: "/tour/1",
       },
       {
         image: require("../assets/image/magazine-urope.jpg"),
-        title: "اروپا و جذابیت‌های آن",
+        title: "جاذبه‌های اروپا",
         text: "سفر با تور اروپا بدون شک یکی از زیباترین و بهترین تجربیات زندگی هر فرد می‌باشد. این قاره یکی از مقاصد زیبا برای سفر است که در سالهای اخیر به یکی از محبوب‌ترین مقاصد توریستی جهان تبدیل‌شده‌است. در بین تمامی مردم جهان...",
         link: "/tour/1017",
       },
       {
         image: require("../assets/image/magazine-dubai.jpg"),
-        title: "جاذبه های دبی",
+        title: "جاذبه‌های دبی",
         text: "دبی یکی از شهرهای بزرگ و پرطرفدار امارات متحده عربی است که درواقع یک شهر لاکچری و مدرن در بین تمام شهرهای دنیا می‌باشد.بدلیل کوتاه بودن مسافت پرواز و همسایگی با این کشور نه تنها منطقه خاورمیانه، بلکه در سراسر جهان...",
         link: "/tour/Dubai",
       },

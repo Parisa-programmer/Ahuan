@@ -372,7 +372,7 @@
                                     (item.airline == 'I3'
                                       ? 'http://ra.ataair.ir'
                                       : item.airline == 'Y9'
-                                      ? 'http://crs.kishair.aero'
+                                      ? 'https://crs.kishairlines.ir'
                                       : item.airline == 'QB'
                                       ? 'http://pra.qeshmairline.com'
                                       : item.airline == 'HH'

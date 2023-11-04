@@ -29,7 +29,7 @@
     <v-row class="mb-12" justify="center" v-show="(showSection && windowWidth < 600) || windowWidth >= 600">
       <div class="indexDiv">
         <v-form ref="headerInputForm" lazy-validation>
-          <v-card v-show="selectedSection.title != 'بیمه'" elevation="1" class=" rounded-lg px-sm-4 py-2 py-sm-4 py-md-6">
+          <v-card v-show="selectedSection.title != 'بیمه' && selectedSection.title != 'قطار' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'هتل'" elevation="1" class=" rounded-lg px-sm-4 py-2 py-sm-4 py-md-6">
             <v-row>
               <v-col cols="12" sm="5" md="4" lg="3"
                 v-if="selectedSection.title != 'آهوان' && selectedSection.title != 'تور' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'قطار'">
@@ -564,7 +564,7 @@
               </v-col>
             </v-row> -->
           </v-card>
-          <v-card v-show="selectedSection.title == 'بیمه'" class=" rounded-lg px-4 py-4 py-ms-8 py-md-12 text-center">
+          <v-card v-show="(page == 'main') && (selectedSection.title == 'بیمه' || selectedSection.title == 'قطار' || selectedSection.title == 'اتوبوس' || (selectedSection.title == 'هتل'))" class=" rounded-lg px-4 py-4 py-ms-8 py-md-12 text-center">
             <h3 class="grey--text text--darken-2 font-small-xs">این قسمت از سایت در حال توسعه میباشد...</h3>
           </v-card>
         </v-form>

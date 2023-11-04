@@ -61,7 +61,7 @@
               type="chip"
               :loading="isLoading"
             >
-              <router-link to="/flight" class="text-decoration-none">
+              <router-link to="/" class="text-decoration-none">
                 <span
                   class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
                   @click="
@@ -77,16 +77,14 @@
                   <div class="">
                     <v-list-item class="cursorPointer titleHeader py-0">
                       <router-link
-                        to="/flight"
+                        to="/"
                         style="text-decoration: none"
                         class="topMenu"
                       >
                         <v-list-item-title
-                          @click="group.active = !group.active"
                           class="topMenu pl-2 pl-2 d-flex"
                           style="font-weight: bold"
                         >
-                          <!-- <img width="30" src="@/assets/image/سفارت انگلیس (4).jpg" alt="سفارت انگلیس" class="ml-1"> -->
                           رزرو پرواز
                         </v-list-item-title>
                       </router-link>
@@ -98,11 +96,9 @@
                         class="topMenu"
                       >
                         <v-list-item-title
-                          @click="group.active = !group.active"
                           class="topMenu pl-2 pl-2 d-flex"
                           style="font-weight: bold"
                         >
-                          <!-- <img width="30" src="@/assets/image/سفارت آمریکا (4).jpg" alt="سفارت آمریکا" class="ml-1"> -->
                           چاپ مجدد/کنسل کردن بلیط
                         </v-list-item-title>
                       </router-link>
@@ -346,9 +342,14 @@
             :loading="isLoading"
           >
             <div v-if="isLogin" class="cursorPointer" @click="logOut">
-              <span class="font-14 grey--text d-inline-block ml-4">
-                {{ userName }}
-              </span>
+              <router-link to="/profile" class="text-decoration-none">
+                <span
+                  class="font-14 grey--text d-inline-block ml-4"
+                  style="white-space: nowrap"
+                >
+                  {{ userName }}
+                </span></router-link
+              >
             </div>
             <div
               v-else
@@ -390,7 +391,7 @@
                 v-model="activePage"
                 active-class="red--text text--accent-4 "
               >
-                <a href="/flight" class="text-decoration-none">
+                <router-link to="/" class="text-decoration-none">
                   <v-list-item
                     @click="
                       showMenuSmall = false;
@@ -400,7 +401,7 @@
                     <v-icon class="ml-2">mdi-airplane</v-icon>
                     <v-list-item-title> پرواز </v-list-item-title>
                   </v-list-item>
-                </a>
+                </router-link>
                 <v-list-item
                   @click="
                     activeLinkMenuHeader != 'تور'
@@ -603,9 +604,14 @@
             :loading="isLoading"
           >
             <div v-if="isLogin" class="cursorPointer" @click="logOut">
-              <span class="font-14 grey--text d-inline-block ml-4">
-                {{ userName }}
-              </span>
+              <router-link to="/profile" class="text-decoration-none">
+                <span
+                  class="font-14 grey--text d-inline-block ml-4"
+                  style="white-space: nowrap"
+                >
+                  {{ userName }}
+                </span>
+              </router-link>
             </div>
             <div
               v-else
@@ -990,6 +996,7 @@
           <v-btn
             v-if="loginStep == 1 || (loginStep == 2 && UserType == 1)"
             :disabled="loginStep == 2 && loginForm.otp.length < 4"
+            :loading="loadingApi"
             @click="loginOrRegisterValidate()"
             dark
             class="widthAll red my-4 rounded-xl py-7 mt-1"
@@ -1012,6 +1019,8 @@
 import "@/assets/css/main.css";
 import axios from "axios";
 axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
+axios.defaults.headers.common["Authorization"] =
+  "Bearer " + localStorage.getItem("Client-Token");
 // const vuetify = new Vuetify({
 //   theme: {
 //     themes: {
@@ -1053,6 +1062,7 @@ export default {
     },
   },
   data: () => ({
+    loadingApi: false,
     tours: [],
     links: [
       {
@@ -1306,42 +1316,36 @@ export default {
           if (self.loginType == "login") {
             // user login__________________________________________________
             if (self.UserType == 1) {
+              self.loadingApi = true;
               axios
-                .post(
-                  "https://ahuan.ir/api/login?mobile=" + self.loginForm.phone
+                .get(
+                  "https://panel.ahuantours.com/api/login/sendsms/" +
+                    self.loginForm.phone
                 )
                 .then(function (response) {
                   // handle success
-
-                  if (response.data.sussecc) {
-                    localStorage.setItem("user-name", response.data.result);
-                    axios
-                      .get(
-                        "https://ahuan.ir/api/login?mobile=" +
-                          self.loginForm.phone
-                      )
-                      .then(function (response) {
-                        // handle success
-                        codeSend = response.data;
-                        self.resendSeconds = 60;
-                        self.alertText = "کد تایید برای شما ارسال شد.";
-                        self.alertType = "success";
-                        self.showAlert = true;
-                        self.loginStep = 2;
-                      })
-                      .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                      });
+                  localStorage.setItem(
+                    "phone-number-ahuan",
+                    self.loginForm.phone
+                  );
+                  if (response.data) {
+                    codeSend = response.data;
+                    self.resendSeconds = 60;
+                    self.alertText = "کد تایید برای شما ارسال شد.";
+                    self.alertType = "success";
+                    self.showAlert = true;
+                    self.loginStep = 2;
                   } else {
                     self.alertText = response.data.error;
                     self.alertType = "error";
                     self.showAlert = true;
                   }
+                  self.loadingApi = false;
                 })
                 .catch(function (error) {
                   // handle error
                   console.log(error);
+                  self.loadingApi = false;
                 });
             }
             // companey login______________________________________________
@@ -1352,7 +1356,7 @@ export default {
                 password: self.loginForm.password,
                 rememberMe: true,
               };
-
+              self.loadingApi = true;
               axios
                 .post("https://ahuan.ir/api/login", userInfo)
                 .then(function (response) {
@@ -1370,10 +1374,12 @@ export default {
                     self.alertType = "error";
                     self.showAlert = true;
                   }
+                  self.loadingApi = false;
                 })
                 .catch(function (error) {
                   // handle error
                   console.log(error);
+                  self.loadingApi = false;
                 });
             }
           }
@@ -1381,23 +1387,30 @@ export default {
           else {
             // user register__________________________________________________
             if (self.UserType == 1) {
+              self.loadingApi = true;
               axios
                 .get(
-                  "https://ahuan.ir/api/login?mobile=" + self.loginForm.phone
+                  "https://panel.ahuantours.com/api/login/sendsms/" +
+                    self.loginForm.phone
                 )
                 .then(function (response) {
                   // handle success
+                  localStorage.setItem(
+                    "phone-number-ahuan",
+                    self.loginForm.phone
+                  );
                   codeSend = response.data;
                   self.resendSeconds = 60;
                   self.alertText = "کد تایید برای شما ارسال شد.";
                   self.alertType = "success";
                   self.showAlert = true;
                   self.loginStep = 2;
-                  console.log(codeSend);
+                  self.loadingApi = false;
                 })
                 .catch(function (error) {
                   // handle error
                   console.log(error);
+                  self.loadingApi = false;
                 });
               console.log(options);
               // axios.post('https://ahuan.ir/api/register' , options)
@@ -1445,12 +1458,33 @@ export default {
           self.alertType = "error";
         }
       } else if (self.loginStep == 2) {
-        console.log(self.loginForm.otp, codeSend);
         if (self.loginForm.otp == codeSend) {
           if (self.loginType == "login") {
-            self.isLogin = true;
-            self.userName = localStorage.getItem("user-name");
-            self.loginStep = 3;
+            self.loadingApi = true;
+            axios
+              .get(
+                "https://panel.ahuantours.com/api/Login/Checksms/" +
+                  self.loginForm.phone +
+                  "/" +
+                  self.loginForm.otp
+              )
+              .then(function (response) {
+                // handle success
+                self.isLogin = true;
+                localStorage.setItem(
+                  "user-name",
+                  response.data.fName + " " + response.data.lName
+                );
+                localStorage.setItem("fName", response.data.fName);
+                localStorage.setItem("lName", response.data.lName);
+                localStorage.setItem("Client-Token", response.data.token);
+                axios.defaults.headers.common["Authorization"] =
+                  "Bearer " + response.data.token;
+                self.userName = response.data.fName + " " + response.data.lName;
+                console.log(response.data);
+                self.loginStep = 3;
+                self.loadingApi = false;
+              });
           } else {
             var options = {
               displayname: self.loginForm.name + " " + self.loginForm.family,
@@ -1458,6 +1492,7 @@ export default {
               mobile: self.loginForm.phone,
               password: "Test@123",
             };
+            self.loadingApi = true;
             axios
               .post("https://ahuan.ir/api/register", options)
               .then(function (response) {
@@ -1471,6 +1506,7 @@ export default {
                   self.isLogin = true;
                   self.userName = options.displayname;
                   localStorage.setItem("user-name", options.displayname);
+                  console.log(response.data);
                   localStorage.setItem("isLoginAhuan", true);
                   self.loginStep = 3;
                 } else {
@@ -1479,10 +1515,12 @@ export default {
                   self.alertType = "error";
                   self.showAlert = true;
                 }
+                self.loadingApi = false;
               })
               .catch(function (error) {
                 // handle error
                 console.log(error);
+                self.loadingApi = false;
               });
           }
         } else {
@@ -1494,7 +1532,6 @@ export default {
       }
     },
     logOut() {
-      window.location.href = "/profile";
       // var self = this
       // axios.put('https://ahuan.ir/api/login')
       //   .then(function (response) {
@@ -1532,16 +1569,35 @@ export default {
           console.log(error);
         });
     },
+    checkIsLoggedIn() {
+      let self = this;
+      self.loadingApi = true;
+      axios
+        .get("https://panel.ahuantours.com/api/Login/isLoggedIn")
+        .then(function (response) {
+          // handle success
+          localStorage.setItem("isLoginAhuan", true);
+          self.isLogin = true;
+          if (localStorage.getItem("user-name")) {
+            self.userName = localStorage.getItem("user-name");
+          }
+          self.loadingApi = false;
+        })
+        .catch(function (error) {
+          // handle error
+          localStorage.setItem("isLoginAhuan", false);
+          self.isLogin = false;
+          console.log(error);
+          self.loadingApi = false;
+        });
+    },
   },
   mounted() {
+    if (localStorage.getItem("Client-Token")) {
+      this.checkIsLoggedIn();
+    }
     this.getTours();
     window.scrollTo(0, 0);
-    if (localStorage.getItem("user-name")) {
-      this.userName = localStorage.getItem("user-name");
-    }
-    if (localStorage.getItem("isLoginAhuan")) {
-      this.isLogin = localStorage.getItem("isLoginAhuan");
-    }
     this.loginSecondsInterval = setInterval(() => {
       this.resendSeconds > 0 && this.resendSeconds--;
     }, 1000);

@@ -936,6 +936,7 @@ export default {
       formshaparak: {
         bankToken: "",
       },
+      successAge: false,
       loadingReserve: false,
       clickedDownload: false,
       PNR1: "",
@@ -1194,6 +1195,7 @@ export default {
             }
           }
           if (findOpacity == true) {
+            this.successAge = false;
             this.alertType = "warning";
             this.alertText =
               "سن افراد انتخاب شده با اطلاعات وارد شده مغایرت داردلطفا اطلاعات سنی مسافر را تصحیح فرمائید.";
@@ -1201,7 +1203,9 @@ export default {
             setTimeout(() => {
               this.showAlert = false;
             }, 10000);
+            resolve(false);
           } else {
+            this.c = true;
             resolve(true);
           }
           if (this.Passenger2[0].peaple <= 0) {
@@ -1219,6 +1223,7 @@ export default {
     },
     async changeBookStep(step) {
       let self = this;
+
       if (step == 2 && this.validateBookStep()) {
         let successAges = await self.checkAges();
         if (successAges) {
@@ -1232,9 +1237,9 @@ export default {
           this.scrollTopNextPage();
         }
       } else if (step == 3 && this.$refs.acceptRulls.validate()) {
-        self.loadingReserve = true;
-        let successAges = await this.checkAges();
+        let successAges = await self.checkAges();
         if (successAges) {
+          self.loadingReserve = true;
           this.reserveTicket(step);
           this.dateError = false;
         }
@@ -1262,7 +1267,7 @@ export default {
       }
       this.editTicketInfoDialog = true;
     },
-    confirmEditUser(type) {
+    async confirmEditUser(type) {
       if (this.validateBookStep()) {
         if (type == "user") {
           var index = this.users.findIndex((x) => x.id == this.editUser.id);
@@ -1500,38 +1505,38 @@ export default {
                 self.choosedTicket[0].allprice.replace(/,/g, "") * 10;
               localStorage.setItem("bankprice", bankprice);
               let goBankUrl =
-                "http://localhost:8080/#/ticket-download?AirLine1=" +
+                "https://ahuan.ir/#/ticket-download?AirLine1=" +
                 self.choosedTicket[0].Airline +
                 "&bankpnr1=" +
                 self.PNR1 +
                 "&Email=" +
                 self.contactInfo[0].email;
 
-              window.open(goBankUrl, "_blank");
+              // window.open(goBankUrl);
               self.loadingReserve = false;
-              // axios
-              //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-              //     amount: bankprice,
-              //     revertUrl:
-              //       "http://localhost:8080/#/ticket-download?AirLine1=" +
-              //       self.choosedTicket[0].Airline +
-              //       "&PNR1=" +
-              //       self.PNR1 +
-              //       "&Email=" +
-              //       self.contactInfo[0].email +
-              //       "&",
-              //   })
-              //   .then(function (response) {
-              //     self.formshaparak.bankToken = response.data;
-              //     self.bookStep = 6;
-              //     setTimeout(() => {
-              //       self.$refs.formshaparak.submit();
-              //     }, 1000);
-              //   })
-              //   .catch(function (error) {
-              //     // handle error
-              //     console.log(error);
-              //   });
+              axios
+                .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+                  amount: bankprice,
+                  revertUrl:
+                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                    self.choosedTicket[0].Airline +
+                    "&PNR1=" +
+                    self.PNR1 +
+                    "&Email=" +
+                    self.contactInfo[0].email +
+                    "&",
+                })
+                .then(function (response) {
+                  self.formshaparak.bankToken = response.data;
+                  self.bookStep = 6;
+                  setTimeout(() => {
+                    self.$refs.formshaparak.submit();
+                  }, 1000);
+                })
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
               // self.getFlightNumber(sendAerray);
             }
           } else {
@@ -1708,7 +1713,7 @@ export default {
               parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
             localStorage.setItem("bankprice", bankprice);
             let goBankUrl =
-              "http://localhost:8080/#/ticket-download?AirLine1=" +
+              "https://ahuan.ir/#/ticket-download?AirLine1=" +
               self.choosedTicket[0].Airline +
               "&bankpnr1=" +
               self.PNR1 +
@@ -1719,38 +1724,38 @@ export default {
               "&Email=" +
               self.contactInfo[0].email;
 
-            window.open(goBankUrl, "_blank");
+            // window.open(goBankUrl);
             // milad  mohammadpour  3860357141 0440518245
             self.loadingReserve = false;
             // go to bank__________________________
-            // axios
-            //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-            //     amount: bankprice,
-            //     revertUrl:
-            //       "http://localhost:8080/#/ticket-download?AirLine1=" +
-            //       self.choosedTicket[0].Airline +
-            //       "&PNR1=" +
-            //       self.PNR1 +
-            //       "&PNR2=" +
-            //       nextpnr +
-            //       "&AirLine2=" +
-            //       self.choosedTicket[1].Airline +
-            //       "&Email=" +
-            //       self.contactInfo[0].email +
-            //       "&Price=" +
-            //       bankprice,
-            //   })
-            //   .then(function (response) {
-            //     self.formshaparak.bankToken = response.data;
-            //     self.bookStep = 6;
-            //     setTimeout(() => {
-            //       self.$refs.formshaparak.submit();
-            //     }, 1000);
-            //   })
-            //   .catch(function (error) {
-            //     // handle error
-            //     console.log(error);
-            //   });
+            axios
+              .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+                amount: bankprice,
+                revertUrl:
+                  "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                  self.choosedTicket[0].Airline +
+                  "&PNR1=" +
+                  self.PNR1 +
+                  "&PNR2=" +
+                  self.PNR2 +
+                  "&AirLine2=" +
+                  self.choosedTicket[1].Airline +
+                  "&Email=" +
+                  self.contactInfo[0].email +
+                  "&Price=" +
+                  bankprice,
+              })
+              .then(function (response) {
+                self.formshaparak.bankToken = response.data;
+                self.bookStep = 6;
+                setTimeout(() => {
+                  self.$refs.formshaparak.submit();
+                }, 1000);
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
 
             //  // self.getFlightNumber(sendAerray);
           } else {

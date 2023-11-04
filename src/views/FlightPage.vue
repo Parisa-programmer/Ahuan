@@ -15,9 +15,79 @@
     </div>
     <v-row class="" justify="center" style="margin-top: -25px !important">
       <div class="indexDiv">
-        <v-row :class="windowWidth < 960 && !editFlightMood && 'mt-sm-4 '">
-          <v-col cols="3" class="pl-md-3 d-none d-md-inline-block">
+        <v-row>
+          <v-col cols="12" md="3" class="px-0 pt-0 pl-md-3">
+            <v-row class="white rounded-lg pa-2 d-md-none">
+              <div
+                class="grey--text text--darken-2"
+                @click="showFilterBox = !showFilterBox"
+              >
+                <v-icon class="ml-1">mdi-filter-plus-outline</v-icon>
+                فیلتر
+              </div>
+              <v-spacer></v-spacer>
+              <div
+                class="grey--text text--darken-2 relative"
+                style="z-index: 2"
+                @click="showSortTab = !showSortTab"
+              >
+                مرتب‌سازی براساس
+                <v-icon class="mr-1">mdi-sort-alphabetical-ascending</v-icon>
+                <div
+                  class="white widthAll rounded-lg absolute"
+                  v-if="showSortTab"
+                >
+                  <v-row
+                    class="px-1 py-2 grey--text text--darken-1"
+                    :class="sortTab == 0 && 'grey lighten-2'"
+                    justify="center"
+                    @click="sortTab = 0"
+                  >
+                    قیمت
+                  </v-row>
+                  <v-row
+                    class="px-1 py-2 grey--text text--darken-1"
+                    :class="sortTab == 1 && 'grey lighten-2'"
+                    justify="center"
+                    @click="sortTab = 1"
+                    >ساعت</v-row
+                  >
+                  <v-row
+                    class="px-1 py-2 grey--text text--darken-1"
+                    :class="sortTab == 2 && 'grey lighten-2'"
+                    justify="center"
+                    @click="sortTab = 2"
+                    >ایرلاین</v-row
+                  >
+                </div>
+                <!-- <v-tabs
+                  v-if="!isLoading"
+                  v-model="sortTab"
+                  class="d-inline-block"
+                  style="width: fit-content"
+                >
+                  <v-tabs-slider color="red darken-2"></v-tabs-slider>
+
+                  <v-tab> قیمت </v-tab>
+                  <v-tab>ساعت</v-tab>
+                  <v-tab>ایرلاین</v-tab>
+                </v-tabs> -->
+              </div>
+            </v-row>
+            <v-dialog v-if="windowWidth < 960" v-model="showFilterBox">
+              <v-card>
+                <ticket-filter-component
+                  class="widthAll mt-sm-4"
+                  :loadeingTickets="loadingTickets"
+                  :from="fromPrice"
+                  :to="toPrice"
+                  :tickets="tickets"
+                  @startFilter="startFilter($event)"
+                />
+              </v-card>
+            </v-dialog>
             <ticket-filter-component
+              v-show="windowWidth >= 960"
               :loadeingTickets="loadingTickets"
               :from="fromPrice"
               :to="toPrice"
@@ -397,6 +467,8 @@ export default {
   name: "flight-page",
   data() {
     return {
+      showFilterBox: false,
+      showSortTab: false,
       rezervStepParent: false,
       rezervStep: 1,
       hideFeild: false,

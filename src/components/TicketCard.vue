@@ -70,16 +70,18 @@
                   style="box-shadow: 1px 1px 4px #b3b3b3; z-index: 2"
                 />
                 <span
-                  class="px-2 px-sm-2 body-2 px-4 mt-2 mt-sm-0"
+                  class="px-2 px-sm-4 body-2 mt-2 mt-sm-0"
                   :class="isFaild ? 'grey lighten-2' : 'white'"
                   style="font-family: Byekan !important; z-index: 2"
                 >
-                  {{
+                  {{ AllpersianCityes.find((x) => x.id == item.Origin).text }}
+                  <!-- {{ isNextPage && i == 0 }} -->
+                  <!-- {{
                     (chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)
                       ? AllpersianCityes.find((x) => x.id == item.Origin).text
                       : AllpersianCityes.find((x) => x.id == item.Destination)
                           .text
-                  }}
+                  }} -->
                 </span>
                 <img
                   src="@/assets/image/flight-go-flesh.png"
@@ -109,16 +111,19 @@
                   >سیستمی</span
                 >
                 <span
-                  class="px-2 px-sm-6 body-2 pr-4 pl-7 pl-sm-5 mt-2 mt-sm-0"
+                  class="px-2 px-sm-6 body-2 pr-sm-4 pl-7 pl-sm-5 mt-2 mt-sm-0"
                   :class="isFaild ? 'grey lighten-2' : 'white'"
                   style="font-family: Byekan !important; left: 0; z-index: 2"
                 >
                   {{
+                    AllpersianCityes.find((x) => x.id == item.Destination).text
+                  }}
+                  <!-- {{
                     (chooseStep == 1 && !isNextPage) || (isNextPage && i == 0)
                       ? AllpersianCityes.find((x) => x.id == item.Destination)
                           .text
                       : AllpersianCityes.find((x) => x.id == item.Origin).text
-                  }}
+                  }} -->
                 </span>
               </v-row>
               <v-row class="my-4 mr-4 mr-sm-7">
@@ -126,7 +131,7 @@
                   item.AirlinePersianId
                 }}</span>
                 <span
-                  class="mr-3 mr-sm-3 pr-1 body-2"
+                  class="mr-1 mr-sm-3 pr-1 body-2"
                   style="font-family: Byekan !important"
                   >{{ item.DepartureTime }}</span
                 >
@@ -261,7 +266,7 @@
             تغییر پرواز انتخابی
           </v-btn>
         </v-row>
-        <v-tabs width="300" v-model="activeTab" class="mt-12 mt-sm-2" flat>
+        <v-tabs width="300" v-model="activeTab" class="mt-6 mt-sm-2" flat>
           <v-tabs-slider color="red"></v-tabs-slider>
           <v-tab
             style="width: fit-content"
@@ -287,16 +292,21 @@
                   >
                     <v-expansion-panels color="red" v-model="panelDetails">
                       <v-expansion-panel>
-                        <v-expansion-panel-header color="grey lighten-3">
+                        <v-expansion-panel-header
+                          color="grey lighten-3 pt-4 pt-md-0"
+                        >
                           <v-row align="center">
-                            <span class="blue--text text--darken-3">0 0 0</span>
+                            <span
+                              class="blue--text text--darken-3 d-none d-md-block"
+                              >0 0 0</span
+                            >
                             <v-icon
                               large
-                              class="blue--text text--darken-1"
+                              class="blue--text text--darken-1 d-none d-md-block"
                               style="transform: rotate(225deg)"
                               >mdi-airplane</v-icon
                             >
-                            <h4 class="blue--text text--darken-1 mr-3">
+                            <h4 class="blue--text text--darken-1 mr-md-3">
                               {{
                                 (chooseStep == 1 && !isNextPage) ||
                                 (isNextPage && choosedTicketNumber == 0)
@@ -313,10 +323,13 @@
                                     " )"
                               }}
                             </h4>
-                            <v-divider vertical class="mx-4"></v-divider>
-                            <div class="text-right">
+                            <v-divider
+                              vertical
+                              class="mx-4 d-none d-md-block"
+                            ></v-divider>
+                            <div class="text-right mb-3 mb-md-0">
                               <span
-                                class="grey--text caption widthAll mb-2 d-block"
+                                class="grey--text caption widthAll mb-2 mt-2 mt-md-0 d-block"
                                 style="font-family: Byekan !important"
                               >
                                 مدت زمان پرواز
@@ -343,7 +356,7 @@
                             </div>
                           </v-row>
                         </v-expansion-panel-header>
-                        <v-expansion-panel-content class="white py-4">
+                        <v-expansion-panel-content class="white py-sm-4">
                           <v-row align="center">
                             <v-col cols="12" sm="5" md="5" lg="3">
                               <v-row class="justify-center justify-sm-start">
@@ -364,20 +377,22 @@
                                 class="mt-2 mt-sm-12 justify-center justify-sm-start"
                               >
                                 <span
-                                  class="body-2 ml-2"
+                                  class="body-2 ml-2 d-none d-md-inline-block"
                                   style="font-family: Byekan !important"
                                 >
                                   ({{ choosedTicket.enLongDate2 }})
                                 </span>
                                 <span
-                                  class="body-2"
+                                  class="body-2 d-none d-md-inline-block"
                                   style="font-family: Byekan !important"
                                 >
                                   {{ choosedTicket.longDate2 }}
                                 </span>
                               </v-row>
                             </v-col>
-                            <div class="d-block d-sm-none widthAll mx-12 px-12">
+                            <div
+                              class="d-block d-sm-none widthAll mx-12 px-md-12"
+                            >
                               <v-divider class="my-2"></v-divider>
                             </div>
                             <v-col cols="12" sm="7" md="7" lg="4">
@@ -395,10 +410,14 @@
                                 <span
                                   class="body-2 grey--text text--darken-1"
                                   style="font-family: Byekan !important"
-                                  >{{ choosedTicket.originCity }} ،({{
-                                    choosedTicket.airport1
-                                  }})</span
                                 >
+                                  {{ choosedTicket.originCity }}
+                                  <span
+                                    class="grey--text text--darken-1 d-none d-md-inline-block"
+                                  >
+                                    ،({{ choosedTicket.airport1 }})
+                                  </span>
+                                </span>
                               </v-row>
                               <v-row
                                 class="mt-2 mt-sm-4 mr-sm-1 caption grey--text text--darken-1 font-weight-bold justify-center justify-sm-start"
@@ -428,17 +447,22 @@
                                 <span
                                   class="body-2 grey--text text--darken-1"
                                   style="font-family: Byekan !important"
-                                  >{{ choosedTicket.destinationInternal }} ،({{
-                                    choosedTicket.airport2
-                                  }})</span
-                                >
+                                  >{{ choosedTicket.destinationInternal }}
+                                  <span
+                                    class="grey--text text--darken-1 d-none d-md-inline-block"
+                                  >
+                                    ،({{ choosedTicket.airport2 }})
+                                  </span>
+                                </span>
                               </v-row>
                             </v-col>
                             <v-divider
                               vertical
                               class="my-2 d-none d-lg-block"
                             ></v-divider>
-                            <div class="d-block d-lg-none widthAll mx-12 px-12">
+                            <div
+                              class="d-block d-sm-none widthAll mx-12 px-md-12"
+                            >
                               <v-divider class="my-2"></v-divider>
                             </div>
                             <v-col cols="12" lg="5">
@@ -446,7 +470,7 @@
                                 align="center"
                                 class="justify-center justify-sm-start"
                               >
-                                <div class="d-inline-block">
+                                <div class="d-inline-block xsBoxes">
                                   <v-row align="center">
                                     <img
                                       :src="
@@ -481,7 +505,7 @@
                                       alt=""
                                     />
                                     <span
-                                      class="mr-2 body-2"
+                                      class="mr-2 body-2 grey--text text--darken-3"
                                       style="font-family: Byekan !important"
                                     >
                                       {{
@@ -494,9 +518,9 @@
                                 </div>
                                 <v-divider
                                   vertical
-                                  class="my-2 mx-3"
+                                  class="my-2 mx-3 d-none d-sm-inline-block"
                                 ></v-divider>
-                                <div class="d-inline-block">
+                                <div class="d-inline-block xsBoxes">
                                   <v-row
                                     class="caption grey--text"
                                     justify="center"
@@ -504,7 +528,7 @@
                                     >شماره پرواز</v-row
                                   >
                                   <v-row
-                                    class="caption font-weight-bold"
+                                    class="caption font-weight-bold grey--text text--darken-2"
                                     justify="center"
                                     style="font-family: Byekan !important"
                                     >{{ choosedTicket.FlightNo }}</v-row
@@ -512,9 +536,9 @@
                                 </div>
                                 <v-divider
                                   vertical
-                                  class="my-2 mx-3"
+                                  class="my-2 mx-3 d-none d-sm-inline-block"
                                 ></v-divider>
-                                <div class="d-inline-block">
+                                <div class="d-inline-block xsBoxes">
                                   <v-row
                                     class="caption grey--text"
                                     justify="center"
@@ -522,7 +546,7 @@
                                     >کلاس</v-row
                                   >
                                   <v-row
-                                    class="caption font-weight-bold"
+                                    class="caption font-weight-bold grey--text text--darken-2"
                                     justify="center"
                                     style="font-family: Byekan !important"
                                     >{{ choosedTicket.className }}</v-row
@@ -530,9 +554,9 @@
                                 </div>
                                 <v-divider
                                   vertical
-                                  class="my-2 mx-3"
+                                  class="my-2 mx-3 d-none d-sm-inline-block"
                                 ></v-divider>
-                                <div class="d-inline-block">
+                                <div class="d-inline-block xsBoxes">
                                   <v-row
                                     class="caption grey--text"
                                     justify="center"
@@ -540,7 +564,7 @@
                                     >مدل هواپیما</v-row
                                   >
                                   <v-row
-                                    class="caption font-weight-bold"
+                                    class="caption font-weight-bold grey--text text--darken-2"
                                     justify="center"
                                     style="font-family: Byekan !important"
                                   >
@@ -982,6 +1006,13 @@
 .ticketDetailsTabs .v-expansion-panel-header__icon i {
   bottom: unset !important;
 }
+
+@media (max-width: 599px) {
+  .xsBoxes {
+    width: 50%;
+    height: 60px;
+  }
+}
 </style>
 
 <script>
@@ -1028,7 +1059,11 @@ export default {
       type: Boolean,
     },
     Passenger: {
-      defult: {},
+      defult: {
+        peaple: 1,
+        child: 0,
+        baby: 0,
+      },
     },
     chooseStep: {
       defult: 1,

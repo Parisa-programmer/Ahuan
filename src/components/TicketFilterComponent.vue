@@ -157,12 +157,18 @@
               color="red"
               off-icon="mdi-circle-outline"
               on-icon="mdi-check-circle-outline"
-              :label="item.label"
               :value="item.value"
               class="caption"
               hide-details
               @click="changeFilterAirline()"
-            ></v-checkbox>
+            >
+              <template v-slot:label>
+                <v-row align="center">
+                  <img class="ml-1" height="30" :src="item.src" alt="Avatar" />
+                  <span>{{ item.label }}</span>
+                </v-row>
+              </template>
+            </v-checkbox>
           </v-row>
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
@@ -201,6 +207,9 @@
           ></v-checkbox>
         </v-skeleton-loader>
       </v-card>
+      <v-btn color="green" dark class="d-md-none mb-4 px-12">
+        اعمال تغییرات
+      </v-btn>
     </v-row>
   </div>
 </template>
@@ -288,50 +297,62 @@ export default {
           {
             label: "آتا",
             value: "I3",
+            src: require("@/assets/image/لوگوی_آتا.png"),
           },
           {
             label: "کیش‌ایر",
             value: "Y9",
+            src: require("@/assets/image/لوگوی_کیش ایر.png"),
           },
           {
             label: "قشم‌ایر",
             value: "QB",
+            src: require("@/assets/image/لوگوی_قشم ایر.png"),
           },
           {
             label: "کاسپین",
             value: "IV",
+            src: require("@/assets/image/لوگوی_کاسپین.png"),
           },
           {
             label: "تابان",
             value: "HH",
+            src: require("@/assets/image/لوگوی_تابان.png"),
           },
           {
             label: "ساها",
             value: "IRZ",
+            src: require("@/assets/image/لوگوی_ساها.png"),
           },
           {
             label: "آسمان",
             value: "EP",
+            src: require("@/assets/image/لوگوآسمان2.jpg"),
           },
           {
             label: "فلای‌پرشیا",
             value: "FP",
+            src: require("@/assets/image/لوگوی_فلای‌پرشی.png"),
           },
           {
             label: "زاگرس",
             value: "ZV",
+            src: require("@/assets/image/zagros.png"),
           },
           {
             label: "نفت",
             value: "NV",
+            src: require("@/assets/image/لوگوی_نفت.png"),
           },
           {
             label: "معراج",
             value: "JI",
+            src: require("@/assets/image/لوگوی_معراج.png"),
           },
           {
             label: "وارش",
             value: "VR",
+            src: require("@/assets/image/لوگوی_وارش.png"),
           },
         ],
         airline: [],

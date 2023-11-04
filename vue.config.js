@@ -11,6 +11,11 @@ module.exports = defineConfig({
   },
   devServer: {
     proxy: {
+      '/weatherproxy/': {
+        target: 'https://api.openweathermap.org/',
+        pathRewrite: { '^/weatherproxy': '' },
+        secure: false
+      },
       '/panel/': {
         target: 'https://panel.ahuantours.com/api/',
         pathRewrite: { '^/panel': '' },
