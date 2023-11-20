@@ -70,7 +70,11 @@
                   >
                 </v-row>
                 <v-row justify="center" class="py-4">
-                  <v-icon size="30" color="grey darken-1"
+                  <v-icon
+                    size="30"
+                    class="cursorPointer"
+                    @click="exit()"
+                    color="grey darken-1"
                     >mdi-exit-to-app</v-icon
                   >
                 </v-row>
@@ -87,7 +91,7 @@
                       style="box-shadow: 0 0 15px #ebebeb"
                     >
                       <v-col cols="12" md="5">
-                        <v-row class="" style="">
+                        <v-row class="" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -95,11 +99,11 @@
                           >
                           <span
                             class="grey--text text--darken-2 textButtonsTitle"
-                            style="flex-wrap: nowrap"
+                            style="white-space: nowrap"
                             >{{ fName }}</span
                           >
                         </v-row>
-                        <v-row class="mt-3">
+                        <v-row class="mt-3" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -107,11 +111,11 @@
                           >
                           <span
                             class="grey--text text--darken-2 textButtonsTitle"
-                            style="flex-wrap: nowrap"
+                            style="white-space: nowrap"
                             >{{ lName }}</span
                           >
                         </v-row>
-                        <v-row class="mt-3">
+                        <v-row class="mt-3" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -119,13 +123,13 @@
                           >
                           <span
                             class="grey--text text--darken-2 textButtonsTitle"
-                            style="flex-wrap: nowrap"
+                            style="white-space: nowrap"
                             >-</span
                           >
                         </v-row>
                       </v-col>
                       <v-col cols="12" md="7" class="mt-3 mt-md-0">
-                        <v-row class="">
+                        <v-row class="" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -133,11 +137,11 @@
                           >
                           <span
                             class="grey--text text--darken-2 textButtonsTitle"
-                            style="flex-wrap: nowrap"
+                            style="white-space: nowrap"
                             >{{ phone }}</span
                           >
                         </v-row>
-                        <v-row class="mt-3">
+                        <v-row class="mt-3" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -149,7 +153,7 @@
                             >-</span
                           >
                         </v-row>
-                        <v-row class="mt-3">
+                        <v-row class="mt-3" style="flex-wrap: nowrap">
                           <b
                             class="grey--text text--darken-2"
                             style="width: 90px"
@@ -228,17 +232,7 @@
             <h3 class="mt mt-9 mb-6 grey--text text--darken-2">
               آخرین سفارشات ثبت شده
             </h3>
-            <v-row
-              justify="center"
-              class="rounded-lg px-3 py-3"
-              style="
-                box-shadow: 0 0 15px #ebebeb;
-                border: 1px solid #ebebeb;
-                background: #fff;
-              "
-            >
-              این قسمت از سایت در حال توسعه میباشد!
-            </v-row>
+            <ticket-contract-card :documents="documents" />
           </v-col>
           <v-col cols="3" class="">
             <v-row>
@@ -269,7 +263,9 @@
                   <span class="grey--text text--darken-1"
                     >بلیط‌های خریداری شده</span
                   >
-                  <span class="grey--text text--darken-1">0</span>
+                  <span class="grey--text text--darken-1">{{
+                    documents.length
+                  }}</span>
                 </v-row>
                 <v-row
                   justify="space-between"
@@ -344,7 +340,9 @@
                   <span class="grey--text text--darken-1"
                     >بلیط‌های خریداری شده</span
                   >
-                  <span class="grey--text text--darken-1">0</span>
+                  <span class="grey--text text--darken-1">{{
+                    documents.length
+                  }}</span>
                 </v-row>
                 <v-row
                   justify="space-between"
@@ -652,7 +650,7 @@
                   justify="center"
                   style="box-shadow: 0 0 15px #ebebeb"
                 >
-                  <v-col>
+                  <v-col class="cursorPointer" @click="exit()">
                     <v-row justify="center" class="pt-3">
                       <v-icon size="30" color="grey darken-2"
                         >mdi-exit-to-app</v-icon
@@ -771,6 +769,7 @@
 <script>
 // import '@/assets/css/main.css'
 import axios from "axios";
+import TicketContractCard from "@/components/TicketContractCard.vue";
 axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
 // import CircleSlider from '@/components/CircleSlider.vue'
 axios.defaults.headers.common["Authorization"] =
@@ -785,9 +784,11 @@ export default {
       fName: "",
       lName: "",
       loadingApi: true,
+      documents: [],
     };
   },
   components: {
+    TicketContractCard,
     // CircleSlider
   },
   computed: {},
@@ -812,13 +813,8 @@ export default {
           if (localStorage.getItem("lName")) {
             self.lName = localStorage.getItem("lName");
           }
-          axios
-            .get(
-              "https://api.openweathermap.org/data/2.5/weather?lat=35.737315&lon=51.414907&appid=b28caa11e918f16f9e55d242f38ede77"
-            )
-            .then(function (res) {
-              self.weather = res.data.main.temp;
-            });
+          self.getWeather();
+          self.getContracts(localStorage.getItem("phone-number-ahuan"));
           self.loadingApi = false;
         })
         .catch(function (error) {
@@ -827,12 +823,195 @@ export default {
           self.isLogin = false;
           console.log(error);
           self.loadingApi = false;
+          self.exit();
         });
+    },
+    getWeather() {
+      let self = this;
+      // axios
+      //   .get(
+      //     "https://api.openweathermap.org/data/2.5/weather?lat=35.737315&lon=51.414907&appid=b28caa11e918f16f9e55d242f38ede77"
+      //   )
+      //   .then(function (res) {
+      //     self.weather = res.data.main.temp;
+      //   });
+    },
+    getContracts(username) {
+      let self = this;
+      axios
+        .get(
+          "https://panel.ahuantours.com/api/Contract/search-user/" + username
+        )
+        .then(function (res) {
+          let documents = res.data;
+          let documentsArray = [];
+          for (let i = 0; i < documents.length; i++) {
+            let duc = documents[i];
+            let day = new Date(documents[i].issueDate).getDay();
+            let price = 0;
+            let passengers = [];
+            if (duc.confirmStatus != "temp") {
+              for (let j = 0; j < duc.contractPassengers.length; j++) {
+                price = price + duc.contractPassengers[j].price;
+                if (duc.contractPassengers[j].price2) {
+                  price = price + duc.contractPassengers[j].price2;
+                }
+                for (let k = 0; k < duc.contractFlights.length; k++) {
+                  passengers.push({
+                    name:
+                      duc.contractPassengers[j].fName +
+                      " " +
+                      duc.contractPassengers[j].lName,
+                    age:
+                      duc.contractPassengers[j].age == "ADL"
+                        ? "بزرگسال"
+                        : duc.contractPassengers[j].age == "CHD"
+                        ? "کودک"
+                        : "نوزاد",
+                    date: new Date(
+                      duc.contractFlights[k].date
+                    ).toLocaleDateString("fa", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    }),
+                    time: duc.contractFlights[k].time,
+                    flightNumber: duc.contractFlights[k].flightNumber,
+                    flightType:
+                      duc.contractFlights[k].charterFlight == true
+                        ? "چارتری"
+                        : "سیستمی",
+                    origin: duc.contractFlights[k].origin,
+                    destination: duc.contractFlights[k].destination,
+                    ticketNumber:
+                      k == 0
+                        ? duc.contractPassengers[j].goTicketNumber
+                        : duc.contractPassengers[j].retTicketNumber,
+                    airline:
+                      duc.contractFlights[k].airlineId == 489
+                        ? "آتا"
+                        : duc.contractFlights[k].airlineId == 1016
+                        ? "کیش‌ایر"
+                        : duc.contractFlights[k].airlineId == 761
+                        ? "قشم‌ایر"
+                        : duc.contractFlights[k].airlineId == 470
+                        ? "تابان"
+                        : duc.contractFlights[k].airlineId == 376
+                        ? "آسمان"
+                        : duc.contractFlights[k].airlineId == 1064
+                        ? "زاگرس"
+                        : duc.contractFlights[k].airlineId == 683
+                        ? "نفت"
+                        : duc.contractFlights[k].airlineId == 535
+                        ? "معراج"
+                        : duc.contractFlights[k].airlineId == 943
+                        ? "وارش"
+                        : duc.contractFlights[k].airlineId == "IRZ"
+                        ? "ساها"
+                        : duc.contractFlights[k].airlineId == 410
+                        ? "فلای‌پرشیا"
+                        : duc.contractFlights[k].airlineId == 515
+                        ? "کاسپین"
+                        : duc.contractFlights[k].airlineId == 7
+                        ? "سپهران"
+                        : duc.contractFlights[k].airlineId == 212
+                        ? "ایر1"
+                        : duc.contractFlights[k].airlineId == 802
+                        ? "چابهار"
+                        : duc.contractFlights[k].airlineId == 956
+                        ? "ماهان"
+                        : duc.contractFlights[k].airlineId == 512
+                        ? "ایران‌ایر"
+                        : duc.contractFlights[k].airlineId == "PA"
+                        ? "پارس‌ایر"
+                        : duc.contractFlights[k].airlineId == "PY"
+                        ? "پویاایر"
+                        : duc.contractFlights[k].airlineId == 256
+                        ? "ایرتور"
+                        : duc.contractFlights[k].airlineId == 218
+                        ? "آساجت"
+                        : "نامعلوم",
+                    airlineLogo:
+                      duc.contractFlights[k].airlineId == 489
+                        ? require("@/assets/image/لوگوی_آتا.png")
+                        : duc.contractFlights[k].airlineId == 1016
+                        ? require("@/assets/image/لوگوی_کیش ایر.png")
+                        : duc.contractFlights[k].airlineId == 761
+                        ? require("@/assets/image/لوگوی_قشم ایر.png")
+                        : duc.contractFlights[k].airlineId == 470
+                        ? require("@/assets/image/لوگوی_تابان.png")
+                        : duc.contractFlights[k].airlineId == 376
+                        ? require("@/assets/image/لوگوآسمان2.jpg")
+                        : duc.contractFlights[k].airlineId == 1064
+                        ? require("@/assets/image/zagros.png")
+                        : duc.contractFlights[k].airlineId == 683
+                        ? require("@/assets/image/لوگوی_نفت.png")
+                        : duc.contractFlights[k].airlineId == 535
+                        ? require("@/assets/image/لوگوی_معراج.png")
+                        : duc.contractFlights[k].airlineId == 943
+                        ? require("@/assets/image/لوگوی_وارش.png")
+                        : duc.contractFlights[k].airlineId == "IRZ"
+                        ? require("@/assets/image/لوگوی_ساها.png")
+                        : duc.contractFlights[k].airlineId == 410
+                        ? require("@/assets/image/لوگوی_فلای‌پرشی.png")
+                        : duc.contractFlights[k].airlineId == 515
+                        ? require("@/assets/image/لوگوی_کاسپین.png")
+                        : duc.contractFlights[k].airlineId == 7
+                        ? require("@/assets/image/لوگوی_سپهران.png")
+                        : duc.contractFlights[k].airlineId == 212
+                        ? require("@/assets/image/لوگوی_ایر1.png")
+                        : duc.contractFlights[k].airlineId == 802
+                        ? require("@/assets/image/لوگوی_چابهار.png")
+                        : duc.contractFlights[k].airlineId == 956
+                        ? require("@/assets/image/لوگوماهان.jpg")
+                        : duc.contractFlights[k].airlineId == 512
+                        ? require("@/assets/image/لوگوایران‌ایر.jpg")
+                        : duc.contractFlights[k].airlineId == "PA"
+                        ? require("@/assets/image/لوگوی_پارس ایر.png")
+                        : duc.contractFlights[k].airlineId == "PY"
+                        ? require("@/assets/image/لوگوی_پویاایر.png")
+                        : duc.contractFlights[k].airlineId == 256
+                        ? require("@/assets/image/لوگوی_ایرتور.png")
+                        : duc.contractFlights[k].airlineId == 218
+                        ? require("@/assets/image/لوگوی_آساجت.png")
+                        : "",
+                    description: duc.contractFlights[k].description,
+                    pnr:
+                      k == 0
+                        ? duc.contractPassengers[j].goTicketPNR
+                        : duc.contractPassengers[j].retTicketPNR,
+                  });
+                }
+              }
+              documents[i].allFarePrice = price;
+              documents[i].dayname = day;
+              documents[i].passengers = passengers;
+              documentsArray.push(documents[i]);
+            }
+          }
+          self.documents = documentsArray;
+        });
+    },
+    exit() {
+      localStorage.removeItem("Client-Token");
+      localStorage.removeItem("fName");
+      localStorage.removeItem("ipAddress");
+      localStorage.removeItem("isLoginAhuan");
+      localStorage.removeItem("lName");
+      localStorage.removeItem("user-name");
+      localStorage.removeItem("phone-number-ahuan");
+      localStorage.removeItem("credit");
+      this.$router.push({
+        path: "/",
+      });
+      this.$emit("logOut");
     },
   },
   mounted() {
     if (localStorage.getItem("Client-Token")) {
       this.checkIsLoggedIn();
+    } else {
+      this.exit();
     }
     // if (this.$route.query.return) {
     //   console.log("has query");

@@ -240,6 +240,24 @@
                               ? "فلای‌پرشیا"
                               : item.airline == "IRZ"
                               ? "ساها"
+                              : item.airline == "IS"
+                              ? "سپهران"
+                              : item.airline == "A1"
+                              ? "اروان"
+                              : item.airline == "RI"
+                              ? "چابهار"
+                              : item.airline == "W5"
+                              ? "ماهان"
+                              : item.airline == "IR"
+                              ? "ایران‌ایر"
+                              : item.airline == "PA"
+                              ? "پارس‌ایر"
+                              : item.airline == "PY"
+                              ? "پویاایر"
+                              : item.airline == "B9"
+                              ? "ایرتور"
+                              : item.airline == "A7"
+                              ? "آساجت"
                               : ""
                           }}
                         </td>
@@ -270,6 +288,24 @@
                                 ? require('@/assets/image/لوگوی_ساها.png')
                                 : item.airline == 'FP'
                                 ? require('@/assets/image/لوگوی_فلای‌پرشی.png')
+                                : item.airline == 'IS'
+                                ? require('@/assets/image/لوگوی_سپهران.png')
+                                : item.airline == 'A1'
+                                ? require('@/assets/image/لوگوی_ایر1.png')
+                                : item.airline == 'RI'
+                                ? require('@/assets/image/لوگوی_چابهار.png')
+                                : item.airline == 'W5'
+                                ? require('@/assets/image/لوگوماهان.jpg')
+                                : item.airline == 'IR'
+                                ? require('@/assets/image/لوگوایران‌ایر.jpg')
+                                : item.airline == 'PA'
+                                ? require('@/assets/image/لوگوی_پارس ایر.png')
+                                : item.airline == 'PY'
+                                ? require('@/assets/image/لوگوی_پویاایر.png')
+                                : item.airline == 'B9'
+                                ? require('@/assets/image/لوگوی_ایرتور.png')
+                                : item.airline == 'A7'
+                                ? require('@/assets/image/لوگوی_آساجت.png')
                                 : ''
                             "
                             alt=""
@@ -393,6 +429,24 @@
                                       ? 'http://fp.nirasoft.ir'
                                       : item.airline == 'IV'
                                       ? 'http://ra.caspianairlines.com'
+                                      : item.airline == 'IS'
+                                      ? ''
+                                      : item.airline == 'A1'
+                                      ? ''
+                                      : item.airline == 'RI'
+                                      ? ''
+                                      : item.airline == 'W5'
+                                      ? ''
+                                      : item.airline == 'IR'
+                                      ? ''
+                                      : item.airline == 'PA'
+                                      ? ''
+                                      : item.airline == 'PY'
+                                      ? ''
+                                      : item.airline == 'B9'
+                                      ? ''
+                                      : item.airline == 'A7'
+                                      ? ''
                                       : '') +
                                     '/TicketPrint.aspx?PNR=' +
                                     item.PNR +

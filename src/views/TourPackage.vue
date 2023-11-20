@@ -410,11 +410,7 @@
                 >
                   <h3 class="tabel-tour-title red--text mt-6 mt-sm-3 mt-md-0">
                     نکات ضروری تورهای
-                    {{
-                      tour.packageGroup &&
-                      tour.packageGroup.name &&
-                      tour.packageGroup.name
-                    }}
+                    {{ tour.packageGroup && tour.packageGroup.name }}
                   </h3>
                   <ul class="my-6 mr-2 mr-md-9 pl-0">
                     <li

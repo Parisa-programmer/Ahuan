@@ -157,6 +157,7 @@
                     clsss="grey"
                     :rules="familyRules"
                     v-model="user.family"
+                    @keydown.tab.prevent="focusAutocomplete('nationality')"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -167,6 +168,7 @@
                 >
                   <label for="" class="mr-2">ملیت</label>
                   <v-select
+                    ref="nationality"
                     :rules="emptyRules"
                     color="white"
                     class="font-small-xs"
@@ -470,6 +472,7 @@
               </v-row>
               <v-row justify="end">
                 <v-btn
+                  :loading="loadingReserve"
                   color="red"
                   dark
                   class="my-2 ml-4"
@@ -823,7 +826,7 @@
                       لطفا توجه داشته باشید در صورت تائید اطلاعات،امکان اصلاح
                       وجود ندارد!
                     </h5>
-                    <v-row>
+                    <v-row justify="space-between">
                       <v-form ref="acceptRulls">
                         <v-checkbox
                           v-model="acceptRulls"
@@ -836,6 +839,121 @@
                           :rules="emptyRules"
                         ></v-checkbox>
                       </v-form>
+                      <div
+                        v-if="
+                          choosedTicket[0].reserveType == 'Chr724' && !Captcha2
+                        "
+                        class="grey lighten-3 rounded-lg smallInputForm mt-6 mt-md-0"
+                      >
+                        <v-row align="center">
+                          <div>
+                            <v-text-field
+                              placeholder="کد تائید هویت"
+                              v-model="captchaCode1"
+                              class="d-inline-block"
+                              style="width: 200px"
+                            ></v-text-field>
+                          </div>
+
+                          <div class="relative d-inline-block">
+                            <v-icon
+                              @click="reservchr724(2)"
+                              size="32"
+                              class="absolute"
+                              style="right: -30px; top: 19px"
+                              >mdi-refresh</v-icon
+                            >
+                            <img
+                              class="heightAll mt-2"
+                              :src="Captcha1"
+                              alt=""
+                            />
+                          </div>
+                        </v-row>
+                      </div>
+                      <div
+                        v-if="
+                          choosedTicket[1] &&
+                          choosedTicket[1].reserveType == 'Chr724' &&
+                          !Captcha1
+                        "
+                        class="grey lighten-3 rounded-lg smallInputForm mt-6 mt-md-0"
+                      >
+                        <v-row align="center">
+                          <div>
+                            <v-text-field
+                              placeholder="کد تائید هویت"
+                              v-model="captchaCode2"
+                              class="d-inline-block"
+                              style="width: 200px"
+                            ></v-text-field>
+                          </div>
+
+                          <div class="relative d-inline-block">
+                            <v-icon
+                              @click="reservchr724(2, 1)"
+                              size="32"
+                              class="absolute"
+                              style="right: -30px; top: 19px"
+                              >mdi-refresh</v-icon
+                            >
+                            <img
+                              class="heightAll mt-2"
+                              :src="Captcha2"
+                              alt=""
+                            />
+                          </div>
+                        </v-row>
+                      </div>
+                      <div
+                        v-if="
+                          choosedTicket[0].reserveType == 'Chr724' &&
+                          choosedTicket[1] &&
+                          choosedTicket[1].reserveType == 'Chr724'
+                        "
+                        class="grey lighten-3 rounded-lg smallInputForm mt-6 mt-md-0"
+                      >
+                        <v-row align="center" justify="center">
+                          <div>
+                            <v-text-field
+                              placeholder="کد تائید هویت"
+                              v-model="captchaCode1"
+                              class="d-inline-block"
+                              style="width: 200px"
+                            ></v-text-field>
+                          </div>
+
+                          <div class="relative d-inline-block">
+                            <v-icon
+                              @click="
+                                reservchr724(2);
+                                reservchr724(2, 1);
+                              "
+                              size="32"
+                              class="absolute"
+                              style="right: -30px; top: 19px"
+                              >mdi-refresh</v-icon
+                            >
+                            <div
+                              class="d-inline-block hideOver"
+                              style="width: 130px; margin-left: -23px"
+                            >
+                              <img
+                                class="heightAll mt-2"
+                                :src="Captcha2"
+                                alt=""
+                              />
+                            </div>
+                            <div class="d-inline-block hideOver">
+                              <img
+                                class="heightAll mt-2"
+                                :src="Captcha1"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        </v-row>
+                      </div>
                     </v-row>
                   </v-card>
                 </v-row>
@@ -933,6 +1051,12 @@ const $ = require("jquery");
 export default {
   data() {
     return {
+      captchaCode1: "",
+      captchaIdReq1: "",
+      captchaCode2: "",
+      captchaIdReq2: "",
+      id_faktor1: "",
+      showCharterPassengers1: [],
       formshaparak: {
         bankToken: "",
       },
@@ -1092,6 +1216,8 @@ export default {
       endUser: [],
       Passenger2: undefined,
       params: [],
+      Captcha1: null,
+      Captcha2: null,
     };
   },
   name: "ticket-dialog-component",
@@ -1110,6 +1236,9 @@ export default {
     Passenger: {
       defult: {},
     },
+    charterToken: {
+      type: String,
+    },
   },
   watch: {
     choosedTicket() {
@@ -1118,6 +1247,16 @@ export default {
   },
   computed: {},
   methods: {
+    focusAutocomplete(rftype) {
+      let reftype = rftype;
+      switch (reftype) {
+        case "nationality":
+          this.$refs.nationality.focus();
+          break;
+        default:
+          break;
+      }
+    },
     validateBookStep() {
       if (this.$refs.nextPageForm.validate()) {
         return true;
@@ -1223,25 +1362,100 @@ export default {
     },
     async changeBookStep(step) {
       let self = this;
-
-      if (step == 2 && this.validateBookStep()) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + this.charterToken;
+      if (step == 2 && self.validateBookStep()) {
         let successAges = await self.checkAges();
         if (successAges) {
-          var users = this.users;
-          this.persianUsers = [];
-          this.otherUsers = [];
-          this.persianUsers = users.filter((x) => x.nationality == "ایرانی");
-          this.otherUsers = users.filter((x) => x.nationality != "ایرانی");
-          this.bookStep = step;
-          this.dateError = false;
-          this.scrollTopNextPage();
+          if (self.choosedTicket[0].reserveType == "Chr724") {
+            self.loadingReserve = true;
+            let bankprice = 2000000000;
+            if (
+              self.choosedTicket.length == 2 &&
+              self.choosedTicket[1].reserveType == "Chr724"
+            ) {
+              bankprice =
+                parseInt(
+                  self.choosedTicket[0].allprice.replace(/,/g, "") * 10
+                ) +
+                parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
+            } else {
+              bankprice = parseInt(
+                self.choosedTicket[0].allprice.replace(/,/g, "") * 10
+              );
+            }
+            axios
+              .get("https://panel.ahuantours.com/api/Ch724/GetCharge")
+              .then(function (res) {
+                if (res.data.data.parent_charge >= bankprice) {
+                  self.reservchr724(step);
+                } else if (res.data.data.parent_charge < bankprice) {
+                  self.alertText = "خطا!لطفا چند دقیقه دیگر مجددا تلاش کنید.";
+                  self.alertType = "error";
+                  self.showAlert = true;
+                  self.loadingReserve = false;
+                  setTimeout(() => {
+                    self.showAlert = false;
+                  }, 5000);
+                }
+              })
+              .catch(function (error) {});
+          } else {
+            if (
+              this.choosedTicket.length == 2 &&
+              this.choosedTicket[1].reserveType == "Chr724"
+            ) {
+              self.loadingReserve = true;
+              let bankprice = parseInt(
+                self.choosedTicket[1].allprice.replace(/,/g, "") * 10
+              );
+
+              axios
+                .get("https://panel.ahuantours.com/api/Ch724/GetCharge")
+                .then(function (res) {
+                  if (res.data.data.parent_charge >= bankprice) {
+                    self.reservchr724(step, 1);
+                  } else {
+                    self.alertText = "خطا!لطفا چند دقیقه دیگر مجددا تلاش کنید.";
+                    self.alertType = "error";
+                    self.showAlert = true;
+                    self.loadingReserve = false;
+                    setTimeout(() => {
+                      self.showAlert = false;
+                    }, 5000);
+                  }
+                })
+                .catch(function (error) {});
+            } else {
+              var users = this.users;
+              this.persianUsers = [];
+              this.otherUsers = [];
+              this.persianUsers = users.filter(
+                (x) => x.nationality == "ایرانی"
+              );
+              this.otherUsers = users.filter((x) => x.nationality != "ایرانی");
+              this.bookStep = step;
+              this.dateError = false;
+              this.scrollTopNextPage();
+            }
+          }
         }
       } else if (step == 3 && this.$refs.acceptRulls.validate()) {
-        let successAges = await self.checkAges();
-        if (successAges) {
-          self.loadingReserve = true;
-          this.reserveTicket(step);
-          this.dateError = false;
+        if (localStorage.getItem("lName")) {
+          let successAges = await self.checkAges();
+          if (successAges) {
+            self.loadingReserve = true;
+            this.reserveTicket(step);
+            this.dateError = false;
+          }
+        } else {
+          self.alertText = "برای رزرو پرواز ابتدا حتما باید وارد سایت شوید!";
+          self.alertType = "error";
+          self.showAlert = true;
+          setTimeout(() => {
+            self.showAlert = false;
+          }, 5000);
+          self.$emit("openLogin");
         }
       } else {
         this.dateError = true;
@@ -1289,7 +1503,6 @@ export default {
     },
     checkCode() {
       this.offCodeLoading = true;
-
       setTimeout(() => {
         this.offCodeLoading = false;
         if (this.offCode == "1111") {
@@ -1301,37 +1514,772 @@ export default {
         }
       }, 1000);
     },
+    checkPenulty1(paramsReservation) {
+      axios
+        .post("https://panel.ahuantours.com/api/Ch724/CheckPenalti", {
+          id_faktor: paramsReservation.id_faktor,
+        })
+        .then(function (res) {
+          console.log(res);
+        })
+        .catch(function (error) {});
+    },
+    reservchr724(step, index) {
+      let findNumber = index ? 1 : 0;
+      let self = this;
+      // self.loadingReserve = true;
+      let params = {
+        from_flight: self.choosedTicket[findNumber].Origin,
+        to_flight: self.choosedTicket[findNumber].Destination,
+        date_flight: self.choosedTicket[findNumber].DepartureDateTime,
+        time_flight:
+          self.choosedTicket[findNumber].ArrivalDateTime.split(" ")[1],
+        number_flight: self.choosedTicket[findNumber].number_flight,
+        ajency_online_ID: self.choosedTicket[findNumber].ajency_online_ID,
+        cabinclass:
+          self.choosedTicket[findNumber].className == "-"
+            ? ""
+            : self.choosedTicket[findNumber].className,
+        airline: self.choosedTicket[findNumber].chrAirline,
+      };
+
+      axios
+        .post("https://panel.ahuantours.com/api/Ch724/GetCaptcha", params)
+        .then(function (res) {
+          if (findNumber == 0) {
+            self.Captcha1 = res.data.data.link_captcha;
+            self.captchaIdReq1 = res.data.data.id_request;
+            if (
+              self.choosedTicket.length == 1 ||
+              (self.choosedTicket[1] &&
+                self.choosedTicket[1].reserveType != "Chr724")
+            ) {
+              let users = self.users;
+              self.persianUsers = [];
+              self.otherUsers = [];
+              self.persianUsers = users.filter(
+                (x) => x.nationality == "ایرانی"
+              );
+              self.otherUsers = users.filter((x) => x.nationality != "ایرانی");
+              self.bookStep = step;
+              self.dateError = false;
+              // self.loadingReserve = false;
+              self.scrollTopNextPage();
+            } else if (
+              self.choosedTicket[1] &&
+              self.choosedTicket[1].reserveType == "Chr724"
+            ) {
+              self.reservchr724(step, 1);
+            }
+            // else if (
+            //   self.choosedTicket[1] &&
+            //   self.choosedTicket[1].reserveType != "Chr724"
+            // ) {
+            // self.reserveTicket2(step, "isFirstChrPrice");
+            // }
+          } else if (findNumber == 1) {
+            self.Captcha2 = res.data.data.link_captcha;
+            self.captchaIdReq2 = res.data.data.id_request;
+            let users = self.users;
+            self.persianUsers = [];
+            self.otherUsers = [];
+            self.persianUsers = users.filter((x) => x.nationality == "ایرانی");
+            self.otherUsers = users.filter((x) => x.nationality != "ایرانی");
+            self.bookStep = step;
+            self.dateError = false;
+            // self.loadingReserve = false;
+            self.scrollTopNextPage();
+          }
+          self.loadingReserve = false;
+        })
+        .catch(function (error) {});
+    },
     reserveTicket(step) {
       var self = this;
-      let testText =
-        "AirLine=" +
-        this.choosedTicket[0].Airline +
-        "&cbSource=" +
-        this.choosedTicket[0].Origin +
-        "&cbTarget=" +
-        this.choosedTicket[0].Destination +
-        "&FlightClass=" +
-        this.choosedTicket[0].className +
-        "&FlightNo=" +
-        this.choosedTicket[0].FlightNo +
-        "&Day=" +
-        this.choosedTicket[0].DepartureDateTime.substring(8, 10) +
-        "&Month=" +
-        this.choosedTicket[0].DepartureDateTime.substring(5, 7) +
-        "&DepartureDate=" +
-        this.choosedTicket[0].DepartureDateTime +
-        "&No=" +
-        this.users.length +
-        "&edtContact=" +
-        this.contactInfo[0].phone +
-        "|" +
-        self.contactInfo[0].email;
-      // +
-      // "&OfficeUser=" +
-      // this.choosedTicket[0].OfficeUser +
-      // "&OfficePass=" +
-      // this.choosedTicket[0].OfficePass;
-      var testTextNew = "";
+
+      if (this.choosedTicket[0].reserveType == "Chr724") {
+        if (!this.captchaCode1) {
+          self.alertText = "لطفا کد احراز هویت را وارد کنید";
+          self.alertType = "error";
+          self.showAlert = true;
+          setTimeout(() => {
+            self.showAlert = false;
+          }, 3000);
+        } else {
+          let infoArray = {
+            id_request: self.captchaIdReq1,
+            captchcode: self.captchaCode1.substring(0, 4),
+            mobile: self.contactInfo[0].phone,
+            email: self.contactInfo[0].email,
+            passengers: [],
+          };
+          for (let i = 0; i < this.users.length; i++) {
+            let gregorianBirthdayDate = self.jalali_to_gregorian(
+              self.users[i].birthdayYear,
+              self.users[i].birthdayMonth,
+              self.users[i].birthdayDay
+            );
+            let gregorianBirthdayDate2 =
+              (gregorianBirthdayDate[1].toString().length == 1
+                ? "0" + gregorianBirthdayDate[1]
+                : gregorianBirthdayDate[1]) +
+              "/" +
+              (gregorianBirthdayDate[2].toString().length == 1
+                ? "0" + gregorianBirthdayDate[2]
+                : gregorianBirthdayDate[2]) +
+              "/" +
+              gregorianBirthdayDate[0];
+
+            infoArray.passengers.push({
+              passengerType:
+                self.getAge(gregorianBirthdayDate2) < 2
+                  ? "INF"
+                  : self.getAge(gregorianBirthdayDate2) < 12
+                  ? "CHD"
+                  : "ADL",
+              fnamefa: self.users[i].name,
+              lnamefa: self.users[i].family,
+              fnameen: self.users[i].name,
+              lnameen: self.users[i].family,
+              gender: self.users[i].gender == "خانم" ? 2 : 1,
+              nationality: this.users[i].nationality == "ایرانی" ? 1 : 0,
+              passengerCode: self.users[i].nationalityCode,
+              nationalitycode:
+                this.users[i].nationality == "ایرانی" ? "IRI" : "غیر ایرانی",
+              expdate:
+                this.users[i].nationality == "ایرانی"
+                  ? ""
+                  : this.users[i].expirePassYear +
+                    "-" +
+                    this.users[i].expirePassMonth +
+                    "-" +
+                    this.users[i].expirePassDay,
+              birthday:
+                gregorianBirthdayDate[0] +
+                "-" +
+                gregorianBirthdayDate[1] +
+                "-" +
+                gregorianBirthdayDate[2],
+            });
+          }
+          axios
+            .post(
+              "https://panel.ahuantours.com/api/Ch724/Reservation",
+              infoArray
+            )
+            .then(function (response) {
+              if (response.data.result == "true") {
+                self.captchaIdReq1 = response.data.data.id_request;
+                self.id_faktor1 = response.data.data.id_faktor;
+                self.choosedTicket[0].allprice =
+                  response.data.data.totalprice_request;
+                self.showCharterPassengers1 = response.data.data.passenger_info;
+                let paramsReservation = {
+                  id_faktor: self.id_faktor1,
+                  id_request: self.captchaIdReq1,
+                  penalti: undefined,
+                  listticketID: [],
+                  passengers: response.data.data.passengers,
+                };
+                if (self.choosedTicket.length == 2) {
+                  if (self.choosedTicket[1].reserveType != "Chr724") {
+                    self.reserveTicket2(
+                      2,
+                      response.data.data.totalprice_request
+                    );
+                  } else {
+                    let infoArray2 = {
+                      id_request: self.captchaIdReq2,
+                      captchcode: self.captchaCode1.substring(4, 8),
+                      mobile: self.contactInfo[0].phone,
+                      email: self.contactInfo[0].email,
+                      passengers: infoArray.passengers,
+                    };
+                    axios
+                      .post(
+                        "https://panel.ahuantours.com/api/Ch724/Reservation",
+                        infoArray2
+                      )
+                      .then(function (res) {
+                        if (res.data.result == "true") {
+                          self.captchaIdReq2 = res.data.data.id_request;
+                          self.id_faktor2 = res.data.data.id_faktor;
+                          self.choosedTicket[1].allprice =
+                            res.data.data.totalprice_request;
+                          self.showCharterPassengers2 =
+                            res.data.data.passenger_info;
+                          let bankprice =
+                            parseInt(response.data.data.totalprice_request) +
+                            parseInt(res.data.data.totalprice_request);
+                          let urlReturn =
+                            "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                            self.captchaIdReq1 +
+                            "&id_faktor1=" +
+                            self.id_faktor1 +
+                            "&id_request2=" +
+                            self.captchaIdReq2 +
+                            "&id_faktor2=" +
+                            self.id_faktor2 +
+                            "&";
+                          self.addToDatabase(bankprice, urlReturn);
+                          // axios
+                          //   .post(
+                          //     "https://panel.ahuantours.com/api/Tejarat/BankToken",
+                          //     {
+                          //       amount: bankprice,
+                          //       revertUrl:
+                          //         "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                          //         self.captchaIdReq1 +
+                          //         "&id_faktor1=" +
+                          //         self.id_faktor1 +
+                          //         "&id_request2=" +
+                          //         self.captchaIdReq2 +
+                          //         "&id_faktor2=" +
+                          //         self.id_faktor2 +
+                          //         "&",
+                          //     }
+                          //   )
+                          //   .then(function (resp) {
+                          //     self.formshaparak.bankToken = resp.data;
+                          //     self.bookStep = 6;
+                          //     setTimeout(() => {
+                          //       self.$refs.formshaparak.submit();
+                          //     }, 1000);
+                          //   })
+                          //   .catch(function (error) {
+                          //     // handle error
+                          //     console.log(error);
+                          //   });
+
+                          // self.checkPenulty1(paramsReservation);
+                        }
+                      })
+                      .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                      });
+                  }
+                } else {
+                  let bankprice = response.data.data.totalprice_request;
+                  let urlReturn =
+                    "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                    self.captchaIdReq1 +
+                    "&id_faktor1=" +
+                    self.id_faktor1 +
+                    "&";
+                  self.addToDatabase(bankprice, urlReturn);
+                  // axios
+                  //   .post(
+                  //     "https://panel.ahuantours.com/api/Tejarat/BankToken",
+                  //     {
+                  //       amount: bankprice,
+                  //       revertUrl:
+                  //         "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                  //         self.captchaIdReq1 +
+                  //         "&id_faktor1=" +
+                  //         self.id_faktor1 +
+                  //         "&",
+                  //     }
+                  //   )
+                  //   .then(function (resp) {
+                  //     self.formshaparak.bankToken = resp.data;
+                  //     self.bookStep = 6;
+                  //     setTimeout(() => {
+                  //       self.$refs.formshaparak.submit();
+                  //     }, 1000);
+                  //   })
+                  //   .catch(function (error) {
+                  //     // handle error
+                  //     console.log(error);
+                  //   });
+                }
+                // self.checkPenulty1(paramsReservation);
+              }
+              // response will be:
+              // let response = {
+              //   result: "true",
+              //   msg: "Reservation",
+              //   data: {
+              //     id_request: 2545307,
+              //     id_faktor: 206548079,
+              //     msg: "Data Mode Test",
+              //     duplicate: 0,
+              //     totalprice_request: "23228000",
+              //     passenger_info: [
+              //       {
+              //         fname: "jkkkjj",
+              //         lname: "dfgdd",
+              //         type: "ADL",
+              //         real_price: 14517500,
+              //         fare: 12990575,
+              //       },
+              //       {
+              //         fname: "dfhfgh",
+              //         lname: "hnjjhk",
+              //         type: "CHD",
+              //         real_price: 7258750,
+              //         fare: 6495287,
+              //       },
+              //       {
+              //         fname: "ljkjkljkl",
+              //         lname: "llkkj",
+              //         type: "INF",
+              //         real_price: 1451750,
+              //         fare: 1299057,
+              //       },
+              //     ],
+              //     class_r: "",
+              //     one_price: "14517500",
+              //     own_com: "0",
+              //   },
+              // };
+              // self.formshaparak.bankToken = response.data;
+              // self.bookStep = 6;
+              // setTimeout(() => {
+              //   self.$refs.formshaparak.submit();
+              // }, 1000);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
+        }
+      } else {
+        let testText =
+          "AirLine=" +
+          this.choosedTicket[0].Airline +
+          "&cbSource=" +
+          this.choosedTicket[0].Origin +
+          "&cbTarget=" +
+          this.choosedTicket[0].Destination +
+          "&FlightClass=" +
+          this.choosedTicket[0].className +
+          "&FlightNo=" +
+          this.choosedTicket[0].FlightNo +
+          "&Day=" +
+          this.choosedTicket[0].DepartureDateTime.substring(8, 10) +
+          "&Month=" +
+          this.choosedTicket[0].DepartureDateTime.substring(5, 7) +
+          "&DepartureDate=" +
+          this.choosedTicket[0].DepartureDateTime +
+          "&No=" +
+          this.users.length +
+          "&edtContact=" +
+          this.contactInfo[0].phone +
+          "|" +
+          self.contactInfo[0].email;
+        // +
+        // "&OfficeUser=" +
+        // this.choosedTicket[0].OfficeUser +
+        // "&OfficePass=" +
+        // this.choosedTicket[0].OfficePass;
+        var testTextNew = "";
+        for (let i = 0; i < this.users.length; i++) {
+          let gregorianBirthdayDate = self.jalali_to_gregorian(
+            self.users[i].birthdayYear,
+            self.users[i].birthdayMonth,
+            self.users[i].birthdayDay
+          );
+          gregorianBirthdayDate =
+            (gregorianBirthdayDate[1].toString().length == 1
+              ? "0" + gregorianBirthdayDate[1]
+              : gregorianBirthdayDate[1]) +
+            "/" +
+            (gregorianBirthdayDate[2].toString().length == 1
+              ? "0" + gregorianBirthdayDate[2]
+              : gregorianBirthdayDate[2]) +
+            "/" +
+            gregorianBirthdayDate[0];
+          let options = { month: "short" };
+          let monthExDateNameShort =
+            this.users[i].expirePassYear +
+            "/" +
+            this.users[i].expirePassMonth +
+            "/" +
+            this.users[i].expirePassDay;
+          monthExDateNameShort = new Date(
+            monthExDateNameShort
+          ).toLocaleDateString("en", options);
+          testTextNew =
+            testTextNew +
+            (testTextNew.length ? "&" : "") +
+            "edtName" +
+            (i + 1) +
+            "=" +
+            self.users[i].name +
+            "&edtLast" +
+            (i + 1) +
+            "=" +
+            self.users[i].family +
+            "&edtAge" +
+            (i + 1) +
+            "=" +
+            self.getAge(gregorianBirthdayDate);
+          let numeriDate = self.jalali_to_gregorian(
+            self.users[i].birthdayYear,
+            self.users[i].birthdayMonth,
+            self.users[i].birthdayDay
+          );
+          numeriDate =
+            numeriDate[0] + "/" + numeriDate[1] + "/" + numeriDate[2];
+          let monthDateNameShort = new Date(numeriDate).toLocaleDateString(
+            "en",
+            options
+          );
+          if (this.users[i].nationality == "ایرانی") {
+            testTextNew =
+              testTextNew +
+              "&edtID" +
+              (i + 1) +
+              "=" +
+              "I__" +
+              self.users[i].nationalityCode +
+              "__" +
+              new Date(numeriDate).getDate() +
+              monthDateNameShort +
+              new Date(numeriDate).getFullYear().toString().slice(-2) +
+              "_" +
+              (self.users[i].gender == "خانم" ? "F" : "M") +
+              "___";
+          } else {
+            testTextNew =
+              testTextNew +
+              "&edtID" +
+              (i + 1) +
+              "=" +
+              "P__" +
+              self.users[i].nationalityCode +
+              "__" +
+              new Date(numeriDate).getDate() +
+              monthDateNameShort +
+              new Date(numeriDate).getFullYear().toString().slice(-2) +
+              "_" +
+              (self.users[i].gender == "خانم" ? "F" : "M") +
+              "_" +
+              this.users[i].expirePassDay +
+              monthExDateNameShort +
+              this.users[i].expirePassYear.toString().slice(-2) +
+              "__";
+          }
+        }
+
+        let params = {
+          AirLine: this.choosedTicket[0].Airline,
+          cbSource: this.choosedTicket[0].Origin,
+          cbTarget: this.choosedTicket[0].Destination,
+          FlightClass: this.choosedTicket[0].className,
+          FlightNo: this.choosedTicket[0].FlightNo,
+          Day: this.choosedTicket[0].DepartureDateTime.substring(8, 10),
+          Month: this.choosedTicket[0].DepartureDateTime.substring(5, 7),
+          DepartureDate: this.choosedTicket[0].DepartureDateTime,
+          No: this.users.length,
+          edtContact:
+            this.contactInfo[0].phone + "|" + self.contactInfo[0].email,
+          PassengersInfo: testTextNew,
+        };
+        if (
+          self.choosedTicket.length == 2 &&
+          self.choosedTicket[1].reserveType == "Chr724" &&
+          !self.captchaCode2
+        ) {
+          self.alertText = "لطفا کد احراز هویت را وارد کنید";
+          self.alertType = "error";
+          self.showAlert = true;
+          setTimeout(() => {
+            self.showAlert = false;
+          }, 3000);
+        } else {
+          axios
+            .get("https://panel.ahuantours.com/api/Nira/GetReserve", { params })
+            .then(function (res) {
+              self.PNR1 = res.data.AirReserve[0].PNR;
+              if (res.data.AirReserve[0].Error == "No Err") {
+                if (self.choosedTicket.length == 2) {
+                  if (self.choosedTicket[1].reserveType == "Chr724") {
+                    let infoArray4 = {
+                      id_request: self.captchaIdReq2,
+                      captchcode: self.captchaCode2,
+                      mobile: self.contactInfo[0].phone,
+                      email: self.contactInfo[0].email,
+                      passengers: [],
+                    };
+                    for (let i = 0; i < self.users.length; i++) {
+                      let gregorianBirthdayDate = self.jalali_to_gregorian(
+                        self.users[i].birthdayYear,
+                        self.users[i].birthdayMonth,
+                        self.users[i].birthdayDay
+                      );
+                      let gregorianBirthdayDate2 =
+                        (gregorianBirthdayDate[1].toString().length == 1
+                          ? "0" + gregorianBirthdayDate[1]
+                          : gregorianBirthdayDate[1]) +
+                        "/" +
+                        (gregorianBirthdayDate[2].toString().length == 1
+                          ? "0" + gregorianBirthdayDate[2]
+                          : gregorianBirthdayDate[2]) +
+                        "/" +
+                        gregorianBirthdayDate[0];
+
+                      infoArray4.passengers.push({
+                        passengerType:
+                          self.getAge(gregorianBirthdayDate2) < 2
+                            ? "INF"
+                            : self.getAge(gregorianBirthdayDate2) < 12
+                            ? "CHD"
+                            : "ADL",
+                        fnamefa: self.users[i].name,
+                        lnamefa: self.users[i].family,
+                        fnameen: self.users[i].name,
+                        lnameen: self.users[i].family,
+                        gender: self.users[i].gender == "خانم" ? 2 : 1,
+                        nationality:
+                          self.users[i].nationality == "ایرانی" ? 1 : 0,
+                        passengerCode: self.users[i].nationalityCode,
+                        nationalitycode:
+                          self.users[i].nationality == "ایرانی"
+                            ? "IRI"
+                            : "غیر ایرانی",
+                        expdate:
+                          self.users[i].nationality == "ایرانی"
+                            ? ""
+                            : self.users[i].expirePassYear +
+                              "-" +
+                              self.users[i].expirePassMonth +
+                              "-" +
+                              self.users[i].expirePassDay,
+                        birthday:
+                          gregorianBirthdayDate[0] +
+                          "-" +
+                          gregorianBirthdayDate[1] +
+                          "-" +
+                          gregorianBirthdayDate[2],
+                      });
+                    }
+                    axios
+                      .post(
+                        "https://panel.ahuantours.com/api/Ch724/Reservation",
+                        infoArray4
+                      )
+                      .then(function (response) {
+                        if (response.data.result == "true") {
+                          self.captchaIdReq2 = response.data.data.id_request;
+                          self.id_faktor2 = response.data.data.id_faktor;
+                          self.choosedTicket[1].allprice =
+                            response.data.data.totalprice_request;
+                          self.showCharterPassengers2 =
+                            response.data.data.passenger_info;
+                          let bankprice =
+                            self.choosedTicket[0].allprice.replace(/,/g, "") *
+                              10 +
+                            parseInt(response.data.data.totalprice_request);
+                          let revertUrl =
+                            "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request2=" +
+                            self.captchaIdReq2 +
+                            "&id_faktor2=" +
+                            self.id_faktor2 +
+                            "&AirLine1=" +
+                            self.choosedTicket[0].Airline +
+                            "&PNR1=" +
+                            self.PNR1 +
+                            "&Email=" +
+                            self.contactInfo[0].email +
+                            "&";
+
+                          self.addToDatabase(bankprice, revertUrl);
+                          // axios
+                          //   .post(
+                          //     "https://panel.ahuantours.com/api/Tejarat/BankToken",
+                          //     {
+                          //       amount: bankprice,
+                          //       revertUrl: revertUrl,
+                          //     }
+                          //   )
+                          //   .then(function (resp) {
+                          //     self.formshaparak.bankToken = resp.data;
+                          //     self.bookStep = 6;
+                          //     setTimeout(() => {
+                          //       self.$refs.formshaparak.submit();
+                          //     }, 1000);
+                          //   })
+                          //   .catch(function (error) {
+                          //     // handle error
+                          //     console.log(error);
+                          //   });
+
+                          // self.checkPenulty1(paramsReservation);
+                        }
+
+                        // self.formshaparak.bankToken = response.data;
+                        // self.bookStep = 6;
+                        // setTimeout(() => {
+                        //   self.$refs.formshaparak.submit();
+                        // }, 1000);
+                      })
+                      .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                      });
+                  } else {
+                    self.reserveTicket2();
+                  }
+                } else {
+                  // go to paymant _______________________
+                  // self.params = [];
+                  // for (let i = 0; i < self.users.length; i++) {
+                  //   for (let j = 0; j < self.choosedTicket.length; j++) {
+                  //     self.params.push({
+                  //       ticketType: self.choosedTicket[j].ticketType,
+                  //       DepartureTime: self.choosedTicket[j].DepartureTime,
+                  //       DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
+                  //       Airline: self.choosedTicket[j].Airline,
+                  //       longDateTime1: self.choosedTicket[j].longDateTime1,
+                  //       OfficeUser: self.choosedTicket[j].OfficeUser,
+                  //       proxy: self.choosedTicket[j].proxy,
+                  //       className: self.choosedTicket[j].className,
+                  //       FlightNo: self.choosedTicket[j].FlightNo,
+                  //       AirlinePersianId: self.choosedTicket[j].AirlinePersianId,
+                  //       Origin: self.choosedTicket[j].Origin,
+                  //       Destination: self.choosedTicket[j].Destination,
+                  //       originCity:
+                  //         j == 0
+                  //           ? self.choosedTicket[j].originCity +
+                  //             " - " +
+                  //             self.choosedTicket[j].airport1
+                  //           : self.choosedTicket[j].destinationInternal +
+                  //             " - " +
+                  //             self.choosedTicket[j].airport2,
+                  //       destinationInternal:
+                  //         j == 0
+                  //           ? self.choosedTicket[j].destinationInternal +
+                  //             " - " +
+                  //             self.choosedTicket[j].airport2
+                  //           : self.choosedTicket[j].originCity +
+                  //             " - " +
+                  //             self.choosedTicket[j].airport1,
+                  //       price:
+                  //         self.endUser[i].ageType == "old"
+                  //           ? self.choosedTicket[j].fare.AdultTotalPrice
+                  //           : self.endUser[i].ageType == "child"
+                  //           ? self.choosedTicket[j].fare.ChildTotalPrice
+                  //           : self.choosedTicket[j].fare.InfantTotalPrice,
+                  //       ageType: self.endUser[i].ageType,
+                  //       name: self.users[i].name + " " + self.users[i].family,
+                  //       PNR: j == 0 ? self.PNR1 : j == 1 ? self.PNR2 : "",
+                  //       bookTime:
+                  //         new Date().getHours() + ":" + new Date().getMinutes(),
+                  //       bookDate: new Date().toLocaleDateString("fa"),
+                  //     });
+                  //   }
+                  // }
+                  // let sendAerray = [
+                  //   {
+                  //     Airline: self.choosedTicket[0].Airline,
+                  //     PNR: self.PNR1,
+                  //     OfficeUser: self.choosedTicket[0].OfficeUser,
+                  //     OfficePAss: self.choosedTicket[0].OfficePass,
+                  //     Complete: "Y",
+                  //     proxy: self.choosedTicket[0].proxy,
+                  //     FlightNo: self.choosedTicket[0].FlightNo,
+                  //   },
+                  // ];
+                  let bankprice =
+                    self.choosedTicket[0].allprice.replace(/,/g, "") * 10;
+                  let goBankUrl =
+                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                    self.choosedTicket[0].Airline +
+                    "&bankpnr1=" +
+                    self.PNR1 +
+                    "&Email=" +
+                    self.contactInfo[0].email;
+
+                  // window.open(goBankUrl);
+                  let urlReturn =
+                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                    self.choosedTicket[0].Airline +
+                    "&PNR1=" +
+                    self.PNR1 +
+                    "&Email=" +
+                    self.contactInfo[0].email +
+                    "&";
+                  self.addToDatabase(bankprice, urlReturn);
+
+                  // axios
+                  //   .post(
+                  //     "https://panel.ahuantours.com/api/Tejarat/BankToken",
+                  //     {
+                  //       amount: bankprice,
+                  //       revertUrl:
+                  //         "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                  //         self.choosedTicket[0].Airline +
+                  //         "&PNR1=" +
+                  //         self.PNR1 +
+                  //         "&Email=" +
+                  //         self.contactInfo[0].email +
+                  //         "&",
+                  //     }
+                  //   )
+                  //   .then(function (response) {
+                  //     self.formshaparak.bankToken = response.data;
+                  //     self.bookStep = 6;
+                  //     setTimeout(() => {
+                  //       self.$refs.formshaparak.submit();
+                  //     }, 1000);
+                  //   })
+                  //   .catch(function (error) {
+                  //     // handle error
+                  //     console.log(error);
+                  //   });
+                  // self.getFlightNumber(sendAerray);
+                }
+              } else {
+                self.alertText =
+                  "عملیات رزرو با خطا مواجه شد لطفا پس از اطمینان از ظرفیت پرواز و صحیح بودن اطلاعاتparisa  ghasemi،دوباره سعی کنید.";
+                self.alertType = "error";
+                self.showAlert = true;
+                self.loadingReserve = false;
+                setTimeout(() => {
+                  self.showAlert = false;
+                }, 3000);
+              }
+            })
+            .catch(function (error) {
+              // handle error
+
+              // console.log("عملیات رزرو ناموفق بود!");
+              // self.loadingReserve = false;
+              let errorText = "";
+              console.log(error);
+              if (error.response && error.response.status == 403) {
+                errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
+              } else if (error.response && error.response.status == 400) {
+                errorText = "bad quest";
+              } else if (error.response && error.response.status == 401) {
+                self.$emit("unahutorize");
+                errorText = "لطفا صفحه را refresh کنید.";
+              }
+
+              self.alertText = errorText;
+              self.alertType = "error";
+              self.showAlert = true;
+              setTimeout(() => {
+                self.showAlert = false;
+              }, 3000);
+            });
+        }
+      }
+    },
+    addToDatabase(price, url) {
+      localStorage.setItem("bankprice", price);
+      let self = this;
+      let findPnrReturn =
+        self.choosedTicket.length == 2 &&
+        self.choosedTicket[1].reserveType == "Chr724"
+          ? self.captchaIdReq2
+          : self.choosedTicket.length == 2 &&
+            self.choosedTicket[1].reserveType != "Chr724"
+          ? self.PNR2
+          : "";
+      let allPassengers = [];
       for (let i = 0; i < this.users.length; i++) {
         let gregorianBirthdayDate = self.jalali_to_gregorian(
           self.users[i].birthdayYear,
@@ -1339,242 +2287,387 @@ export default {
           self.users[i].birthdayDay
         );
         gregorianBirthdayDate =
-          (gregorianBirthdayDate[1].toString().length == 1
-            ? "0" + gregorianBirthdayDate[1]
-            : gregorianBirthdayDate[1]) +
+          gregorianBirthdayDate[1] +
           "/" +
-          (gregorianBirthdayDate[2].toString().length == 1
-            ? "0" + gregorianBirthdayDate[2]
-            : gregorianBirthdayDate[2]) +
+          gregorianBirthdayDate[2] +
           "/" +
           gregorianBirthdayDate[0];
-        let options = { month: "short" };
-        let monthExDateNameShort =
-          this.users[i].expirePassYear +
-          "/" +
-          this.users[i].expirePassMonth +
-          "/" +
-          this.users[i].expirePassDay;
-        monthExDateNameShort = new Date(
-          monthExDateNameShort
-        ).toLocaleDateString("en", options);
-        testTextNew =
-          testTextNew +
-          (testTextNew.length ? "&" : "") +
-          "edtName" +
-          (i + 1) +
-          "=" +
-          self.users[i].name +
-          "&edtLast" +
-          (i + 1) +
-          "=" +
-          self.users[i].family +
-          "&edtAge" +
-          (i + 1) +
-          "=" +
-          self.getAge(gregorianBirthdayDate);
-        let numeriDate = self.jalali_to_gregorian(
-          self.users[i].birthdayYear,
-          self.users[i].birthdayMonth,
-          self.users[i].birthdayDay
-        );
-        numeriDate = numeriDate[0] + "/" + numeriDate[1] + "/" + numeriDate[2];
-        let monthDateNameShort = new Date(numeriDate).toLocaleDateString(
-          "en",
-          options
-        );
-        if (this.users[i].nationality == "ایرانی") {
-          testTextNew =
-            testTextNew +
-            "&edtID" +
-            (i + 1) +
-            "=" +
-            "I__" +
-            self.users[i].nationalityCode +
-            "__" +
-            new Date(numeriDate).getDate() +
-            monthDateNameShort +
-            new Date(numeriDate).getFullYear().toString().slice(-2) +
-            "_" +
-            (self.users[i].gender == "خانم" ? "F" : "M") +
-            "___";
-        } else {
-          testTextNew =
-            testTextNew +
-            "&edtID" +
-            (i + 1) +
-            "=" +
-            "P__" +
-            self.users[i].nationalityCode +
-            "__" +
-            new Date(numeriDate).getDate() +
-            monthDateNameShort +
-            new Date(numeriDate).getFullYear().toString().slice(-2) +
-            "_" +
-            (self.users[i].gender == "خانم" ? "F" : "M") +
-            "_" +
-            this.users[i].expirePassDay +
-            monthExDateNameShort +
-            this.users[i].expirePassYear.toString().slice(-2) +
-            "__";
+        gregorianBirthdayDate = new Date(gregorianBirthdayDate);
+        let theObjectForPush = {
+          id: 0,
+          contractId: 0,
+          fName: self.users[i].name,
+          lName: self.users[i].family,
+          age:
+            self.users[i].ageType == "old"
+              ? "ADL"
+              : self.users[i].ageType == "child"
+              ? "CHD"
+              : "INF",
+          gender: self.users[i].gender == "خانم" ? false : true,
+          birthDate: gregorianBirthdayDate,
+          //     price:
+          //       theObject.Passengers[i].PassenferAgeType == "{Adult}"
+          //         ? theObject.AdultTP
+          //         : theObject.Passengers[i].PassenferAgeType == "{Child}"
+          //         ? theObject.ChildTP
+          //         : theObject.InfantTP,
+          //     price2: theObject2
+          //       ? theObject2.Passengers[i].PassenferAgeType == "{Adult}"
+          //         ? theObject2.AdultTP
+          //         : theObject2.Passengers[i].PassenferAgeType == "{Child}"
+          //         ? theObject2.ChildTP
+          //         : theObject2.InfantTP
+          //       : null,
+          goTicketPNR: self.PNR1 ? self.PNR1 : String(self.id_faktor1),
+          //     goTicketNumber: findFirstTicketNumber[1],
+          retTicketPNR: self.choosedTicket[1]
+            ? self.PNR2
+              ? self.PNR2
+              : String(self.id_faktor2)
+            : "",
+          // retTicketNumber: '',
+          description: "",
+          passportNo: self.users[i].nationalityCode, //چک شود که دیتا درست به نیرا فرستاده میشود یا نه
+          codeMelli: self.users[i].nationalityCode,
+          nationality: self.users[i].nationality,
+          //     // farePrice: 0,//اینو بپرسم بعدا از مهندس
+          //     // comPrice: 0,//اینو بپرسم بعدا از مهندس    // فقط برای چارتری
+          //     // taxPrice: 0,//اینو بپرسم بعدا از مهندس// فقط برای چارتری
+          //     // sharePrice: 0,//اینو بپرسم بعدا از مهندس
+          //     // taxDesc: "string",
+        };
+        if (self.users[i].nationality == "غیر ایرانی") {
+          theObjectForPush.passportExpDate = new Date(
+            self.users[i].expirePassYear +
+              "/" +
+              self.users[i].expirePassMonth +
+              "/" +
+              self.users[i].expirePassDay
+          ).toLocaleString("en");
         }
+        allPassengers.push(theObjectForPush);
       }
-
-      let params = {
-        AirLine: this.choosedTicket[0].Airline,
-        cbSource: this.choosedTicket[0].Origin,
-        cbTarget: this.choosedTicket[0].Destination,
-        FlightClass: this.choosedTicket[0].className,
-        FlightNo: this.choosedTicket[0].FlightNo,
-        Day: this.choosedTicket[0].DepartureDateTime.substring(8, 10),
-        Month: this.choosedTicket[0].DepartureDateTime.substring(5, 7),
-        DepartureDate: this.choosedTicket[0].DepartureDateTime,
-        No: this.users.length,
-        edtContact: this.contactInfo[0].phone + "|" + self.contactInfo[0].email,
-        PassengersInfo: testTextNew,
+      let allObjects = [this.choosedTicket[0]];
+      let allFlights = [];
+      if (this.choosedTicket[1]) {
+        allObjects.push(this.choosedTicket[1]);
+      }
+      for (let i = 0; i < allObjects.length; i++) {
+        let stepfindip = self.choosedTicket[i].Airline;
+        let findAirlineId =
+          stepfindip == "I3"
+            ? 489
+            : stepfindip == "Y9"
+            ? 1016
+            : stepfindip == "QB"
+            ? 761
+            : stepfindip == "HH"
+            ? 470
+            : stepfindip == "EP"
+            ? 376
+            : stepfindip == "ZV"
+            ? 1064
+            : stepfindip == "NV"
+            ? 683
+            : stepfindip == "JI"
+            ? 535
+            : stepfindip == "VR"
+            ? 943
+            : stepfindip == "IRZ"
+            ? "IRZ"
+            : stepfindip == "FP"
+            ? 410
+            : stepfindip == "IV"
+            ? 515
+            : stepfindip == "IS"
+            ? 7
+            : stepfindip == "A1"
+            ? 212
+            : stepfindip == "RI"
+            ? 802
+            : stepfindip == "W5"
+            ? 956
+            : stepfindip == "IR"
+            ? 512
+            : stepfindip == "PA"
+            ? "PA"
+            : stepfindip == "PY"
+            ? "PY"
+            : stepfindip == "B9"
+            ? 256
+            : stepfindip == "A7"
+            ? 218
+            : "000";
+        allFlights.push({
+          contractId: 0,
+          pnr:
+            i == 0
+              ? self.PNR1
+                ? self.PNR1
+                : String(self.captchaIdReq1)
+              : self.PNR2
+              ? self.PNR2
+              : String(self.id_faktor2),
+          origin: self.choosedTicket[i].Origin,
+          destination: self.choosedTicket[i].Destination,
+          flightClass: self.choosedTicket[i].className,
+          airlineId: findAirlineId,
+          charterFlight: self.choosedTicket[i].ticketType == "s" ? false : true,
+          date: self.choosedTicket[i].DepartureDateTime,
+          time: self.choosedTicket[i].DepartureTime,
+          flightNumber: String(self.choosedTicket[i].FlightNo),
+          airplaneType: self.choosedTicket[i].AirCraftType
+            ? self.choosedTicket[i].AirCraftType
+            : self.choosedTicket[i].AircraftTypeName,
+          description: "",
+        });
+      }
+      let theIssueDate =
+        String(new Date().getFullYear()) +
+        "-" +
+        (String(new Date().getMonth() + 1).length == 2
+          ? String(new Date().getMonth() + 1)
+          : "0" + String(new Date().getMonth() + 1)) +
+        "-" +
+        (String(new Date().getDate()).length == 2
+          ? String(new Date().getDate())
+          : "0" + String(new Date().getDate()));
+      let variabelobject = {
+        id: 0,
+        userName: localStorage.getItem("phone-number-ahuan"),
+        issueDate: theIssueDate,
+        issueTime:
+          (String(new Date().getHours()).length == 2
+            ? new Date().getHours()
+            : "0" + new Date().getHours()) +
+          ":" +
+          (String(new Date().getMinutes()).length == 2
+            ? new Date().getMinutes()
+            : "0" + new Date().getMinutes()),
+        ipAddress: "0",
+        //   // paymentId: "string",
+        contractType: 0, //داخلی
+        contractingPartyType: 0, //0 یعنی حضوری____2 یعنی شرکتی
+        //   // customerId: 0,
+        //   // companyId: 0,
+        //   // companyEmployeeId: 0,
+        //   // paymentType: 0 //نقدی,
+        travelVehicle: "هواپیما",
+        tour: false,
+        ticket: true,
+        hotel: false,
+        visa: false,
+        insurance: false,
+        cruise: false,
+        other: false,
+        //   // charterFlight: true // اگر چارتری بود باید true باشد درغیر این صورت false,
+        //   // contractDesc: "string"//توضیحاتی است برای تیکت رزرو شده,
+        //   // ticketType: 0, //داخلی,
+        systemOrCharter: false, // اگر چارتری بود باید true باشد درغیر این صورت false,,
+        manualOrAutomatic: true,
+        taxType: 0, //مالیات,
+        confirmStatus: "temp",
+        ticketStatus: "temp",
+        showDetail: false,
+        //   // company: {
+        //   //   id: 0,
+        //   //   name: "string",
+        //   //   code: "string",
+        //   //   category: "string",
+        //   //   email: "string",
+        //   //   fax: "string",
+        //   //   phone: ["string"],
+        //   //   address: "string",
+        //   //   credit: 0,
+        //   //   isApproved: true,
+        //   //   noLimit: true,
+        //   //   contracts: ["string"],
+        //   //   employees: [
+        //   //     {
+        //   //       id: 0,
+        //   //       companyId: 0,
+        //   //       gender: true,
+        //   //       fName: "string",
+        //   //       lName: "string",
+        //   //       mobile: "string",
+        //   //       phone: "string",
+        //   //       address: "string",
+        //   //       codeMelli: "string",
+        //   //       birthDate: "2023-10-30T11:22:05.123Z",
+        //   //       email: "string",
+        //   //       position: "string",
+        //   //       isAgent: true,
+        //   //       company: "string",
+        //   //       contracts: ["string"],
+        //   //     },
+        //   //   ],
+        //   // },
+        //   // companyEmployee: {
+        //   //   id: 0,
+        //   //   companyId: 0,
+        //   //   gender: true,
+        //   //   fName: "string",
+        //   //   lName: "string",
+        //   //   mobile: "string",
+        //   //   phone: "string",
+        //   //   address: "string",
+        //   //   codeMelli: "string",
+        //   //   birthDate: "2023-10-30T11:22:05.123Z",
+        //   //   email: "string",
+        //   //   position: "string",
+        //   //   isAgent: true,
+        //   //   company: "string",
+        //   //   contracts: ["string"],
+        //   // },
+        contractPassengers: allPassengers,
+        contractFlights: allFlights,
+        //   // contractReceives: [
+        //   //   {
+        //   //     id: 0,
+        //   //     contractId: 0,
+        //   //     receiveType: 0,
+        //   //     receiveDate: "2023-10-30T11:22:05.125Z",
+        //   //     amount: 0,
+        //   //     currency: "string",
+        //   //     receiveFor: 0,
+        //   //     payer: "string",
+        //   //     chequeDate: "2023-10-30T11:22:05.125Z",
+        //   //     chequeBank: "string",
+        //   //     chequeNumber: "string",
+        //   //     cartDate: "2023-10-30T11:22:05.125Z",
+        //   //     cart4Digits: "string",
+        //   //     cartNumber: "string",
+        //   //     depositDate: "2023-10-30T11:22:05.125Z",
+        //   //     depositType: "string",
+        //   //     depositAccount: "string",
+        //   //     description: "string",
+        //   //     exchange: true,
+        //   //     exchangeAmount: 0,
+        //   //     exchangeRate: 0,
+        //   //     exchangeCurrency: "string",
+        //   //     contract: "string",
+        //   //   },
+        //   // ],
       };
-
+      // a = {
+      //   id: 0,
+      //   userName: "09054791374",
+      //   issueDate: "2023-11-15",
+      //   issueTime: "16:15",
+      //   contractType: 0,
+      //   contractingPartyType: 0,
+      //   travelVehicle: "هواپیما",
+      //   tour: false,
+      //   ticket: true,
+      //   hotel: false,
+      //   visa: false,
+      //   insurance: false,
+      //   cruise: false,
+      //   other: false,
+      //   systemOrCharter: false,
+      //   manualOrAutomatic: true,
+      //   taxType: 0,
+      //   confirmStatus: "temp",
+      //   ticketStatus: "temp",
+      //   showDetail: false,
+      //   contractPassengers: [
+      //     {
+      //       id: 0,
+      //       contractId: 0,
+      //       fName: "parisa",
+      //       lName: "ghasemi",
+      //       age: "ADL",
+      //       gender: false,
+      //       birthDate: "9/21/1995, 12:00:00 AM",
+      //       goTicketPNR: "R1ZQ2",
+      //       retTicketPNR: 34062735,
+      //       description: "",
+      //       passportNo: "0440518245",
+      //       codeMelli: "0440518245",
+      //       nationality: "ایرانی",
+      //     },
+      //     {
+      //       id: 0,
+      //       contractId: 0,
+      //       fName: "milad",
+      //       lName: "mohammadpur",
+      //       age: "ADL",
+      //       gender: true,
+      //       birthDate: "7/26/1996, 12:00:00 AM",
+      //       goTicketPNR: "R1ZQ2",
+      //       retTicketPNR: 34062735,
+      //       description: "",
+      //       passportNo: "3860357141",
+      //       codeMelli: "3860357141",
+      //       nationality: "ایرانی",
+      //     },
+      //   ],
+      //   contractFlights: [
+      //     {
+      //       contractId: 0,
+      //       pnr: "R1ZQ2",
+      //       origin: "THR",
+      //       destination: "MHD",
+      //       flightClass: "BB",
+      //       airlineId: 683,
+      //       date: "11/27/2023, 3:30:00 AM",
+      //       time: "16:00",
+      //       flightNumber: 2638,
+      //       airplaneType: "BOEING 733",
+      //       description: "",
+      //     },
+      //     {
+      //       contractId: 0,
+      //       pnr: 34062735,
+      //       origin: "MHD",
+      //       destination: "THR",
+      //       flightClass: "BH",
+      //       airlineId: 956,
+      //       date: "11/30/2023, 3:30:00 AM",
+      //       time: "06:00",
+      //       flightNumber: "1036",
+      //       airplaneType: "Airbus 320",
+      //       description: "",
+      //     },
+      //   ],
+      // };
+      // http://charter.ahuan.ir/GetTicket-34072344-1604123883.html
       axios
-        .get("https://panel.ahuantours.com/api/Nira/GetReserve", { params })
+        .post("https://panel.ahuantours.com/api/Contract/add", variabelobject)
         .then(function (res) {
-          self.PNR1 = res.data.AirReserve[0].PNR;
-          if (res.data.AirReserve[0].Error == "No Err") {
-            if (self.choosedTicket.length == 2) {
-              self.reserveTicket2();
-            } else {
-              // go to paymant _______________________
-              // self.params = [];
-              // for (let i = 0; i < self.users.length; i++) {
-              //   for (let j = 0; j < self.choosedTicket.length; j++) {
-              //     self.params.push({
-              //       ticketType: self.choosedTicket[j].ticketType,
-              //       DepartureTime: self.choosedTicket[j].DepartureTime,
-              //       DepartureDateTime: self.choosedTicket[j].DepartureDateTime,
-              //       Airline: self.choosedTicket[j].Airline,
-              //       longDateTime1: self.choosedTicket[j].longDateTime1,
-              //       OfficeUser: self.choosedTicket[j].OfficeUser,
-              //       proxy: self.choosedTicket[j].proxy,
-              //       className: self.choosedTicket[j].className,
-              //       FlightNo: self.choosedTicket[j].FlightNo,
-              //       AirlinePersianId: self.choosedTicket[j].AirlinePersianId,
-              //       Origin: self.choosedTicket[j].Origin,
-              //       Destination: self.choosedTicket[j].Destination,
-              //       originCity:
-              //         j == 0
-              //           ? self.choosedTicket[j].originCity +
-              //             " - " +
-              //             self.choosedTicket[j].airport1
-              //           : self.choosedTicket[j].destinationInternal +
-              //             " - " +
-              //             self.choosedTicket[j].airport2,
-              //       destinationInternal:
-              //         j == 0
-              //           ? self.choosedTicket[j].destinationInternal +
-              //             " - " +
-              //             self.choosedTicket[j].airport2
-              //           : self.choosedTicket[j].originCity +
-              //             " - " +
-              //             self.choosedTicket[j].airport1,
-              //       price:
-              //         self.endUser[i].ageType == "old"
-              //           ? self.choosedTicket[j].fare.AdultTotalPrice
-              //           : self.endUser[i].ageType == "child"
-              //           ? self.choosedTicket[j].fare.ChildTotalPrice
-              //           : self.choosedTicket[j].fare.InfantTotalPrice,
-              //       ageType: self.endUser[i].ageType,
-              //       name: self.users[i].name + " " + self.users[i].family,
-              //       PNR: j == 0 ? self.PNR1 : j == 1 ? self.PNR2 : "",
-              //       bookTime:
-              //         new Date().getHours() + ":" + new Date().getMinutes(),
-              //       bookDate: new Date().toLocaleDateString("fa"),
-              //     });
-              //   }
-              // }
-              // let sendAerray = [
-              //   {
-              //     Airline: self.choosedTicket[0].Airline,
-              //     PNR: self.PNR1,
-              //     OfficeUser: self.choosedTicket[0].OfficeUser,
-              //     OfficePAss: self.choosedTicket[0].OfficePass,
-              //     Complete: "Y",
-              //     proxy: self.choosedTicket[0].proxy,
-              //     FlightNo: self.choosedTicket[0].FlightNo,
-              //   },
-              // ];
-              let bankprice =
-                self.choosedTicket[0].allprice.replace(/,/g, "") * 10;
-              localStorage.setItem("bankprice", bankprice);
-              let goBankUrl =
-                "https://ahuan.ir/#/ticket-download?AirLine1=" +
-                self.choosedTicket[0].Airline +
-                "&bankpnr1=" +
-                self.PNR1 +
-                "&Email=" +
-                self.contactInfo[0].email;
-
-              // window.open(goBankUrl);
-              self.loadingReserve = false;
-              axios
-                .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-                  amount: bankprice,
-                  revertUrl:
-                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
-                    self.choosedTicket[0].Airline +
-                    "&PNR1=" +
-                    self.PNR1 +
-                    "&Email=" +
-                    self.contactInfo[0].email +
-                    "&",
-                })
-                .then(function (response) {
-                  self.formshaparak.bankToken = response.data;
-                  self.bookStep = 6;
-                  setTimeout(() => {
-                    self.$refs.formshaparak.submit();
-                  }, 1000);
-                })
-                .catch(function (error) {
-                  // handle error
-                  console.log(error);
-                });
-              // self.getFlightNumber(sendAerray);
-            }
+          if (
+            localStorage.getItem("credit") != "null" &&
+            (localStorage.getItem("credit") == "noLimit" ||
+              localStorage.getItem("credit") >= price)
+          ) {
+            window.location.href =
+              url + "responseData=" + res.data.id + "&price=" + price + "&";
           } else {
-            self.alertText =
-              "عملیات رزرو با خطا مواجه شد لطفا پس از اطمینان از ظرفیت پرواز،دوباره سعی کنید.";
-            self.alertType = "error";
-            self.showAlert = true;
-            self.loadingReserve = false;
-            setTimeout(() => {
-              self.showAlert = false;
-            }, 3000);
+            axios
+              .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+                amount: price,
+                revertUrl: url + "responseData=" + res.data.id + "&",
+              })
+              .then(function (response) {
+                self.formshaparak.bankToken = response.data;
+                self.bookStep = 6;
+                setTimeout(() => {
+                  self.$refs.formshaparak.submit();
+                }, 1000);
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
           }
         })
         .catch(function (error) {
           // handle error
-
-          // console.log("عملیات رزرو ناموفق بود!");
-          self.loadingReserve = false;
-          let errorText = "";
           console.log(error);
-          if (error.response.status == 403) {
-            errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
-          } else if (error.response.status == 400) {
-            errorText = "bad quest";
-          } else if (error.response.status == 401) {
-            self.$emit("unahutorize");
-            errorText = "لطفا صفحه را refresh کنید.";
-          }
-
-          self.alertText = errorText;
-          self.alertType = "error";
-          self.showAlert = true;
-          setTimeout(() => {
-            self.showAlert = false;
-          }, 3000);
         });
     },
-    reserveTicket2(step) {
+    reserveTicket2(step, isFirstChrPrice) {
       var self = this;
       // let testText =
       //   "AirLine=" +
@@ -1708,62 +2801,126 @@ export default {
           self.PNR2 = res.data.AirReserve[0].PNR;
           if (res.data.AirReserve[0].Error == "No Err") {
             // go to paymant _______________________
-            let bankprice =
-              parseInt(self.choosedTicket[0].allprice.replace(/,/g, "") * 10) +
-              parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
-            localStorage.setItem("bankprice", bankprice);
-            let goBankUrl =
-              "https://ahuan.ir/#/ticket-download?AirLine1=" +
-              self.choosedTicket[0].Airline +
-              "&bankpnr1=" +
-              self.PNR1 +
-              "&bankpnr2=" +
-              self.PNR2 +
-              "&AirLine2=" +
-              self.choosedTicket[1].Airline +
-              "&Email=" +
-              self.contactInfo[0].email;
 
-            // window.open(goBankUrl);
-            // milad  mohammadpour  3860357141 0440518245
-            self.loadingReserve = false;
-            // go to bank__________________________
-            axios
-              .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-                amount: bankprice,
-                revertUrl:
-                  "https://ahuan.ir/#/ticket-download?AirLine1=" +
-                  self.choosedTicket[0].Airline +
-                  "&PNR1=" +
-                  self.PNR1 +
-                  "&PNR2=" +
-                  self.PNR2 +
-                  "&AirLine2=" +
-                  self.choosedTicket[1].Airline +
-                  "&Email=" +
-                  self.contactInfo[0].email +
-                  "&Price=" +
-                  bankprice,
-              })
-              .then(function (response) {
-                self.formshaparak.bankToken = response.data;
-                self.bookStep = 6;
-                setTimeout(() => {
-                  self.$refs.formshaparak.submit();
-                }, 1000);
-              })
-              .catch(function (error) {
-                // handle error
-                console.log(error);
-              });
+            if (isFirstChrPrice) {
+              let bankprice =
+                isFirstChrPrice +
+                parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
+              let urlReturn =
+                "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                self.captchaIdReq1 +
+                "&id_faktor1=" +
+                self.id_faktor1 +
+                "&PNR2=" +
+                self.PNR2 +
+                "&AirLine2=" +
+                self.choosedTicket[1].Airline +
+                "&Email=" +
+                self.contactInfo[0].email +
+                "&";
+              self.addToDatabase(bankprice, urlReturn);
+              // axios
+              //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+              //     amount: bankprice,
+              //     revertUrl:
+              //       "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+              //       self.captchaIdReq1 +
+              //       "&id_faktor1=" +
+              //       self.id_faktor1 +
+              //       "&PNR2=" +
+              //       self.PNR2 +
+              //       "&AirLine2=" +
+              //       self.choosedTicket[1].Airline +
+              //       "&Email=" +
+              //       self.contactInfo[0].email +
+              //       "&",
+              //   })
+              //   .then(function (response) {
+              //     self.formshaparak.bankToken = response.data;
+              //     self.bookStep = 6;
+              //     setTimeout(() => {
+              //       self.$refs.formshaparak.submit();
+              //     }, 1000);
+              //   })
+              //   .catch(function (error) {
+              //     // handle error
+              //     console.log(error);
+              //   });
+            } else {
+              let bankprice =
+                parseInt(
+                  self.choosedTicket[0].allprice.replace(/,/g, "") * 10
+                ) +
+                parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
+              // let goBankUrl =
+              //   "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              //   self.choosedTicket[0].Airline +
+              //   "&bankpnr1=" +
+              //   self.PNR1 +
+              //   "&bankpnr2=" +
+              //   self.PNR2 +
+              //   "&AirLine2=" +
+              //   self.choosedTicket[1].Airline +
+              //   "&Email=" +
+              //   self.contactInfo[0].email;
 
-            //  // self.getFlightNumber(sendAerray);
+              // window.open(goBankUrl);
+              // milad  mohammadpour  3860357141 0440518245 0084508965 8/12/67
+              // self.loadingReserve = false;
+              // go to bank__________________________
+              let urlReturn =
+                "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                self.choosedTicket[0].Airline +
+                "&PNR1=" +
+                self.PNR1 +
+                "&PNR2=" +
+                self.PNR2 +
+                "&AirLine2=" +
+                self.choosedTicket[1].Airline +
+                "&Email=" +
+                self.contactInfo[0].email +
+                "&Price=" +
+                bankprice +
+                "&";
+              self.addToDatabase(bankprice, urlReturn);
+
+              // axios
+              //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+              //     amount: bankprice,
+              //     revertUrl:
+              //       "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              //       self.choosedTicket[0].Airline +
+              //       "&PNR1=" +
+              //       self.PNR1 +
+              //       "&PNR2=" +
+              //       self.PNR2 +
+              //       "&AirLine2=" +
+              //       self.choosedTicket[1].Airline +
+              //       "&Email=" +
+              //       self.contactInfo[0].email +
+              //       "&Price=" +
+              //       bankprice,
+              //   })
+              //   .then(function (response) {
+              //     self.formshaparak.bankToken = response.data;
+              //     self.bookStep = 6;
+              //     setTimeout(() => {
+              //       self.$refs.formshaparak.submit();
+              //     }, 1000);
+              //   })
+              //   .catch(function (error) {
+              //     // handle error
+              //     console.log(error);
+              //   });
+
+              //  // self.getFlightNumber(sendAerray);
+            }
           } else {
             self.alertText =
               "عملیات رزرو با خطا مواجه شد لطفا پس از اطمینان از ظرفیت پروازها،دوباره سعی کنید.";
             self.alertType = "error";
             self.showAlert = true;
-            self.loadingReserve = false;
+            // self.loadingReserve = false;
             setTimeout(() => {
               self.showAlert = false;
             }, 3000);
@@ -1775,11 +2932,11 @@ export default {
           // console.log("عملیات رزرو ناموفق بود!");
           let errorText = "";
           console.log(error);
-          // if (error.response.status == 403) {
+          // if (error.response && error.response.status == 403) {
           //   errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
-          // } else if (error.response.status == 400) {
+          // } else if (error.response && error.response.status == 400) {
           //   errorText = "bad quest";
-          // } else if (error.response.status == 401) {
+          // } else if (error.response && error.response.status == 401) {
           //   self.$emit("unahutorize");
           //   errorText = "لطفا صفحه را refresh کنید.";
           // }
@@ -1878,7 +3035,7 @@ export default {
         );
       }
       this.bookStep = 3;
-      this.loadingReserve = false;
+      // this.loadingReserve = false;
       this.scrollTopNextPage();
     },
     getFlightNumber2(
@@ -2001,10 +3158,7 @@ export default {
         ageType: "baby",
       });
     }
-    if (localStorage.getItem("Client-Token")) {
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("Client-Token");
-    }
+
     this.setDates();
   },
 };

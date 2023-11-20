@@ -20,7 +20,9 @@
             <v-row class="white rounded-lg pa-2 d-md-none">
               <div
                 class="grey--text text--darken-2"
-                @click="showFilterBox = !showFilterBox"
+                @click="
+                  showFilterBox = loadingTickets == false && !showFilterBox
+                "
               >
                 <v-icon class="ml-1">mdi-filter-plus-outline</v-icon>
                 فیلتر
@@ -74,9 +76,20 @@
                 </v-tabs> -->
               </div>
             </v-row>
-            <v-dialog v-if="windowWidth < 960" v-model="showFilterBox">
+            <v-row
+              v-show="showFilterBox"
+              class="pa-3 fixed heightAll widthAll"
+              style="
+                background: #00000069;
+                top: 0;
+                right: 0;
+                z-index: 22222;
+                overflow-y: scroll;
+              "
+            >
               <v-card>
                 <ticket-filter-component
+                  @doneChanges="doneChanges()"
                   class="widthAll mt-sm-4"
                   :loadeingTickets="loadingTickets"
                   :from="fromPrice"
@@ -85,9 +98,9 @@
                   @startFilter="startFilter($event)"
                 />
               </v-card>
-            </v-dialog>
+            </v-row>
             <ticket-filter-component
-              v-show="windowWidth >= 960"
+              v-if="windowWidth >= 960"
               :loadeingTickets="loadingTickets"
               :from="fromPrice"
               :to="toPrice"
@@ -409,6 +422,7 @@
             </div>
             <div v-else>
               <ticket-component
+                @openLogin="openLogin()"
                 :setFirstDate="setFirstDate"
                 :rezervStepParent="rezervStepParent"
                 @changeTicket="changeTicket($event)"
@@ -693,6 +707,10 @@ export default {
         class: [],
         airlineItems: [
           {
+            label: "ماهان",
+            value: "W5",
+          },
+          {
             label: "آتا",
             value: "I3",
           },
@@ -735,6 +753,38 @@ export default {
           {
             label: "وارش",
             value: "VR",
+          },
+          {
+            label: "سپهران",
+            value: "IS",
+          },
+          {
+            label: "اروان",
+            value: "A1",
+          },
+          {
+            label: "چابهار",
+            value: "RI",
+          },
+          {
+            label: "ایران‌ایر",
+            value: "IR",
+          },
+          {
+            label: "پارس‌ایر",
+            value: "PA",
+          },
+          {
+            label: "پویاایر",
+            value: "PY",
+          },
+          {
+            label: "ایرتور",
+            value: "B9",
+          },
+          {
+            label: "آساجت",
+            value: "A7",
           },
         ],
         airline: [],
@@ -822,6 +872,9 @@ export default {
   },
   computed: {},
   methods: {
+    openLogin() {
+      this.$emit("openLogin");
+    },
     searchInHeaderBox() {
       this.allChoosedTickets = [];
       this.rezervStep = 1;
@@ -932,7 +985,9 @@ export default {
       let result = await this.changeFilterTime(event.time);
       this.showTickets = result.filter((x) => {
         return (
+          event.class.includes(x.type_flight) &&
           event.airline.includes(x.Airline) &&
+          event.type.includes(x.ticketType) &&
           x.price >= event.price[0] * 10 &&
           x.price <= event.price[1] * 10
         );
@@ -983,6 +1038,9 @@ export default {
           Math.floor(new Date(this.$route.query.start).getTime() / 1000) * 1000;
         this.dayNumber(numberdate);
       }
+    },
+    doneChanges() {
+      this.showFilterBox = false;
     },
   },
   created() {

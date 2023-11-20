@@ -1,6 +1,11 @@
 <template class="">
   <div class="mt-12 pt-12">
-    <v-row justify="center" class="mt-md-12 mt-sm-6" v-if="isReturnUrl">
+    <div v-if="isBuying">
+      <h1 class="widthAll text-center green--text text--darken-3 mt-12">
+        درحال تکمیل فرایند خرید...
+      </h1>
+    </div>
+    <v-row justify="center" class="mt-md-12 mt-sm-6" v-else-if="isReturnUrl">
       <div
         v-if="successSell"
         class="indexDiv rounded-xl mb-6 pa-4 mt-12 mt-sm-6"
@@ -14,14 +19,55 @@
             عملیات رزرو با موفقیت انجام شد!
           </h1>
         </v-row>
-
-        <v-row justify="center" class="mb-12">
+        <v-row
+          v-if="(PNR1 && PNR2) || (PNR1 && !PNR2 && !ticketUrl1 && !ticketUrl2)"
+          justify="center"
+          class="mb-12"
+        >
           <v-btn
             outlined
             color="red"
             :loading="loadingDownload"
-            @click="clickedDownload = !clickedDownload"
+            @click="downloadTickets()"
             >جهت دانلود بلیط ها کلیک کنید</v-btn
+          >
+        </v-row>
+        <v-row
+          v-else-if="ticketUrl1 && !ticketUrl2 && !PNR1 && !PNR2"
+          justify="center"
+          class="mb-12"
+        >
+          <v-btn
+            outlined
+            color="red"
+            :loading="loadingDownload"
+            @click="downloadTickets1()"
+            >جهت دانلود بلیط ها کلیک کنید</v-btn
+          >
+        </v-row>
+        <v-row
+          v-else-if="
+            (ticketUrl1 && ticketUrl2) ||
+            (ticketUrl1 && PNR2) ||
+            (PNR1 && ticketUrl2)
+          "
+          justify="center"
+          class="mb-12"
+        >
+          <v-btn
+            outlined
+            class="ml-2"
+            color="red"
+            :loading="loadingDownload"
+            @click="downloadTickets2()"
+            >دانلود بلیط رفت</v-btn
+          >
+          <v-btn
+            outlined
+            color="red"
+            :loading="loadingDownload"
+            @click="downloadTickets3()"
+            >دانلود بلیط برگشت</v-btn
           >
         </v-row>
       </div>
@@ -79,6 +125,11 @@ const $ = require("jquery");
 export default {
   data() {
     return {
+      PNR1: this.$route.query.PNR1,
+      PNR2: this.$route.query.PNR2,
+      isBuying: false,
+      ticketUrl1: null,
+      ticketUrl2: null,
       successSell: true,
       formshaparak: {
         bankToken: "",
@@ -125,7 +176,7 @@ export default {
           code: "Ahwaz, AWZ",
           text: "اهواز",
           id: "AWZ",
-          airport: "",
+          airport: "Ahwaz Arpt",
         },
         {
           label: "Isfahan, IFN - اصفهان",
@@ -202,7 +253,7 @@ export default {
           code: "Bahregan, IAQ",
           text: "بهرگان",
           id: "IAQ",
-          airport: "",
+          airport: "Bahregan Arpt",
         },
         {
           label: "Lamard, LFM - لامرد",
@@ -433,7 +484,7 @@ export default {
           code: "Parsabad, PFQ",
           text: "پارس آباد",
           id: "PFQ",
-          airport: "",
+          airport: "Parsabad Arpt",
         },
         {
           label: "Iranshahr, IHR - ایران شهر",
@@ -529,8 +580,6 @@ export default {
       ],
       loadingDownload: true,
       clickedDownload: false,
-      PNR1: "",
-      PNR2: "",
       showAlert: false,
       alertType: "",
       alertText: "",
@@ -705,19 +754,479 @@ export default {
   },
   computed: {},
   methods: {
-    async issueTickets() {
-      let first = await this.ETIssueJS(
-        this.$route.query.AirLine1,
-        this.$route.query.PNR1
-      );
-      if (this.$route.query.PNR2) {
-        let next = await this.ETIssueJS(
+    async addPnr() {
+      let next = await this.addPnr2();
+      this.setTicketInfo2("pnr", next);
+    },
+    addPnr2() {
+      return new Promise((resolve) => {
+        let next = this.ETIssueJS(
           this.$route.query.AirLine2,
           this.$route.query.PNR2
         );
-        this.addToDatabase(first, next);
-      } else {
-        this.addToDatabase(first);
+        resolve(next);
+      });
+    },
+    downloadTickets() {
+      this.clickedDownload = !this.clickedDownload;
+    },
+    downloadTickets1() {
+      if (this.ticketUrl1) {
+        window.open(this.ticketUrl1, "_blank");
+      }
+    },
+    downloadTickets2() {
+      if (this.$route.query.PNR1) {
+        // if go and return tickets are reserved from Nira
+        this.clickedDownload = !this.clickedDownload;
+      }
+      if (this.ticketUrl1) {
+        window.open(this.ticketUrl1, "_blank");
+      }
+    },
+    downloadTickets3() {
+      if (this.$route.query.PNR2) {
+        // if go and return tickets are reserved from Nira
+        this.clickedDownload = !this.clickedDownload;
+      }
+      if (this.ticketUrl2) {
+        window.open(this.ticketUrl2, "_blank");
+      }
+    },
+    async issueTickets() {
+      let self = this;
+      if (self.$route.query.id_request1) {
+        axios
+          .post("https://panel.ahuantours.com/api/Ch724/BuyTicket", {
+            id_request: self.$route.query.id_request1,
+            id_faktor: self.$route.query.id_faktor1,
+          })
+          .then(function (response) {
+            // handle success
+            self.ticketUrl1 = response.data.data.linkticket;
+            if (self.$route.query.id_request2) {
+              self.setTicketInfo1("id_request", response.data.data);
+              axios
+                .post("https://panel.ahuantours.com/api/Ch724/BuyTicket", {
+                  id_request: self.$route.query.id_request2,
+                  id_faktor: self.$route.query.id_faktor2,
+                })
+                .then(function (res) {
+                  // handle success
+                  self.setTicketInfo2("id_request", res.data.data);
+                  self.ticketUrl2 = res.data.data.linkticket;
+                  // self.loadingDownload = false;
+                  // console.log(res);
+                })
+                .catch(function (error) {
+                  // self.loadingDownload = false;
+                  self.alertText =
+                    "پرداخت کامل انجام شده  و رزرو پرواز رفت  انجام شده اما رزرو پرواز برگشت با شماره فاکتور  " +
+                    self.$route.query.id_faktor2 +
+                    " موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+                  self.alertType = "error";
+                  self.showAlert = true;
+                  // handle error
+                  console.log(error);
+                });
+              // self.addToDatabase();
+            } else if (self.$route.query.PNR2) {
+              self.setTicketInfo1("id_request", response.data.data);
+              self.addPnr();
+            } else {
+              self.setTicketInfo1("id_request", response.data.data, "end");
+              // self.addToDatabase();
+              // self.loadingDownload = false;
+            }
+            // console.log(response);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            self.alertText =
+              "پرداخت انجام شده اما رزرو پرواز ها موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+            self.alertType = "error";
+            self.showAlert = true;
+          });
+      } else if (self.$route.query.PNR1) {
+        let first = await self.ETIssueJS(
+          self.$route.query.AirLine1,
+          self.$route.query.PNR1
+        );
+
+        if (first) {
+          if (self.$route.query.id_request2) {
+            self.setTicketInfo1("pnr", first);
+            axios
+              .post("https://panel.ahuantours.com/api/Ch724/BuyTicket", {
+                id_request: self.$route.query.id_request2,
+                id_faktor: self.$route.query.id_faktor2,
+              })
+              .then(function (response) {
+                // self.loadingDownload = false;
+                self.ticketUrl2 = response.data.data.linkticket;
+                self.setTicketInfo2("id_request", response.data.data);
+                // handle success
+              })
+              .catch(function (error) {
+                // handle error
+                // self.loadingDownload = false;
+                self.alertText =
+                  "پرداخت کامل انجام شده  و  پرواز رفت رزرو شده اما رزرو پرواز برگشت با شماره فاکتور  " +
+                  self.$route.query.id_faktor2 +
+                  " موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+                self.alertType = "error";
+                self.showAlert = true;
+                console.log(error);
+              });
+            // self.addToDatabase(first);
+          } else if (self.$route.query.PNR2) {
+            self.setTicketInfo1("pnr", first);
+            let next = await self.ETIssueJS(
+              self.$route.query.AirLine2,
+              self.$route.query.PNR2
+            );
+            self.setTicketInfo2("pnr", next);
+            // self.addToDatabase(first, next);
+          } else {
+            self.setTicketInfo1("pnr", first, "end");
+          }
+        } else {
+          self.alertText =
+            "پرداخت انجام شده اما رزرو پرواز ها موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+          self.alertType = "error";
+          self.showAlert = true;
+        }
+      }
+    },
+    setTicketInfo1(type, info, isend) {
+      if (type == "pnr") {
+        this.informationObject.contractFlights[0].charterFlight = false;
+        this.informationObject.contractFlights[0].description = "nira";
+        for (let i = 0; i < info.Tickets.length; i++) {
+          let name = info.Tickets[i].PassengerET.split(":");
+          let ticketNo = name[1];
+          name = name[0].split("/");
+          let family = name[0];
+          name = name[1];
+          let indexPassenger =
+            this.informationObject.contractPassengers.findIndex(
+              (x) =>
+                x.fName.toLocaleUpperCase() == name &&
+                x.lName.toLocaleUpperCase() == family
+            );
+          if (indexPassenger != "-1") {
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketNumber = ticketNo;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketPNR = this.$route.query.PNR1;
+            this.informationObject.contractPassengers[indexPassenger].price =
+              this.informationObject.contractPassengers[indexPassenger].age ==
+              "ADL"
+                ? info.AdultTP
+                : this.informationObject.contractPassengers[indexPassenger]
+                    .age == "CHD"
+                ? info.ChildTP
+                : info.InfantTP;
+            let findairline = this.$route.query.AirLine1;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketUrl =
+              (findairline == "I3"
+                ? "http://ra.ataair.ir"
+                : findairline == "Y9"
+                ? "https://crs.kishairlines.ir"
+                : findairline == "QB"
+                ? "http://pra.qeshmairline.com"
+                : findairline == "HH"
+                ? "http://epay.taban.aero"
+                : findairline == "EP"
+                ? "http://ra.iaa.ir"
+                : findairline == "ZV"
+                ? "http://ra.zagrosairlines.com"
+                : findairline == "NV"
+                ? "http://pra.karunair.ir"
+                : findairline == "JI"
+                ? "http://ra.meraj.aero"
+                : findairline == "VR"
+                ? "http://vr.nirasoft.ir"
+                : findairline == "IRZ"
+                ? "http://ra.sahaair.com/"
+                : findairline == "FP"
+                ? "http://fp.nirasoft.ir"
+                : findairline == "IV"
+                ? "http://ra.caspianairlines.com"
+                : findairline == "IS"
+                ? ""
+                : findairline == "A1"
+                ? ""
+                : findairline == "RI"
+                ? ""
+                : findairline == "W5"
+                ? ""
+                : findairline == "IR"
+                ? ""
+                : findairline == "PA"
+                ? ""
+                : findairline == "PY"
+                ? ""
+                : findairline == "B9"
+                ? ""
+                : findairline == "A7"
+                ? ""
+                : "") +
+              "/TicketPrint.aspx?PNR=" +
+              this.$route.query.PNR1 +
+              "&TicketNo=" +
+              ticketNo +
+              "&OC=" +
+              (findairline == "I3"
+                ? "THR155"
+                : findairline == "Y9"
+                ? "THR100"
+                : findairline == "QB"
+                ? "THR166"
+                : findairline == "HH"
+                ? "THR168"
+                : findairline == "EP"
+                ? "THR100"
+                : findairline == "ZV"
+                ? "THR197"
+                : findairline == "NV"
+                ? "THR100"
+                : findairline == "JI"
+                ? "THR158"
+                : findairline == "VR"
+                ? "THR215"
+                : findairline == "IRZ"
+                ? "THR140"
+                : findairline == "FP"
+                ? "THR106"
+                : findairline == "IV"
+                ? "THR100"
+                : findairline == "IS"
+                ? ""
+                : findairline == "A1"
+                ? ""
+                : findairline == "RI"
+                ? ""
+                : findairline == "W5"
+                ? ""
+                : findairline == "IR"
+                ? ""
+                : findairline == "PA"
+                ? ""
+                : findairline == "PY"
+                ? ""
+                : findairline == "B9"
+                ? ""
+                : findairline == "A7"
+                ? ""
+                : "") +
+              "&lang=FA";
+
+            console.log();
+          }
+        }
+        if (isend) {
+          this.addToDatabase();
+        }
+      } else if (type == "id_request") {
+        this.informationObject.contractFlights[0].charterFlight = true;
+        this.informationObject.contractFlights[0].description = "chr724";
+        for (let i = 0; i < info.passenger_info.length; i++) {
+          let name = info.passenger_info[i].fname;
+          let ticketNo = info.passenger_info[i].ticket_number;
+          let family = info.passenger_info[i].lname;
+          let indexPassenger =
+            this.informationObject.contractPassengers.findIndex(
+              (x) =>
+                x.fName.toLocaleUpperCase() == name.toLocaleUpperCase() &&
+                x.lName.toLocaleUpperCase() == family.toLocaleUpperCase()
+            );
+          if (indexPassenger != "-1") {
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketNumber = ticketNo;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketUrl = info.linkticket;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].goTicketPNR = this.$route.query.id_faktor1;
+            this.informationObject.contractPassengers[indexPassenger].price =
+              info.passenger_info[i].real_price;
+            //   console.log();
+          }
+        }
+        if (isend) {
+          this.addToDatabase();
+        }
+      }
+    },
+    setTicketInfo2(type, info) {
+      if (type == "pnr") {
+        this.informationObject.contractFlights[1].charterFlight = false;
+        this.informationObject.contractFlights[1].description = "nira";
+        for (let i = 0; i < info.Tickets.length; i++) {
+          let name = info.Tickets[i].PassengerET.split(":");
+          let ticketNo = name[1];
+          name = name[0].split("/");
+          let family = name[0];
+          name = name[1];
+          let indexPassenger =
+            this.informationObject.contractPassengers.findIndex(
+              (x) =>
+                x.fName.toLocaleUpperCase() == name &&
+                x.lName.toLocaleUpperCase() == family
+            );
+          if (indexPassenger != "-1") {
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].retTicketNumber = ticketNo;
+
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].retTicketPNR = this.$route.query.PNR2;
+
+            this.informationObject.contractPassengers[indexPassenger].price2 =
+              this.informationObject.contractPassengers[indexPassenger].age ==
+              "ADL"
+                ? info.AdultTP
+                : this.informationObject.contractPassengers[indexPassenger]
+                    .age == "CHD"
+                ? info.ChildTP
+                : info.InfantTP;
+            let findairline = this.$route.query.AirLine2;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].reTicketUrl =
+              (findairline == "I3"
+                ? "http://ra.ataair.ir"
+                : findairline == "Y9"
+                ? "https://crs.kishairlines.ir"
+                : findairline == "QB"
+                ? "http://pra.qeshmairline.com"
+                : findairline == "HH"
+                ? "http://epay.taban.aero"
+                : findairline == "EP"
+                ? "http://ra.iaa.ir"
+                : findairline == "ZV"
+                ? "http://ra.zagrosairlines.com"
+                : findairline == "NV"
+                ? "http://pra.karunair.ir"
+                : findairline == "JI"
+                ? "http://ra.meraj.aero"
+                : findairline == "VR"
+                ? "http://vr.nirasoft.ir"
+                : findairline == "IRZ"
+                ? "http://ra.sahaair.com/"
+                : findairline == "FP"
+                ? "http://fp.nirasoft.ir"
+                : findairline == "IV"
+                ? "http://ra.caspianairlines.com"
+                : findairline == "IS"
+                ? ""
+                : findairline == "A1"
+                ? ""
+                : findairline == "RI"
+                ? ""
+                : findairline == "W5"
+                ? ""
+                : findairline == "IR"
+                ? ""
+                : findairline == "PA"
+                ? ""
+                : findairline == "PY"
+                ? ""
+                : findairline == "B9"
+                ? ""
+                : findairline == "A7"
+                ? ""
+                : "") +
+              "/TicketPrint.aspx?PNR=" +
+              this.$route.query.PNR2 +
+              "&TicketNo=" +
+              ticketNo +
+              "&OC=" +
+              (findairline == "I3"
+                ? "THR155"
+                : findairline == "Y9"
+                ? "THR100"
+                : findairline == "QB"
+                ? "THR166"
+                : findairline == "HH"
+                ? "THR168"
+                : findairline == "EP"
+                ? "THR100"
+                : findairline == "ZV"
+                ? "THR197"
+                : findairline == "NV"
+                ? "THR100"
+                : findairline == "JI"
+                ? "THR158"
+                : findairline == "VR"
+                ? "THR215"
+                : findairline == "IRZ"
+                ? "THR140"
+                : findairline == "FP"
+                ? "THR106"
+                : findairline == "IV"
+                ? "THR100"
+                : findairline == "IS"
+                ? ""
+                : findairline == "A1"
+                ? ""
+                : findairline == "RI"
+                ? ""
+                : findairline == "W5"
+                ? ""
+                : findairline == "IR"
+                ? ""
+                : findairline == "PA"
+                ? ""
+                : findairline == "PY"
+                ? ""
+                : findairline == "B9"
+                ? ""
+                : findairline == "A7"
+                ? ""
+                : "") +
+              "&lang=FA";
+          }
+        }
+        this.addToDatabase();
+      } else if (type == "id_request") {
+        this.informationObject.contractFlights[1].charterFlight = true;
+        this.informationObject.contractFlights[1].description = "chr724";
+        for (let i = 0; i < info.passenger_info.length; i++) {
+          let name = info.passenger_info[i].fname;
+          let ticketNo = info.passenger_info[i].ticket_number;
+          let family = info.passenger_info[i].lname;
+          let indexPassenger =
+            this.informationObject.contractPassengers.findIndex(
+              (x) =>
+                x.fName.toLocaleUpperCase() == name.toLocaleUpperCase() &&
+                x.lName.toLocaleUpperCase() == family.toLocaleUpperCase()
+            );
+          if (indexPassenger != "-1") {
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].retTicketNumber = ticketNo;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].retTicketPNR = this.$route.query.id_faktor2;
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].retTicketUrl = info.linkticket;
+            this.informationObject.contractPassengers[indexPassenger].price2 =
+              info.passenger_info[i].real_price;
+            //   console.log();
+          }
+        }
+        this.addToDatabase();
       }
     },
     verifyBank() {
@@ -748,8 +1257,7 @@ export default {
                 self.$route.query.PNR2,
                 self.$route.query.AirLine2
               );
-            } else {
-              self.successSell = false;
+            } else if (self.$route.query.PNR1) {
               self.cancellPnr(
                 self.$route.query.PNR1,
                 self.$route.query.AirLine1
@@ -774,6 +1282,7 @@ export default {
           self.showAlert = true;
         });
     },
+    setIpAddress() {},
     ETIssueJS(airline, PNR) {
       return new Promise((resolve) => {
         let testText =
@@ -787,11 +1296,7 @@ export default {
         axios
           .get("https://panel.ahuantours.com/api/Nira/ETIssue?" + testText)
           .then(function (response) {
-            fetch("https://api.ipify.org?format=json")
-              .then((x) => x.json())
-              .then(({ ip }) => {
-                localStorage.setItem("ipAddress", ip);
-              });
+            console.log(response);
             let rtData = self.RT(airline, PNR);
             // this.addToDatabase(rtData);
             resolve(rtData);
@@ -821,11 +1326,7 @@ export default {
     RT(airline, PNR) {
       return new Promise((resolve) => {
         let self = this;
-        let findFinish =
-          !this.$route.query.PNR2 ||
-          (this.$route.query.PNR2 && this.$route.query.PNR2 == PNR)
-            ? false
-            : true;
+
         axios
           .get(
             "https://panel.ahuantours.com/api/Nira/RT?AirLine=" +
@@ -890,7 +1391,7 @@ export default {
                   ? res.data.ChildTP
                   : res.data.InfantTP,
               });
-              self.loadingDownload = findFinish;
+              // self.loadingDownload = findFinish;
             }
             resolve(res.data);
             //     let findObject = res.data.Tickets.find(
@@ -945,112 +1446,12 @@ export default {
           });
       });
     },
-
-    addToDatabase(theObject, theObject2) {
-      let allPassengers = [];
-      for (let i = 0; i < theObject.Passengers.length; i++) {
-        let findGender = Object.values(theObject.DOCS[i])[0].split("/");
-        let findFirstTicketNumber = theObject.Tickets[i].PassengerET.split(":");
-        let findFirstTicketNumber2 = theObject2
-          ? theObject2.Tickets[i].PassengerET.split(":")
-          : "";
-        let theObjectForPush = {
-          id: 0,
-          contractId: 0,
-          fName: findFirstTicketNumber[0].split("/")[1],
-          lName: findFirstTicketNumber[0].split("/")[0],
-          age:
-            theObject.Passengers[i].PassenferAgeType == "{Adult}"
-              ? "ADL"
-              : theObject.Passengers[i].PassenferAgeType == "{Child}"
-              ? "CHD"
-              : "INF",
-          gender: findGender[5] == "F" ? false : true,
-          birthDate: new Date(findGender[4]),
-          price:
-            theObject.Passengers[i].PassenferAgeType == "{Adult}"
-              ? theObject.AdultTP
-              : theObject.Passengers[i].PassenferAgeType == "{Child}"
-              ? theObject.ChildTP
-              : theObject.InfantTP,
-          price2: theObject2
-            ? theObject2.Passengers[i].PassenferAgeType == "{Adult}"
-              ? theObject2.AdultTP
-              : theObject2.Passengers[i].PassenferAgeType == "{Child}"
-              ? theObject2.ChildTP
-              : theObject2.InfantTP
-            : null,
-          goTicketPNR: this.$route.query.PNR1,
-          goTicketNumber: findFirstTicketNumber[1],
-          retTicketPNR: theObject2 ? this.$route.query.PNR2 : null,
-          retTicketNumber: theObject2 ? findFirstTicketNumber2[1] : null,
-          description: "",
-          passportNo: findGender[2], //چک شود که دیتا درست به نیرا فرستاده میشود یا نه
-          codeMelli: findGender[2],
-          nationality: findGender[0] == "I" ? "ایرانی" : "غیرایرانی",
-          // farePrice: 0,//اینو بپرسم بعدا از مهندس
-          // comPrice: 0,//اینو بپرسم بعدا از مهندس    // فقط برای چارتری
-          // taxPrice: 0,//اینو بپرسم بعدا از مهندس// فقط برای چارتری
-          // sharePrice: 0,//اینو بپرسم بعدا از مهندس
-          // taxDesc: "string",
-        };
-        if (findGender[0] != "I") {
-          theObjectForPush.passportExpDate = new Date(findGender[6]);
-        }
-        allPassengers.push(theObjectForPush);
-      }
-      let allObjects = [theObject];
-      let allFlights = [];
-      if (theObject2) {
-        allObjects.push(theObject2);
-      }
-      for (let i = 0; i < allObjects.length; i++) {
-        let stepfindip =
-          i == 0 ? this.$route.query.AirLine1 : this.$route.query.AirLine2;
-        let findAirlineId =
-          stepfindip == "I3"
-            ? 489
-            : stepfindip == "Y9"
-            ? 1016
-            : stepfindip == "QB"
-            ? 761
-            : stepfindip == "HH"
-            ? 470
-            : stepfindip == "EP"
-            ? 376
-            : stepfindip == "ZV"
-            ? 1064
-            : stepfindip == "NV"
-            ? 683
-            : stepfindip == "JI"
-            ? 535
-            : stepfindip == "VR"
-            ? 943
-            : stepfindip == "IRZ"
-            ? "IRZ"
-            : stepfindip == "FP"
-            ? 410
-            : stepfindip == "IV"
-            ? 515
-            : "000";
-        allFlights.push({
-          contractId: 0,
-          pnr: i == 0 ? this.$route.query.PNR1 : this.$route.query.PNR2,
-          origin: allObjects[i].Segments[0].Origin,
-          destination: allObjects[i].Segments[0].Destination,
-          flightClass: allObjects[i].Segments[0].FlightClass,
-          airlineId: findAirlineId,
-          date: allObjects[i].Segments[0].DepartureDT.split(" ")[0],
-          time: allObjects[i].Segments[0].DepartureDT.split(" ")[1].substring(
-            0,
-            5
-          ),
-          flightNumber: allObjects[i].Segments[0].FlightNo,
-          airplaneType: allObjects[i].Segments[0].AirCraftType,
-          description: "",
-        });
-      }
-      let theIssueDate =
+    addToDatabase() {
+      this.loadingDownload = false;
+      this.informationObject.ticketStatus = "confirm";
+      this.informationObject.confirmStatus = "confirm";
+      this.informationObject.ipAddress = localStorage.getItem("ipAddress");
+      this.informationObject.issueDate =
         String(new Date().getFullYear()) +
         "-" +
         (String(new Date().getMonth() + 1).length == 2
@@ -1060,130 +1461,280 @@ export default {
         (String(new Date().getDate()).length == 2
           ? String(new Date().getDate())
           : "0" + String(new Date().getDate()));
-      let variabelobject = {
-        id: 0,
-        userName: "online",
-        issueDate: theIssueDate,
-        issueTime:
-          (String(new Date().getHours()).length == 2
-            ? new Date().getHours()
-            : "0" + new Date().getHours()) +
-          ":" +
-          (String(new Date().getMinutes()).length == 2
-            ? new Date().getMinutes()
-            : "0" + new Date().getMinutes()),
-        ipAddress: localStorage.getItem("ipAddress"),
-        // paymentId: "string",
-        contractType: 0, //داخلی
-        contractingPartyType: 0, //0 یعنی حضوری____2 یعنی شرکتی
-        // customerId: 0,
-        // companyId: 0,
-        // companyEmployeeId: 0,
-        // paymentType: 0 //نقدی,
-        travelVehicle: "هواپیما",
-        tour: false,
-        ticket: true,
-        hotel: false,
-        visa: false,
-        insurance: false,
-        cruise: false,
-        other: false,
-        // charterFlight: true // اگر چارتری بود باید true باشد درغیر این صورت false,
-        // contractDesc: "string"//توضیحاتی است برای تیکت رزرو شده,
-        // ticketType: 0, //داخلی,
-        systemOrCharter: false, // اگر چارتری بود باید true باشد درغیر این صورت false,,
-        manualOrAutomatic: true,
-        taxType: 0, //مالیات,
-        confirmStatus: "confirm",
-        ticketStatus: "confirm",
-        showDetail: false,
-        // company: {
-        //   id: 0,
-        //   name: "string",
-        //   code: "string",
-        //   category: "string",
-        //   email: "string",
-        //   fax: "string",
-        //   phone: ["string"],
-        //   address: "string",
-        //   credit: 0,
-        //   isApproved: true,
-        //   noLimit: true,
-        //   contracts: ["string"],
-        //   employees: [
-        //     {
-        //       id: 0,
-        //       companyId: 0,
-        //       gender: true,
-        //       fName: "string",
-        //       lName: "string",
-        //       mobile: "string",
-        //       phone: "string",
-        //       address: "string",
-        //       codeMelli: "string",
-        //       birthDate: "2023-10-30T11:22:05.123Z",
-        //       email: "string",
-        //       position: "string",
-        //       isAgent: true,
-        //       company: "string",
-        //       contracts: ["string"],
-        //     },
-        //   ],
-        // },
-        // companyEmployee: {
-        //   id: 0,
-        //   companyId: 0,
-        //   gender: true,
-        //   fName: "string",
-        //   lName: "string",
-        //   mobile: "string",
-        //   phone: "string",
-        //   address: "string",
-        //   codeMelli: "string",
-        //   birthDate: "2023-10-30T11:22:05.123Z",
-        //   email: "string",
-        //   position: "string",
-        //   isAgent: true,
-        //   company: "string",
-        //   contracts: ["string"],
-        // },
-        contractPassengers: allPassengers,
-        contractFlights: allFlights,
-        // contractReceives: [
-        //   {
-        //     id: 0,
-        //     contractId: 0,
-        //     receiveType: 0,
-        //     receiveDate: "2023-10-30T11:22:05.125Z",
-        //     amount: 0,
-        //     currency: "string",
-        //     receiveFor: 0,
-        //     payer: "string",
-        //     chequeDate: "2023-10-30T11:22:05.125Z",
-        //     chequeBank: "string",
-        //     chequeNumber: "string",
-        //     cartDate: "2023-10-30T11:22:05.125Z",
-        //     cart4Digits: "string",
-        //     cartNumber: "string",
-        //     depositDate: "2023-10-30T11:22:05.125Z",
-        //     depositType: "string",
-        //     depositAccount: "string",
-        //     description: "string",
-        //     exchange: true,
-        //     exchangeAmount: 0,
-        //     exchangeRate: 0,
-        //     exchangeCurrency: "string",
-        //     contract: "string",
-        //   },
-        // ],
-      };
+
+      let self = this;
       axios
-        .post("https://panel.ahuantours.com/api/Contract/add", variabelobject)
+        .put(
+          "https://panel.ahuantours.com/api/Contract/update",
+          this.informationObject
+        )
         .then(function (response) {})
         .catch(function (error) {
           // handle error
+          self.alertText =
+            "رزرو با موفقیت انجام شد اما ذخیره اطلاعات  در پایگاه داده ناموفق بود.لطفا به پشتیبانی اطلاع دهید.";
+          self.alertType = "error";
+          self.showAlert = true;
           console.log(error);
         });
+      //   let allPassengers = [];
+      //   for (let i = 0; i < theObject.Passengers.length; i++) {
+      //     let findGender = Object.values(theObject.DOCS[i])[0].split("/");
+      //     let findFirstTicketNumber = theObject.Tickets[i].PassengerET.split(":");
+      //     let findFirstTicketNumber2 = theObject2
+      //       ? theObject2.Tickets[i].PassengerET.split(":")
+      //       : "";
+      //     let theObjectForPush = {
+      //       id: 0,
+      //       contractId: 0,
+      //       fName: findFirstTicketNumber[0].split("/")[1],
+      //       lName: findFirstTicketNumber[0].split("/")[0],
+      //       age:
+      //         theObject.Passengers[i].PassenferAgeType == "{Adult}"
+      //           ? "ADL"
+      //           : theObject.Passengers[i].PassenferAgeType == "{Child}"
+      //           ? "CHD"
+      //           : "INF",
+      //       gender: findGender[5] == "F" ? false : true,
+      //       birthDate: new Date(findGender[4]),
+      //       price:
+      //         theObject.Passengers[i].PassenferAgeType == "{Adult}"
+      //           ? theObject.AdultTP
+      //           : theObject.Passengers[i].PassenferAgeType == "{Child}"
+      //           ? theObject.ChildTP
+      //           : theObject.InfantTP,
+      //       price2: theObject2
+      //         ? theObject2.Passengers[i].PassenferAgeType == "{Adult}"
+      //           ? theObject2.AdultTP
+      //           : theObject2.Passengers[i].PassenferAgeType == "{Child}"
+      //           ? theObject2.ChildTP
+      //           : theObject2.InfantTP
+      //         : null,
+      //       goTicketPNR: this.$route.query.PNR1,
+      //       goTicketNumber: findFirstTicketNumber[1],
+      //       retTicketPNR: theObject2 ? this.$route.query.PNR2 : "",
+      //       retTicketNumber: theObject2 ? findFirstTicketNumber2[1] : "",
+      //       description: "",
+      //       passportNo: findGender[2], //چک شود که دیتا درست به نیرا فرستاده میشود یا نه
+      //       codeMelli: findGender[2],
+      //       nationality: findGender[0] == "I" ? "ایرانی" : "غیرایرانی",
+      //       // farePrice: 0,//اینو بپرسم بعدا از مهندس
+      //       // comPrice: 0,//اینو بپرسم بعدا از مهندس    // فقط برای چارتری
+      //       // taxPrice: 0,//اینو بپرسم بعدا از مهندس// فقط برای چارتری
+      //       // sharePrice: 0,//اینو بپرسم بعدا از مهندس
+      //       // taxDesc: "string",
+      //     };
+      //     if (findGender[0] != "I") {
+      //       theObjectForPush.passportExpDate = new Date(findGender[6]);
+      //     }
+      //     allPassengers.push(theObjectForPush);
+      //   }
+      //   let allObjects = [theObject];
+      //   let allFlights = [];
+      //   if (theObject2) {
+      //     allObjects.push(theObject2);
+      //   }
+      //   for (let i = 0; i < allObjects.length; i++) {
+      //     let stepfindip =
+      //       i == 0 ? this.$route.query.AirLine1 : this.$route.query.AirLine2;
+      //     let findAirlineId =
+      //       stepfindip == "I3"
+      //         ? 489
+      //         : stepfindip == "Y9"
+      //         ? 1016
+      //         : stepfindip == "QB"
+      //         ? 761
+      //         : stepfindip == "HH"
+      //         ? 470
+      //         : stepfindip == "EP"
+      //         ? 376
+      //         : stepfindip == "ZV"
+      //         ? 1064
+      //         : stepfindip == "NV"
+      //         ? 683
+      //         : stepfindip == "JI"
+      //         ? 535
+      //         : stepfindip == "VR"
+      //         ? 943
+      //         : stepfindip == "IRZ"
+      //         ? "IRZ"
+      //         : stepfindip == "FP"
+      //         ? 410
+      //         : stepfindip == "IV"
+      //         ? 515
+      //         : stepfindip == "IS"
+      //         ? 7
+      //         : stepfindip == "A1"
+      //         ? 212
+      //         : stepfindip == "RI"
+      //         ? 802
+      //         : stepfindip == "W5"
+      //         ? 956
+      //         : stepfindip == "IR"
+      //         ? 512
+      //         : stepfindip == "PA"
+      //         ? "PA"
+      //         : stepfindip == "PY"
+      //         ? "PY"
+      //         : stepfindip == "B9"
+      //         ? 256
+      //         : stepfindip == "A7"
+      //         ? 218
+      //         : "000";
+      //     allFlights.push({
+      //       contractId: 0,
+      //       pnr: i == 0 ? this.$route.query.PNR1 : this.$route.query.PNR2,
+      //       origin: allObjects[i].Segments[0].Origin,
+      //       destination: allObjects[i].Segments[0].Destination,
+      //       flightClass: allObjects[i].Segments[0].FlightClass,
+      //       airlineId: findAirlineId,
+      //       date: allObjects[i].Segments[0].DepartureDT.split(" ")[0],
+      //       time: allObjects[i].Segments[0].DepartureDT.split(" ")[1].substring(
+      //         0,
+      //         5
+      //       ),
+      //       flightNumber: allObjects[i].Segments[0].FlightNo,
+      //       airplaneType: allObjects[i].Segments[0].AirCraftType,
+      //       description: "",
+      //     });
+      //   }
+      //   let theIssueDate =
+      //     String(new Date().getFullYear()) +
+      //     "-" +
+      //     (String(new Date().getMonth() + 1).length == 2
+      //       ? String(new Date().getMonth() + 1)
+      //       : "0" + String(new Date().getMonth() + 1)) +
+      //     "-" +
+      //     (String(new Date().getDate()).length == 2
+      //       ? String(new Date().getDate())
+      //       : "0" + String(new Date().getDate()));
+      //   let variabelobject = {
+      //     id: Number(this.$route.query.responseData),
+      //     userName: localStorage.getItem("phone-number-ahuan"),
+      //     issueDate: theIssueDate,
+      //     issueTime:
+      //       (String(new Date().getHours()).length == 2
+      //         ? new Date().getHours()
+      //         : "0" + new Date().getHours()) +
+      //       ":" +
+      //       (String(new Date().getMinutes()).length == 2
+      //         ? new Date().getMinutes()
+      //         : "0" + new Date().getMinutes()),
+      //     ipAddress: localStorage.getItem("ipAddress"),
+      //     // paymentId: "string",
+      //     contractType: 0, //داخلی
+      //     contractingPartyType: 0, //0 یعنی حضوری____2 یعنی شرکتی
+      //     // customerId: 0,
+      //     // companyId: 0,
+      //     // companyEmployeeId: 0,
+      //     // paymentType: 0 //نقدی,
+      //     travelVehicle: "هواپیما",
+      //     tour: false,
+      //     ticket: true,
+      //     hotel: false,
+      //     visa: false,
+      //     insurance: false,
+      //     cruise: false,
+      //     other: false,
+      //     // charterFlight: true // اگر چارتری بود باید true باشد درغیر این صورت false,
+      //     // contractDesc: "string"//توضیحاتی است برای تیکت رزرو شده,
+      //     // ticketType: 0, //داخلی,
+      //     systemOrCharter: false, // اگر چارتری بود باید true باشد درغیر این صورت false,,
+      //     manualOrAutomatic: true,
+      //     taxType: 0, //مالیات,
+      //     confirmStatus: "confirm",
+      //     ticketStatus: "confirm",
+      //     showDetail: false,
+      //     // company: {
+      //     //   id: 0,
+      //     //   name: "string",
+      //     //   code: "string",
+      //     //   category: "string",
+      //     //   email: "string",
+      //     //   fax: "string",
+      //     //   phone: ["string"],
+      //     //   address: "string",
+      //     //   credit: 0,
+      //     //   isApproved: true,
+      //     //   noLimit: true,
+      //     //   contracts: ["string"],
+      //     //   employees: [
+      //     //     {
+      //     //       id: 0,
+      //     //       companyId: 0,
+      //     //       gender: true,
+      //     //       fName: "string",
+      //     //       lName: "string",
+      //     //       mobile: "string",
+      //     //       phone: "string",
+      //     //       address: "string",
+      //     //       codeMelli: "string",
+      //     //       birthDate: "2023-10-30T11:22:05.123Z",
+      //     //       email: "string",
+      //     //       position: "string",
+      //     //       isAgent: true,
+      //     //       company: "string",
+      //     //       contracts: ["string"],
+      //     //     },
+      //     //   ],
+      //     // },
+      //     // companyEmployee: {
+      //     //   id: 0,
+      //     //   companyId: 0,
+      //     //   gender: true,
+      //     //   fName: "string",
+      //     //   lName: "string",
+      //     //   mobile: "string",
+      //     //   phone: "string",
+      //     //   address: "string",
+      //     //   codeMelli: "string",
+      //     //   birthDate: "2023-10-30T11:22:05.123Z",
+      //     //   email: "string",
+      //     //   position: "string",
+      //     //   isAgent: true,
+      //     //   company: "string",
+      //     //   contracts: ["string"],
+      //     // },
+      //     contractPassengers: allPassengers,
+      //     contractFlights: allFlights,
+      //     // contractReceives: [
+      //     //   {
+      //     //     id: 0,
+      //     //     contractId: 0,
+      //     //     receiveType: 0,
+      //     //     receiveDate: "2023-10-30T11:22:05.125Z",
+      //     //     amount: 0,
+      //     //     currency: "string",
+      //     //     receiveFor: 0,
+      //     //     payer: "string",
+      //     //     chequeDate: "2023-10-30T11:22:05.125Z",
+      //     //     chequeBank: "string",
+      //     //     chequeNumber: "string",
+      //     //     cartDate: "2023-10-30T11:22:05.125Z",
+      //     //     cart4Digits: "string",
+      //     //     cartNumber: "string",
+      //     //     depositDate: "2023-10-30T11:22:05.125Z",
+      //     //     depositType: "string",
+      //     //     depositAccount: "string",
+      //     //     description: "string",
+      //     //     exchange: true,
+      //     //     exchangeAmount: 0,
+      //     //     exchangeRate: 0,
+      //     //     exchangeCurrency: "string",
+      //     //     contract: "string",
+      //     //   },
+      //     // ],
+      //   };
+      //   axios
+      //     .post(
+      //       "https://panel.ahuantours.com/api/Contract/update",
+      //       variabelobject
+      //     )
+      //     .then(function (response) {})
+      //     .catch(function (error) {
+      //       // handle error
+      //       console.log(error);
+      //     });
     },
     getToken() {
       return new Promise((resolve) => {
@@ -1194,7 +1745,7 @@ export default {
             // handle success
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + response.data.token;
-            localStorage.setItem("Client-Token", response.data.token);
+            localStorage.setItem("charterToken", response.data.token);
             resolve();
           })
           .catch(function (error) {
@@ -1204,94 +1755,149 @@ export default {
       });
     },
     async cancellPnr(pnr1, AirLine1, pnr2, AirLine2) {
-      this.successSell = false;
-      let arrayPnr = [pnr1];
-      if (pnr2) {
-        arrayPnr.push(pnr2);
-      }
-      for (let i = 0; i < arrayPnr.length; i++) {
-        let self = this;
-        let finedurlcancelPNR =
-          "https://panel.ahuantours.com/api/Nira/CancelPNR?AirLine=" +
-          (i == 0 ? AirLine1 : AirLine2) +
-          "&PNR=" +
-          (i == 0 ? pnr1 : pnr2);
-        axios
-          .get(finedurlcancelPNR)
-          .then(function (response) {
-            //
-          })
-          .catch(function (error) {
-            if (error.response.status == 401) {
-              this.getToken();
-              setTimeout(() => {
-                self.cancellPnr(pnr1, AirLine1, pnr2, AirLine2);
-              }, 3000);
-            }
-          });
-      }
-      // console.log(arrayPnr);
+      // this.successSell = false;
+      // let arrayPnr = [pnr1];
+      // if (pnr2) {
+      //   arrayPnr.push(pnr2);
+      // }
+      // for (let i = 0; i < arrayPnr.length; i++) {
+      //   let self = this;
+      //   let finedurlcancelPNR =
+      //     "https://panel.ahuantours.com/api/Nira/CancelPNR?AirLine=" +
+      //     (i == 0 ? AirLine1 : AirLine2) +
+      //     "&PNR=" +
+      //     (i == 0 ? pnr1 : pnr2);
+      //   axios
+      //     .get(finedurlcancelPNR)
+      //     .then(function (response) {
+      //       //
+      //     })
+      //     .catch(function (error) {
+      //       if (error.response.status == 401) {
+      //         this.getToken();
+      //         setTimeout(() => {
+      //           self.cancellPnr(pnr1, AirLine1, pnr2, AirLine2);
+      //         }, 3000);
+      //       }
+      //     });
+      // }
+      // // console.log(arrayPnr);
     },
-  },
-  async mounted() {
-    if (localStorage.getItem("Client-Token")) {
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("Client-Token");
-    } else {
-      await this.getToken();
-    }
-    if (this.$route.query.PNR1 && !this.$route.query.bankpnr1) {
-      this.isReturnUrl = true;
-      if (this.$route.query.amount == localStorage.getItem("bankprice")) {
-        this.verifyBank();
-      } else {
-        if (this.$route.query.PNR2) {
-          this.cancellPnr(
-            this.$route.query.PNR1,
-            this.$route.query.AirLine1,
-            this.$route.query.PNR2,
-            this.$route.query.AirLine2
-          );
-        } else {
-          this.cancellPnr(this.$route.query.PNR1, this.$route.query.AirLine1);
-        }
-      }
-    } else if (this.$route.query.bankpnr1) {
-      let bankprice = localStorage.getItem("bankprice");
-      this.isReturnUrl = false;
+    getInformations() {
       let self = this;
-      let urlSendBank = self.$route.query.bankpnr2
-        ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
-          self.$route.query.AirLine1 +
-          "&PNR1=" +
-          self.$route.query.bankpnr1 +
-          "&PNR2=" +
-          self.$route.query.bankpnr2 +
-          "&AirLine2=" +
-          self.$route.query.AirLine2 +
-          "&Email=" +
-          self.$route.query.Email
-        : "https://ahuan.ir/#/ticket-download?AirLine1=" +
-          self.$route.query.AirLine1 +
-          "&PNR1=" +
-          self.$route.query.bankpnr1 +
-          "&Email=" +
-          self.$route.query.Email;
       axios
-        .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-          amount: bankprice,
-          revertUrl: urlSendBank,
-        })
+        .get(
+          "https://panel.ahuantours.com/api/Contract/" +
+            Number(this.$route.query.responseData)
+        )
         .then(function (response) {
-          self.formshaparak.bankToken = response.data;
-          setTimeout(() => {
-            self.$refs.formshaparak.submit();
-          }, 1000);
+          self.informationObject = response.data;
         })
         .catch(function (error) {
           // handle error
           console.log(error);
         });
+    },
+  },
+  async mounted() {
+    fetch("https://api.ipify.org?format=json")
+      .then((x) => x.json())
+      .then(({ ip }) => {
+        localStorage.setItem("ipAddress", ip);
+      });
+    let self = this;
+    if (localStorage.getItem("charterToken")) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + localStorage.getItem("charterToken");
+    } else {
+      await self.getToken();
+      localStorage.removeItem("credit");
+    }
+    await this.getInformations();
+    if (
+      (localStorage.getItem("credit") &&
+        localStorage.getItem("credit") == "noLimit") ||
+      (localStorage.getItem("credit") &&
+        localStorage.getItem("credit") >= self.$route.query.price)
+    ) {
+      if (localStorage.getItem("credit") != "noLimit") {
+        localStorage.setItem(
+          "credit",
+          localStorage.getItem("credit") - self.$route.query.price
+        );
+      }
+      self.isReturnUrl = true;
+      await self.issueTickets();
+    } else {
+      if (self.$route.query.id_request1) {
+        self.isReturnUrl = true;
+        if (self.$route.query.code == "00") {
+          if (self.$route.query.amount == localStorage.getItem("bankprice")) {
+            self.successSell = true;
+            self.verifyBank();
+          }
+        } else {
+          self.successSell = false;
+        }
+      } else {
+        if (self.$route.query.PNR1 && !self.$route.query.bankpnr1) {
+          self.isReturnUrl = true;
+          if (self.$route.query.amount == localStorage.getItem("bankprice")) {
+            self.successSell = true;
+            self.verifyBank();
+          } else {
+            if (self.$route.query.PNR2) {
+              self.cancellPnr(
+                self.$route.query.PNR1,
+                self.$route.query.AirLine1,
+                self.$route.query.PNR2,
+                self.$route.query.AirLine2
+              );
+            } else {
+              self.cancellPnr(
+                self.$route.query.PNR1,
+                self.$route.query.AirLine1
+              );
+            }
+          }
+        } else if (self.$route.query.bankpnr1) {
+          let bankprice = localStorage.getItem("bankprice");
+          self.isReturnUrl = false;
+          let self = this;
+          let urlSendBank = self.$route.query.bankpnr2
+            ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              self.$route.query.AirLine1 +
+              "&PNR1=" +
+              self.$route.query.bankpnr1 +
+              "&PNR2=" +
+              self.$route.query.bankpnr2 +
+              "&AirLine2=" +
+              self.$route.query.AirLine2 +
+              "&Email=" +
+              self.$route.query.Email
+            : "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              self.$route.query.AirLine1 +
+              "&PNR1=" +
+              self.$route.query.bankpnr1 +
+              "&Email=" +
+              self.$route.query.Email;
+          axios
+            .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+              amount: bankprice,
+              revertUrl: urlSendBank,
+            })
+            .then(function (response) {
+              self.formshaparak.bankToken = response.data;
+              setTimeout(() => {
+                self.$refs.formshaparak.submit();
+              }, 1000);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
+        }
+      }
     }
   },
 };

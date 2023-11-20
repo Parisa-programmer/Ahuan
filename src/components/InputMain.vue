@@ -1227,7 +1227,7 @@ export default {
     ],
     selectedSection: {
       icon: "mdi-airplane",
-      title: "هتل",
+      title: "پرواز",
       active: true,
     },
     showSection: true,
@@ -1415,7 +1415,7 @@ export default {
         code: "Ahwaz, AWZ",
         text: "اهواز",
         id: "AWZ",
-        airport: "",
+        airport: "Ahwaz Arpt",
       },
       {
         label: "Isfahan, IFN - اصفهان",
@@ -1492,7 +1492,7 @@ export default {
         code: "Bahregan, IAQ",
         text: "بهرگان",
         id: "IAQ",
-        airport: "",
+        airport: "Bahregan Arpt",
       },
       {
         label: "Lamard, LFM - لامرد",
@@ -1723,7 +1723,7 @@ export default {
         code: "Parsabad, PFQ",
         text: "پارس آباد",
         id: "PFQ",
-        airport: "",
+        airport: "Parsabad Arpt",
       },
       {
         label: "Iranshahr, IHR - ایران شهر",

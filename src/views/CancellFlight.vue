@@ -172,6 +172,14 @@ export default {
           pass: "Ahuan1348",
         },
         {
+          text: "سپهران",
+          value: "IS",
+          url: "sepehran",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
           text: "کاسپین",
           value: "IV",
           url: "caspian",
@@ -242,6 +250,70 @@ export default {
           oc: "THR106",
           user: "THR106.WS",
           pass: "123456789",
+        },
+        {
+          text: "اروان",
+          value: "A1",
+          url: "air1",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "چابهار",
+          value: "RI",
+          url: "chabahar",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "ماهان",
+          value: "W5",
+          url: "mahan",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "ایران‌ایر",
+          value: "IR",
+          url: "iranair",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "پارس‌ایر",
+          value: "PA",
+          url: "parsair",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "پویاایر",
+          value: "PY",
+          url: "poya",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "ایرتور",
+          value: "B9",
+          url: "airtour",
+          oc: "",
+          user: "",
+          pass: "",
+        },
+        {
+          text: "آساجت",
+          value: "A7",
+          url: "asajet",
+          oc: "",
+          user: "",
+          pass: "",
         },
       ],
       nameRules: [
@@ -472,6 +544,8 @@ export default {
             ? "https://crs.kishairlines.ir"
             : airline.value == "QB"
             ? "http://pra.qeshmairline.com"
+            : airline.value == "IS"
+            ? ""
             : airline.value == "HH"
             ? "http://epay.taban.aero"
             : airline.value == "EP"
@@ -490,6 +564,22 @@ export default {
             ? "http://fp.nirasoft.ir"
             : airline.value == "IV"
             ? "http://ra.caspianairlines.com"
+            : airline.value == "A1"
+            ? ""
+            : airline.value == "RI"
+            ? ""
+            : airline.value == "W5"
+            ? ""
+            : airline.value == "IR"
+            ? ""
+            : airline.value == "PA"
+            ? ""
+            : airline.value == "PY"
+            ? ""
+            : airline.value == "B9"
+            ? ""
+            : airline.value == "A7"
+            ? ""
             : "";
 
         window.open(
@@ -779,7 +869,7 @@ export default {
               // handle success
               axios.defaults.headers.common["Authorization"] =
                 "Bearer " + response.data.token;
-              localStorage.setItem("Client-Token", response.data.token);
+              localStorage.setItem("charterToken", response.data.token);
               setTimeout(() => {
                 if (self.$route.query.path) {
                   self.checkAsync();
@@ -799,9 +889,9 @@ export default {
     },
   },
   created() {
-    if (localStorage.getItem("Client-Token")) {
+    if (localStorage.getItem("charterToken")) {
       axios.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("Client-Token");
+        "Bearer " + localStorage.getItem("charterToken");
     } else {
       this.getToken();
     }

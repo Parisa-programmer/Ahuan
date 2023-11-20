@@ -138,6 +138,7 @@
             :value="item.value"
             class="caption"
             hide-details
+            @change="changeFilterClass()"
           ></v-checkbox>
         </v-skeleton-loader>
         <v-divider class="my-3"></v-divider>
@@ -185,6 +186,7 @@
             :label="item.label"
             :value="item.value"
             class="caption"
+            @click="changeFilterType()"
             hide-details
           ></v-checkbox>
         </v-skeleton-loader>
@@ -207,7 +209,12 @@
           ></v-checkbox>
         </v-skeleton-loader>
       </v-card>
-      <v-btn color="green" dark class="d-md-none mb-4 px-12">
+      <v-btn
+        color="green"
+        dark
+        class="d-md-none mb-4 px-12"
+        @click="doneChanges()"
+      >
         اعمال تغییرات
       </v-btn>
     </v-row>
@@ -285,14 +292,14 @@ export default {
         classItems: [
           {
             label: "اکونومی",
-            value: 1,
+            value: "Economy",
           },
           {
             label: "بیزینس",
-            value: 2,
+            value: "Business",
           },
         ],
-        class: [],
+        class: ["Business", "Economy"],
         airlineItems: [
           {
             label: "آتا",
@@ -308,6 +315,11 @@ export default {
             label: "قشم‌ایر",
             value: "QB",
             src: require("@/assets/image/لوگوی_قشم ایر.png"),
+          },
+          {
+            label: "سپهران",
+            value: "IS",
+            src: require("@/assets/image/لوگوی_سپهران.png"),
           },
           {
             label: "کاسپین",
@@ -354,19 +366,59 @@ export default {
             value: "VR",
             src: require("@/assets/image/لوگوی_وارش.png"),
           },
+          {
+            label: "اروان",
+            value: "A1",
+            src: require("@/assets/image/لوگوی_ایر1.png"),
+          },
+          {
+            label: "چابهار",
+            value: "RI",
+            src: require("@/assets/image/لوگوی_چابهار.png"),
+          },
+          {
+            label: "ماهان",
+            value: "W5",
+            src: require("@/assets/image/لوگوماهان.jpg"),
+          },
+          {
+            label: "ایران‌ایر",
+            value: "IR",
+            src: require("@/assets/image/لوگوایران‌ایر.jpg"),
+          },
+          {
+            label: "پارس‌ایر",
+            value: "PA",
+            src: require("@/assets/image/لوگوی_پارس ایر.png"),
+          },
+          {
+            label: "پویاایر",
+            value: "PY",
+            src: require("@/assets/image/لوگوی_پویاایر.png"),
+          },
+          {
+            label: "ایرتور",
+            value: "B9",
+            src: require("@/assets/image/لوگوی_ایرتور.png"),
+          },
+          {
+            label: "آساجت",
+            value: "A7",
+            src: require("@/assets/image/لوگوی_آساجت.png"),
+          },
         ],
         airline: [],
         typeItems: [
           {
             label: "چارتری",
-            value: 1,
+            value: "ch",
           },
           {
             label: "سیستمی",
-            value: 2,
+            value: "s",
           },
         ],
-        type: [2],
+        type: ["ch", "s"],
         showTypeItems: [
           {
             label: "نمایش پروازهای موجود",
@@ -466,6 +518,8 @@ export default {
       // self.filter.class = []
       //   self.filter.type = []
       self.filter.showType = [];
+      self.filter.type = ["ch", "s"];
+      self.filter.class = ["Business", "Economy"];
       self.toPrice = self.filter.maxPrice;
       self.fromPrice = self.filter.minPrice;
     },
@@ -485,6 +539,12 @@ export default {
       this.emitFilter();
     },
     changeFilterTime() {
+      this.emitFilter();
+    },
+    changeFilterType() {
+      this.emitFilter();
+    },
+    changeFilterClass() {
       this.emitFilter();
     },
     changeFilterAirline() {
@@ -538,10 +598,15 @@ export default {
       let object = {
         price: this.filter.price,
         time: filterByTime,
+        class: this.filter.class,
+        type: this.filter.type,
         airline: this.filter.airline,
         hideFeild: this.filter.showType.includes(1),
       };
       this.$emit("startFilter", object);
+    },
+    doneChanges() {
+      this.$emit("doneChanges");
     },
   },
   mounted() {},

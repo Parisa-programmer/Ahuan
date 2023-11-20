@@ -355,6 +355,7 @@
               v-else
               class="cursorPointer"
               @click="
+                loginType = 'login';
                 loginDialog = true;
                 loginStep = 1;
                 resetLoginForm();
@@ -617,6 +618,7 @@
               v-else
               class="cursorPointer"
               @click="
+                loginType = 'login';
                 loginDialog = true;
                 loginStep = 1;
                 resetLoginForm();
@@ -690,7 +692,7 @@
             "
             class="text-center mt-6"
           >
-            ورود به حساب کاربری
+            ثبت نام / ورود به حساب کاربری
           </h3>
           <h4
             v-else-if="
@@ -953,21 +955,9 @@
               </div>
             </v-row>
           </div>
+
           <span
-            v-if="loginType == 'login' && loginStep == 1"
-            class="body-2 text-center widthAll my-4"
-            style="font-family: Byekan !important"
-          >
-            قبلا ثبت نام نکرده اید؟
-            <span
-              @click="loginType = 'register'"
-              class="blue--text text--darken-2 cursorPointer"
-              style="text-decoration: underline"
-              >ثبت نام</span
-            >
-          </span>
-          <span
-            v-else-if="loginStep == 2 && UserType != 2"
+            v-if="loginStep == 2 && UserType != 2"
             class="body text-center widthAll grey--text text--darken-1"
             style="font-family: Byekan !important"
           >
@@ -1001,6 +991,7 @@
             dark
             class="widthAll red my-4 rounded-xl py-7 mt-1"
             style="width: 55%"
+            :class="UserType == 1 && loginStep == 1 ? 'mt-6' : ''"
           >
             {{
               (UserType == 2 && loginType == "login") ||
@@ -1018,10 +1009,9 @@
 <script>
 import "@/assets/css/main.css";
 import axios from "axios";
-axios.defaults.headers.common["Client-Token"] = "Ahuan-Wapi?123";
 axios.defaults.headers.common["Authorization"] =
   "Bearer " + localStorage.getItem("Client-Token");
-// const vuetify = new Vuetify({
+// const vuetify = new Vuetify({DDDDD
 //   theme: {
 //     themes: {
 //       light: {
@@ -1040,6 +1030,7 @@ export default {
   components: {
     // style
   },
+  props: ["isLogout", "isOpenLogin"],
   watch: {
     showAlert() {
       if (this.showAlert) {
@@ -1059,6 +1050,16 @@ export default {
         }, 2000);
       }
       this.$refs.loginForm.resetValidation();
+    },
+    isLogout() {
+      if (this.isLogout == true) {
+        this.isLogin = false;
+        this.userName = "";
+      }
+    },
+    isOpenLogin() {
+      this.loginType = "login";
+      this.loginDialog = true;
     },
   },
   data: () => ({
@@ -1311,6 +1312,14 @@ export default {
       var self = this;
 
       if (self.loginStep == 1) {
+        localStorage.removeItem("Client-Token");
+        localStorage.removeItem("fName");
+        localStorage.removeItem("ipAddress");
+        localStorage.removeItem("isLoginAhuan");
+        localStorage.removeItem("lName");
+        localStorage.removeItem("user-name");
+        localStorage.removeItem("phone-number-ahuan");
+        localStorage.removeItem("credit");
         if (self.$refs.loginForm.validate()) {
           // login section_________________________________________________
           if (self.loginType == "login") {
@@ -1329,7 +1338,6 @@ export default {
                     self.loginForm.phone
                   );
                   if (response.data) {
-                    codeSend = response.data;
                     self.resendSeconds = 60;
                     self.alertText = "کد تایید برای شما ارسال شد.";
                     self.alertType = "success";
@@ -1344,7 +1352,11 @@ export default {
                 })
                 .catch(function (error) {
                   // handle error
-                  console.log(error);
+                  self.alertText =
+                    error.response.data + "!ابتدا در سایت ثبت‌نام کنید.";
+                  self.showAlert = true;
+                  self.alertType = "error";
+                  self.loginType = "register";
                   self.loadingApi = false;
                 });
             }
@@ -1388,31 +1400,71 @@ export default {
             // user register__________________________________________________
             if (self.UserType == 1) {
               self.loadingApi = true;
+              var registerOptions = {
+                // displayname: self.loginForm.name + " " + self.loginForm.family,
+                // email: self.loginForm.mail,
+                phoneNumber: self.loginForm.phone,
+                fName: self.loginForm.name,
+                lName: self.loginForm.family,
+                // address:
+                // cardNo:
+                // companyId:
+                // codeMelli:
+                // passportNo:
+                // accountNo:
+                // gender:
+                // shebaNo:
+                // birthDate:
+                // password:
+                // isConfirmed:
+              };
               axios
-                .get(
-                  "https://panel.ahuantours.com/api/login/sendsms/" +
-                    self.loginForm.phone
+                .post(
+                  "https://panel.ahuantours.com/api/Accounts/Register",
+                  registerOptions
                 )
-                .then(function (response) {
+                .then(function (res) {
                   // handle success
-                  localStorage.setItem(
-                    "phone-number-ahuan",
-                    self.loginForm.phone
-                  );
-                  codeSend = response.data;
-                  self.resendSeconds = 60;
-                  self.alertText = "کد تایید برای شما ارسال شد.";
-                  self.alertType = "success";
-                  self.showAlert = true;
-                  self.loginStep = 2;
-                  self.loadingApi = false;
+                  axios
+                    .get(
+                      "https://panel.ahuantours.com/api/login/sendsms/" +
+                        self.loginForm.phone
+                    )
+                    .then(function (response) {
+                      // handle success
+                      localStorage.setItem(
+                        "phone-number-ahuan",
+                        self.loginForm.phone
+                      );
+                      codeSend = response.data;
+                      self.resendSeconds = 60;
+                      self.alertText = "کد تایید برای شما ارسال شد.";
+                      self.alertType = "success";
+                      self.showAlert = true;
+                      self.loginStep = 2;
+                      self.loadingApi = false;
+                    })
+                    .catch(function (error) {
+                      // handle error
+                      console.log(error);
+                      self.alertText =
+                        error.response.data + "!ابتدا در سایت ثبت‌نام کنید.";
+                      self.showAlert = true;
+                      self.alertType = "error";
+                      self.loginType = "register";
+                      self.loadingApi = false;
+                    });
                 })
                 .catch(function (error) {
                   // handle error
                   console.log(error);
+                  self.alertText = error;
+                  self.showAlert = true;
+                  self.alertType = "error";
+                  self.loginType = "register";
                   self.loadingApi = false;
                 });
-              console.log(options);
+
               // axios.post('https://ahuan.ir/api/register' , options)
               //         .then(function (response) {
               //           // handle success
@@ -1458,77 +1510,49 @@ export default {
           self.alertType = "error";
         }
       } else if (self.loginStep == 2) {
-        if (self.loginForm.otp == codeSend) {
-          if (self.loginType == "login") {
-            self.loadingApi = true;
-            axios
-              .get(
-                "https://panel.ahuantours.com/api/Login/Checksms/" +
-                  self.loginForm.phone +
-                  "/" +
-                  self.loginForm.otp
-              )
-              .then(function (response) {
-                // handle success
-                self.isLogin = true;
-                localStorage.setItem(
-                  "user-name",
-                  response.data.fName + " " + response.data.lName
-                );
-                localStorage.setItem("fName", response.data.fName);
-                localStorage.setItem("lName", response.data.lName);
-                localStorage.setItem("Client-Token", response.data.token);
-                axios.defaults.headers.common["Authorization"] =
-                  "Bearer " + response.data.token;
-                self.userName = response.data.fName + " " + response.data.lName;
-                console.log(response.data);
-                self.loginStep = 3;
-                self.loadingApi = false;
-              });
-          } else {
-            var options = {
-              displayname: self.loginForm.name + " " + self.loginForm.family,
-              email: self.loginForm.mail,
-              mobile: self.loginForm.phone,
-              password: "Test@123",
-            };
-            self.loadingApi = true;
-            axios
-              .post("https://ahuan.ir/api/register", options)
-              .then(function (response) {
-                // handle success
-                // codeSend = response.data
-                // self.resendSeconds = 60
-                if (response.data.sussecc) {
-                  self.alertText = "ثبت نام با موفقیت انجام شد.";
-                  self.alertType = "success";
-                  self.showAlert = true;
-                  self.isLogin = true;
-                  self.userName = options.displayname;
-                  localStorage.setItem("user-name", options.displayname);
-                  console.log(response.data);
-                  localStorage.setItem("isLoginAhuan", true);
-                  self.loginStep = 3;
-                } else {
-                  console.log(response.data.error);
-                  self.alertText = response.data.error;
-                  self.alertType = "error";
-                  self.showAlert = true;
-                }
-                self.loadingApi = false;
-              })
-              .catch(function (error) {
-                // handle error
-                console.log(error);
-                self.loadingApi = false;
-              });
-          }
-        } else {
-          self.loginForm.otp == "";
-          self.showAlert = true;
-          self.alertText = "کد وارد شده صحیح نیست.";
-          self.alertType = "error";
-        }
+        self.loadingApi = true;
+        axios
+          .get(
+            "https://panel.ahuantours.com/api/Login/Checksms/" +
+              self.loginForm.phone +
+              "/" +
+              self.loginForm.otp
+          )
+          .then(function (response) {
+            // handle success
+            self.isLogin = true;
+            localStorage.setItem(
+              "user-name",
+              response.data.fName + " " + response.data.lName
+            );
+            localStorage.setItem("fName", response.data.fName);
+            localStorage.setItem(
+              "credit",
+              response.data.noLimit == true
+                ? "noLimit"
+                : response.data.credit != null
+                ? response.data.credit
+                : 0
+            );
+            localStorage.setItem("lName", response.data.lName);
+            localStorage.setItem("Client-Token", response.data.token);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + response.data.token;
+            self.userName = response.data.fName + " " + response.data.lName;
+            console.log(response.data);
+            self.loginStep = 3;
+            self.loadingApi = false;
+            self.showAlert = true;
+            self.alertText = "عملیات ورود با موفقیت انجام شد.";
+            self.alertType = "success";
+          })
+          .catch(function (error) {
+            self.loadingApi = false;
+            self.loginForm.otp == "";
+            self.showAlert = true;
+            self.alertText = "کد وارد شده صحیح نیست.";
+            self.alertType = "error";
+          });
       }
     },
     logOut() {
@@ -1585,7 +1609,14 @@ export default {
         })
         .catch(function (error) {
           // handle error
-          localStorage.setItem("isLoginAhuan", false);
+          localStorage.removeItem("Client-Token");
+          localStorage.removeItem("fName");
+          localStorage.removeItem("ipAddress");
+          localStorage.removeItem("isLoginAhuan");
+          localStorage.removeItem("lName");
+          localStorage.removeItem("user-name");
+          localStorage.removeItem("phone-number-ahuan");
+          localStorage.removeItem("credit");
           self.isLogin = false;
           console.log(error);
           self.loadingApi = false;
@@ -1593,9 +1624,9 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.getItem("Client-Token")) {
-      this.checkIsLoggedIn();
-    }
+    // if (localStorage.getItem("Client-Token")) {
+    this.checkIsLoggedIn();
+    // }
     this.getTours();
     window.scrollTo(0, 0);
     this.loginSecondsInterval = setInterval(() => {

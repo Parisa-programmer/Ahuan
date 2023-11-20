@@ -59,8 +59,26 @@
                       ? require('@/assets/image/لوگوی_نفت.png')
                       : item.Airline == 'IRZ'
                       ? require('@/assets/image/لوگوی_ساها.png')
+                      : item.Airline == 'IS'
+                      ? require('@/assets/image/لوگوی_سپهران.png')
                       : item.Airline == 'FP'
                       ? require('@/assets/image/لوگوی_فلای‌پرشی.png')
+                      : item.Airline == 'A1'
+                      ? require('@/assets/image/لوگوی_ایر1.png')
+                      : item.Airline == 'RI'
+                      ? require('@/assets/image/لوگوی_چابهار.png')
+                      : item.Airline == 'W5'
+                      ? require('@/assets/image/لوگوماهان.jpg')
+                      : item.Airline == 'IR'
+                      ? require('@/assets/image/لوگوایران‌ایر.jpg')
+                      : item.Airline == 'PA'
+                      ? require('@/assets/image/لوگوی_پارس ایر.png')
+                      : item.Airline == 'PY'
+                      ? require('@/assets/image/لوگوی_پویاایر.png')
+                      : item.Airline == 'B9'
+                      ? require('@/assets/image/لوگوی_ایرتور.png')
+                      : item.Airline == 'A7'
+                      ? require('@/assets/image/لوگوی_آساجت.png')
                       : ''
                   "
                   alt=""
@@ -108,7 +126,7 @@
                 <span
                   class="absolute grey--text text--darken-1 caption typeFlightTicket"
                   style="font-family: Byekan !important"
-                  >سیستمی</span
+                  >{{ item.ticketType == "s" ? "سیستمی" : "چارتر" }}</span
                 >
                 <span
                   class="px-2 px-sm-6 body-2 pr-sm-4 pl-7 pl-sm-5 mt-2 mt-sm-0"
@@ -139,6 +157,9 @@
                 <span
                   class="ml-5 ml-sm-3 pl-2 body-2"
                   style="font-family: Byekan !important"
+                  :style="{
+                    opacity: item.DepartureTime == item.ArrivalTime ? '0' : '1',
+                  }"
                   >{{ item.ArrivalTime }}</span
                 >
               </v-row>
@@ -422,6 +443,13 @@
                               <v-row
                                 class="mt-2 mt-sm-4 mr-sm-1 caption grey--text text--darken-1 font-weight-bold justify-center justify-sm-start"
                                 style="font-family: Byekan !important"
+                                :style="{
+                                  opacity:
+                                    choosedTicket.DepartureTime ==
+                                    choosedTicket.ArrivalTime
+                                      ? '0'
+                                      : '1',
+                                }"
                               >
                                 مدت پرواز:
                                 {{
@@ -437,6 +465,13 @@
                                 <span
                                   class="body-2 grey--text text--darken-1"
                                   style="font-family: Byekan !important"
+                                  :style="{
+                                    opacity:
+                                      choosedTicket.DepartureTime ==
+                                      choosedTicket.ArrivalTime
+                                        ? '0'
+                                        : '1',
+                                  }"
                                   >{{ choosedTicket.ArrivalTime }}</span
                                 >
                                 <v-icon
@@ -498,6 +533,22 @@
                                           ? require('@/assets/image/لوگوی_ساها.png')
                                           : choosedTicket.Airline == 'FP'
                                           ? require('@/assets/image/لوگوی_فلای‌پرشی.png')
+                                          : choosedTicket.Airline == 'IS'
+                                          ? require('@/assets/image/لوگوی_سپهران.png')
+                                          : choosedTicket.Airline == 'A1'
+                                          ? require('@/assets/image/لوگوی_ایر1.png')
+                                          : choosedTicket.Airline == 'RI'
+                                          ? require('@/assets/image/لوگوی_چابهار.png')
+                                          : choosedTicket.Airline == 'W5'
+                                          ? require('@/assets/image/لوگوماهان.jpg')
+                                          : choosedTicket.Airline == 'IR'
+                                          ? require('@/assets/image/لوگوایران‌ایر.jpg')
+                                          : choosedTicket.Airline == 'PA'
+                                          ? require('@/assets/image/لوگوی_پارس ایر.png')
+                                          : choosedTicket.Airline == 'B9'
+                                          ? require('@/assets/image/لوگوی_ایرتور.png')
+                                          : choosedTicket.Airline == 'A7'
+                                          ? require('@/assets/image/لوگوی_آساجت.png')
                                           : ''
                                       "
                                       class="mr-sm-2 white"
@@ -1115,7 +1166,7 @@ export default {
         code: "Ahwaz, AWZ",
         text: "اهواز",
         id: "AWZ",
-        airport: "",
+        airport: "Ahwaz Arpt",
       },
       {
         label: "Isfahan, IFN - اصفهان",
@@ -1192,7 +1243,7 @@ export default {
         code: "Bahregan, IAQ",
         text: "بهرگان",
         id: "IAQ",
-        airport: "",
+        airport: "Bahregan Arpt",
       },
       {
         label: "Lamard, LFM - لامرد",
@@ -1423,7 +1474,7 @@ export default {
         code: "Parsabad, PFQ",
         text: "پارس آباد",
         id: "PFQ",
-        airport: "",
+        airport: "Parsabad Arpt",
       },
       {
         label: "Iranshahr, IHR - ایران شهر",
@@ -1594,8 +1645,10 @@ export default {
         }
       }
       let text = "";
-      if (hours == 0) {
+      if (hours == 0 && minutes != 0) {
         text = minutes + " دقیقه";
+      } else if (hours == 0 && minutes == 0) {
+        text = "-";
       } else if (minutes == 0) {
         text = hours + " ساعت";
       } else {
