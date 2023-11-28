@@ -94,9 +94,10 @@
                         :menu-props="{ closeOnClick: true, bottom: false, offsetY: true }" location="end"
                         v-model="originCity" id="originCity" ref="originCity" :rules="emptyRules2"
                         :items="external ? otherCityesOrigin : persianCityes" :search-input.sync="originSearchInput"
-                        :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'" class="font-small-xs hideArrow headerCityes"
+                        :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'" class="relative font-small-xs hideArrow headerCityes"
                         :class="originCity && originCity.length ? 'pt-2' : 'pt-0'" prepend-inner-icon="mdi-map-marker"
-                        @click="viiblePeaple = false" @change="changeHeaderInput('originCity')">
+                        @click="handleAutocompleteOpen();viiblePeaple = false" @change="changeHeaderInput('originCity')">
+                        
                         <template v-slot:no-data>
                           <span class="body-2 d-block px-4" style="font-family:Byekan !important">شهر مورد نظر یافت
                             نشد!</span>
@@ -142,7 +143,7 @@
                       v-model="date1" locale="fa,en" :locale-config="localeConfig" popover="right" auto-submit
                       :min="minDate"
                       :range="(byReturn == 2 || selectedSection.title == 'هتل' || selectedSection.title == 'آهوان' || selectedSection.title == 'تور') ? true : false"
-                      style="" @close="show = false; viiblePeaple = true; changeDate1()" @open=" viiblePeaple = false">
+                      style="" @close="show = false; viiblePeaple = date1.length ? true : false; changeDate1()" @open=" viiblePeaple = false">
                       <template #header-date="{ formattedDate }">
                         {{ date1.length ? formattedDate : 'انتخاب تاریخ' }}
                       </template>
@@ -611,6 +612,7 @@ export default {
       this.originCity = "";
       this.destinationInternal = "";
       // this.byReturn = 1
+
       this.date1 = "";
     },
     selectedDate() {
@@ -649,7 +651,10 @@ export default {
           date: "",
         },
       ];
+
+      this.$refs.date1.selectedDates = [];
       this.date1 = "";
+      this.changeDate1("");
       // .value = ''
     },
     originCity() {
@@ -2198,6 +2203,7 @@ export default {
       var self = this;
       this.viiblePeaple = false;
       if (
+        (this.selectedSection.title == "پرواز" && !this.date1) ||
         !this.$refs.headerInputForm.validate() ||
         (this.selectedSection.title == "تور" && !this.tourDate.length) ||
         (this.selectedSection.title != "تور" && !this.selectedDate.length) ||
@@ -2499,6 +2505,23 @@ export default {
         self.isLoadingAxios = false;
       }
     },
+    handleAutocompleteOpen() {
+      console.log(this.$refs.originCity);
+      // Log to verify if the method is being called
+      // console.log("Clicked!");
+
+      // // Access the element using $refs
+      // const top = this.$refs.originCity.offsetTop;
+      // const left = this.$refs.originCity.offsetLeft;
+      // const width = this.$refs.originCity.clientWidth;
+      // const height = this.$refs.originCity.clientHeight;
+
+      // // Log the values
+      // console.log("Top:", top);
+      // console.log("Left:", left);
+      // console.log("Width:", width);
+      // console.log("Height:", height);
+    },
     async changeHeaderInput(item) {
       var self = this;
       switch (item) {
@@ -2657,12 +2680,15 @@ export default {
         switch (self.$route.query.path) {
           case "ow":
             self.byReturn = 1;
+            self.date1 = "";
             break;
           case "rt":
             self.byReturn = 2;
+            self.date1 = "";
             break;
           case "mp":
             self.byReturn = 3;
+            self.date1 = "";
             break;
           default:
             break;

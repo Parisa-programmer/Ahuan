@@ -77,6 +77,7 @@
               </div>
             </v-row>
             <v-row
+              justify="center"
               v-show="showFilterBox"
               class="pa-3 fixed heightAll widthAll"
               style="

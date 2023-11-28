@@ -11,7 +11,7 @@
         background: #fff;
       "
     >
-      <v-col md="2" class="py-3">
+      <v-col cols="6" sm="2" class="py-3">
         <v-row justify="center">
           <b class="grey--text text--darken-1">شماره‌سفارش</b>
         </v-row>
@@ -19,7 +19,7 @@
           {{ item.id }}
         </v-row>
       </v-col>
-      <v-col md="3" class="py-3">
+      <v-col cols="6" sm="3" class="py-3">
         <v-row justify="center">
           <b class="grey--text text--darken-1">نوع سفارش</b>
         </v-row>
@@ -27,24 +27,39 @@
           پرواز داخلی
         </v-row>
       </v-col>
-      <v-col md="2" class="py-3">
+      <v-col cols="6" sm="2" class="py-3">
         <v-row justify="center">
-          <b class="grey--text text--darken-1">مبلغ(تومان)</b>
+          <b class="grey--text text--darken-1"
+            >مبلغ
+            <b
+              class="grey--text text--darken-1 d-inline-block d-sm-none d-lg-inline-block"
+              >(تومان)</b
+            >
+          </b>
         </v-row>
         <v-row class="mt-4 grey--text text--darken-1" justify="center">
           {{ separatePrice(item.allFarePrice / 10) }}
         </v-row>
       </v-col>
-      <v-col md="3" class="py-3">
+      <v-col cols="6" sm="2" md="3" class="py-3">
         <v-row justify="center">
-          <b class="grey--text text--darken-1">تاریخ‌و‌ساعت</b>
+          <b class="grey--text text--darken-1"
+            >تاریخ‌
+            <b
+              class="grey--text text--darken-1 d-inline-block d-sm-none d-lg-inline-block"
+              >و‌ساعت</b
+            >
+          </b>
         </v-row>
         <v-row class="mt-4 grey--text text--darken-1" justify="center">
-          {{ item.issueTime }} -
-          {{ new Date(item.issueDate).toLocaleDateString("fa") }}
+          <span
+            class="d-inline-block d-sm-none d-lg-inline-block grey--text text--darken-1"
+          >
+            {{ item.issueTime }} - </span
+          >{{ new Date(item.issueDate).toLocaleDateString("fa") }}
         </v-row>
       </v-col>
-      <v-col md="2" class="py-3">
+      <v-col cols="12" sm="3" md="2" class="py-3">
         <v-row justify="center" class="heightAll" align="center">
           <v-btn
             class="widthAll rounded-xl"
@@ -65,18 +80,23 @@
       v-model="ticketDetailsModal"
       style="z-index: 999999"
     >
-      <v-sheet class="relative pa-12" style="min-height: 500px">
-        <v-icon class="ma-1" @click="ticketDetailsModal = false"
-          >mdi-close</v-icon
+      <v-sheet class="relative pa-5" style="min-height: 500px">
+        <v-icon
+          class="fixed white rounded-circle"
+          @click="ticketDetailsModal = false"
         >
-        <v-row class="mt-6 px-12 blue lighten-5 rounded-xl py-4">
-          <v-col cols="3" class="my-2">
+          mdi-close
+        </v-icon>
+        <v-row
+          class="px-3 px-sm-6 px-md-12 blue lighten-5 rounded-xl py-4 mt-9"
+        >
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>شماره‌سفارش:</b>
               <span class="mr-3">{{ choosedTicket.id }}</span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>تاریخ رزرو:</b>
               <span class="mr-3">
@@ -90,7 +110,7 @@
               </span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>ساعت رزرو:</b>
               <span class="mr-3">
@@ -98,15 +118,31 @@
               </span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>روز رزرو:</b>
               <span class="mr-3">
-                {{ choosedTicket.dayname }}
+                {{
+                  choosedTicket.dayname == 6
+                    ? "شنبه"
+                    : choosedTicket.dayname == 0
+                    ? "یکشنبه"
+                    : choosedTicket.dayname == 1
+                    ? "دوشنبه"
+                    : choosedTicket.dayname == 2
+                    ? "سه‌شنبه"
+                    : choosedTicket.dayname == 3
+                    ? "چهارشنبه"
+                    : choosedTicket.dayname == 4
+                    ? "پنجشنبه"
+                    : choosedTicket.dayname == 5
+                    ? "جمعه"
+                    : ""
+                }}
               </span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>تعدادمسیر:</b>
               <span class="mr-3">{{
@@ -118,7 +154,7 @@
               }}</span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>تعدادمسافر:</b>
               <span class="mr-3"
@@ -126,7 +162,7 @@
               >
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>وضعیت:</b>
               <span class="mr-3">{{
@@ -134,13 +170,10 @@
               }}</span>
             </v-row>
           </v-col>
-          <v-col cols="3" class="my-2">
+          <v-col cols="12" sm="6" md="4" lg="3" class="my-1 my-md-2">
             <v-row>
               <b>نوع‌سفارش:</b>
-              <span class="mr-3"
-                >پرواز داخلی
-                {{ choosedTicket.systemOrCharter ? "چارتری" : "سیستمی" }}</span
-              >
+              <span class="mr-3">پرواز داخلی</span>
             </v-row>
           </v-col>
         </v-row>
@@ -160,6 +193,13 @@
                 }}</span>
               </v-row>
             </template>
+            <template v-slot:[`item.price`]="{ item }">
+              <v-row justify="center" align="center">
+                <span>
+                  {{ separatePrice(item.price / 10) }}
+                </span>
+              </v-row>
+            </template>
             <template v-slot:[`item.destination`]="{ item }">
               <v-row justify="center" align="center">
                 <span>{{
@@ -170,20 +210,108 @@
             <template v-slot:[`item.airline`]="{ item }">
               <v-row justify="center" align="center">
                 <span>{{ item.airline }}</span>
-                <img width="40" :src="item.airlineLogo" alt="" />
+                <img
+                  v-if="item.airlineLogo"
+                  width="40"
+                  :src="item.airlineLogo"
+                  alt=""
+                />
               </v-row>
             </template>
             <template v-slot:[`item.action`]="{ item }">
-              <v-btn
-                @click="cancellticket(item)"
-                dark
-                color="rgb(20, 23, 158)"
-                :class="item"
-                >کنسل کردن بلیط‌</v-btn
-              >
+              <v-row justify="center">
+                <!--  -->
+                <v-btn
+                  :loading="item.loadingCancellButton"
+                  :disabled="!item.ticketNumber"
+                  @click="cancellticket(item)"
+                  outlined
+                  color="#DEB788"
+                  class="mt-3"
+                  >کنسل کردن بلیط‌</v-btn
+                >
+              </v-row>
+              <v-row justify="center">
+                <v-btn
+                  :disabled="!item.ticketNumber"
+                  @click="downloadticket(item)"
+                  outlined
+                  color="rgb(20, 23, 158)"
+                  class="my-3 px-8"
+                  >دانلود بلیط‌</v-btn
+                >
+              </v-row>
             </template>
           </v-data-table>
         </v-row>
+        <v-dialog width="500" v-if="cancellModal" v-model="cancellModal">
+          <v-sheet
+            v-if="isCancellType"
+            class="pa-6 text-center"
+            style="line-height: 44px"
+          >
+            آیا از کنسل کردن بلیط پرواز
+            <b>{{ choosedTicketRow.name }}</b>
+
+            <br />
+            از مبداء
+            <b>{{
+              AllpersianCityes.find((x) => x.id == choosedTicketRow.origin).text
+            }}</b>
+
+            به
+            <b>{{
+              AllpersianCityes.find((x) => x.id == choosedTicketRow.destination)
+                .text
+            }}</b>
+
+            <br />
+            در تاریخ
+            <b>{{ choosedTicketRow.date }}</b>
+            ساعت
+            <b>{{ choosedTicketRow.time }}</b>
+
+            <br />
+            به شماره بلیط
+            <b>{{ choosedTicketRow.ticketNumber }}</b>
+            <br />
+            و مبلغ جریمه
+            <b class="red--text"
+              >{{ separatePrice(choosedTicketRow.PENALTY) }}
+              {{ choosedTicketRow.description == "nira" ? "تومان" : "%" }}</b
+            >
+
+            اطمینان دارید؟
+            <v-row justify="center" class="mt-6">
+              <v-btn
+                class="px-9 ml-3"
+                color="red"
+                dark
+                :loading="loadingButton"
+                @click="confirmCancell()"
+                >بله</v-btn
+              >
+              <v-btn
+                class="px-9"
+                color="rgb(20, 23, 158)"
+                dark
+                @click="cancellModal = false"
+                >خیر</v-btn
+              >
+            </v-row>
+          </v-sheet>
+          <v-sheet v-else class="pa-6 text-center" style="line-height: 44px">
+            <v-row>
+              <v-icon @click="cancellModal = false">mdi-close</v-icon>
+            </v-row>
+            <h3
+              class="my-4"
+              :class="alertType == 'error' ? 'red--text' : 'green--text'"
+            >
+              {{ alertText }}
+            </h3>
+          </v-sheet>
+        </v-dialog>
       </v-sheet>
     </v-dialog>
     <v-alert
@@ -208,6 +336,7 @@
 </style>
 
 <script>
+import axios from "axios";
 export default {
   name: "ticket-contract-card",
   components: {},
@@ -215,6 +344,9 @@ export default {
   props: ["documents"],
   computed: {},
   data: () => ({
+    newInformations: {},
+    loadingButton: false,
+    cancellModal: false,
     AllpersianCityes: [
       {
         label: "Tehran, THR - تهران",
@@ -662,7 +794,7 @@ export default {
     showAlert: false,
     alertType: "error",
     alertText: "",
-    choosedTicket: true,
+    choosedTicket: {},
     flightHeaders: [
       // { text: '', sortable: false, value: 'image', align: 'center', },
       {
@@ -686,6 +818,12 @@ export default {
         align: "center",
         sortable: false,
         value: "destination",
+      },
+      {
+        text: "مبلغ",
+        align: "center",
+        sortable: false,
+        value: "price",
       },
       {
         text: "شماره‌بلیط",
@@ -730,8 +868,28 @@ export default {
         align: "center",
       },
     ],
+    choosedTicketRow: {},
+    isCancellType: true,
   }),
   methods: {
+    getToken() {
+      return new Promise((resolve) => {
+        let self = this;
+        axios
+          .get("https://panel.ahuantours.com/api/Login")
+          .then(function (response) {
+            // handle success
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + response.data.token;
+            localStorage.setItem("charterToken", response.data.token);
+            resolve();
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          });
+      });
+    },
     separatePrice(number) {
       let value1 = number.toString().replace(/,/g, "");
       let value2 = value1;
@@ -746,9 +904,304 @@ export default {
       // self.filter.price = [Number(self.fromPrice.toString().replace(/,/g, "")), Number(value1)]
     },
     cancellticket(item) {
-      console.log(item);
+      this.choosedTicket.passengers[item.index].loadingCancellButton = true;
+      // console.log();
+      let self = this;
+      this.choosedTicketRow = item;
+      if (item.description == "chr724") {
+        let factor = {
+          id_faktor: item.pnr,
+        };
+        axios
+          .post("https://panel.ahuantours.com/api/Ch724/CheckPenalti", factor)
+          .then(function (res) {
+            if (res.data.data.success == "true") {
+              if (res.data.data.penalti == "-1") {
+                self.cancellModal = true;
+                self.alertType = "success";
+                self.alertText = "این بلیط قبلا کنسل شده!";
+                self.isCancellType = false;
+                self.updateDatabase();
+              } else {
+                self.choosedTicketRow.PENALTY = res.data.data.penalti;
+                self.cancellModal = true;
+                self.isCancellType = true;
+              }
+            } else {
+              self.alertType = "error";
+              self.alertText =
+                "برای کنسل کردن این بلیط چند دقیقه دیگر تلاش کنید یا با پشتیبانی تماس بگیرید";
+              self.cancellModal = true;
+              self.isCancellType = false;
+            }
+            self.choosedTicket.passengers[
+              item.index
+            ].loadingCancellButton = false;
+          })
+          .catch(function (error) {
+            // handle error
+            self.choosedTicket.passengers[
+              item.index
+            ].loadingCancellButton = false;
+            console.log(error);
+          });
+      } else if (item.description == "nira") {
+        let params = {
+          Airline: self.choosedTicketRow.airlineCode,
+          TicketNo: self.choosedTicketRow.ticketNumber,
+        };
+        axios
+          .get("https://panel.ahuantours.com/api/Nira/PenaltyNow", {
+            params,
+          })
+          .then(function (response) {
+            if (response.data.NRSPenalty) {
+              self.choosedTicketRow.PENALTY =
+                response.data.NRSPenalty.PENALTY.split(".")[0] / 10;
+              self.choosedTicketRow.RefundedAmount =
+                response.data.NRSPenalty.RefundedAmount.split(".")[0];
+              self.isCancellType = true;
+              self.cancellModal = true;
+            } else {
+              self.alertText =
+                response.data ==
+                "NO COUPON EXISTS FOR REFUND!!!\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+                  ? "این بلیط قبلا کنسل شده!"
+                  : response.data;
+              self.alertType = "success";
+              self.isCancellType = false;
+              self.cancellModal = true;
+              self.updateDatabase();
+            }
+            self.choosedTicket.passengers[
+              item.index
+            ].loadingCancellButton = true;
+          })
+          .catch(function (error) {
+            // handle error
+            let errorText = "";
+            if (error.response.status == 403) {
+              errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
+            } else if (error.response.status == 400) {
+              errorText = "bad quest";
+            } else if (error.response.status == 401) {
+              self.getToken();
+            }
+            self.alertText = errorText;
+            self.alertType = "error";
+            self.showAlert = true;
+            setTimeout(() => {
+              self.showAlert = false;
+            }, 3000);
+            self.choosedTicket.passengers[
+              item.index
+            ].loadingCancellButton = true;
+          });
+      } else {
+        this.alertType = "error";
+        this.alertText = "متاسفانه نوع بلیط ثبت نشده";
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
+        this.choosedTicket.passengers[item.index].loadingCancellButton = false;
+      }
+    },
+    downloadticket(item) {
+      if (item.ticketUrl) {
+        window.open(item.ticketUrl, "_blank");
+      } else {
+        this.alertType = "error";
+        this.alertText = "متاسفانه تصویر بلیط ثبت نشده";
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
+      }
+    },
+    confirmCancell() {
+      let self = this;
+      self.loadingButton = true;
+      if (this.choosedTicketRow.description == "chr724") {
+        let penaltiObject = {
+          id_faktor: self.choosedTicketRow.pnr,
+          penalti: self.choosedTicketRow.PENALTY,
+          listticketID: [self.choosedTicketRow.ticketNumber],
+        };
+        axios
+          .post(
+            "https://panel.ahuantours.com/api/Ch724/CancelTicket",
+            penaltiObject
+          )
+          .then(function (response) {
+            self.loadingButton = false;
+            if (response.data.data.success == "true") {
+              self.alertType = "success";
+              self.choosedTicketRow.RefundedAmount =
+                response.data.data.passengers[0].refunde_price;
+              self.alertText =
+                "بلیط با موفقیت کنسل شد.مبلغ بازگشتی به شما" +
+                self.separatePrice(
+                  response.data.data.passengers[0].refunde_price
+                ) +
+                "ریال میباشد.";
+              self.isCancellType = false;
+              self.loadingButton = false;
+              self.updateDatabase(self.choosedTicket);
+            } else {
+              self.alertType = "error";
+              self.alertText =
+                "برای کنسل کردن این بلیط چند دقیقه دیگر تلاش کنید یا با پشتیبانی تماس بگیرید";
+              self.isCancellType = false;
+              self.loadingButton = false;
+            }
+          })
+          .catch(function (error) {
+            // handle error
+            self.loadingButton = false;
+            console.log(error);
+          });
+      } else if (this.choosedTicketRow.description == "nira") {
+        let self = this;
+        let params = {
+          Airline: self.choosedTicketRow.airlineCode,
+          PNR: self.choosedTicketRow.pnr,
+          PassengerName: self.choosedTicketRow.fName,
+          PassengerLastName: self.choosedTicketRow.lName,
+          DepartureDate: self.choosedTicketRow.georgianDate.split("T")[0],
+          FlightNo: self.choosedTicketRow.flightNumber,
+        };
+        axios
+          .get("https://panel.ahuantours.com/api/Nira/CancelSeat", {
+            params,
+          })
+          .then(function (response) {
+            if (response.data.AirCancelSeat[0].Done == "true") {
+              axios
+                .get(
+                  "https://panel.ahuantours.com/api/Nira/ETR?AirLine=" +
+                    self.choosedTicketRow.airlineCode +
+                    "&TicketNo=" +
+                    self.choosedTicketRow.ticketNumber
+                )
+                .then(function (res) {
+                  if (res.data.Fare) {
+                    self.newInformations.Fare = res.data.Fare;
+                    let KU = res.data.TAXES.find((x) => x.TaxCode == "KU");
+                    self.newInformations.KU == KU ? KU.TaxAmount : 0;
+                    let LP = res.data.TAXES.find((x) => x.TaxCode == "LP");
+                    self.newInformations.LP == LP ? LP.TaxAmount : 0;
+                    self.ETRefund();
+                    // get self.newInformations.KU == ???   TaxAmount
+                    // get self.newInformations.LP == ???   TaxCode
+                  }
+                })
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            } else {
+              self.loadingButton = false;
+              self.alertText =
+                "عملیات با خطا مواجه شد.لطفا دوباره سعی کنید،یا باپشتیبانی تماس حاصل فرمائید.";
+              self.alertType = "error";
+              self.isCancellType = false;
+              self.loadingButton = false;
+              self.cancellModal = true;
+            }
+          })
+          .catch(function (error) {
+            // handle error
+            self.loadingButton = false;
+            let errorText = "";
+            if (error.response.status == 403) {
+              errorText = "سطح دسترسی این وب سرویس برای شما محدودیت دارد.";
+            } else if (error.response.status == 400) {
+              errorText = "bad quest";
+            } else if (error.response.status == 401) {
+              self.getToken();
+            } else {
+              errorText = "عملیات با خطا مواجه شد.";
+            }
+            self.alertText = errorText;
+            self.alertType = "error";
+            self.showAlert = true;
+            setTimeout(() => {
+              self.showAlert = false;
+            }, 3000);
+          });
+      }
+    },
+    ETRefund() {
+      let self = this;
+      let params = {
+        Airline: self.choosedTicketRow.airlineCode,
+        TicketNo: self.choosedTicketRow.ticketNumber,
+        Fare: self.newInformations.Fare,
+        KU: self.newInformations.KU ? self.newInformations.KU : 0, //عوارض
+        LP: self.newInformations.LP, //عوارض فرودگاهی
+        Penalty: self.choosedTicketRow.PENALTY,
+      };
+      axios
+        .get("https://panel.ahuantours.com/api/Nira/ETRefund", {
+          params,
+        })
+        .then(function (response) {
+          self.alertType = "success";
+          self.alertText =
+            "بلیط با موفقیت کنسل شد.مبلغ بازگشتی به شما " +
+            self.separatePrice(self.choosedTicketRow.RefundedAmount) +
+            " ریال میباشد.";
+          self.isCancellType = false;
+          self.loadingButton = false;
+          self.updateDatabase();
+          self.cancellModal = true;
+        })
+        .catch(function (error) {
+          // handle error
+          self.loadingButton = false;
+          console.log(error);
+        });
+    },
+    updateDatabase(object) {
+      let self = this;
+      axios
+        .get(
+          "https://panel.ahuantours.com/api/Contract/" +
+            Number(self.choosedTicket.id)
+        )
+        .then(function (res) {
+          let resObject = res.data;
+          let findObject = resObject.contractPassengers;
+          let findObjectIndex = findObject.findIndex(
+            (x) =>
+              x.fName + " " + x.lName == self.choosedTicketRow.name &&
+              (x.retTicketNumber == self.choosedTicketRow.ticketNumber ||
+                x.goTicketNumber == self.choosedTicketRow.ticketNumber)
+          );
+          resObject.contractPassengers[findObjectIndex].description =
+            "cancelled";
+          self.choosedTicketRow.descriptionSeat = "cancelled";
+          axios
+            .put("https://panel.ahuantours.com/api/Contract/update", resObject)
+            .then(function (response) {})
+            .catch(function (error) {
+              // handle error
+              self.alertText =
+                "پرواز با موفقیت کنسل شد اما ذخیره اطلاعات  در پایگاه داده ناموفق بود.لطفا به پشتیبانی اطلاع دهید.";
+              self.alertType = "error";
+              self.showAlert = true;
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
     },
   },
-  created() {},
+  async created() {
+    await this.getToken();
+  },
 };
 </script>

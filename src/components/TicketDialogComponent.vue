@@ -1596,7 +1596,6 @@ export default {
     },
     reserveTicket(step) {
       var self = this;
-
       if (this.choosedTicket[0].reserveType == "Chr724") {
         if (!this.captchaCode1) {
           self.alertText = "لطفا کد احراز هویت را وارد کنید";
@@ -1637,10 +1636,18 @@ export default {
                   : self.getAge(gregorianBirthdayDate2) < 12
                   ? "CHD"
                   : "ADL",
-              fnamefa: self.users[i].name,
-              lnamefa: self.users[i].family,
-              fnameen: self.users[i].name,
-              lnameen: self.users[i].family,
+              fnamefa:
+                self.users[i].name.replace(/\s/g, "") +
+                (self.users[i].gender == "خانم" ? "MS" : "MR"),
+              lnamefa:
+                self.users[i].family.replace(/\s/g, "") +
+                (self.users[i].gender == "خانم" ? "MS" : "MR"),
+              fnameen:
+                self.users[i].name.replace(/\s/g, "") +
+                (self.users[i].gender == "خانم" ? "MS" : "MR"),
+              lnameen:
+                self.users[i].family.replace(/\s/g, "") +
+                (self.users[i].gender == "خانم" ? "MS" : "MR"),
               gender: self.users[i].gender == "خانم" ? 2 : 1,
               nationality: this.users[i].nationality == "ایرانی" ? 1 : 0,
               passengerCode: self.users[i].nationalityCode,
@@ -1906,11 +1913,12 @@ export default {
             "edtName" +
             (i + 1) +
             "=" +
-            self.users[i].name +
+            self.users[i].name.replace(/\s/g, "") +
+            (self.users[i].gender == "خانم" ? "MS" : "MR") +
             "&edtLast" +
             (i + 1) +
             "=" +
-            self.users[i].family +
+            self.users[i].family.replace(/\s/g, "") +
             "&edtAge" +
             (i + 1) +
             "=" +
@@ -1926,6 +1934,7 @@ export default {
             "en",
             options
           );
+
           if (this.users[i].nationality == "ایرانی") {
             testTextNew =
               testTextNew +
@@ -1939,7 +1948,13 @@ export default {
               monthDateNameShort +
               new Date(numeriDate).getFullYear().toString().slice(-2) +
               "_" +
-              (self.users[i].gender == "خانم" ? "F" : "M") +
+              (self.users[i].gender == "خانم"
+                ? self.users[i].ageType == "baby"
+                  ? "FI"
+                  : "F"
+                : self.users[i].ageType == "baby"
+                ? "MI"
+                : "M") +
               "___";
           } else {
             testTextNew =
@@ -1947,14 +1962,20 @@ export default {
               "&edtID" +
               (i + 1) +
               "=" +
-              "P__" +
+              "T__" +
               self.users[i].nationalityCode +
               "__" +
               new Date(numeriDate).getDate() +
               monthDateNameShort +
               new Date(numeriDate).getFullYear().toString().slice(-2) +
               "_" +
-              (self.users[i].gender == "خانم" ? "F" : "M") +
+              (self.users[i].gender == "خانم"
+                ? self.users[i].ageType == "baby"
+                  ? "FI"
+                  : "F"
+                : self.users[i].ageType == "baby"
+                ? "MI"
+                : "M") +
               "_" +
               this.users[i].expirePassDay +
               monthExDateNameShort +
@@ -2027,10 +2048,18 @@ export default {
                             : self.getAge(gregorianBirthdayDate2) < 12
                             ? "CHD"
                             : "ADL",
-                        fnamefa: self.users[i].name,
-                        lnamefa: self.users[i].family,
-                        fnameen: self.users[i].name,
-                        lnameen: self.users[i].family,
+                        fnamefa:
+                          self.users[i].name.replace(/\s/g, "") +
+                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                        lnamefa:
+                          self.users[i].family.replace(/\s/g, "") +
+                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                        fnameen:
+                          self.users[i].name.replace(/\s/g, "") +
+                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                        lnameen:
+                          self.users[i].family.replace(/\s/g, "") +
+                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
                         gender: self.users[i].gender == "خانم" ? 2 : 1,
                         nationality:
                           self.users[i].nationality == "ایرانی" ? 1 : 0,
@@ -2069,9 +2098,10 @@ export default {
                           self.showCharterPassengers2 =
                             response.data.data.passenger_info;
                           let bankprice =
-                            self.choosedTicket[0].allprice.replace(/,/g, "") *
-                              10 +
-                            parseInt(response.data.data.totalprice_request);
+                            parseInt(
+                              self.choosedTicket[0].allprice.replace(/,/g, "") *
+                                10
+                            ) + parseInt(response.data.data.totalprice_request);
                           let revertUrl =
                             "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request2=" +
                             self.captchaIdReq2 +
@@ -2183,7 +2213,8 @@ export default {
                   //   },
                   // ];
                   let bankprice =
-                    self.choosedTicket[0].allprice.replace(/,/g, "") * 10;
+                    parseInt(self.choosedTicket[0].allprice.replace(/,/g, "")) *
+                    10;
                   let goBankUrl =
                     "https://ahuan.ir/#/ticket-download?AirLine1=" +
                     self.choosedTicket[0].Airline +
@@ -2296,8 +2327,8 @@ export default {
         let theObjectForPush = {
           id: 0,
           contractId: 0,
-          fName: self.users[i].name,
-          lName: self.users[i].family,
+          fName: self.users[i].name.replace(/\s/g, ""),
+          lName: self.users[i].family.replace(/\s/g, ""),
           age:
             self.users[i].ageType == "old"
               ? "ADL"
@@ -2433,10 +2464,11 @@ export default {
         (String(new Date().getDate()).length == 2
           ? String(new Date().getDate())
           : "0" + String(new Date().getDate()));
+
       let variabelobject = {
         id: 0,
         userName: localStorage.getItem("phone-number-ahuan"),
-        issueDate: theIssueDate,
+        IssueDate: theIssueDate,
         issueTime:
           (String(new Date().getHours()).length == 2
             ? new Date().getHours()
@@ -2641,25 +2673,25 @@ export default {
             (localStorage.getItem("credit") == "noLimit" ||
               localStorage.getItem("credit") >= price)
           ) {
-            window.location.href =
-              url + "responseData=" + res.data.id + "&price=" + price + "&";
+            // window.location.href =
+            //   url + "responseData=" + res.data.id + "&price=" + price + "&";
           } else {
-            axios
-              .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-                amount: price,
-                revertUrl: url + "responseData=" + res.data.id + "&",
-              })
-              .then(function (response) {
-                self.formshaparak.bankToken = response.data;
-                self.bookStep = 6;
-                setTimeout(() => {
-                  self.$refs.formshaparak.submit();
-                }, 1000);
-              })
-              .catch(function (error) {
-                // handle error
-                console.log(error);
-              });
+            // axios
+            //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+            //     amount: price,
+            //     revertUrl: url + "responseData=" + res.data.id + "&",
+            //   })
+            //   .then(function (response) {
+            //     self.formshaparak.bankToken = response.data;
+            //     self.bookStep = 6;
+            //     setTimeout(() => {
+            //       self.$refs.formshaparak.submit();
+            //     }, 1000);
+            //   })
+            //   .catch(function (error) {
+            //     // handle error
+            //     console.log(error);
+            //   });
           }
         })
         .catch(function (error) {
@@ -2725,11 +2757,12 @@ export default {
           "edtName" +
           (i + 1) +
           "=" +
-          self.users[i].name +
+          self.users[i].name.replace(/\s/g, "") +
+          (self.users[i].gender == "خانم" ? "MS" : "MR") +
           "&edtLast" +
           (i + 1) +
           "=" +
-          self.users[i].family +
+          self.users[i].family.replace(/\s/g, "") +
           "&edtAge" +
           (i + 1) +
           "=" +
@@ -2744,6 +2777,7 @@ export default {
           "en",
           options
         );
+
         if (this.users[i].nationality == "ایرانی") {
           testTextNew =
             testTextNew +
@@ -2757,7 +2791,13 @@ export default {
             monthDateNameShort +
             new Date(numeriDate).getFullYear().toString().slice(-2) +
             "_" +
-            (self.users[i].gender == "خانم" ? "F" : "M") +
+            (self.users[i].gender == "خانم"
+              ? self.users[i].ageType == "baby"
+                ? "FI"
+                : "F"
+              : self.users[i].ageType == "baby"
+              ? "MI"
+              : "M") +
             "___";
         } else {
           testTextNew =
@@ -2765,14 +2805,20 @@ export default {
             "&edtID" +
             (i + 1) +
             "=" +
-            "P__" +
+            "I__" +
             self.users[i].nationalityCode +
             "__" +
             new Date(numeriDate).getDate() +
             monthDateNameShort +
             new Date(numeriDate).getFullYear().toString().slice(-2) +
             "_" +
-            (self.users[i].gender == "خانم" ? "F" : "M") +
+            (self.users[i].gender == "خانم"
+              ? self.users[i].ageType == "baby"
+                ? "FI"
+                : "F"
+              : self.users[i].ageType == "baby"
+              ? "MI"
+              : "M") +
             "_" +
             this.users[i].expirePassDay +
             monthExDateNameShort +

@@ -176,19 +176,19 @@
                       <v-row justify="center">
                         <b class="grey--text text--darken-2">
                           {{
-                            new Date().getDay() + 2 == 8
+                            new Date().getDay() == 6
                               ? "شنبه"
-                              : new Date().getDay() + 2 == 2
+                              : new Date().getDay() == 0
                               ? "یکشنبه"
-                              : new Date().getDay() + 2 == 3
+                              : new Date().getDay() == 1
                               ? "دوشنبه"
-                              : new Date().getDay() + 2 == 4
+                              : new Date().getDay() == 2
                               ? "سه‌شنبه"
-                              : new Date().getDay() + 2 == 5
+                              : new Date().getDay() == 3
                               ? "چهارشنبه"
-                              : new Date().getDay() + 2 == 6
+                              : new Date().getDay() == 4
                               ? "پنجشنبه"
-                              : new Date().getDay() + 2 == 7
+                              : new Date().getDay() == 5
                               ? "جمعه"
                               : ""
                           }}،
@@ -285,14 +285,17 @@
                 </v-row>
                 <v-row justify="space-between" class="pr-9 pl-1 mt-3">
                   <span class="grey--text text--darken-1">موجودی کیف پول</span>
-                  <span class="grey--text text--darken-1"
-                    >0
+                  <span class="grey--text text--darken-1">
+                    {{
+                      !credit ? "0 " : credit == "noLimit" ? "نامحدود" : credit
+                    }}
                     <span
+                      v-if="!credit"
                       class="caption grey--text"
                       style="font-family: Byekan !important"
                       >تومان</span
-                    ></span
-                  >
+                    >
+                  </span>
                 </v-row>
               </div>
               <div
@@ -672,7 +675,8 @@
             >
               آخرین سفارشات ثبت شده
             </h3>
-            <v-row
+            <ticket-contract-card :documents="documents" />
+            <!-- <v-row
               justify="center"
               class="rounded-lg py-3"
               style="
@@ -682,7 +686,7 @@
               "
             >
               این قسمت از سایت در حال توسعه میباشد!
-            </v-row>
+            </v-row> -->
           </v-col>
           <v-col cols="12" md="5" class="px-0 mt-9 order-5 order-sm-5">
             <div
@@ -692,19 +696,19 @@
               <v-row justify="center">
                 <b class="grey--text text--darken-2">
                   {{
-                    new Date().getDay() + 2 == 8
+                    new Date().getDay() == 6
                       ? "شنبه"
-                      : new Date().getDay() + 2 == 2
+                      : new Date().getDay() == 0
                       ? "یکشنبه"
-                      : new Date().getDay() + 2 == 3
+                      : new Date().getDay() == 1
                       ? "دوشنبه"
-                      : new Date().getDay() + 2 == 4
+                      : new Date().getDay() == 2
                       ? "سه‌شنبه"
-                      : new Date().getDay() + 2 == 5
+                      : new Date().getDay() == 3
                       ? "چهارشنبه"
-                      : new Date().getDay() + 2 == 6
+                      : new Date().getDay() == 4
                       ? "پنجشنبه"
-                      : new Date().getDay() + 2 == 7
+                      : new Date().getDay() == 5
                       ? "جمعه"
                       : ""
                   }}،
@@ -777,6 +781,7 @@ axios.defaults.headers.common["Authorization"] =
 export default {
   data() {
     return {
+      credit: localStorage.getItem("credit"),
       isLogin: false,
       userName: "",
       phone: "",
@@ -828,13 +833,11 @@ export default {
     },
     getWeather() {
       let self = this;
-      // axios
-      //   .get(
-      //     "https://api.openweathermap.org/data/2.5/weather?lat=35.737315&lon=51.414907&appid=b28caa11e918f16f9e55d242f38ede77"
-      //   )
-      //   .then(function (res) {
-      //     self.weather = res.data.main.temp;
-      //   });
+      axios
+        .get("https://panel.ahuantours.com/WeatherForecast")
+        .then(function (res) {
+          self.weather = res.data.main.temp;
+        });
     },
     getContracts(username) {
       let self = this;
@@ -845,12 +848,14 @@ export default {
         .then(function (res) {
           let documents = res.data;
           let documentsArray = [];
+
           for (let i = 0; i < documents.length; i++) {
             let duc = documents[i];
             let day = new Date(documents[i].issueDate).getDay();
             let price = 0;
             let passengers = [];
             if (duc.confirmStatus != "temp") {
+              let index = 0;
               for (let j = 0; j < duc.contractPassengers.length; j++) {
                 price = price + duc.contractPassengers[j].price;
                 if (duc.contractPassengers[j].price2) {
@@ -862,6 +867,11 @@ export default {
                       duc.contractPassengers[j].fName +
                       " " +
                       duc.contractPassengers[j].lName,
+                    fName: duc.contractPassengers[j].fName,
+                    lName: duc.contractPassengers[j].lName,
+                    RefundedAmount: 0,
+                    descriptionSeat: duc.contractPassengers[j].description,
+                    georgianDate: duc.contractFlights[k].date,
                     age:
                       duc.contractPassengers[j].age == "ADL"
                         ? "بزرگسال"
@@ -882,11 +892,57 @@ export default {
                         ? "چارتری"
                         : "سیستمی",
                     origin: duc.contractFlights[k].origin,
+
                     destination: duc.contractFlights[k].destination,
                     ticketNumber:
                       k == 0
                         ? duc.contractPassengers[j].goTicketNumber
                         : duc.contractPassengers[j].retTicketNumber,
+                    PENALTY: "100%",
+                    airlineCode:
+                      duc.contractFlights[k].airlineId == 489
+                        ? "I3"
+                        : duc.contractFlights[k].airlineId == 1016
+                        ? "Y9"
+                        : duc.contractFlights[k].airlineId == 761
+                        ? "QB"
+                        : duc.contractFlights[k].airlineId == 470
+                        ? "HH"
+                        : duc.contractFlights[k].airlineId == 376
+                        ? "EP"
+                        : duc.contractFlights[k].airlineId == 1064
+                        ? "ZV"
+                        : duc.contractFlights[k].airlineId == 683
+                        ? "NV"
+                        : duc.contractFlights[k].airlineId == 535
+                        ? "JI"
+                        : duc.contractFlights[k].airlineId == 943
+                        ? "VR"
+                        : duc.contractFlights[k].airlineId == "IRZ"
+                        ? "IRZ"
+                        : duc.contractFlights[k].airlineId == 410
+                        ? "FP"
+                        : duc.contractFlights[k].airlineId == 515
+                        ? "IV"
+                        : duc.contractFlights[k].airlineId == 7
+                        ? "IS"
+                        : duc.contractFlights[k].airlineId == 212
+                        ? "A1"
+                        : duc.contractFlights[k].airlineId == 802
+                        ? "RI"
+                        : duc.contractFlights[k].airlineId == 956
+                        ? "W5"
+                        : duc.contractFlights[k].airlineId == 512
+                        ? "IR"
+                        : duc.contractFlights[k].airlineId == "PA"
+                        ? "PA"
+                        : duc.contractFlights[k].airlineId == "PY"
+                        ? "PY"
+                        : duc.contractFlights[k].airlineId == 256
+                        ? "B9"
+                        : duc.contractFlights[k].airlineId == 218
+                        ? "A7"
+                        : "000",
                     airline:
                       duc.contractFlights[k].airlineId == 489
                         ? "آتا"
@@ -976,11 +1032,23 @@ export default {
                         ? require("@/assets/image/لوگوی_آساجت.png")
                         : "",
                     description: duc.contractFlights[k].description,
+                    price:
+                      k == 0
+                        ? duc.contractPassengers[j].price
+                        : duc.contractPassengers[j].price2,
                     pnr:
                       k == 0
                         ? duc.contractPassengers[j].goTicketPNR
                         : duc.contractPassengers[j].retTicketPNR,
+                    ticketUrl:
+                      k == 0
+                        ? duc.contractPassengers[j].goTicketUrl
+                        : duc.contractPassengers[j].retTicketUrl,
+                    loadingCancellButton: false,
+                    index: index,
+                    typeGoing: k == 0 ? "go" : "return",
                   });
+                  index = index + 1;
                 }
               }
               documents[i].allFarePrice = price;

@@ -91,6 +91,14 @@
         :clickedDownload="clickedDownload"
         :params="Passengers"
       />
+      <div class="widthAll">
+        <v-row
+          :class="alertType == 'error' ? 'red--text' : 'green--text'"
+          justify="center"
+        >
+          {{ alertText }}
+        </v-row>
+      </div>
     </v-row>
     <div v-else>
       <h1 class="widthAll text-center green--text text--darken-3 mt-12">
@@ -756,7 +764,20 @@ export default {
   methods: {
     async addPnr() {
       let next = await this.addPnr2();
-      this.setTicketInfo2("pnr", next);
+
+      if (next) {
+        this.setTicketInfo2("pnr", next);
+        this.alertText = "رزرو پرواز رفت و برگشت با موفقیت کامل شد.";
+        this.alertType = "success";
+        this.showAlert = true;
+      } else {
+        this.loadingDownload = false;
+        console.log("next");
+        this.alertText =
+          "پرداخت کامل انجام شده اما رزرو پرواز برگشت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+        this.alertType = "error";
+        this.showAlert = true;
+      }
     },
     addPnr2() {
       return new Promise((resolve) => {
@@ -816,7 +837,6 @@ export default {
                   self.setTicketInfo2("id_request", res.data.data);
                   self.ticketUrl2 = res.data.data.linkticket;
                   // self.loadingDownload = false;
-                  // console.log(res);
                 })
                 .catch(function (error) {
                   // self.loadingDownload = false;
@@ -838,7 +858,6 @@ export default {
               // self.addToDatabase();
               // self.loadingDownload = false;
             }
-            // console.log(response);
           })
           .catch(function (error) {
             // handle error
@@ -853,188 +872,255 @@ export default {
           self.$route.query.AirLine1,
           self.$route.query.PNR1
         );
-
         if (first) {
-          if (self.$route.query.id_request2) {
-            self.setTicketInfo1("pnr", first);
-            axios
-              .post("https://panel.ahuantours.com/api/Ch724/BuyTicket", {
-                id_request: self.$route.query.id_request2,
-                id_faktor: self.$route.query.id_faktor2,
-              })
-              .then(function (response) {
-                // self.loadingDownload = false;
-                self.ticketUrl2 = response.data.data.linkticket;
-                self.setTicketInfo2("id_request", response.data.data);
-                // handle success
-              })
-              .catch(function (error) {
-                // handle error
-                // self.loadingDownload = false;
-                self.alertText =
-                  "پرداخت کامل انجام شده  و  پرواز رفت رزرو شده اما رزرو پرواز برگشت با شماره فاکتور  " +
-                  self.$route.query.id_faktor2 +
-                  " موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
-                self.alertType = "error";
-                self.showAlert = true;
-                console.log(error);
-              });
-            // self.addToDatabase(first);
-          } else if (self.$route.query.PNR2) {
-            self.setTicketInfo1("pnr", first);
-            let next = await self.ETIssueJS(
-              self.$route.query.AirLine2,
-              self.$route.query.PNR2
-            );
-            self.setTicketInfo2("pnr", next);
-            // self.addToDatabase(first, next);
-          } else {
+          // پرواز رفت رزرو شد
+          if (!self.$route.query.id_request2 && !self.$route.query.PNR2) {
+            // پرواز یک طرفه است
             self.setTicketInfo1("pnr", first, "end");
+          } else {
+            // پرواز دو طرفه است
+            self.setTicketInfo1("pnr", first);
           }
         } else {
-          self.alertText =
-            "پرداخت انجام شده اما رزرو پرواز ها موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
-          self.alertType = "error";
-          self.showAlert = true;
+          self.loadingDownload = false;
+          // پرواز رفت رزرو نشد
+          if (!self.$route.query.id_request2 && !self.$route.query.PNR2) {
+            // پرواز یک طرفه است
+            self.alertText =
+              "پرداخت انجام شده اما رزرو پرواز موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+            self.alertType = "error";
+            self.showAlert = true;
+          } else if (self.$route.query.id_request2 || self.$route.query.PNR2) {
+            // پرواز دو طرفه است
+            self.alertText =
+              "پرداخت کامل انجام شده اما رزرو پرواز  رفت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+            self.alertType = "error";
+            self.showAlert = true;
+          }
+        }
+        if (self.$route.query.id_request2) {
+          axios
+            .post("https://panel.ahuantours.com/api/Ch724/BuyTicket", {
+              id_request: self.$route.query.id_request2,
+              id_faktor: self.$route.query.id_faktor2,
+            })
+            .then(function (response) {
+              // self.loadingDownload = false;
+              self.ticketUrl2 = response.data.data.linkticket;
+              if (response.data.data.linkticket) {
+                self.setTicketInfo2("id_request", response.data.data);
+                if (first) {
+                  self.alertText = "رزرو پرواز رفت و برگشت با موفقیت کامل شد.";
+                  self.alertType = "success";
+                  self.showAlert = true;
+                } else {
+                  self.alertText =
+                    "پرداخت کامل انجام شده اما رزرو پرواز رفت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+                  self.alertType = "error";
+                  self.showAlert = true;
+                }
+              } else {
+                if (first) {
+                  self.alertText =
+                    "پرداخت کامل انجام شده اما رزرو پرواز برگشت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+                  self.alertType = "error";
+                  self.showAlert = true;
+                } else {
+                  self.alertText =
+                    "پرداخت انجام شده اما رزرو پروازها موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+                  self.alertType = "error";
+                  self.showAlert = true;
+                }
+              }
+
+              // handle success
+            })
+            .catch(function (error) {
+              // handle error
+              // self.loadingDownload = false;
+              self.alertText =
+                "پرداخت کامل انجام شده  و  پرواز رفت رزرو شده اما رزرو پرواز برگشت با شماره فاکتور  " +
+                self.$route.query.id_faktor2 +
+                " موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+              self.alertType = "error";
+              self.showAlert = true;
+              console.log(error);
+            });
+          // self.addToDatabase(first);
+        } else if (self.$route.query.PNR2) {
+          let next = await self.ETIssueJS(
+            self.$route.query.AirLine2,
+            self.$route.query.PNR2
+          );
+          if (next) {
+            self.setTicketInfo2("pnr", next);
+            if (first) {
+              self.alertText = "رزرو پرواز رفت و برگشت با موفقیت کامل شد.";
+              self.alertType = "success";
+              self.showAlert = true;
+            } else {
+              self.alertText =
+                "پرداخت کامل انجام شده اما رزرو پرواز رفت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+              self.alertType = "error";
+              self.showAlert = true;
+            }
+          } else {
+            if (first) {
+              self.alertText =
+                "پرداخت کامل انجام شده اما رزرو پرواز برگشت موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+              self.alertType = "error";
+              self.showAlert = true;
+            } else {
+              self.alertText =
+                "پرداخت انجام شده اما رزرو پروازها موفقیت آمیز نبود.لطفا به پشتیبانی اطلاع دهید.";
+              self.alertType = "error";
+              self.showAlert = true;
+            }
+          }
+
+          // self.addToDatabase(first, next);
         }
       }
     },
     setTicketInfo1(type, info, isend) {
       if (type == "pnr") {
-        this.informationObject.contractFlights[0].charterFlight = false;
         this.informationObject.contractFlights[0].description = "nira";
-        for (let i = 0; i < info.Tickets.length; i++) {
-          let name = info.Tickets[i].PassengerET.split(":");
-          let ticketNo = name[1];
-          name = name[0].split("/");
-          let family = name[0];
-          name = name[1];
-          let indexPassenger =
-            this.informationObject.contractPassengers.findIndex(
-              (x) =>
-                x.fName.toLocaleUpperCase() == name &&
-                x.lName.toLocaleUpperCase() == family
-            );
-          if (indexPassenger != "-1") {
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].goTicketNumber = ticketNo;
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].goTicketPNR = this.$route.query.PNR1;
-            this.informationObject.contractPassengers[indexPassenger].price =
-              this.informationObject.contractPassengers[indexPassenger].age ==
-              "ADL"
-                ? info.AdultTP
-                : this.informationObject.contractPassengers[indexPassenger]
-                    .age == "CHD"
-                ? info.ChildTP
-                : info.InfantTP;
-            let findairline = this.$route.query.AirLine1;
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].goTicketUrl =
-              (findairline == "I3"
-                ? "http://ra.ataair.ir"
-                : findairline == "Y9"
-                ? "https://crs.kishairlines.ir"
-                : findairline == "QB"
-                ? "http://pra.qeshmairline.com"
-                : findairline == "HH"
-                ? "http://epay.taban.aero"
-                : findairline == "EP"
-                ? "http://ra.iaa.ir"
-                : findairline == "ZV"
-                ? "http://ra.zagrosairlines.com"
-                : findairline == "NV"
-                ? "http://pra.karunair.ir"
-                : findairline == "JI"
-                ? "http://ra.meraj.aero"
-                : findairline == "VR"
-                ? "http://vr.nirasoft.ir"
-                : findairline == "IRZ"
-                ? "http://ra.sahaair.com/"
-                : findairline == "FP"
-                ? "http://fp.nirasoft.ir"
-                : findairline == "IV"
-                ? "http://ra.caspianairlines.com"
-                : findairline == "IS"
-                ? ""
-                : findairline == "A1"
-                ? ""
-                : findairline == "RI"
-                ? ""
-                : findairline == "W5"
-                ? ""
-                : findairline == "IR"
-                ? ""
-                : findairline == "PA"
-                ? ""
-                : findairline == "PY"
-                ? ""
-                : findairline == "B9"
-                ? ""
-                : findairline == "A7"
-                ? ""
-                : "") +
-              "/TicketPrint.aspx?PNR=" +
-              this.$route.query.PNR1 +
-              "&TicketNo=" +
-              ticketNo +
-              "&OC=" +
-              (findairline == "I3"
-                ? "THR155"
-                : findairline == "Y9"
-                ? "THR100"
-                : findairline == "QB"
-                ? "THR166"
-                : findairline == "HH"
-                ? "THR168"
-                : findairline == "EP"
-                ? "THR100"
-                : findairline == "ZV"
-                ? "THR197"
-                : findairline == "NV"
-                ? "THR100"
-                : findairline == "JI"
-                ? "THR158"
-                : findairline == "VR"
-                ? "THR215"
-                : findairline == "IRZ"
-                ? "THR140"
-                : findairline == "FP"
-                ? "THR106"
-                : findairline == "IV"
-                ? "THR100"
-                : findairline == "IS"
-                ? ""
-                : findairline == "A1"
-                ? ""
-                : findairline == "RI"
-                ? ""
-                : findairline == "W5"
-                ? ""
-                : findairline == "IR"
-                ? ""
-                : findairline == "PA"
-                ? ""
-                : findairline == "PY"
-                ? ""
-                : findairline == "B9"
-                ? ""
-                : findairline == "A7"
-                ? ""
-                : "") +
-              "&lang=FA";
-
-            console.log();
+        if (info.Tickets) {
+          for (let i = 0; i < info.Tickets.length; i++) {
+            let name = info.Tickets[i].PassengerET.split(":");
+            let ticketNo = name[1];
+            name = name[0].split("/");
+            let family = name[0];
+            name = name[1];
+            let indexPassenger =
+              this.informationObject.contractPassengers.findIndex(
+                (x) =>
+                  x.fName.toLocaleUpperCase() == name &&
+                  x.lName.toLocaleUpperCase() == family
+              );
+            if (indexPassenger != "-1") {
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].goTicketNumber = ticketNo;
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].goTicketPNR = this.$route.query.PNR1;
+              this.informationObject.contractPassengers[indexPassenger].price =
+                this.informationObject.contractPassengers[indexPassenger].age ==
+                "ADL"
+                  ? info.AdultTP
+                  : this.informationObject.contractPassengers[indexPassenger]
+                      .age == "CHD"
+                  ? info.ChildTP
+                  : info.InfantTP;
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].description = "confirm";
+              let findairline = this.$route.query.AirLine1;
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].goTicketUrl =
+                (findairline == "I3"
+                  ? "http://ra.ataair.ir"
+                  : findairline == "Y9"
+                  ? "https://crs.kishairlines.ir"
+                  : findairline == "QB"
+                  ? "http://pra.qeshmairline.com"
+                  : findairline == "HH"
+                  ? "http://epay.taban.aero"
+                  : findairline == "EP"
+                  ? "http://ra.iaa.ir"
+                  : findairline == "ZV"
+                  ? "http://ra.zagrosairlines.com"
+                  : findairline == "NV"
+                  ? "http://pra.karunair.ir"
+                  : findairline == "JI"
+                  ? "http://ra.meraj.aero"
+                  : findairline == "VR"
+                  ? "http://vr.nirasoft.ir"
+                  : findairline == "IRZ"
+                  ? "http://ra.sahaair.com/"
+                  : findairline == "FP"
+                  ? "http://fp.nirasoft.ir"
+                  : findairline == "IV"
+                  ? "http://ra.caspianairlines.com"
+                  : findairline == "IS"
+                  ? ""
+                  : findairline == "A1"
+                  ? ""
+                  : findairline == "RI"
+                  ? ""
+                  : findairline == "W5"
+                  ? ""
+                  : findairline == "IR"
+                  ? ""
+                  : findairline == "PA"
+                  ? ""
+                  : findairline == "PY"
+                  ? ""
+                  : findairline == "B9"
+                  ? ""
+                  : findairline == "A7"
+                  ? ""
+                  : "") +
+                "/TicketPrint.aspx?PNR=" +
+                this.$route.query.PNR1 +
+                "&TicketNo=" +
+                ticketNo +
+                "&OC=" +
+                (findairline == "I3"
+                  ? "THR155"
+                  : findairline == "Y9"
+                  ? "THR100"
+                  : findairline == "QB"
+                  ? "THR166"
+                  : findairline == "HH"
+                  ? "THR168"
+                  : findairline == "EP"
+                  ? "THR100"
+                  : findairline == "ZV"
+                  ? "THR197"
+                  : findairline == "NV"
+                  ? "THR100"
+                  : findairline == "JI"
+                  ? "THR158"
+                  : findairline == "VR"
+                  ? "THR215"
+                  : findairline == "IRZ"
+                  ? "THR140"
+                  : findairline == "FP"
+                  ? "THR106"
+                  : findairline == "IV"
+                  ? "THR100"
+                  : findairline == "IS"
+                  ? ""
+                  : findairline == "A1"
+                  ? ""
+                  : findairline == "RI"
+                  ? ""
+                  : findairline == "W5"
+                  ? ""
+                  : findairline == "IR"
+                  ? ""
+                  : findairline == "PA"
+                  ? ""
+                  : findairline == "PY"
+                  ? ""
+                  : findairline == "B9"
+                  ? ""
+                  : findairline == "A7"
+                  ? ""
+                  : "") +
+                "&lang=FA";
+            }
           }
         }
+
         if (isend) {
+          this.loadingDownload = false;
           this.addToDatabase();
         }
-      } else if (type == "id_request") {
-        this.informationObject.contractFlights[0].charterFlight = true;
+      } else if (this.informationObject && type == "id_request") {
         this.informationObject.contractFlights[0].description = "chr724";
         for (let i = 0; i < info.passenger_info.length; i++) {
           let name = info.passenger_info[i].fname;
@@ -1058,52 +1144,30 @@ export default {
             ].goTicketPNR = this.$route.query.id_faktor1;
             this.informationObject.contractPassengers[indexPassenger].price =
               info.passenger_info[i].real_price;
-            //   console.log();
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].description = "confirm";
           }
         }
         if (isend) {
+          this.loadingDownload = false;
           this.addToDatabase();
         }
       }
     },
     setTicketInfo2(type, info) {
       if (type == "pnr") {
-        this.informationObject.contractFlights[1].charterFlight = false;
         this.informationObject.contractFlights[1].description = "nira";
-        for (let i = 0; i < info.Tickets.length; i++) {
-          let name = info.Tickets[i].PassengerET.split(":");
-          let ticketNo = name[1];
-          name = name[0].split("/");
-          let family = name[0];
-          name = name[1];
-          let indexPassenger =
-            this.informationObject.contractPassengers.findIndex(
-              (x) =>
-                x.fName.toLocaleUpperCase() == name &&
-                x.lName.toLocaleUpperCase() == family
-            );
-          if (indexPassenger != "-1") {
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].retTicketNumber = ticketNo;
-
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].retTicketPNR = this.$route.query.PNR2;
-
-            this.informationObject.contractPassengers[indexPassenger].price2 =
-              this.informationObject.contractPassengers[indexPassenger].age ==
-              "ADL"
-                ? info.AdultTP
-                : this.informationObject.contractPassengers[indexPassenger]
-                    .age == "CHD"
-                ? info.ChildTP
-                : info.InfantTP;
+        if (info.Tickets) {
+          for (let i = 0; i < info.Tickets.length; i++) {
             let findairline = this.$route.query.AirLine2;
-            this.informationObject.contractPassengers[
-              indexPassenger
-            ].reTicketUrl =
-              (findairline == "I3"
+            let name = info.Tickets[i].PassengerET.split(":");
+            let ticketNo = name[1];
+            name = name[0].split("/");
+            let family = name[0];
+            name = name[1];
+            let baseurl =
+              findairline == "I3"
                 ? "http://ra.ataair.ir"
                 : findairline == "Y9"
                 ? "https://crs.kishairlines.ir"
@@ -1145,13 +1209,9 @@ export default {
                 ? ""
                 : findairline == "A7"
                 ? ""
-                : "") +
-              "/TicketPrint.aspx?PNR=" +
-              this.$route.query.PNR2 +
-              "&TicketNo=" +
-              ticketNo +
-              "&OC=" +
-              (findairline == "I3"
+                : "";
+            let officeCode =
+              findairline == "I3"
                 ? "THR155"
                 : findairline == "Y9"
                 ? "THR100"
@@ -1193,13 +1253,53 @@ export default {
                 ? ""
                 : findairline == "A7"
                 ? ""
-                : "") +
+                : "";
+
+            let retTicketUrl =
+              baseurl +
+              "/TicketPrint.aspx?PNR=" +
+              this.$route.query.PNR2 +
+              "&TicketNo=" +
+              ticketNo +
+              "&OC=" +
+              officeCode +
               "&lang=FA";
+            let indexPassenger =
+              this.informationObject.contractPassengers.findIndex(
+                (x) =>
+                  x.fName.toLocaleUpperCase() == name &&
+                  x.lName.toLocaleUpperCase() == family
+              );
+            if (indexPassenger != "-1") {
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].retTicketNumber = ticketNo;
+
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].retTicketPNR = this.$route.query.PNR2;
+
+              this.informationObject.contractPassengers[indexPassenger].price2 =
+                this.informationObject.contractPassengers[indexPassenger].age ==
+                "ADL"
+                  ? info.AdultTP
+                  : this.informationObject.contractPassengers[indexPassenger]
+                      .age == "CHD"
+                  ? info.ChildTP
+                  : info.InfantTP;
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].description = "confirm";
+
+              this.informationObject.contractPassengers[
+                indexPassenger
+              ].retTicketUrl = retTicketUrl;
+            }
           }
         }
+        this.loadingDownload = false;
         this.addToDatabase();
       } else if (type == "id_request") {
-        this.informationObject.contractFlights[1].charterFlight = true;
         this.informationObject.contractFlights[1].description = "chr724";
         for (let i = 0; i < info.passenger_info.length; i++) {
           let name = info.passenger_info[i].fname;
@@ -1215,6 +1315,7 @@ export default {
             this.informationObject.contractPassengers[
               indexPassenger
             ].retTicketNumber = ticketNo;
+
             this.informationObject.contractPassengers[
               indexPassenger
             ].retTicketPNR = this.$route.query.id_faktor2;
@@ -1223,9 +1324,12 @@ export default {
             ].retTicketUrl = info.linkticket;
             this.informationObject.contractPassengers[indexPassenger].price2 =
               info.passenger_info[i].real_price;
-            //   console.log();
+            this.informationObject.contractPassengers[
+              indexPassenger
+            ].description = "confirm";
           }
         }
+        this.loadingDownload = false;
         this.addToDatabase();
       }
     },
@@ -1296,7 +1400,6 @@ export default {
         axios
           .get("https://panel.ahuantours.com/api/Nira/ETIssue?" + testText)
           .then(function (response) {
-            console.log(response);
             let rtData = self.RT(airline, PNR);
             // this.addToDatabase(rtData);
             resolve(rtData);
@@ -1336,64 +1439,70 @@ export default {
               "&Complete=y"
           )
           .then(function (res) {
-            for (let i = 0; i < res.data.Tickets.length; i++) {
-              // let findTicketnumber =
-              // res.data.Tickets.find(x => x.)
-              let findBabyName = "";
-              let findBabyFamily = "";
-              if (!res.data.Passengers[i]) {
-                findBabyName = res.data.Tickets[i].PassengerET.split(":");
-                findBabyName = findBabyName[0].split(" ");
-                findBabyName = findBabyName[1].split("/");
-                findBabyFamily = findBabyName[1];
-                findBabyName = findBabyName[0];
+            if (res.data.Tickets.length) {
+              for (let i = 0; i < res.data.Tickets.length; i++) {
+                // let findTicketnumber =
+                // res.data.Tickets.find(x => x.)
+                let findBabyName = "";
+                let findBabyFamily = "";
+                if (!res.data.Passengers[i]) {
+                  findBabyName = res.data.Tickets[i].PassengerET.split(":");
+                  findBabyName = findBabyName[0].split(" ");
+                  findBabyName = findBabyName[1].split("/");
+                  findBabyFamily = findBabyName[1];
+                  findBabyName = findBabyName[0];
+                }
+                self.Passengers.push({
+                  Destination: res.data.Segments[0].Destination,
+                  Origin: res.data.Segments[0].Origin,
+                  OriginAprt: self.AllpersianCityes.find(
+                    (x) => x.id == res.data.Segments[0].Origin
+                  ).airport,
+                  DestinationAprt: self.AllpersianCityes.find(
+                    (x) => x.id == res.data.Segments[0].Destination
+                  ).airport,
+                  FlightClass: res.data.Segments[0].FlightClass,
+                  FlightNo: res.data.Segments[0].FlightNo,
+                  JourneyType: res.data.Segments[0].JourneyType,
+                  AirCraftType: res.data.Segments[0].AirCraftType,
+                  DepartureDT: res.data.Segments[0].DepartureDT.split(" "),
+                  PassenferAgeType: res.data.Passengers[i]
+                    ? res.data.Passengers[i].PassenferAgeType
+                    : "{INF}",
+                  PassenferFirstName: res.data.Passengers[i]
+                    ? res.data.Passengers[i].PassenferFirstName
+                    : findBabyName,
+                  PassenferLastName: res.data.Passengers[i]
+                    ? res.data.Passengers[i].PassenferLastName
+                    : findBabyFamily,
+                  ETStatus: res.data.Tickets[i].ETStatus,
+
+                  Ticket: res.data.Tickets[i].PassengerET.split(":"),
+
+                  PNR: PNR,
+                  ticketType: "s",
+                  airline: airline,
+                  bookTime:
+                    new Date().getHours() + ":" + new Date().getMinutes(),
+                  bookDate: new Date().toLocaleDateString("fa"),
+                  longDateTime1: new Date(
+                    res.data.Segments[0].DepartureDT
+                  ).toLocaleDateString("fa"),
+                  price: !res.data.Passengers[i]
+                    ? res.data.InfantTP
+                    : res.data.Passengers[i].PassenferAgeType == "{Adult}"
+                    ? res.data.AdultTP
+                    : res.data.Passengers[i].PassenferAgeType == "{Child}"
+                    ? res.data.ChildTP
+                    : res.data.InfantTP,
+                });
+                // self.loadingDownload = findFinish;
               }
-              self.Passengers.push({
-                Destination: res.data.Segments[0].Destination,
-                Origin: res.data.Segments[0].Origin,
-                OriginAprt: self.AllpersianCityes.find(
-                  (x) => x.id == res.data.Segments[0].Origin
-                ).airport,
-                DestinationAprt: self.AllpersianCityes.find(
-                  (x) => x.id == res.data.Segments[0].Destination
-                ).airport,
-                FlightClass: res.data.Segments[0].FlightClass,
-                FlightNo: res.data.Segments[0].FlightNo,
-                JourneyType: res.data.Segments[0].JourneyType,
-                AirCraftType: res.data.Segments[0].AirCraftType,
-                DepartureDT: res.data.Segments[0].DepartureDT.split(" "),
-                PassenferAgeType: res.data.Passengers[i]
-                  ? res.data.Passengers[i].PassenferAgeType
-                  : "{INF}",
-                PassenferFirstName: res.data.Passengers[i]
-                  ? res.data.Passengers[i].PassenferFirstName
-                  : findBabyName,
-                PassenferLastName: res.data.Passengers[i]
-                  ? res.data.Passengers[i].PassenferLastName
-                  : findBabyFamily,
-                ETStatus: res.data.Tickets[i].ETStatus,
-
-                Ticket: res.data.Tickets[i].PassengerET.split(":"),
-
-                PNR: PNR,
-                ticketType: "s",
-                airline: airline,
-                bookTime: new Date().getHours() + ":" + new Date().getMinutes(),
-                bookDate: new Date().toLocaleDateString("fa"),
-                longDateTime1: new Date(
-                  res.data.Segments[0].DepartureDT
-                ).toLocaleDateString("fa"),
-                price: !res.data.Passengers[i]
-                  ? res.data.InfantTP
-                  : res.data.Passengers[i].PassenferAgeType == "{Adult}"
-                  ? res.data.AdultTP
-                  : res.data.Passengers[i].PassenferAgeType == "{Child}"
-                  ? res.data.ChildTP
-                  : res.data.InfantTP,
-              });
-              // self.loadingDownload = findFinish;
+              resolve(res.data);
+            } else {
+              resolve(false);
             }
-            resolve(res.data);
+
             //     let findObject = res.data.Tickets.find(
             //       (x) =>
             //         x.PassengerET.toLowerCase() ==
@@ -1451,16 +1560,16 @@ export default {
       this.informationObject.ticketStatus = "confirm";
       this.informationObject.confirmStatus = "confirm";
       this.informationObject.ipAddress = localStorage.getItem("ipAddress");
-      this.informationObject.issueDate =
-        String(new Date().getFullYear()) +
-        "-" +
-        (String(new Date().getMonth() + 1).length == 2
-          ? String(new Date().getMonth() + 1)
-          : "0" + String(new Date().getMonth() + 1)) +
-        "-" +
-        (String(new Date().getDate()).length == 2
-          ? String(new Date().getDate())
-          : "0" + String(new Date().getDate()));
+      // this.informationObject.issueDate =
+      //   String(new Date().getFullYear()) +
+      //   "-" +
+      //   (String(new Date().getMonth() + 1).length == 2
+      //     ? String(new Date().getMonth() + 1)
+      //     : "0" + String(new Date().getMonth() + 1)) +
+      //   "-" +
+      //   (String(new Date().getDate()).length == 2
+      //     ? String(new Date().getDate())
+      //     : "0" + String(new Date().getDate()));
 
       let self = this;
       axios
@@ -1781,7 +1890,6 @@ export default {
       //       }
       //     });
       // }
-      // // console.log(arrayPnr);
     },
     getInformations() {
       let self = this;
@@ -1800,11 +1908,14 @@ export default {
     },
   },
   async mounted() {
-    fetch("https://api.ipify.org?format=json")
-      .then((x) => x.json())
-      .then(({ ip }) => {
-        localStorage.setItem("ipAddress", ip);
-      });
+    if (!localStorage.getItem("ipAddress")) {
+      fetch("https://api.ipify.org?format=json")
+        .then((x) => x.json())
+        .then(({ ip }) => {
+          localStorage.setItem("ipAddress", ip);
+        });
+    }
+
     let self = this;
     if (localStorage.getItem("charterToken")) {
       axios.defaults.headers.common["Authorization"] =

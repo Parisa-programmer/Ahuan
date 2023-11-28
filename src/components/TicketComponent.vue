@@ -75,6 +75,7 @@ export default {
       stepunahutorize: 1,
       thehourDuration: 0,
       theMinuteDuration: 0,
+      stepFunction: 0,
     };
   },
   name: "ticket-component",
@@ -108,6 +109,7 @@ export default {
       this.sortedTickets = this.tickets;
     },
     async $route(to, from) {
+      this.stepFunction = 0;
       this.ticket = [];
       this.faildTickets = [];
       this.sortedTickets = [];
@@ -922,14 +924,7 @@ export default {
           for (let i = 0; i < this.ticket.length; i++) {
             if (
               this.ticket[i].Airline == object.Airline &&
-              this.ticket[i].FlightNo == object.FlightNo
-            ) {
-              // console.log(this.ticket[i].price, object.price);
-            }
-
-            if (
-              this.ticket[i].Airline == object.Airline &&
-              this.ticket[i].FlightNo == object.FlightNo &&
+              this.ticket[i].DepartureTime == object.DepartureTime &&
               this.ticket[i].price == object.price
             ) {
               wasBefore = true;
@@ -1085,8 +1080,15 @@ export default {
             self.ticket[0].ArrivalTime
           );
         } else {
-          self.thehourDuration = 0;
-          self.theMinuteDuration = 0;
+          if (self.faildTickets[0]) {
+            await self.getDurationTime(
+              self.faildTickets[0].DepartureTime,
+              self.faildTickets[0].ArrivalTime
+            );
+          } else {
+            self.thehourDuration = 0;
+            self.theMinuteDuration = 0;
+          }
         }
         await self.getFlightsCh724(airline, airlineCode);
         await self.sortTickets(self.sortTab);
@@ -1162,7 +1164,7 @@ export default {
     changeTicket(event) {
       if (this.rezervStep != event + 1) {
         this.rezervStep = event + 1;
-        self.setCharterToken();
+        this.setCharterToken();
         this.checkAsync();
       }
       this.$emit("changeTicket", this.rezervStep);
@@ -1204,9 +1206,11 @@ export default {
     },
   },
   async mounted() {
+    // if ((this.$route.query && !this.$route.query.rt) || !this.$route.query) {
     this.charterToken = await this.getToken();
-    localStorage.setItem("charterToken", this.charterToken);
     this.setCharterToken();
+    // }
+
     setTimeout(() => {
       if (this.$route.query.path) {
         if (this.$route.query.rt != undefined) {

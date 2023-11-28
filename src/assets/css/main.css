@@ -18,6 +18,24 @@ html {
   /* scroll-behavior: smooth; */
 }
 
+.vpd-wrapper.vpd-is-popover[data-placement="bottom-right"] .vpd-container,
+.vpd-wrapper.vpd-is-popover[data-placement="top-right"] .vpd-container {
+  top: 0 !important;
+  left: 0 !important;
+  bottom: unset !important;
+}
+
+.ac_results {
+  background-color: white;
+  border: 1px solid #c5dbec;
+  overflow: hidden;
+  padding: 0;
+  z-index: 99999;
+  position: fixed;
+  top: 0px;
+  margin: 20px 0px 0px 0px; /* The top margin defines the offset of textbox */
+}
+
 .v-data-table__progress .v-progress-linear__indeterminate.long.primary,
 .v-data-table__progress .v-progress-linear__indeterminate.short.primary {
   background-color: #e3c8af !important;
