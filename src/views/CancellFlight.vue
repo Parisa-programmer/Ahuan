@@ -1,7 +1,7 @@
 <template>
   <div class="mt-6 mt-md-12 pt-12 heightAll relative">
     <v-img class="backImage " src="@/assets/image/cancell-flight.jpg" alt="" />
-    <v-form ref="flightForm" lazy-validation>
+    <v-form ref="flightForm" lazy-validation  name="flightForm">
       <v-row align="center" class="absolute heightAll widthAll" style="top:-50px">
         <div class=" pt-6 px-6 rounded-lg white" style="width:80%;max-width:700px ;margin: 0 10% ">
           <v-row>
@@ -315,6 +315,14 @@ export default {
           user: "",
           pass: "",
         },
+        {
+          text: "یزدایر",
+          value: "yazdair",
+          url: "yazdair",
+          oc: "",
+          user: "",
+          pass: "",
+        },
       ],
       nameRules: [
         (v) => !!v || "پر کردن فیلد نام اجباریست.",
@@ -580,6 +588,8 @@ export default {
             ? ""
             : airline.value == "A7"
             ? ""
+            : airline.value == "yazdair"
+            ? "yazdair"
             : "";
 
         window.open(

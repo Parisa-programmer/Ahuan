@@ -57,7 +57,7 @@
     <!-- input box -->
     <v-row class="mb-12" justify="center" v-show="showSection">
       <div class="indexDiv">
-        <v-form ref="headerInputForm" lazy-validation>
+        <v-form ref="headerInputForm" lazy-validation name="headerInputForm">
           <v-card
             v-if="selectedSection.title == 'پرواز'"
             elevation="1"

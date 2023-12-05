@@ -42,6 +42,7 @@
       :Passenger="Passenger"
       :choosedTicket="allChoosedTickets"
       :tickets="allChoosedTickets"
+      @getAllprice="getAllprice($event)"
       @unahutorize="getToken()"
       v-if="nextPage"
       @changeTicket="
@@ -132,6 +133,12 @@ export default {
   },
   computed: {},
   methods: {
+    getAllprice(event) {
+      // console.log(event);
+      this.allChoosedTickets[event.index].allprice =event.price
+      console.log(this.allChoosedTickets);
+      // this.allPrice = event;
+    },
     setCharterToken() {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + this.charterToken;
@@ -205,6 +212,8 @@ export default {
                   ? "ایرتور"
                   : result[i].iatA_code == "A7"
                   ? "آساجت"
+                  : result[i].iatA_code == "yazdair"
+                  ? "یزدایر"
                   : "";
               let finalPrice = result[i].price_final;
               let chrObject = {
@@ -535,6 +544,8 @@ export default {
                     ? "ایرتور"
                     : getDataAvailabel[i].Airline == "A7"
                     ? "آساجت"
+                    : getDataAvailabel[i].Airline == "yazdair"
+                    ? "یزدایر"
                     : "";
                 // getDataAvailabel[i].Airline =
                 let DepartureDateTime =
@@ -1053,7 +1064,8 @@ export default {
       let self = this;
       self.stepFunction = step ? step : 0;
       async function asyncCall(airline, airlineCode, user, pass) {
-        let result = await self.getFlights(
+        if (self.stepFunction < 12 ){
+          let result = await self.getFlights(
           airline,
           airlineCode,
           user,
@@ -1069,9 +1081,11 @@ export default {
           }
         }
         self.stepFunction = self.stepFunction + 1;
-        if (self.stepFunction >= 11 || proxy) {
+        if (self.stepFunction == 11 || proxy) {
           asyncCallCh724();
         }
+        }
+        
       }
       async function asyncCallCh724(airline, airlineCode) {
         if (self.ticket[0]) {

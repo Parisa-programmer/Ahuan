@@ -2,6 +2,12 @@
   <v-container class="pt-12 mt-12">
     <v-row class="pt-12 mt-12">
       <v-col class="pt-12 mt-12">
+        <v-text-field
+                    filled
+                    class="grey"
+                  ></v-text-field>
+      </v-col>
+      <v-col class="pt-12 mt-12">
         <v-autocomplete
           v-model="inputValue"
           :items="suggestions"

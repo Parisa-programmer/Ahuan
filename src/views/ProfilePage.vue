@@ -886,6 +886,7 @@ export default {
                       year: "numeric",
                     }),
                     time: duc.contractFlights[k].time,
+                    dateTime:duc.contractFlights[k].date && ((duc.contractFlights[k].date).split('T'))[0] + 'T' + duc.contractFlights[k].time + ':00',
                     flightNumber: duc.contractFlights[k].flightNumber,
                     flightType:
                       duc.contractFlights[k].charterFlight == true
@@ -942,6 +943,8 @@ export default {
                         ? "B9"
                         : duc.contractFlights[k].airlineId == 218
                         ? "A7"
+                        : duc.contractFlights[k].airlineId == 'yazdair'
+                        ? "yazdair"
                         : "000",
                     airline:
                       duc.contractFlights[k].airlineId == 489

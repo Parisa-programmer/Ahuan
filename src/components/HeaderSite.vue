@@ -61,7 +61,7 @@
               type="chip"
               :loading="isLoading"
             >
-              <router-link to="/" class="text-decoration-none">
+              <router-link to="/flight" class="text-decoration-none">
                 <span
                   class="ml-2 ml-md-3 ml-lg-5 mb-2 mb-0"
                   @click="
@@ -72,40 +72,6 @@
                   >پرواز
                 </span>
               </router-link>
-              <div class="absolute show-sub-menu" style="right: -58%">
-                <v-list nav dense style="">
-                  <div class="">
-                    <v-list-item class="cursorPointer titleHeader py-0">
-                      <router-link
-                        to="/"
-                        style="text-decoration: none"
-                        class="topMenu"
-                      >
-                        <v-list-item-title
-                          class="topMenu pl-2 pl-2 d-flex"
-                          style="font-weight: bold"
-                        >
-                          رزرو پرواز
-                        </v-list-item-title>
-                      </router-link>
-                    </v-list-item>
-                    <v-list-item class="cursorPointer titleHeader py-0">
-                      <router-link
-                        to="/cancell-flight"
-                        style="text-decoration: none"
-                        class="topMenu"
-                      >
-                        <v-list-item-title
-                          class="topMenu pl-2 pl-2 d-flex"
-                          style="font-weight: bold"
-                        >
-                          چاپ مجدد/کنسل کردن بلیط
-                        </v-list-item-title>
-                      </router-link>
-                    </v-list-item>
-                  </div>
-                </v-list>
-              </div>
             </v-skeleton-loader>
           </v-skeleton-loader>
           <v-skeleton-loader
@@ -392,7 +358,7 @@
                 v-model="activePage"
                 active-class="red--text text--accent-4 "
               >
-                <router-link to="/" class="text-decoration-none">
+                <router-link to="/flight" class="text-decoration-none">
                   <v-list-item
                     @click="
                       showMenuSmall = false;
@@ -747,7 +713,7 @@
           </div>
         </v-row>
         <v-row v-show="loginStep == 1" justify="center">
-          <v-form ref="loginForm" lazy-validation>
+          <v-form ref="loginForm" lazy-validation name="headerformname">
             <div v-if="UserType == 1">
               <v-text-field
                 v-if="loginType == 'register'"
@@ -892,7 +858,7 @@
           </v-form>
         </v-row>
         <v-row v-if="loginStep == 2 && UserType != 2" justify="center">
-          <v-form ref="loginOtpForm" lazy-validation>
+          <v-form ref="loginOtpForm" lazy-validation name="loginOtpForm">
             <span
               class="body-2 text-center d-block"
               style="font-family: Byekan !important"

@@ -11,7 +11,7 @@
         z-index: 22;
       "
     >
-      <v-form ref="nextPageForm" lazy-validation>
+      <v-form ref="nextPageForm" lazy-validation name="nextPageForm">
         <div class="indexDiv my-4">
           <v-row justify="center" align="center">
             <v-card class="pa-2" style="margin-top: 110px">
@@ -157,7 +157,7 @@
                     clsss="grey"
                     :rules="familyRules"
                     v-model="user.family"
-                    @keydown.tab.prevent="focusAutocomplete('nationality')"
+                    @keydown.tab.prevent="focusAutocomplete('nationality' + i)"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -168,12 +168,14 @@
                 >
                   <label for="" class="mr-2">ملیت</label>
                   <v-select
-                    ref="nationality"
+                    :ref="'nationality' + i"
                     :rules="emptyRules"
                     color="white"
                     class="font-small-xs"
                     :items="nationalities"
                     v-model="user.nationality"
+                    @keydown.tab.prevent="focusAutocomplete2(i)"
+                    @change="focusAutocomplete2(i)"
                   ></v-select>
                 </v-col>
                 <v-col
@@ -185,12 +187,14 @@
                 >
                   <label for="" class="mr-4">کد ملی</label>
                   <v-text-field
+                    :ref="'nationalityCode' + i"
                     filled
                     clsss="grey"
                     pattern="\d*"
                     type="number"
                     v-model="user.nationalityCode"
                     :rules="nationalNumberRules"
+                    @keydown.tab.prevent="focusAutocomplete('genders' + i)"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-4 py-2" v-else>
@@ -205,11 +209,14 @@
                 <v-col cols="12" sm="6" md="4" class="px-3 py-2">
                   <label for="" class="mr-2">جنسیت</label>
                   <v-select
+                    :ref="'genders' + i"
                     color="white"
                     class="font-small-xs"
                     :items="genders"
                     v-model="user.gender"
                     :rules="emptyRules"
+                    @keydown.tab.prevent="focusAutocomplete('birthdateDay' + i)"
+                    @change="focusAutocomplete('birthdateDay' + i)"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" class="px-2 px-lg-3 py-2">
@@ -219,28 +226,43 @@
                       <v-select
                         color="white"
                         placeholder="روز"
-                        @change="checkAges()"
+                        @change="
+                          checkAges();
+                          focusAutocomplete('birthdateMonth' + i);
+                        "
                         class="font-small-xs user-date"
                         :items="dateDays"
                         v-model="user.birthdayDay"
                         :rules="emptyRules"
                         hide-details
+                        :ref="'birthdateDay' + i"
+                        @keydown.tab.prevent="
+                          focusAutocomplete('birthdateMonth' + i)
+                        "
                       ></v-select>
                     </v-col>
                     <v-col class="px-1">
                       <v-select
+                        :ref="'birthdateMonth' + i"
                         color="white"
                         placeholder="ماه"
                         class="font-small-xs"
-                        @change="checkAges()"
+                        @change="
+                          checkAges();
+                          focusAutocomplete('birthdateYear' + i);
+                        "
                         :items="dateMonthsPersian"
                         v-model="user.birthdayMonth"
                         :rules="emptyRules"
                         hide-details
+                        @keydown.tab.prevent="
+                          focusAutocomplete('birthdateYear' + i)
+                        "
                       ></v-select>
                     </v-col>
                     <v-col class="px-1">
                       <v-select
+                        :ref="'birthdateYear' + i"
                         color="white"
                         placeholder="سال"
                         @change="checkAges()"
@@ -827,7 +849,7 @@
                       وجود ندارد!
                     </h5>
                     <v-row justify="space-between">
-                      <v-form ref="acceptRulls">
+                      <v-form ref="acceptRulls" name="acceptRulls">
                         <v-checkbox
                           v-model="acceptRulls"
                           label="قوانین و مقررات خرید بلیط و سایت را مطالعه کرده و میپذیرم"
@@ -1051,6 +1073,7 @@ const $ = require("jquery");
 export default {
   data() {
     return {
+      interval1: "",
       captchaCode1: "",
       captchaIdReq1: "",
       captchaCode2: "",
@@ -1248,14 +1271,24 @@ export default {
   computed: {},
   methods: {
     focusAutocomplete(rftype) {
-      let reftype = rftype;
-      switch (reftype) {
-        case "nationality":
-          this.$refs.nationality.focus();
-          break;
-        default:
-          break;
-      }
+      // let reftype = rftype;
+      // switch (reftype) {
+      //   case "nationality":
+      this.$refs[rftype][0].isMenuActive = true;
+      this.$refs[rftype][0].focus();
+      //   break;
+      // default:
+      //   break;
+      // }
+    },
+    focusAutocomplete2(index) {
+      let text = "nationalityCode" + index;
+
+      setTimeout(() => {
+        if (this.$refs[text] && this.$refs[text][0]) {
+          this.$refs[text][0].focus();
+        }
+      }, 500);
     },
     validateBookStep() {
       if (this.$refs.nextPageForm.validate()) {
@@ -1375,9 +1408,7 @@ export default {
               self.choosedTicket[1].reserveType == "Chr724"
             ) {
               bankprice =
-                parseInt(
-                  self.choosedTicket[0].allprice.replace(/,/g, "") * 10
-                ) +
+                parseInt(self.choosedTicket[0].allprice.replace(/,/g, "")) +
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
             } else {
               bankprice = parseInt(
@@ -1520,7 +1551,7 @@ export default {
           id_faktor: paramsReservation.id_faktor,
         })
         .then(function (res) {
-          console.log(res);
+          //
         })
         .catch(function (error) {});
     },
@@ -1592,7 +1623,15 @@ export default {
           }
           self.loadingReserve = false;
         })
-        .catch(function (error) {});
+        .catch(function (error) {
+          self.alertText = "error!";
+          self.alertType = "error";
+          self.loadingReserve = false;
+          self.showAlert = true;
+          setTimeout(() => {
+            self.showAlert = false;
+          }, 3000);
+        });
     },
     reserveTicket(step) {
       var self = this;
@@ -1600,6 +1639,7 @@ export default {
         if (!this.captchaCode1) {
           self.alertText = "لطفا کد احراز هویت را وارد کنید";
           self.alertType = "error";
+          self.loadingReserve = false;
           self.showAlert = true;
           setTimeout(() => {
             self.showAlert = false;
@@ -1640,14 +1680,12 @@ export default {
                 self.users[i].name.replace(/\s/g, "") +
                 (self.users[i].gender == "خانم" ? "MS" : "MR"),
               lnamefa:
-                self.users[i].family.replace(/\s/g, "") +
-                (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                self.users[i].family.replace(/\s/g, ""),
               fnameen:
                 self.users[i].name.replace(/\s/g, "") +
                 (self.users[i].gender == "خانم" ? "MS" : "MR"),
               lnameen:
-                self.users[i].family.replace(/\s/g, "") +
-                (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                self.users[i].family.replace(/\s/g, "") ,
               gender: self.users[i].gender == "خانم" ? 2 : 1,
               nationality: this.users[i].nationality == "ایرانی" ? 1 : 0,
               passengerCode: self.users[i].nationalityCode,
@@ -1763,6 +1801,13 @@ export default {
                       })
                       .catch(function (error) {
                         // handle error
+                        self.alertText = "error!";
+                        self.alertType = "error";
+                        self.loadingReserve = false;
+                        self.showAlert = true;
+                        setTimeout(() => {
+                          self.showAlert = false;
+                        }, 3000);
                         console.log(error);
                       });
                   }
@@ -1848,6 +1893,13 @@ export default {
             })
             .catch(function (error) {
               // handle error
+              self.alertText = "error!";
+              self.alertType = "error";
+              self.loadingReserve = false;
+              self.showAlert = true;
+              setTimeout(() => {
+                self.showAlert = false;
+              }, 3000);
               console.log(error);
             });
         }
@@ -2052,14 +2104,12 @@ export default {
                           self.users[i].name.replace(/\s/g, "") +
                           (self.users[i].gender == "خانم" ? "MS" : "MR"),
                         lnamefa:
-                          self.users[i].family.replace(/\s/g, "") +
-                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                          self.users[i].family.replace(/\s/g, "") ,
                         fnameen:
                           self.users[i].name.replace(/\s/g, "") +
                           (self.users[i].gender == "خانم" ? "MS" : "MR"),
                         lnameen:
-                          self.users[i].family.replace(/\s/g, "") +
-                          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+                          self.users[i].family.replace(/\s/g, ""),
                         gender: self.users[i].gender == "خانم" ? 2 : 1,
                         nationality:
                           self.users[i].nationality == "ایرانی" ? 1 : 0,
@@ -2147,6 +2197,13 @@ export default {
                       })
                       .catch(function (error) {
                         // handle error
+                        self.alertText = "error!";
+                        self.alertType = "error";
+                        self.loadingReserve = false;
+                        self.showAlert = true;
+                        setTimeout(() => {
+                          self.showAlert = false;
+                        }, 3000);
                         console.log(error);
                       });
                   } else {
@@ -2276,7 +2333,6 @@ export default {
             .catch(function (error) {
               // handle error
 
-              // console.log("عملیات رزرو ناموفق بود!");
               // self.loadingReserve = false;
               let errorText = "";
               console.log(error);
@@ -2327,7 +2383,8 @@ export default {
         let theObjectForPush = {
           id: 0,
           contractId: 0,
-          fName: self.users[i].name.replace(/\s/g, ""),
+          fName: self.users[i].name.replace(/\s/g, "") + 
+          (self.users[i].gender == "خانم" ? "MS" : "MR"),
           lName: self.users[i].family.replace(/\s/g, ""),
           age:
             self.users[i].ageType == "old"
@@ -2429,6 +2486,8 @@ export default {
             ? 256
             : stepfindip == "A7"
             ? 218
+            : stepfindip == "yazdair"
+            ? 'yazdair'
             : "000";
         allFlights.push({
           contractId: 0,
@@ -2673,25 +2732,25 @@ export default {
             (localStorage.getItem("credit") == "noLimit" ||
               localStorage.getItem("credit") >= price)
           ) {
-            // window.location.href =
-            //   url + "responseData=" + res.data.id + "&price=" + price + "&";
+            window.location.href =
+              url + "responseData=" + res.data.id + "&price=" + price + "&";
           } else {
-            // axios
-            //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
-            //     amount: price,
-            //     revertUrl: url + "responseData=" + res.data.id + "&",
-            //   })
-            //   .then(function (response) {
-            //     self.formshaparak.bankToken = response.data;
-            //     self.bookStep = 6;
-            //     setTimeout(() => {
-            //       self.$refs.formshaparak.submit();
-            //     }, 1000);
-            //   })
-            //   .catch(function (error) {
-            //     // handle error
-            //     console.log(error);
-            //   });
+            axios
+              .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
+                amount: price,
+                revertUrl: url + "responseData=" + res.data.id + "&",
+              })
+              .then(function (response) {
+                self.formshaparak.bankToken = response.data;
+                self.bookStep = 6;
+                setTimeout(() => {
+                  self.$refs.formshaparak.submit();
+                }, 1000);
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
           }
         })
         .catch(function (error) {
@@ -2975,7 +3034,6 @@ export default {
         .catch(function (error) {
           // handle error
 
-          // console.log("عملیات رزرو ناموفق بود!");
           let errorText = "";
           console.log(error);
           // if (error.response && error.response.status == 403) {
@@ -3141,7 +3199,6 @@ export default {
             if (step == 1)
               // handle error
               console.log(error);
-            console.log("عملیات رزرو ناموفق بود!");
           });
       });
     },
@@ -3166,7 +3223,10 @@ export default {
       this.$emit("changeTicket", event);
     },
     getAllprice(event) {
-      this.allPrice = event;
+      // console.log(event);
+      // this.choosedTicket[event.index].allprice =event.price
+      this.$emit("getAllprice", event);
+      // this.allPrice = event;
     },
     separatePrice(number) {
       let value1 = number.toString().replace(/,/g, "");
@@ -3183,6 +3243,7 @@ export default {
     },
   },
   mounted() {
+   
     let peapelesNumber =
       Number(this.$route.query.adl) +
       Number(this.$route.query.chd) +
@@ -3206,6 +3267,9 @@ export default {
     }
 
     this.setDates();
+  },
+  beforeunmount() {
+    
   },
 };
 </script>

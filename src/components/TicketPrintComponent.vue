@@ -258,6 +258,8 @@
                               ? "ایرتور"
                               : item.airline == "A7"
                               ? "آساجت"
+                              : item.airline == "yazdair"
+                              ? "یزدایر"
                               : ""
                           }}
                         </td>
@@ -306,6 +308,8 @@
                                 ? require('@/assets/image/لوگوی_ایرتور.png')
                                 : item.airline == 'A7'
                                 ? require('@/assets/image/لوگوی_آساجت.png')
+                                : item.airline == 'yazdair'
+                                ? require('@/assets/image/لوگوی_یزدایر.png')
                                 : ''
                             "
                             alt=""
@@ -446,6 +450,8 @@
                                       : item.airline == 'B9'
                                       ? ''
                                       : item.airline == 'A7'
+                                      ? ''
+                                      : item.airline == 'yazdair'
                                       ? ''
                                       : '') +
                                     '/TicketPrint.aspx?PNR=' +

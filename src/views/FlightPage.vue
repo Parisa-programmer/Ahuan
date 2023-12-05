@@ -787,6 +787,10 @@ export default {
             label: "آساجت",
             value: "A7",
           },
+          {
+            label: "یزدایر",
+            value: "yazdair",
+          },
         ],
         airline: [],
         typeItems: [

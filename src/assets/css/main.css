@@ -16,7 +16,7 @@
 
 html {
   /* scroll-behavior: smooth; */
-}
+}  
 
 .vpd-wrapper.vpd-is-popover[data-placement="bottom-right"] .vpd-container,
 .vpd-wrapper.vpd-is-popover[data-placement="top-right"] .vpd-container {
@@ -317,6 +317,10 @@ ul li::before {
   display: inline-block;
   width: 1em;
   margin-right: -1em;
+}
+
+.menueLi::before {
+  content: "";
 }
 
 .text-right button,

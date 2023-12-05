@@ -79,6 +79,8 @@
                       ? require('@/assets/image/لوگوی_ایرتور.png')
                       : item.Airline == 'A7'
                       ? require('@/assets/image/لوگوی_آساجت.png')
+                      : item.Airline == 'yazdair'
+                      ? require('@/assets/image/لوگوی_یزدایر.png')
                       : ''
                   "
                   alt=""
@@ -185,7 +187,7 @@
                     <span class=""> قیمت </span>
                     <br />
                     <h3 class="mb-3 d-inline-block">
-                      {{ separatePrice(item.price / 10) }}
+                      {{ separatePrice(Math.round(item.price / 10)) }}
                     </h3>
                     <h3
                       class="mb-3 d-inline-block mr-2"
@@ -231,7 +233,6 @@
                       "
                       @click="
                         choosedTicketNumber = i;
-                        setAllPrice(item);
                         activeTab = 0;
                         ticketDetailsModal = true;
                         choosedTicket = item;
@@ -287,7 +288,29 @@
             تغییر پرواز انتخابی
           </v-btn>
         </v-row>
-        <v-tabs width="300" v-model="activeTab" class="mt-6 mt-sm-2" flat>
+        <v-tabs
+          v-if="choosedTicket.reserveType == 'Chr724'"
+          width="300"
+          v-model="activeTab"
+          class="mt-6 mt-sm-2"
+          flat
+        >
+          <v-tabs-slider color="red"></v-tabs-slider>
+          <v-tab
+            style="width: fit-content"
+            v-for="item in ticketDetailsTabs2"
+            :key="item"
+          >
+            {{ item }}
+          </v-tab>
+        </v-tabs>
+        <v-tabs
+          v-else
+          width="300"
+          v-model="activeTab"
+          class="mt-6 mt-sm-2"
+          flat
+        >
           <v-tabs-slider color="red"></v-tabs-slider>
           <v-tab
             style="width: fit-content"
@@ -327,20 +350,41 @@
                               style="transform: rotate(225deg)"
                               >mdi-airplane</v-icon
                             >
-                            <h4 class="blue--text text--darken-1 mr-md-3">
+                            <h4
+                              v-if="choosedTicket.Origin"
+                              class="blue--text text--darken-1 mr-md-3"
+                            >
                               {{
                                 (chooseStep == 1 && !isNextPage) ||
                                 (isNextPage && choosedTicketNumber == 0)
                                   ? "پرواز رفت" +
                                     " (" +
-                                    choosedTicket.originCity +
+                                    (choosedTicket.originCity
+                                      ? choosedTicket.originCity
+                                      : AllpersianCityes.find(
+                                          (x) => x.id == choosedTicket.Origin
+                                        ).text) +
                                     " - " +
-                                    choosedTicket.destinationInternal +
+                                    (choosedTicket.destinationInternal
+                                      ? choosedTicket.destinationInternal
+                                      : AllpersianCityes.find(
+                                          (x) =>
+                                            x.id == choosedTicket.Destination
+                                        ).text) +
                                     ")"
                                   : "پرواز برگشت (" +
-                                    choosedTicket.destinationInternal +
+                                    (choosedTicket.originCity
+                                      ? choosedTicket.originCity
+                                      : AllpersianCityes.find(
+                                          (x) => x.id == choosedTicket.Origin
+                                        ).text) +
                                     " - " +
-                                    choosedTicket.originCity +
+                                    (choosedTicket.destinationInternal
+                                      ? choosedTicket.destinationInternal
+                                      : AllpersianCityes.find(
+                                          (x) =>
+                                            x.id == choosedTicket.Destination
+                                        ).text) +
                                     " )"
                               }}
                             </h4>
@@ -429,14 +473,30 @@
                                   >mdi-circle</v-icon
                                 >
                                 <span
+                                  v-if="
+                                    choosedTicket.Origin ||
+                                    choosedTicket.originCity
+                                  "
                                   class="body-2 grey--text text--darken-1"
                                   style="font-family: Byekan !important"
                                 >
-                                  {{ choosedTicket.originCity }}
+                                  {{
+                                    choosedTicket.originCity
+                                      ? choosedTicket.originCity
+                                      : AllpersianCityes.find(
+                                          (x) => x.id == choosedTicket.Origin
+                                        ).text
+                                  }}
                                   <span
                                     class="grey--text text--darken-1 d-none d-md-inline-block"
                                   >
-                                    ،({{ choosedTicket.airport1 }})
+                                    ،({{
+                                      choosedTicket.airport1
+                                        ? choosedTicket.airport1
+                                        : AllpersianCityes.find(
+                                            (x) => x.id == choosedTicket.Origin
+                                          ).airport
+                                    }})
                                   </span>
                                 </span>
                               </v-row>
@@ -480,13 +540,31 @@
                                   >mdi-circle</v-icon
                                 >
                                 <span
+                                  v-if="
+                                    choosedTicket.destinationInternal ||
+                                    choosedTicket.Destination
+                                  "
                                   class="body-2 grey--text text--darken-1"
                                   style="font-family: Byekan !important"
-                                  >{{ choosedTicket.destinationInternal }}
+                                  >{{
+                                    choosedTicket.destinationInternal
+                                      ? choosedTicket.destinationInternal
+                                      : AllpersianCityes.find(
+                                          (x) =>
+                                            x.id == choosedTicket.Destination
+                                        ).text
+                                  }}
                                   <span
                                     class="grey--text text--darken-1 d-none d-md-inline-block"
                                   >
-                                    ،({{ choosedTicket.airport2 }})
+                                    ،({{
+                                      choosedTicket.airport2
+                                        ? choosedTicket.airport2
+                                        : AllpersianCityes.find(
+                                            (x) =>
+                                              x.id == choosedTicket.Destination
+                                          ).airport
+                                    }})
                                   </span>
                                 </span>
                               </v-row>
@@ -549,6 +627,8 @@
                                           ? require('@/assets/image/لوگوی_ایرتور.png')
                                           : choosedTicket.Airline == 'A7'
                                           ? require('@/assets/image/لوگوی_آساجت.png')
+                                          : choosedTicket.Airline == 'yazdair'
+                                          ? require('@/assets/image/لوگوی_یزدایر.png')
                                           : ''
                                       "
                                       class="mr-sm-2 white"
@@ -662,7 +742,9 @@
                         <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
                           {{
                             separatePrice(
-                              choosedTicket.fare.AdultTotalPrice / 10
+                              Math.round(
+                                choosedTicket.fare.AdultTotalPrice / 10
+                              )
                             )
                           }}
                         </v-col>
@@ -683,7 +765,9 @@
                           <span>
                             {{
                               separatePrice(
-                                choosedTicket.fare.ChildTotalPrice / 10
+                                Math.round(
+                                  choosedTicket.fare.ChildTotalPrice / 10
+                                )
                               )
                             }}
                           </span>
@@ -704,7 +788,9 @@
                         <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
                           {{
                             separatePrice(
-                              choosedTicket.fare.InfantTotalPrice / 10
+                              Math.round(
+                                choosedTicket.fare.InfantTotalPrice / 10
+                              )
                             )
                           }}
                         </v-col>
@@ -714,7 +800,148 @@
                       v-if="choosedTicket.fare"
                       class="text-center mt-6 red--text"
                     >
-                      مجموع {{ setAllPrice(choosedTicket.fare) }} تومان
+                      مجموع
+                      {{setAllPrice(choosedTicket.fare) }} تومان
+                    </h3>
+                    <span
+                      class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
+                      style="font-family: Byekan !important"
+                      >ظرفیت
+                      {{
+                        choosedTicket.capacity == "A"
+                          ? "+9"
+                          : choosedTicket.capacity
+                      }}
+                      نفر
+                    </span>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item>
+            <v-card class="mt-sm-8 py-4" flat>
+              <v-row>
+                <v-col cols="12" md="9" class="">
+                  <v-row align="center" class="">
+                    <v-col cols="12" sm="6" md="4" lg="3" class="mb-sm-2">
+                      <div class="grey lighten-3 rounded-lg ma-sm-4 pa-4">
+                        <v-row class="">
+                          <span
+                            class="caption font-weight-bold blue--text d-block"
+                            style="font-family: Byekan !important"
+                            >{{ choosedTicket.originCity }} به
+                            {{ choosedTicket.destinationInternal }}</span
+                          >
+                        </v-row>
+                        <v-row class="">
+                          <span
+                            class="caption font-weight-bold blue--text d-block"
+                            style="font-family: Byekan !important"
+                            >شماره پرواز {{ choosedTicket.FlightNo }}</span
+                          >
+                        </v-row>
+                        <h3 class="mt-2">
+                          بزرگسال :
+                          {{
+                            choosedTicket.fare
+                              ? choosedTicket.fare.BaggageAllowanceWeight
+                              : "20 Kg"
+                          }}
+                        </h3>
+                      </div>
+                    </v-col>
+                    <!-- <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3> -->
+                  </v-row>
+                </v-col>
+                <v-col
+                  v-if="Passenger && Passenger[0]"
+                  cols="12"
+                  md="3"
+                  class=""
+                >
+                  <v-card
+                    flat
+                    class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12"
+                  >
+                    <div class="blue--text text--darken-1 text-center">
+                      جزییات قیمت (تومان)
+                    </div>
+                    <div
+                      class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
+                    >
+                      <v-row align="center">
+                        <v-col cols="5"
+                          >{{ Passenger[0].peaple }} بزرگسال</v-col
+                        >
+                        <v-col cols="2" class="">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          {{
+                            separatePrice(
+                              Math.round(
+                                choosedTicket.fare.AdultTotalPrice / 10
+                              )
+                            )
+                          }}
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div
+                      v-if="Passenger[0].child > 0"
+                      class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
+                    >
+                      <v-row>
+                        <v-col cols="5">{{ Passenger[0].child }} کودک</v-col>
+                        <v-col cols="2">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          <span>
+                            {{
+                              separatePrice(
+                                Math.round(
+                                  choosedTicket.fare.ChildTotalPrice / 10
+                                )
+                              )
+                            }}
+                          </span>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div
+                      v-if="Passenger[0].baby > 0"
+                      class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
+                    >
+                      <v-row>
+                        <v-col cols="5">{{ Passenger[0].baby }} نوزاد</v-col>
+                        <v-col cols="2">
+                          <v-row justify="center">
+                            <v-icon small>mdi-close</v-icon>
+                          </v-row>
+                        </v-col>
+                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
+                          {{
+                            separatePrice(
+                              Math.round(
+                                choosedTicket.fare.InfantTotalPrice / 10
+                              )
+                            )
+                          }}
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <h3
+                      v-if="choosedTicket.fare"
+                      class="text-center mt-6 red--text"
+                    >
+                      مجموع
+                      {{ setAllPrice(choosedTicket.fare) }} تومان
                     </h3>
                     <span
                       class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
@@ -836,7 +1063,9 @@
                         <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
                           {{
                             separatePrice(
-                              choosedTicket.fare.AdultTotalPrice / 10
+                              Math.round(
+                                choosedTicket.fare.AdultTotalPrice / 10
+                              )
                             )
                           }}
                         </v-col>
@@ -857,7 +1086,9 @@
                           <span>
                             {{
                               separatePrice(
-                                choosedTicket.fare.ChildTotalPrice / 10
+                                Math.round(
+                                  choosedTicket.fare.ChildTotalPrice / 10
+                                )
                               )
                             }}
                           </span>
@@ -878,140 +1109,9 @@
                         <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
                           {{
                             separatePrice(
-                              choosedTicket.fare.InfantTotalPrice / 10
-                            )
-                          }}
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <h3
-                      v-if="choosedTicket.fare"
-                      class="text-center mt-6 red--text"
-                    >
-                      مجموع {{ setAllPrice(choosedTicket.fare) }} تومان
-                    </h3>
-                    <span
-                      class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
-                      style="font-family: Byekan !important"
-                      >ظرفیت
-                      {{
-                        choosedTicket.capacity == "A"
-                          ? "+9"
-                          : choosedTicket.capacity
-                      }}
-                      نفر
-                    </span>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item>
-            <v-card class="mt-sm-8 py-4" flat>
-              <v-row>
-                <v-col cols="12" md="9" class="">
-                  <v-row align="center" class="">
-                    <v-col cols="12" sm="6" md="4" lg="3" class="mb-sm-2">
-                      <div class="grey lighten-3 rounded-lg ma-sm-4 pa-4">
-                        <v-row class="">
-                          <span
-                            class="caption font-weight-bold blue--text d-block"
-                            style="font-family: Byekan !important"
-                            >{{ choosedTicket.originCity }} به
-                            {{ choosedTicket.destinationInternal }}</span
-                          >
-                        </v-row>
-                        <v-row class="">
-                          <span
-                            class="caption font-weight-bold blue--text d-block"
-                            style="font-family: Byekan !important"
-                            >شماره پرواز {{ choosedTicket.FlightNo }}</span
-                          >
-                        </v-row>
-                        <h3 class="mt-2">
-                          بزرگسال :
-                          {{
-                            choosedTicket.fare
-                              ? choosedTicket.fare.BaggageAllowanceWeight
-                              : "20 Kg"
-                          }}
-                        </h3>
-                      </div>
-                    </v-col>
-                    <!-- <h3 class="grey--text">اطلاعاتی برای نمایش یافت نشد!</h3> -->
-                  </v-row>
-                </v-col>
-                <v-col
-                  v-if="Passenger && Passenger[0]"
-                  cols="12"
-                  md="3"
-                  class=""
-                >
-                  <v-card
-                    flat
-                    class="grey lighten-3 py-4 rounded-lg ticketDetailsTabs px-sm-12 px-md-4 px-lg-12"
-                  >
-                    <div class="blue--text text--darken-1 text-center">
-                      جزییات قیمت (تومان)
-                    </div>
-                    <div
-                      class="mt-6 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
-                    >
-                      <v-row align="center">
-                        <v-col cols="5"
-                          >{{ Passenger[0].peaple }} بزرگسال</v-col
-                        >
-                        <v-col cols="2" class="">
-                          <v-row justify="center">
-                            <v-icon small>mdi-close</v-icon>
-                          </v-row>
-                        </v-col>
-                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
-                          {{
-                            separatePrice(
-                              choosedTicket.fare.AdultTotalPrice / 10
-                            )
-                          }}
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <div
-                      v-if="Passenger[0].child > 0"
-                      class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
-                    >
-                      <v-row>
-                        <v-col cols="5">{{ Passenger[0].child }} کودک</v-col>
-                        <v-col cols="2">
-                          <v-row justify="center">
-                            <v-icon small>mdi-close</v-icon>
-                          </v-row>
-                        </v-col>
-                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
-                          <span>
-                            {{
-                              separatePrice(
-                                choosedTicket.fare.ChildTotalPrice / 10
+                              Math.round(
+                                choosedTicket.fare.InfantTotalPrice / 10
                               )
-                            }}
-                          </span>
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <div
-                      v-if="Passenger[0].baby > 0"
-                      class="mt-4 mx-6 mx-sm-12 mx-md-0 px-sm-12 px-md-0 font-small-xs"
-                    >
-                      <v-row>
-                        <v-col cols="5">{{ Passenger[0].baby }} نوزاد</v-col>
-                        <v-col cols="2">
-                          <v-row justify="center">
-                            <v-icon small>mdi-close</v-icon>
-                          </v-row>
-                        </v-col>
-                        <v-col v-if="choosedTicket.fare" cols="5" class="ltr">
-                          {{
-                            separatePrice(
-                              choosedTicket.fare.InfantTotalPrice / 10
                             )
                           }}
                         </v-col>
@@ -1021,7 +1121,8 @@
                       v-if="choosedTicket.fare"
                       class="text-center mt-6 red--text"
                     >
-                      مجموع {{ setAllPrice(choosedTicket.fare) }} تومان
+                      مجموع
+                      {{setAllPrice(choosedTicket.fare) }} تومان
                     </h3>
                     <span
                       class="d-block widthAll text-center green--text caption font-weight-bold mt-2"
@@ -1079,7 +1180,11 @@ export default {
     async choosedTicket() {
       this.choosedTicket.allprice = this.setAllPrice(this.choosedTicket.fare);
       this.$emit("changeChoosedTicket", this.choosedTicket);
-      this.$emit("getAllprice", this.choosedTicket.allprice);
+      let emitobject = {
+        index: this.choosedTicketNumber,
+        price: this.choosedTicket.allprice,
+      };
+      this.$emit("getAllprice", emitobject);
     },
     showAlert() {
       setTimeout(() => {
@@ -1573,7 +1678,8 @@ export default {
     alertText: "",
     ticketDetailsModal: false,
     activeTab: 0,
-    ticketDetailsTabs: ["جزییات پرواز", "قوانین استرداد", "بار مجاز"],
+    ticketDetailsTabs: ["جزییات پرواز", "بار مجاز", "قوانین استرداد"],
+    ticketDetailsTabs2: ["جزییات پرواز", "بار مجاز"],
     nextPage: false,
     panelDetails: 0,
     choosedTicket: {},
@@ -1671,10 +1777,17 @@ export default {
       if (inf > 0) {
         allPrice = allPrice + inf * object.InfantTotalPrice;
       }
-      allPrice = this.separatePrice(allPrice / 10);
+
+      allPrice = this.separatePrice( Math.round(allPrice / 10));
       this.choosedTicket.allprice = allPrice;
-      this.$emit("getAllprice", this.choosedTicket.allprice);
+      let emitobject = {
+        index: this.choosedTicketNumber,
+        price: this.choosedTicket.allprice,
+      };
+      this.$emit("getAllprice", emitobject);
+      // if(Number(allPrice)){
       return allPrice;
+      // }
     },
     returnCRCNRules(stringText) {
       this.CRCNRules = [];

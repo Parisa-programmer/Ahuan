@@ -34,7 +34,7 @@
     </v-row>
     <v-row justify="center" class="grey lighten-2">
       <div class="indexDiv">
-        <v-form ref="sendTextForm" lazy-validation>
+        <v-form ref="sendTextForm" lazy-validation name="sendTextForm">
           <v-card outlined class="my-6">
             <v-row align="center">
               <h4 class="ma-3">

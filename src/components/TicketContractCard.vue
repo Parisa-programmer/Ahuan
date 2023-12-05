@@ -220,10 +220,10 @@
             </template>
             <template v-slot:[`item.action`]="{ item }">
               <v-row justify="center">
-                <!--  -->
+                
                 <v-btn
                   :loading="item.loadingCancellButton"
-                  :disabled="!item.ticketNumber"
+                  :disabled="!item.ticketNumber || (item.dateTime && new Date(item.dateTime).getTime() < new Date().getTime())"
                   @click="cancellticket(item)"
                   outlined
                   color="#DEB788"

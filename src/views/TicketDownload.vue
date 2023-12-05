@@ -1062,6 +1062,8 @@ export default {
                   ? ""
                   : findairline == "A7"
                   ? ""
+                  : findairline == "yazdair"
+                  ? ""
                   : "") +
                 "/TicketPrint.aspx?PNR=" +
                 this.$route.query.PNR1 +
@@ -1109,6 +1111,8 @@ export default {
                   : findairline == "B9"
                   ? ""
                   : findairline == "A7"
+                  ? ""
+                  : findairline == "yazdair"
                   ? ""
                   : "") +
                 "&lang=FA";
@@ -1209,6 +1213,8 @@ export default {
                 ? ""
                 : findairline == "A7"
                 ? ""
+                : findairline == "yazdair"
+                ? ""
                 : "";
             let officeCode =
               findairline == "I3"
@@ -1252,6 +1258,8 @@ export default {
                 : findairline == "B9"
                 ? ""
                 : findairline == "A7"
+                ? ""
+                : findairline == "yazdair"
                 ? ""
                 : "";
 

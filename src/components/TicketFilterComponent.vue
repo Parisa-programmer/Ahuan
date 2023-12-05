@@ -406,6 +406,11 @@ export default {
             value: "A7",
             src: require("@/assets/image/لوگوی_آساجت.png"),
           },
+          {
+            label: "یزدایر",
+            value: "yazdair",
+            src: require("@/assets/image/لوگوی_یزدایر.png"),
+          },
         ],
         airline: [],
         typeItems: [

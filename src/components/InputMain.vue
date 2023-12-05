@@ -28,7 +28,7 @@
     <!-- input box -->
     <v-row class="mb-12" justify="center" v-show="(showSection && windowWidth < 600) || windowWidth >= 600">
       <div class="indexDiv">
-        <v-form ref="headerInputForm" lazy-validation>
+        <v-form ref="headerInputForm" lazy-validation name="headerInputForm4">
           <v-card v-show="selectedSection.title != 'بیمه' && selectedSection.title != 'قطار' && selectedSection.title != 'اتوبوس' && selectedSection.title != 'هتل'" elevation="1" class=" rounded-lg px-sm-4 py-2 py-sm-4 py-md-6">
             <v-row>
               <v-col cols="12" sm="5" md="4" lg="3"
@@ -90,8 +90,9 @@
                     <v-col cols="5"
                       v-if="selectedSection.title != 'هتل' && selectedSection.title != 'تور' && selectedSection.title != 'آهوان'"
                       class="originCityParent relative">
-                      <v-autocomplete :disabled="loading"
-                        :menu-props="{ closeOnClick: true, bottom: false, offsetY: true }" location="end"
+                      <v-autocomplete :disabled="loading" location='bottom'
+                        :menu-props="{ closeOnClick: true, bottom: true
+                          , offsetY: true , location:'bottom',locationStrategy:'static',updateLocation : false}" location-strategy='static'
                         v-model="originCity" id="originCity" ref="originCity" :rules="emptyRules2"
                         :items="external ? otherCityesOrigin : persianCityes" :search-input.sync="originSearchInput"
                         :label="byReturn != 3 ? 'مبدا' : 'مبدا اول'" class="relative font-small-xs hideArrow headerCityes"
@@ -2773,6 +2774,15 @@ export default {
           // // self.date1 = [self.$route.query.start, self.$route.query.end]
           // // self.changeDate1(self.date1)
         }
+      } else{
+        self.headerRooms = [
+            {
+              peaple: 1,
+              child: 0,
+              baby: 0,
+            },
+          ];
+          self.$emit("getPasanger", self.headerRooms);
       }
     },
   },
