@@ -551,7 +551,7 @@ export default {
             : airline.value == "Y9"
             ? "https://crs.kishairlines.ir"
             : airline.value == "QB"
-            ? "http://pra.qeshmairline.com"
+            ? "http://pra.qeshm-air.com"
             : airline.value == "IS"
             ? ""
             : airline.value == "HH"

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
+import VuePersianDatetimePicker from 'vue-persian-datetime-picker'; //https://talkhabi.github.io/vue-persian-datetime-picker/guide/events.html
 Vue.component('date-picker', VuePersianDatetimePicker);
 import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
 

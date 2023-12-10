@@ -414,7 +414,7 @@
                                       : item.airline == 'Y9'
                                       ? 'https://crs.kishairlines.ir'
                                       : item.airline == 'QB'
-                                      ? 'http://pra.qeshmairline.com'
+                                      ? 'http://pra.qeshm-air.com'
                                       : item.airline == 'HH'
                                       ? 'http://epay.taban.aero'
                                       : item.airline == 'EP'

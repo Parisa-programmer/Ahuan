@@ -283,7 +283,7 @@
                   <span class="grey--text text--darken-1">امتیاز</span>
                   <span class="grey--text text--darken-1">0</span>
                 </v-row>
-                <v-row justify="space-between" class="pr-9 pl-1 mt-3">
+                <v-row justify="space-between" class="pr-6 pl-1 mt-3">
                   <span class="grey--text text--darken-1">موجودی کیف پول</span>
                   <span class="grey--text text--darken-1">
                     {{
@@ -365,14 +365,16 @@
                 </v-row>
                 <v-row justify="space-between" class="px-2 px-sm-4 mt-3">
                   <span class="grey--text text--darken-1">موجودی کیف پول</span>
-                  <span class="grey--text text--darken-1"
-                    >0
+                  <span class="grey--text text--darken-1"> {{
+                      !credit ? "0 " : credit == "noLimit" ? "نامحدود" : credit
+                    }}</span>
+                 
                     <span
-                      class="caption grey--text"
+                      v-if="!credit"
+                      class="caption grey--text grey--text text--darken-1"
                       style="font-family: Byekan !important"
                       >تومان</span
-                    ></span
-                  >
+                    >
                 </v-row>
               </div>
             </v-row>
@@ -848,7 +850,6 @@ export default {
         .then(function (res) {
           let documents = res.data;
           let documentsArray = [];
-
           for (let i = 0; i < documents.length; i++) {
             let duc = documents[i];
             let day = new Date(documents[i].issueDate).getDay();

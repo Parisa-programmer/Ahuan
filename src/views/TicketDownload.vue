@@ -1025,7 +1025,7 @@ export default {
                   : findairline == "Y9"
                   ? "https://crs.kishairlines.ir"
                   : findairline == "QB"
-                  ? "http://pra.qeshmairline.com"
+                  ? "http://pra.qeshm-air.com"
                   : findairline == "HH"
                   ? "http://epay.taban.aero"
                   : findairline == "EP"
@@ -1176,7 +1176,7 @@ export default {
                 : findairline == "Y9"
                 ? "https://crs.kishairlines.ir"
                 : findairline == "QB"
-                ? "http://pra.qeshmairline.com"
+                ? "http://pra.qeshm-air.com"
                 : findairline == "HH"
                 ? "http://epay.taban.aero"
                 : findairline == "EP"
@@ -1394,7 +1394,17 @@ export default {
           self.showAlert = true;
         });
     },
-    setIpAddress() {},
+    setIpAddress() {
+      return new Promise((resolve) => {
+        fetch("https://api.ipify.org?format=json")
+        .then((x) => x.json())
+        .then(({ ip }) => {
+          localStorage.setItem("ipAddress", ip);
+           resolve() 
+          
+        });
+      });
+    },
     ETIssueJS(airline, PNR) {
       return new Promise((resolve) => {
         let testText =
@@ -1917,13 +1927,8 @@ export default {
   },
   async mounted() {
     if (!localStorage.getItem("ipAddress")) {
-      fetch("https://api.ipify.org?format=json")
-        .then((x) => x.json())
-        .then(({ ip }) => {
-          localStorage.setItem("ipAddress", ip);
-        });
+      await this.setIpAddress()
     }
-
     let self = this;
     if (localStorage.getItem("charterToken")) {
       axios.defaults.headers.common["Authorization"] =
@@ -1984,7 +1989,7 @@ export default {
           self.isReturnUrl = false;
           let self = this;
           let urlSendBank = self.$route.query.bankpnr2
-            ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
+          ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +
@@ -1994,7 +1999,7 @@ export default {
               self.$route.query.AirLine2 +
               "&Email=" +
               self.$route.query.Email
-            : "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              : "https://ahuan.ir/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +
