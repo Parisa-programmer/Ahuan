@@ -1076,7 +1076,7 @@ export default {
             params,
           })
           .then(function (response) {
-            if (response.data.AirCancelSeat[0].Done == "true") {
+            // if (response.data.AirCancelSeat[0].Done == "true") {
               axios
                 .get(
                   "https://panel.ahuantours.com/api/Nira/ETR?AirLine=" +
@@ -1088,9 +1088,11 @@ export default {
                   if (res.data.Fare) {
                     self.newInformations.Fare = res.data.Fare;
                     let KU = res.data.TAXES.find((x) => x.TaxCode == "KU");
-                    self.newInformations.KU == KU ? KU.TaxAmount : 0;
+                    
+                    self.newInformations.KU = KU ? KU.TaxAmount : 0;
                     let LP = res.data.TAXES.find((x) => x.TaxCode == "LP");
-                    self.newInformations.LP == LP ? LP.TaxAmount : 0;
+                    
+                    self.newInformations.LP = LP ? LP.TaxAmount : 0;
                     self.ETRefund();
                     // get self.newInformations.KU == ???   TaxAmount
                     // get self.newInformations.LP == ???   TaxCode
@@ -1100,15 +1102,15 @@ export default {
                   // handle error
                   console.log(error);
                 });
-            } else {
-              self.loadingButton = false;
-              self.alertText =
-                "عملیات با خطا مواجه شد.لطفا دوباره سعی کنید،یا باپشتیبانی تماس حاصل فرمائید.";
-              self.alertType = "error";
-              self.isCancellType = false;
-              self.loadingButton = false;
-              self.cancellModal = true;
-            }
+            // } else {
+            //   self.loadingButton = false;
+            //   self.alertText =
+            //     "عملیات با خطا مواجه شد.لطفا دوباره سعی کنید،یا باپشتیبانی تماس حاصل فرمائید.";
+            //   self.alertType = "error";
+            //   self.isCancellType = false;
+            //   self.loadingButton = false;
+            //   self.cancellModal = true;
+            // }
           })
           .catch(function (error) {
             // handle error
@@ -1140,7 +1142,7 @@ export default {
         Fare: self.newInformations.Fare,
         KU: self.newInformations.KU ? self.newInformations.KU : 0, //عوارض
         LP: self.newInformations.LP, //عوارض فرودگاهی
-        Penalty: self.choosedTicketRow.PENALTY,
+        Penalty: self.choosedTicketRow.PENALTY * 10,
       };
       axios
         .get("https://panel.ahuantours.com/api/Nira/ETRefund", {
@@ -1154,6 +1156,7 @@ export default {
             " ریال میباشد.";
           self.isCancellType = false;
           self.loadingButton = false;
+
           self.updateDatabase();
           self.cancellModal = true;
         })
