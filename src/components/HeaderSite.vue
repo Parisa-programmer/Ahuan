@@ -102,6 +102,7 @@
                       v-for="(group, i) in tours"
                       :key="i"
                       class="cursorPointer titleHeader py-0"
+                      :class="i == 2 && 'd-none'"
                     >
                       <router-link
                         :to="'/tour/' + group.id"

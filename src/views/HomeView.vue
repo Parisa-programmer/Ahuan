@@ -72,7 +72,7 @@
             ></v-carousel-item>
           </router-link>
           <v-carousel-item
-            height="300"
+height="300"
             :src="require('@/assets/image/slider-whole-world.jpg')"
           ></v-carousel-item>
         </v-carousel>

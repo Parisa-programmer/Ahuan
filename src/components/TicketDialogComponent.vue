@@ -1411,9 +1411,8 @@ export default {
                 parseInt(self.choosedTicket[0].allprice.replace(/,/g, "")) +
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
             } else {
-              bankprice = parseInt(
-                self.choosedTicket[0].allprice.replace(/,/g, "")
-              ) * 10;
+              bankprice =
+                parseInt(self.choosedTicket[0].allprice.replace(/,/g, "")) * 10;
             }
             axios
               .get("https://panel.ahuantours.com/api/Ch724/GetCharge")
@@ -2495,6 +2494,14 @@ export default {
               : self.PNR2
               ? self.PNR2
               : String(self.id_faktor2),
+          flightSupplier:
+            i == 0
+              ? self.PNR1
+                ? "nira"
+                : "chr724"
+              : self.PNR2
+              ? "nira"
+              : "chr724",
           requestId:
             i == 0
               ? self.captchaIdReq1
