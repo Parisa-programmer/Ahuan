@@ -365,16 +365,18 @@
                 </v-row>
                 <v-row justify="space-between" class="px-2 px-sm-4 mt-3">
                   <span class="grey--text text--darken-1">موجودی کیف پول</span>
-                  <span class="grey--text text--darken-1"> {{
-                      !credit ? "0 " : credit == "noLimit" ? "نامحدود" : credit
-                    }}</span>
-                 
-                    <span
-                      v-if="!credit"
-                      class="caption grey--text grey--text text--darken-1"
-                      style="font-family: Byekan !important"
-                      >تومان</span
-                    >
+                  <span class="grey--text text--darken-1">
+                    {{
+                      !credit ? "0" : credit == "noLimit" ? "نامحدود" : credit
+                    }}</span
+                  >
+
+                  <span
+                    v-if="!credit"
+                    class="caption grey--text grey--text text--darken-1"
+                    style="font-family: Byekan !important"
+                    >تومان</span
+                  >
                 </v-row>
               </div>
             </v-row>
@@ -871,7 +873,10 @@ export default {
                     fName: duc.contractPassengers[j].fName,
                     lName: duc.contractPassengers[j].lName,
                     RefundedAmount: 0,
-                    descriptionSeat: duc.contractPassengers[j].description,
+                    descriptionSeat:
+                      k == 0
+                        ? duc.contractPassengers[j].goTicketStatus
+                        : duc.contractPassengers[j].retTicketStatus,
                     georgianDate: duc.contractFlights[k].date,
                     age:
                       duc.contractPassengers[j].age == "ADL"
@@ -887,7 +892,12 @@ export default {
                       year: "numeric",
                     }),
                     time: duc.contractFlights[k].time,
-                    dateTime:duc.contractFlights[k].date && ((duc.contractFlights[k].date).split('T'))[0] + 'T' + duc.contractFlights[k].time + ':00',
+                    dateTime:
+                      duc.contractFlights[k].date &&
+                      duc.contractFlights[k].date.split("T")[0] +
+                        "T" +
+                        duc.contractFlights[k].time +
+                        ":00",
                     flightNumber: duc.contractFlights[k].flightNumber,
                     flightType:
                       duc.contractFlights[k].charterFlight == true
@@ -944,7 +954,7 @@ export default {
                         ? "B9"
                         : duc.contractFlights[k].airlineId == 218
                         ? "A7"
-                        : duc.contractFlights[k].airlineId == 'yazdair'
+                        : duc.contractFlights[k].airlineId == "yazdair"
                         ? "yazdair"
                         : "000",
                     airline:
@@ -1036,6 +1046,7 @@ export default {
                         ? require("@/assets/image/لوگوی_آساجت.png")
                         : "",
                     description: duc.contractFlights[k].description,
+                    flightSupplier: duc.contractFlights[k].flightSupplier,
                     price:
                       k == 0
                         ? duc.contractPassengers[j].price

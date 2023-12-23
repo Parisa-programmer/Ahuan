@@ -984,7 +984,7 @@ export default {
     },
     setTicketInfo1(type, info, isend) {
       if (type == "pnr") {
-        this.informationObject.contractFlights[0].description = "nira";
+        this.informationObject.contractFlights[0].flightSupplier = "nira";
         if (info.Tickets) {
           for (let i = 0; i < info.Tickets.length; i++) {
             let name = info.Tickets[i].PassengerET.split(":");
@@ -995,8 +995,8 @@ export default {
             let indexPassenger =
               this.informationObject.contractPassengers.findIndex(
                 (x) =>
-                  x.fName.toLocaleUpperCase() == name &&
-                  x.lName.toLocaleUpperCase() == family
+                  x.fName.toLocaleUpperCase() == name.toLocaleUpperCase() &&
+                  x.lName.toLocaleUpperCase() == family.toLocaleUpperCase()
               );
             if (indexPassenger != "-1") {
               this.informationObject.contractPassengers[
@@ -1015,7 +1015,7 @@ export default {
                   : info.InfantTP;
               this.informationObject.contractPassengers[
                 indexPassenger
-              ].description = "confirm";
+              ].goTicketStatus = "confirm";
               let findairline = this.$route.query.AirLine1;
               this.informationObject.contractPassengers[
                 indexPassenger
@@ -1125,7 +1125,7 @@ export default {
           this.addToDatabase();
         }
       } else if (this.informationObject && type == "id_request") {
-        this.informationObject.contractFlights[0].description = "chr724";
+        this.informationObject.contractFlights[0].flightSupplier = "chr724";
         for (let i = 0; i < info.passenger_info.length; i++) {
           let name = info.passenger_info[i].fname;
           let ticketNo = info.passenger_info[i].ticket_number;
@@ -1150,7 +1150,7 @@ export default {
               info.passenger_info[i].real_price;
             this.informationObject.contractPassengers[
               indexPassenger
-            ].description = "confirm";
+            ].goTicketStatus = "confirm";
           }
         }
         if (isend) {
@@ -1161,7 +1161,7 @@ export default {
     },
     setTicketInfo2(type, info) {
       if (type == "pnr") {
-        this.informationObject.contractFlights[1].description = "nira";
+        this.informationObject.contractFlights[1].flightSupplier = "nira";
         if (info.Tickets) {
           for (let i = 0; i < info.Tickets.length; i++) {
             let findairline = this.$route.query.AirLine2;
@@ -1275,8 +1275,8 @@ export default {
             let indexPassenger =
               this.informationObject.contractPassengers.findIndex(
                 (x) =>
-                  x.fName.toLocaleUpperCase() == name &&
-                  x.lName.toLocaleUpperCase() == family
+                  x.fName.toLocaleUpperCase() == name.toLocaleUpperCase() &&
+                  x.lName.toLocaleUpperCase() == family.toLocaleUpperCase()
               );
             if (indexPassenger != "-1") {
               this.informationObject.contractPassengers[
@@ -1297,7 +1297,7 @@ export default {
                   : info.InfantTP;
               this.informationObject.contractPassengers[
                 indexPassenger
-              ].description = "confirm";
+              ].retTicketStatus = "confirm";
 
               this.informationObject.contractPassengers[
                 indexPassenger
@@ -1308,7 +1308,7 @@ export default {
         this.loadingDownload = false;
         this.addToDatabase();
       } else if (type == "id_request") {
-        this.informationObject.contractFlights[1].description = "chr724";
+        this.informationObject.contractFlights[1].flightSupplier = "chr724";
         for (let i = 0; i < info.passenger_info.length; i++) {
           let name = info.passenger_info[i].fname;
           let ticketNo = info.passenger_info[i].ticket_number;
@@ -1334,7 +1334,7 @@ export default {
               info.passenger_info[i].real_price;
             this.informationObject.contractPassengers[
               indexPassenger
-            ].description = "confirm";
+            ].retTicketStatus = "confirm";
           }
         }
         this.loadingDownload = false;
@@ -1382,12 +1382,12 @@ export default {
           // handle error
           console.log(error);
           self.alertText = self.$route.query.PNR2
-            ? "عملیات چاپ بلیط با کد " +
+            ? "عملیات رزرو بلیط با کد " +
               self.$route.query.PNR2 +
               "و" +
               self.$route.query.PNR1 +
               " با خطا مواجه شد.لطفا با پشتیبانی تماس حاصل فرمایید"
-            : "عملیات چاپ بلیط با کد " +
+            : "عملیات رزرو بلیط با کد " +
               self.$route.query.PNR1 +
               " با خطا مواجه شد.لطفا با پشتیبانی تماس حاصل فرمایید";
           self.alertType = "error";
@@ -1397,12 +1397,11 @@ export default {
     setIpAddress() {
       return new Promise((resolve) => {
         fetch("https://api.ipify.org?format=json")
-        .then((x) => x.json())
-        .then(({ ip }) => {
-          localStorage.setItem("ipAddress", ip);
-           resolve() 
-          
-        });
+          .then((x) => x.json())
+          .then(({ ip }) => {
+            localStorage.setItem("ipAddress", ip);
+            resolve();
+          });
       });
     },
     ETIssueJS(airline, PNR) {
@@ -1578,6 +1577,7 @@ export default {
       this.informationObject.ticketStatus = "confirm";
       this.informationObject.confirmStatus = "confirm";
       this.informationObject.ipAddress = localStorage.getItem("ipAddress");
+      let self = this;
       // this.informationObject.issueDate =
       //   String(new Date().getFullYear()) +
       //   "-" +
@@ -1588,8 +1588,81 @@ export default {
       //   (String(new Date().getDate()).length == 2
       //     ? String(new Date().getDate())
       //     : "0" + String(new Date().getDate()));
-
-      let self = this;
+      for (let i = 0; i < self.informationObject.contractFlights.length; i++) {
+        let options = { day: "numeric", month: "numeric", year: "numeric" };
+        let smsText =
+          "مسافر گرامی،\nاحتراما به اطلاع میرساند که " +
+          (self.informationObject.contractPassengers.length == 1
+            ? "بلیت‌"
+            : "بلیت‌های") +
+          " شما در پرواز هواپیمایی " +
+          self.informationObject.contractFlights[i].airline.nicName +
+          " به‌شماره " +
+          self.informationObject.contractFlights[i].flightNumber.replace(
+            /(^.+)(\w\d+\w)(.+$)/i,
+            "$2"
+          ) +
+          " مورخ " +
+          new Date(
+            self.informationObject.contractFlights[i].date
+          ).toLocaleDateString("fa-IR", options) +
+          " ساعت " +
+          self.informationObject.contractFlights[i].time +
+          " از " +
+          self.AllpersianCityes.find(
+            (x) => x.id == self.informationObject.contractFlights[i].origin
+          ).text +
+          " به " +
+          self.AllpersianCityes.find(
+            (x) => x.id == self.informationObject.contractFlights[i].destination
+          ).text +
+          " به شرح زیر صادر گردید:\n";
+        for (
+          let l = 0;
+          l < self.informationObject.contractPassengers.length;
+          l++
+        ) {
+          smsText =
+            smsText +
+            (i == 0
+              ? self.informationObject.contractPassengers[l].goTicketNumber
+              : self.informationObject.contractPassengers[l].retTicketNumber) +
+            " به‌نام " +
+            self.informationObject.contractPassengers[l].lName.toUpperCase() +
+            "/" +
+            self.informationObject.contractPassengers[l].fName.toUpperCase() +
+            "\n";
+          if (
+            self.informationObject.contractFlights[i].description == "nira" ||
+            self.informationObject.contractFlights[i].flightSupplier == "nira"
+          ) {
+            smsText =
+              smsText +
+              (i == 0
+                ? self.informationObject.contractPassengers[l].goTicketUrl
+                : self.informationObject.contractPassengers[l].retTicketUrl) +
+              "\n";
+          }
+        }
+        if (
+          self.informationObject.contractFlights[i].description == "chr724" ||
+          self.informationObject.contractFlights[i].flightSupplier == "chr724"
+        ) {
+          smsText =
+            smsText +
+            "لینک دانلود بلیط:\n" +
+            (i == 0
+              ? self.informationObject.contractPassengers[0].goTicketUrl
+              : self.informationObject.contractPassengers[0].retTicketUrl) +
+            "\n";
+        }
+        smsText =
+          smsText +
+          "کد رزرو:" +
+          self.informationObject.contractFlights[i].pnr +
+          "\nبا آرزوی سفری خوش\nشرکت خدمات مسافرتی آهوان";
+        self.sendsms(smsText);
+      }
       axios
         .put(
           "https://panel.ahuantours.com/api/Contract/update",
@@ -1863,6 +1936,19 @@ export default {
       //       console.log(error);
       //     });
     },
+    sendsms(text) {
+      let self = this;
+      axios
+        .post("https://panel.ahuantours.com/api/Login/Send-Sms", {
+          mobile: localStorage.getItem("phone-number-ahuan"),
+          sms: text,
+        })
+        .then(function (res) {
+          self.alertText = "لینک دانلود بلیط ها برای شما ارسال شد";
+          self.alertType = "success";
+          self.showAlert = true;
+        });
+    },
     getToken() {
       return new Promise((resolve) => {
         let self = this;
@@ -1927,7 +2013,7 @@ export default {
   },
   async mounted() {
     if (!localStorage.getItem("ipAddress")) {
-      await this.setIpAddress()
+      await this.setIpAddress();
     }
     let self = this;
     if (localStorage.getItem("charterToken")) {
@@ -1989,7 +2075,7 @@ export default {
           self.isReturnUrl = false;
           let self = this;
           let urlSendBank = self.$route.query.bankpnr2
-          ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
+            ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +
@@ -1999,7 +2085,7 @@ export default {
               self.$route.query.AirLine2 +
               "&Email=" +
               self.$route.query.Email
-              : "https://ahuan.ir/#/ticket-download?AirLine1=" +
+            : "https://ahuan.ir/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +

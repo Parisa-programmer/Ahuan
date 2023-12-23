@@ -1412,8 +1412,8 @@ export default {
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
             } else {
               bankprice = parseInt(
-                self.choosedTicket[0].allprice.replace(/,/g, "") * 10
-              );
+                self.choosedTicket[0].allprice.replace(/,/g, "")
+              ) * 10;
             }
             axios
               .get("https://panel.ahuantours.com/api/Ch724/GetCharge")
@@ -1679,13 +1679,11 @@ export default {
               fnamefa:
                 self.users[i].name.replace(/\s/g, "") +
                 (self.users[i].gender == "خانم" ? "MS" : "MR"),
-              lnamefa:
-                self.users[i].family.replace(/\s/g, ""),
+              lnamefa: self.users[i].family.replace(/\s/g, ""),
               fnameen:
                 self.users[i].name.replace(/\s/g, "") +
                 (self.users[i].gender == "خانم" ? "MS" : "MR"),
-              lnameen:
-                self.users[i].family.replace(/\s/g, "") ,
+              lnameen: self.users[i].family.replace(/\s/g, ""),
               gender: self.users[i].gender == "خانم" ? 2 : 1,
               nationality: this.users[i].nationality == "ایرانی" ? 1 : 0,
               passengerCode: self.users[i].nationalityCode,
@@ -2103,13 +2101,11 @@ export default {
                         fnamefa:
                           self.users[i].name.replace(/\s/g, "") +
                           (self.users[i].gender == "خانم" ? "MS" : "MR"),
-                        lnamefa:
-                          self.users[i].family.replace(/\s/g, "") ,
+                        lnamefa: self.users[i].family.replace(/\s/g, ""),
                         fnameen:
                           self.users[i].name.replace(/\s/g, "") +
                           (self.users[i].gender == "خانم" ? "MS" : "MR"),
-                        lnameen:
-                          self.users[i].family.replace(/\s/g, ""),
+                        lnameen: self.users[i].family.replace(/\s/g, ""),
                         gender: self.users[i].gender == "خانم" ? 2 : 1,
                         nationality:
                           self.users[i].nationality == "ایرانی" ? 1 : 0,
@@ -2164,7 +2160,6 @@ export default {
                             "&Email=" +
                             self.contactInfo[0].email +
                             "&";
-
                           self.addToDatabase(bankprice, revertUrl);
                           // axios
                           //   .post(
@@ -2321,7 +2316,7 @@ export default {
                 }
               } else {
                 self.alertText =
-                  "عملیات رزرو با خطا مواجه شد لطفا پس از اطمینان از ظرفیت پرواز و صحیح بودن اطلاعاتparisa  ghasemi،دوباره سعی کنید.";
+                  "عملیات رزرو با خطا مواجه شد لطفا پس از اطمینان از ظرفیت پرواز و صحیح بودن اطلاعات،دوباره سعی کنید.";
                 self.alertType = "error";
                 self.showAlert = true;
                 self.loadingReserve = false;
@@ -2383,8 +2378,9 @@ export default {
         let theObjectForPush = {
           id: 0,
           contractId: 0,
-          fName: self.users[i].name.replace(/\s/g, "") + 
-          (self.users[i].gender == "خانم" ? "MS" : "MR"),
+          fName:
+            self.users[i].name.replace(/\s/g, "") +
+            (self.users[i].gender == "خانم" ? "MS" : "MR"),
           lName: self.users[i].family.replace(/\s/g, ""),
           age:
             self.users[i].ageType == "old"
@@ -2487,7 +2483,7 @@ export default {
             : stepfindip == "A7"
             ? 218
             : stepfindip == "yazdair"
-            ? 'yazdair'
+            ? "yazdair"
             : "000";
         allFlights.push({
           contractId: 0,
@@ -2499,6 +2495,14 @@ export default {
               : self.PNR2
               ? self.PNR2
               : String(self.id_faktor2),
+          requestId:
+            i == 0
+              ? self.captchaIdReq1
+                ? String(self.captchaIdReq1)
+                : "-"
+              : self.captchaIdReq2
+              ? String(self.captchaIdReq222)
+              : "-",
           origin: self.choosedTicket[i].Origin,
           destination: self.choosedTicket[i].Destination,
           flightClass: self.choosedTicket[i].className,
@@ -2909,7 +2913,7 @@ export default {
 
             if (isFirstChrPrice) {
               let bankprice =
-                isFirstChrPrice +
+                parseInt(isFirstChrPrice) +
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
               let urlReturn =
                 "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
@@ -3243,7 +3247,6 @@ export default {
     },
   },
   mounted() {
-   
     let peapelesNumber =
       Number(this.$route.query.adl) +
       Number(this.$route.query.chd) +
@@ -3268,8 +3271,6 @@ export default {
 
     this.setDates();
   },
-  beforeunmount() {
-    
-  },
+  beforeunmount() {},
 };
 </script>

@@ -220,10 +220,14 @@
             </template>
             <template v-slot:[`item.action`]="{ item }">
               <v-row justify="center">
-                
                 <v-btn
                   :loading="item.loadingCancellButton"
-                  :disabled="!item.ticketNumber || (item.dateTime && new Date(item.dateTime).getTime() < new Date().getTime())"
+                  :disabled="
+                    item.descriptionSeat == 'cancelled' ||
+                    !item.ticketNumber ||
+                    (item.dateTime &&
+                      new Date(item.dateTime).getTime() < new Date().getTime())
+                  "
                   @click="cancellticket(item)"
                   outlined
                   color="#DEB788"
@@ -233,7 +237,7 @@
               </v-row>
               <v-row justify="center">
                 <v-btn
-                  :disabled="!item.ticketNumber"
+                  :disabled="!item.ticketNumber || !item.ticketUrl"
                   @click="downloadticket(item)"
                   outlined
                   color="rgb(20, 23, 158)"
@@ -278,7 +282,12 @@
             و مبلغ جریمه
             <b class="red--text"
               >{{ separatePrice(choosedTicketRow.PENALTY) }}
-              {{ choosedTicketRow.description == "nira" ? "تومان" : "%" }}</b
+              {{
+                choosedTicketRow.description == "nira" ||
+                choosedTicketRow.flightSupplier == "nira"
+                  ? "تومان"
+                  : "%"
+              }}</b
             >
 
             اطمینان دارید؟
@@ -908,7 +917,7 @@ export default {
       // console.log();
       let self = this;
       this.choosedTicketRow = item;
-      if (item.description == "chr724") {
+      if (item.description == "chr724" || item.flightSupplier == "chr724") {
         let factor = {
           id_faktor: item.pnr,
         };
@@ -922,6 +931,9 @@ export default {
                 self.alertText = "این بلیط قبلا کنسل شده!";
                 self.isCancellType = false;
                 self.updateDatabase();
+                self.choosedTicket.passengers[
+                  item.index
+                ].loadingCancellButton = false;
               } else {
                 self.choosedTicketRow.PENALTY = res.data.data.penalti;
                 self.cancellModal = true;
@@ -945,7 +957,7 @@ export default {
             ].loadingCancellButton = false;
             console.log(error);
           });
-      } else if (item.description == "nira") {
+      } else if (item.description == "nira" || item.flightSupplier == "nira") {
         let params = {
           Airline: self.choosedTicketRow.airlineCode,
           TicketNo: self.choosedTicketRow.ticketNumber,
@@ -962,6 +974,9 @@ export default {
                 response.data.NRSPenalty.RefundedAmount.split(".")[0];
               self.isCancellType = true;
               self.cancellModal = true;
+              self.choosedTicket.passengers[
+                item.index
+              ].loadingCancellButton = true;
             } else {
               self.alertText =
                 response.data ==
@@ -972,10 +987,10 @@ export default {
               self.isCancellType = false;
               self.cancellModal = true;
               self.updateDatabase();
+              self.choosedTicket.passengers[
+                item.index
+              ].loadingCancellButton = false;
             }
-            self.choosedTicket.passengers[
-              item.index
-            ].loadingCancellButton = true;
           })
           .catch(function (error) {
             // handle error
@@ -1000,6 +1015,7 @@ export default {
       } else {
         this.alertType = "error";
         this.alertText = "متاسفانه نوع بلیط ثبت نشده";
+        this.updateDatabase();
         this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
@@ -1022,7 +1038,10 @@ export default {
     confirmCancell() {
       let self = this;
       self.loadingButton = true;
-      if (this.choosedTicketRow.description == "chr724") {
+      if (
+        this.choosedTicketRow.description == "chr724" ||
+        this.choosedTicketRow.flightSupplier == "chr724"
+      ) {
         let penaltiObject = {
           id_faktor: self.choosedTicketRow.pnr,
           penalti: self.choosedTicketRow.PENALTY,
@@ -1061,7 +1080,10 @@ export default {
             self.loadingButton = false;
             console.log(error);
           });
-      } else if (this.choosedTicketRow.description == "nira") {
+      } else if (
+        this.choosedTicketRow.description == "nira" ||
+        this.choosedTicketRow.flightSupplier == "nira"
+      ) {
         let self = this;
         let params = {
           Airline: self.choosedTicketRow.airlineCode,
@@ -1077,31 +1099,31 @@ export default {
           })
           .then(function (response) {
             // if (response.data.AirCancelSeat[0].Done == "true") {
-              axios
-                .get(
-                  "https://panel.ahuantours.com/api/Nira/ETR?AirLine=" +
-                    self.choosedTicketRow.airlineCode +
-                    "&TicketNo=" +
-                    self.choosedTicketRow.ticketNumber
-                )
-                .then(function (res) {
-                  if (res.data.Fare) {
-                    self.newInformations.Fare = res.data.Fare;
-                    let KU = res.data.TAXES.find((x) => x.TaxCode == "KU");
-                    
-                    self.newInformations.KU = KU ? KU.TaxAmount : 0;
-                    let LP = res.data.TAXES.find((x) => x.TaxCode == "LP");
-                    
-                    self.newInformations.LP = LP ? LP.TaxAmount : 0;
-                    self.ETRefund();
-                    // get self.newInformations.KU == ???   TaxAmount
-                    // get self.newInformations.LP == ???   TaxCode
-                  }
-                })
-                .catch(function (error) {
-                  // handle error
-                  console.log(error);
-                });
+            axios
+              .get(
+                "https://panel.ahuantours.com/api/Nira/ETR?AirLine=" +
+                  self.choosedTicketRow.airlineCode +
+                  "&TicketNo=" +
+                  self.choosedTicketRow.ticketNumber
+              )
+              .then(function (res) {
+                if (res.data.Fare) {
+                  self.newInformations.Fare = res.data.Fare;
+                  let KU = res.data.TAXES.find((x) => x.TaxCode == "KU");
+
+                  self.newInformations.KU = KU ? KU.TaxAmount : 0;
+                  let LP = res.data.TAXES.find((x) => x.TaxCode == "LP");
+
+                  self.newInformations.LP = LP ? LP.TaxAmount : 0;
+                  self.ETRefund();
+                  // get self.newInformations.KU == ???   TaxAmount
+                  // get self.newInformations.LP == ???   TaxCode
+                }
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
             // } else {
             //   self.loadingButton = false;
             //   self.alertText =
@@ -1182,8 +1204,19 @@ export default {
               (x.retTicketNumber == self.choosedTicketRow.ticketNumber ||
                 x.goTicketNumber == self.choosedTicketRow.ticketNumber)
           );
-          resObject.contractPassengers[findObjectIndex].description =
-            "cancelled";
+          if (
+            resObject.contractPassengers[findObjectIndex].goTicketNumber ==
+            self.choosedTicketRow.ticketNumber
+          ) {
+            resObject.contractPassengers[findObjectIndex].goTicketStatus =
+              "cancelled";
+          } else if (
+            resObject.contractPassengers[findObjectIndex].retTicketNumber ==
+            self.choosedTicketRow.ticketNumber
+          ) {
+            resObject.contractPassengers[findObjectIndex].retTicketStatus =
+              "cancelled";
+          }
           self.choosedTicketRow.descriptionSeat = "cancelled";
           axios
             .put("https://panel.ahuantours.com/api/Contract/update", resObject)
