@@ -1073,6 +1073,7 @@ const $ = require("jquery");
 export default {
   data() {
     return {
+      baseUrl: window.location.origin,
       interval1: "",
       captchaCode1: "",
       captchaIdReq1: "",
@@ -1754,7 +1755,8 @@ export default {
                             parseInt(response.data.data.totalprice_request) +
                             parseInt(res.data.data.totalprice_request);
                           let urlReturn =
-                            "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                            self.baseUrl +
+                            "/#/ticket-download?isReturnUrl=true&id_request1=" +
                             self.captchaIdReq1 +
                             "&id_faktor1=" +
                             self.id_faktor1 +
@@ -1770,7 +1772,7 @@ export default {
                           //     {
                           //       amount: bankprice,
                           //       revertUrl:
-                          //         "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                          //         self.baseUrl +"/#/ticket-download?isReturnUrl=true&id_request1=" +
                           //         self.captchaIdReq1 +
                           //         "&id_faktor1=" +
                           //         self.id_faktor1 +
@@ -1811,7 +1813,8 @@ export default {
                 } else {
                   let bankprice = response.data.data.totalprice_request;
                   let urlReturn =
-                    "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                    self.baseUrl +
+                    "/#/ticket-download?isReturnUrl=true&id_request1=" +
                     self.captchaIdReq1 +
                     "&id_faktor1=" +
                     self.id_faktor1 +
@@ -1823,7 +1826,7 @@ export default {
                   //     {
                   //       amount: bankprice,
                   //       revertUrl:
-                  //         "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                  //         self.baseUrl +"/#/ticket-download?isReturnUrl=true&id_request1=" +
                   //         self.captchaIdReq1 +
                   //         "&id_faktor1=" +
                   //         self.id_faktor1 +
@@ -2148,7 +2151,8 @@ export default {
                                 10
                             ) + parseInt(response.data.data.totalprice_request);
                           let revertUrl =
-                            "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request2=" +
+                            self.baseUrl +
+                            "/#/ticket-download?isReturnUrl=true&id_request2=" +
                             self.captchaIdReq2 +
                             "&id_faktor2=" +
                             self.id_faktor2 +
@@ -2267,7 +2271,8 @@ export default {
                     parseInt(self.choosedTicket[0].allprice.replace(/,/g, "")) *
                     10;
                   let goBankUrl =
-                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                    self.baseUrl +
+                    "/#/ticket-download?AirLine1=" +
                     self.choosedTicket[0].Airline +
                     "&bankpnr1=" +
                     self.PNR1 +
@@ -2276,7 +2281,8 @@ export default {
 
                   // window.open(goBankUrl);
                   let urlReturn =
-                    "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                    self.baseUrl +
+                    "/#/ticket-download?AirLine1=" +
                     self.choosedTicket[0].Airline +
                     "&PNR1=" +
                     self.PNR1 +
@@ -2291,7 +2297,7 @@ export default {
                   //     {
                   //       amount: bankprice,
                   //       revertUrl:
-                  //         "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                  //         self.baseUrl +"/#/ticket-download?AirLine1=" +
                   //         self.choosedTicket[0].Airline +
                   //         "&PNR1=" +
                   //         self.PNR1 +
@@ -2923,7 +2929,8 @@ export default {
                 parseInt(isFirstChrPrice) +
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
               let urlReturn =
-                "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+                self.baseUrl +
+                "/#/ticket-download?isReturnUrl=true&id_request1=" +
                 self.captchaIdReq1 +
                 "&id_faktor1=" +
                 self.id_faktor1 +
@@ -2939,7 +2946,7 @@ export default {
               //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
               //     amount: bankprice,
               //     revertUrl:
-              //       "https://ahuan.ir/#/ticket-download?isReturnUrl=true&id_request1=" +
+              //       self.baseUrl +"/#/ticket-download?isReturnUrl=true&id_request1=" +
               //       self.captchaIdReq1 +
               //       "&id_faktor1=" +
               //       self.id_faktor1 +
@@ -2969,7 +2976,7 @@ export default {
                 ) +
                 parseInt(self.choosedTicket[1].allprice.replace(/,/g, "") * 10);
               // let goBankUrl =
-              //   "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              //   self.baseUrl +"/#/ticket-download?AirLine1=" +
               //   self.choosedTicket[0].Airline +
               //   "&bankpnr1=" +
               //   self.PNR1 +
@@ -2985,7 +2992,8 @@ export default {
               // self.loadingReserve = false;
               // go to bank__________________________
               let urlReturn =
-                "https://ahuan.ir/#/ticket-download?AirLine1=" +
+                self.baseUrl +
+                "/#/ticket-download?AirLine1=" +
                 self.choosedTicket[0].Airline +
                 "&PNR1=" +
                 self.PNR1 +
@@ -3004,7 +3012,7 @@ export default {
               //   .post("https://panel.ahuantours.com/api/Tejarat/BankToken", {
               //     amount: bankprice,
               //     revertUrl:
-              //       "https://ahuan.ir/#/ticket-download?AirLine1=" +
+              //       self.baseUrl +"/#/ticket-download?AirLine1=" +
               //       self.choosedTicket[0].Airline +
               //       "&PNR1=" +
               //       self.PNR1 +

@@ -740,6 +740,7 @@ export default {
       Passenger2: undefined,
       params: [],
       isReturnUrl: false,
+      baseUrl:window.location.origin,
     };
   },
   name: "ticket-download",
@@ -2075,7 +2076,7 @@ export default {
           self.isReturnUrl = false;
           let self = this;
           let urlSendBank = self.$route.query.bankpnr2
-            ? "https://ahuan.ir/#/ticket-download?AirLine1=" +
+            ? self.baseUrl +"/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +
@@ -2085,7 +2086,7 @@ export default {
               self.$route.query.AirLine2 +
               "&Email=" +
               self.$route.query.Email
-            : "https://ahuan.ir/#/ticket-download?AirLine1=" +
+            : self.baseUrl +"/#/ticket-download?AirLine1=" +
               self.$route.query.AirLine1 +
               "&PNR1=" +
               self.$route.query.bankpnr1 +
